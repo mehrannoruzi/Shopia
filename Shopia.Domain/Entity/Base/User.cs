@@ -4,7 +4,7 @@ using Shopia.Domain.Resource;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shopia.Domain.Entity
+namespace Shopia.Domain
 {
     [Table(nameof(User), Schema = "Base")]
     public class User : IInsertDateProperties, IAuthEntity
