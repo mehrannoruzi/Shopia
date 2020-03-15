@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Domain", "Shopia.Domain\Shopia.Domain.csproj", "{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3AB97F42-08F9-4E1C-A4F9-559FDFF304C2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AB97F42-08F9-4E1C-A4F9-559FDFF304C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AB97F42-08F9-4E1C-A4F9-559FDFF304C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AB97F42-08F9-4E1C-A4F9-559FDFF304C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AB97F42-08F9-4E1C-A4F9-559FDFF304C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
