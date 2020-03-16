@@ -7,5 +7,6 @@ namespace Shopia.Domain.Entity
 {
     public class Pages
     {
+        public int UserId { get; set; }
     }
 }
