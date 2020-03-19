@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Entity\Posts.cs" />
+    <Compile Remove="Entity\PostTags.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Resource\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
