@@ -16,7 +16,6 @@
     <Compile Remove="Entity\Posts.cs" />
     <Compile Remove="Entity\PostTags.cs" />
     <Compile Remove="Entity\Categories.cs" />
-    <Compile Remove="Enum\DeliverySpan.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resource\Strings.Designer.cs">
