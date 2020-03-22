@@ -15,6 +15,8 @@ namespace Shopia.Domain
 
         public int StoreId { get; set; }
 
+        public int? ProductCategoryId { get; set; }
+
         public int Price { get; set; }
 
         public int Discount { get; set; }
