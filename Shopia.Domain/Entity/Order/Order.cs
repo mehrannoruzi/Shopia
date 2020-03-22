@@ -1,15 +1,18 @@
 ﻿using System;
 using Elk.Core;
-using System.Linq;
-using System.Collections.Generic;
-using Shopia.Domain.Enum;
+using Shopia.Domain.Resource;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Shopia.Domain.Entity
+namespace Shopia.Domain
 {
-    public class Orders
+    [Table(nameof(Order), Schema = "Order")]
+    public class Order
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public int PageId { get; set; }
 
         public int FromAddressId { get; set; }

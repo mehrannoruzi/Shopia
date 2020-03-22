@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Shopia.Domain.Entity
+
+namespace Shopia.Domain
 {
     public class Discount
     {

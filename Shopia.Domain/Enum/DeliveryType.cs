@@ -1,9 +1,10 @@
 ﻿using System;
-namespace Shopia.Domain.Enum
+
+namespace Shopia.Domain
 {
-    public enum DeliveryType
+    public enum DeliveryType : byte
     {
-       Peik,
-       Post
+       Peik = 1,
+       Post = 2,
     }
 }
