@@ -28,7 +28,7 @@ namespace Shopia.Domain
         public OrderStatus OrderStatus { get; set; }
         public DateTime DoingTime { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public DelicerySpan DelicerySpan { get; set; }
+        public int DeliverySpanId { get; set; }
 
         public string UserDescription { get; set; }
         public string OrderDescription { get; set; }

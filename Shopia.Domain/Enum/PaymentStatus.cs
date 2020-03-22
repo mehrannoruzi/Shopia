@@ -2,7 +2,7 @@
 
 namespace Shopia.Domain
 {
-    public enum PaymentStatus : byte
+    public enum PaymentStatus : int
     {
         Failed = -1,
         Insert = 0,
