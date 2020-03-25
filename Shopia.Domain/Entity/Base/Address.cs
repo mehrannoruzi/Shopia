@@ -19,9 +19,9 @@ namespace Shopia.Domain
 
         public bool IsDefault { get; set; }
 
-        public double Latetude { get; set; }
+        public double Latitude { get; set; }
 
-        public double Longetude { get; set; }
+        public double Longitude { get; set; }
 
         public DateTime InsertDateMi { get; set; }
 

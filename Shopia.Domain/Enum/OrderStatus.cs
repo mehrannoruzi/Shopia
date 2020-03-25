@@ -2,7 +2,7 @@
 
 namespace Shopia.Domain
 {
-    public enum OrderStatus : byte
+    public enum OrderStatus : int
     {
         Failed = -1,
         
@@ -11,6 +11,6 @@ namespace Shopia.Domain
         InProcessing = 3,
         WaitForDelivery = 4,
         
-        Success = 10,
+        Successed = 10,
     }
 }

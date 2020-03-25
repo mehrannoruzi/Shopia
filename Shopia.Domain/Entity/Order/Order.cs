@@ -12,9 +12,9 @@ namespace Shopia.Domain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
-        public int StoreId { get; set; }
+        public Guid UserId { get; set; }
+        public int PageId { get; set; }
 
-        public Guid CustomerId { get; set; }
         public int FromAddressId { get; set; }
         public int ToAddressId { get; set; }
 
@@ -22,15 +22,14 @@ namespace Shopia.Domain
         public int DiscountPrice { get; set; }
 
         public DateTime InsertDateMi { get; set; }
-        public string InsertDateSh { get; set; }
 
         public int DeliveryProviderId { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime DoingTime { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public DeliverySpan DeliverySpan { get; set; }
-        
+
+        public int DeliveryTimeTableId { get; set; }
+
         public string UserDescription { get; set; }
         public string OrderDescription { get; set; }
     }
