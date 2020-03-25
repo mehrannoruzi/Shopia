@@ -6,6 +6,7 @@ namespace Shopia.Domain
     {
         PreRegister = 1,
         Register = 2,
-        Active = 3
+        Active = 3,
+        DeActive = 4
     }
 }
