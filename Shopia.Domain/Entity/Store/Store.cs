@@ -14,6 +14,7 @@ namespace Shopia.Domain
         public int StoreId { get; set; }
 
         public Guid UserId { get; set; }
+        public StoreType StoreType { get; set; }
         public StoreStatus StoreStatus { get; set; }
         public DateTime InsertDateMi { get; set; }
         public DateTime ModifyDateMi { get; set; }
