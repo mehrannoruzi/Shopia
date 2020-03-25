@@ -17,8 +17,13 @@ namespace Shopia.Domain
         public float Percent { get; set; }
         public bool IsActive { get; set; }
 
+        public DateTime ValidFromMi { get; set; }
+        public DateTime ValidToMi { get; set; }
         public DateTime InsertDateMi { get; set; }
         public DateTime ModifyDateMi { get; set; }
+
+        public string ValidFromSh { get; set; }
+        public string ValidToSh { get; set; }
         public string InsertDateSh { get; set; }
         public string ModifyDateSh { get; set; }
     }
