@@ -26,7 +26,7 @@ namespace Shopia.Domain
         public int DeliveryProviderId { get; set; }
         public DeliveryType DeliveryType { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public DateTime DoingTime { get; set; }
+        public DateTime? PreparationDate { get; set; }
 
         public int DeliveryTimeTableId { get; set; }
 

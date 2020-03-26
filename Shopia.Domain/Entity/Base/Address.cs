@@ -27,9 +27,9 @@ namespace Shopia.Domain
 
         public string InsertDateSh { get; set; }
 
-        public string Name { get; set; }
+        public string ReciverName { get; set; }
 
-        public string Details { get; set; }
+        public string Address { get; set; }
 
     }
 }

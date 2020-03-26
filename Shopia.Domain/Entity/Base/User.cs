@@ -19,6 +19,9 @@ namespace Shopia.Domain
         //[Display(Name = nameof(Strings.Enabled), ResourceType = typeof(Strings))]
         //[Required(ErrorMessageResourceName = nameof(Strings.Required), ErrorMessageResourceType = typeof(Strings))]
         public bool Enabled { get; set; }
+        
+        //[Display(Name = nameof(Strings.NewPassword), ResourceType = typeof(Strings))]
+        public bool IsRecoveredPassword { get; set; }
 
         [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
         public DateTime InsertDateMi { get; set; }
@@ -54,20 +57,13 @@ namespace Shopia.Domain
         //[StringLength(50, ErrorMessageResourceName = nameof(Strings.MaxLength), ErrorMessageResourceType = typeof(Strings))]
         public string Email { get; set; }
 
-        [Column(TypeName = "nvarchar(45)")]
+        [Column(TypeName = "char(36)")]
         [DataType(DataType.Password)]
         //[Display(Name = nameof(Strings.Password), ResourceType = typeof(Strings))]
         //[Required(ErrorMessageResourceName = nameof(Strings.Required), ErrorMessageResourceType = typeof(Strings))]
         //[MaxLength(45, ErrorMessageResourceName = nameof(Strings.MaxLength), ErrorMessageResourceType = typeof(Strings))]
         //[StringLength(45, ErrorMessageResourceName = nameof(Strings.MaxLength), ErrorMessageResourceType = typeof(Strings))]
         public string Password { get; set; }
-
-        [Column(TypeName = "nvarchar(45)")]
-        [DataType(DataType.Password)]
-        //[Display(Name = nameof(Strings.NewPassword), ResourceType = typeof(Strings))]
-        //[MaxLength(28, ErrorMessageResourceName = nameof(Strings.MaxLength), ErrorMessageResourceType = typeof(Strings))]
-        //[StringLength(28, ErrorMessageResourceName = nameof(Strings.MaxLength), ErrorMessageResourceType = typeof(Strings))]
-        public string NewPassword { get; set; }
     }
 }
 
