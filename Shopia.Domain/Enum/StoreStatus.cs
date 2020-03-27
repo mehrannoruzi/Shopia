@@ -4,9 +4,10 @@ namespace Shopia.Domain
 {
     public enum StoreStatus : byte
     {
-        PreRegister = 1,
-        Register = 2,
-        Active = 3,
-        DeActive = 4
+        Register = 1,
+        RequestForCrowle = 2,
+        AddProduct = 3,
+        RequestForPayment = 4,
+        AddPayment = 5
     }
 }

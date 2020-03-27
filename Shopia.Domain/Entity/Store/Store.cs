@@ -14,14 +14,19 @@ namespace Shopia.Domain
         public int StoreId { get; set; }
 
         public Guid UserId { get; set; }
+        public bool IsActive { get; set; }
         public StoreType StoreType { get; set; }
         public StoreStatus StoreStatus { get; set; }
         public int PreparationDay { get; set; }
+        public int ProductCount { get; set; }
+        public int PostCount { get; set; }
+        public int FolowerCount { get; set; }
+        public int FolowingCount { get; set; }
+        public DateTime LastCrowlTime { get; set; }
         public DateTime InsertDateMi { get; set; }
         public DateTime ModifyDateMi { get; set; }
         public string InsertDateSh { get; set; }
         public string ModifyDateSh { get; set; }
         public string Name { get; set; }
-        public string CrawlSchedulePattern { get; set; }
     }
 }
