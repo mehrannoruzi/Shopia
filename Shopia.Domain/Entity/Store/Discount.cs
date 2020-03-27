@@ -15,6 +15,7 @@ namespace Shopia.Domain
 
         public int StoreId { get; set; }
         public float Percent { get; set; }
+        public int MaxPrice { get; set; }
         public bool IsActive { get; set; }
 
         public DateTime ValidFromMi { get; set; }

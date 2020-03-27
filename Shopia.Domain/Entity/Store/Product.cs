@@ -19,7 +19,7 @@ namespace Shopia.Domain
 
         public int Price { get; set; }
 
-        public int Discount { get; set; }
+        public float DiscountPercent { get; set; }
 
         public bool IsActive { get; set; }
 
