@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.DataAccess.Ef", "Sho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.DataAccess.Dapper", "Shopia.DataAccess.Dapper\Shopia.DataAccess.Dapper.csproj", "{0728764D-0163-4376-A1CA-B9229690959B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Service", "Shopia.Service\Shopia.Service.csproj", "{CC83A81C-5870-47D3-BB26-65E9D281CAC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0728764D-0163-4376-A1CA-B9229690959B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0728764D-0163-4376-A1CA-B9229690959B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0728764D-0163-4376-A1CA-B9229690959B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC83A81C-5870-47D3-BB26-65E9D281CAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC83A81C-5870-47D3-BB26-65E9D281CAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC83A81C-5870-47D3-BB26-65E9D281CAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC83A81C-5870-47D3-BB26-65E9D281CAC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69} = {B6187195-8347-4A87-8548-86D131534F1B}
 		{66ABF85F-3C68-42FA-9E78-0F84A7F17931} = {17293837-3C1E-4D44-B968-4F402A9B61D0}
 		{0728764D-0163-4376-A1CA-B9229690959B} = {17293837-3C1E-4D44-B968-4F402A9B61D0}
+		{CC83A81C-5870-47D3-BB26-65E9D281CAC9} = {89ADA1BD-047E-4036-9EA5-CE345C766C85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}
