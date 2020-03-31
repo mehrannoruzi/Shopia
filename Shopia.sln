@@ -3,7 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Domain", "Shopia.Domain\Shopia.Domain.csproj", "{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Domain", "Shopia.Domain\Shopia.Domain.csproj", "{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00-Shared", "00-Shared", "{8A42C343-8B4E-4BE1-BCC6-05EE1468B57B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Domain", "01-Domain", "{B6187195-8347-4A87-8548-86D131534F1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-DataAccess", "02-DataAccess", "{17293837-3C1E-4D44-B968-4F402A9B61D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Service", "03-Service", "{89ADA1BD-047E-4036-9EA5-CE345C766C85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Dependency Resolver", "04-Dependency Resolver", "{D63B245E-44F4-4EB8-8E1E-CEF978023B86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-End Points", "05-End Points", "{55134684-BD76-44B9-B934-74912CD29CDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +30,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9D0066F-AC3D-45DF-9A78-FC4ADBBBEF69} = {B6187195-8347-4A87-8548-86D131534F1B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}
