@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="StoredProcedure Scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Elk.Dapper" Version="1.0.1" />
+  </ItemGroup>
+
+</Project>
