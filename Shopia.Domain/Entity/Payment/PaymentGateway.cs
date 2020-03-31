@@ -13,6 +13,8 @@ namespace Shopia.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentGatewayId { get; set; }
 
+        public bool IsActive { get; set; }
+
         public string Name { get; set; }
 
         public string Url { get; set; }
@@ -21,6 +23,8 @@ namespace Shopia.Domain
 
         public string MerchantId { get; set; }
 
-        public string Token { get; set; }
+        public string Username { get; set; }
+        
+        public string Password { get; set; }
     }
 }

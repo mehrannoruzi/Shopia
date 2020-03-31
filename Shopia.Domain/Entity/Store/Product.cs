@@ -19,6 +19,10 @@ namespace Shopia.Domain
 
         public int Price { get; set; }
 
+        public int LikeCount { get; set; }
+        
+        public int OrderCount { get; set; }
+
         public float DiscountPercent { get; set; }
 
         public bool IsActive { get; set; }

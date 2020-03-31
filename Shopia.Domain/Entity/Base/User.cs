@@ -18,7 +18,7 @@ namespace Shopia.Domain
 
         //[Display(Name = nameof(Strings.Enabled), ResourceType = typeof(Strings))]
         //[Required(ErrorMessageResourceName = nameof(Strings.Required), ErrorMessageResourceType = typeof(Strings))]
-        public bool Enabled { get; set; }
+        public bool IsActive { get; set; }
 
         public UserStatus UserStatus { get; set; }
         

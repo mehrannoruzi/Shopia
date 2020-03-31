@@ -8,6 +8,6 @@ namespace Shopia.Domain
         AddStore = 2,
         AddAddress = 3,
         UploadDocument = 4,
-        AddAcount = 5
+        AddBankAcount = 5
     }
 }

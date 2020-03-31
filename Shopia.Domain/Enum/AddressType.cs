@@ -7,6 +7,6 @@ namespace Shopia.Domain
 		Home = 1,
 		Store = 2,
 		Office = 3,
-
+		Warehouse = 4
 	}
 }

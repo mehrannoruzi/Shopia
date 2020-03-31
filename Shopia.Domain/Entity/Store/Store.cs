@@ -27,6 +27,8 @@ namespace Shopia.Domain
         public DateTime ModifyDateMi { get; set; }
         public string InsertDateSh { get; set; }
         public string ModifyDateSh { get; set; }
-        public string Name { get; set; }
+        public string ShopiaUrl { get; set; }
+        public string WhatsAppUrl { get; set; }
+        public string TelegramUrl { get; set; }
     }
 }
