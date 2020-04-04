@@ -37,6 +37,12 @@ namespace Shopia.Domain
         [MaxLength(5, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string Extention { get; set; }
 
+        [Column(TypeName = "char")]
+        [Display(Name = nameof(Strings.UniqueId), ResourceType = typeof(Strings))]
+        [MaxLength(18, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(18, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string UniqueId { get; set; }
+
         [Column(TypeName = "varchar")]
         [Display(Name = nameof(Strings.Name), ResourceType = typeof(Strings))]
         [MaxLength(35, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
@@ -44,15 +50,27 @@ namespace Shopia.Domain
         public string Name { get; set; }
 
         [Column(TypeName = "varchar")]
-        [Display(Name = nameof(Strings.Url), ResourceType = typeof(Strings))]
-        [MaxLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string Url { get; set; }
+        [Display(Name = nameof(Strings.CdnFileUrl), ResourceType = typeof(Strings))]
+        [MaxLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string CdnFileUrl { get; set; }
 
         [Column(TypeName = "varchar")]
-        [Display(Name = nameof(Strings.CdnUrl), ResourceType = typeof(Strings))]
-        [MaxLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string CdnUrl { get; set; }
+        [Display(Name = nameof(Strings.CdnThumbnailUrl), ResourceType = typeof(Strings))]
+        [MaxLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string CdnThumbnailUrl { get; set; }
+
+        [Column(TypeName = "varchar")]
+        [Display(Name = nameof(Strings.FileUrl), ResourceType = typeof(Strings))]
+        [MaxLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string FileUrl { get; set; }
+
+        [Column(TypeName = "varchar")]
+        [Display(Name = nameof(Strings.ThumbnailUrl), ResourceType = typeof(Strings))]
+        [MaxLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string ThumbnailUrl { get; set; }
     }
 }

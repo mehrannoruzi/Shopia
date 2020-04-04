@@ -138,8 +138,11 @@
   <data name="CardNumber" xml:space="preserve">
     <value>شماره کارت</value>
   </data>
-  <data name="CdnUrl" xml:space="preserve">
-    <value>آدرس شبکه داخلی</value>
+  <data name="CdnFileUrl" xml:space="preserve">
+    <value>آدرس داخلی فایل</value>
+  </data>
+  <data name="CdnThumbnailUrl" xml:space="preserve">
+    <value>آدرس داخلی فایل کوچک</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>کد</value>
@@ -197,6 +200,9 @@
   </data>
   <data name="FileType" xml:space="preserve">
     <value>نوع فایل</value>
+  </data>
+  <data name="FileUrl" xml:space="preserve">
+    <value>آدرس فایل</value>
   </data>
   <data name="FolowerCount" xml:space="preserve">
     <value>تعداد دنبال کننده</value>
@@ -380,6 +386,9 @@
   </data>
   <data name="TelegramUrl" xml:space="preserve">
     <value>آدرس فروشگاه در تلگرام</value>
+  </data>
+  <data name="ThumbnailUrl" xml:space="preserve">
+    <value>آدرس فایل کوچک</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>عنوان</value>

@@ -124,11 +124,20 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to آدرس شبکه داخلی.
+        ///   Looks up a localized string similar to آدرس داخلی فایل.
         /// </summary>
-        public static string CdnUrl {
+        public static string CdnFileUrl {
             get {
-                return ResourceManager.GetString("CdnUrl", resourceCulture);
+                return ResourceManager.GetString("CdnFileUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس داخلی فایل کوچک.
+        /// </summary>
+        public static string CdnThumbnailUrl {
+            get {
+                return ResourceManager.GetString("CdnThumbnailUrl", resourceCulture);
             }
         }
         
@@ -300,6 +309,15 @@ namespace Shopia.Domain.Resource {
         public static string FileType {
             get {
                 return ResourceManager.GetString("FileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس فایل.
+        /// </summary>
+        public static string FileUrl {
+            get {
+                return ResourceManager.GetString("FileUrl", resourceCulture);
             }
         }
         
@@ -849,6 +867,15 @@ namespace Shopia.Domain.Resource {
         public static string TelegramUrl {
             get {
                 return ResourceManager.GetString("TelegramUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس فایل کوچک.
+        /// </summary>
+        public static string ThumbnailUrl {
+            get {
+                return ResourceManager.GetString("ThumbnailUrl", resourceCulture);
             }
         }
         
