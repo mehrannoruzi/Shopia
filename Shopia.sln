@@ -17,13 +17,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-DependencyResolver", "04
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-EndPoints", "05-EndPoints", "{55134684-BD76-44B9-B934-74912CD29CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.DataAccess.Ef", "Shopia.DataAccess.Ef\Shopia.DataAccess.Ef.csproj", "{66ABF85F-3C68-42FA-9E78-0F84A7F17931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.DataAccess.Ef", "Shopia.DataAccess.Ef\Shopia.DataAccess.Ef.csproj", "{66ABF85F-3C68-42FA-9E78-0F84A7F17931}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.DataAccess.Dapper", "Shopia.DataAccess.Dapper\Shopia.DataAccess.Dapper.csproj", "{0728764D-0163-4376-A1CA-B9229690959B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.DataAccess.Dapper", "Shopia.DataAccess.Dapper\Shopia.DataAccess.Dapper.csproj", "{0728764D-0163-4376-A1CA-B9229690959B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Service", "Shopia.Service\Shopia.Service.csproj", "{CC83A81C-5870-47D3-BB26-65E9D281CAC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Service", "Shopia.Service\Shopia.Service.csproj", "{CC83A81C-5870-47D3-BB26-65E9D281CAC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.DependencyResolver", "Shopia.DependencyResolver\Shopia.DependencyResolver.csproj", "{40447C40-C6D0-4711-B3C9-D60CAB250D2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.DependencyResolver", "Shopia.DependencyResolver\Shopia.DependencyResolver.csproj", "{40447C40-C6D0-4711-B3C9-D60CAB250D2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Store", "Shopia.Store\Shopia.Store.csproj", "{0D7C5A1F-14F7-489E-900D-BFA463969C35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{0728764D-0163-4376-A1CA-B9229690959B} = {17293837-3C1E-4D44-B968-4F402A9B61D0}
 		{CC83A81C-5870-47D3-BB26-65E9D281CAC9} = {89ADA1BD-047E-4036-9EA5-CE345C766C85}
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A} = {D63B245E-44F4-4EB8-8E1E-CEF978023B86}
+		{0D7C5A1F-14F7-489E-900D-BFA463969C35} = {55134684-BD76-44B9-B934-74912CD29CDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}
