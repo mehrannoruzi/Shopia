@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.DependencyResolver",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Store", "Shopia.Store\Shopia.Store.csproj", "{0D7C5A1F-14F7-489E-900D-BFA463969C35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Store.Api", "Shopia.Store.Api\Shopia.Store.Api.csproj", "{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{CC83A81C-5870-47D3-BB26-65E9D281CAC9} = {89ADA1BD-047E-4036-9EA5-CE345C766C85}
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A} = {D63B245E-44F4-4EB8-8E1E-CEF978023B86}
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35} = {55134684-BD76-44B9-B934-74912CD29CDC}
+		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490} = {55134684-BD76-44B9-B934-74912CD29CDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}

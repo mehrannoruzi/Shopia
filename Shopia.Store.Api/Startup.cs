@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Shopia.Store
+namespace Shopia.Store.Api
 {
     public class Startup
     {
