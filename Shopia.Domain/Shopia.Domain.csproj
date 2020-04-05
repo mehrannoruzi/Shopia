@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Entity\Discount.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Resource\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
