@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
-import CustomButton from './../../libs/components/customButton';
-import CustomUploader from './../../libs/components/customUploader';
+
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { loading: false };
     }
     _onClick() {
         this.setState({ loading: true });

@@ -8,6 +8,7 @@
     logIn:'ورود',
     logOut:'خروج',
     wrongUsernameOrPassword:'نام کاربری یا رمز عبور اشتباه است',
-    browserIsOld:'لطفا از  مرورگر جدیدتری استفاده نمایید'
+    browserIsOld:'لطفا از  مرورگر جدیدتری استفاده نمایید',
+    purchase:'خرید'
 };
 export default strings;

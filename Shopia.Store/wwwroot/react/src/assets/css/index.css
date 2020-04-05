@@ -1,6 +1,10 @@
-html, body {
+html {
   min-height: 100%;
   font-size: 13px;
+}
+
+body {
+  min-height: 100vh;
 }
 
 .MuiFormLabel-root {
@@ -14,6 +18,19 @@ ul {
 
 p {
   margin: 0;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+ul, ol {
+  padding: 0;
 }
 
 .btn-custom {
@@ -141,6 +158,7 @@ p {
   top: 5px;
   left: 5px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 /*-----------------------------------
@@ -236,6 +254,25 @@ p {
 .three-dot-loader .dot:nth-child(3) {
   -webkit-animation-delay: -0.5s !important;
   animation-delay: -0.5s !important;
+}
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .rotate-90 {
@@ -402,5 +439,46 @@ body[dir="rtl"] .modal-header .close {
 
 .dropdown-menu {
   text-align: unset;
+}
+
+.icons {
+  margin-bottom: 15px;
+}
+
+.icons .col-2 {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.btn-purchase {
+  position: fixed;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  width: calc(100% - 2.5rem);
+  padding: 10px;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #0095f6;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.carousel-indicators li {
+  background-color: #000;
+  border-radius: 50%;
+  background: rgba(var(--ba8, 168, 168, 168), 1);
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: none;
+}
+
+.carousel-indicators li.active {
+  background-color: #0095f6;
 }
 /*# sourceMappingURL=index.css.map */

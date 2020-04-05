@@ -1,19 +1,34 @@
-﻿html, body {
+﻿html {
     min-height: 100%;
-    font-size:13px;
+    font-size: 13px;
+}
+body {
+    min-height: 100vh;
 }
 .MuiFormLabel-root {
-    font-family: "iransans"!important;
+    font-family: "iransans" !important;
 }
-ul{
-    margin-bottom:0;
+ul {
+    margin-bottom: 0;
     padding: 0;
 }
-p{
+p {
     margin: 0;
 }
-@import './../../libs/components/css/style.scss';
-@import './utils.scss';
-@import '../../shared/header/css/index.scss';
-@import '../../shared/logIn/css/index.scss';
-@import './rtl.scss';
+button {
+    background: none;
+    border: none;
+    &:focus {
+        outline: none;
+    }
+}
+ul,ol{
+    padding: 0;
+}
+@import "./../../libs/components/css/style.scss";
+@import "./../../shared/Loader/css/index.scss";
+@import "./utils.scss";
+@import "../../shared/header/css/index.scss";
+@import "../../shared/logIn/css/index.scss";
+@import "./rtl.scss";
+@import "./../../routes//product/css/index.scss";

@@ -31,7 +31,7 @@ class CustomHeader extends React.Component {
             <header className="header">
                 <Container>
                     <Row>
-                        <Col sm={8} xl={8}>
+                        <Col className="d-none d-sm-block" sm={8} xl={8} >
                             <nav>
                                 <ul>
                                     <li>

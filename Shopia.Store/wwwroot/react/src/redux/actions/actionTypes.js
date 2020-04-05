@@ -2,6 +2,7 @@
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
     SHOWMODAL: 'SHOWMODAL',
-    HIDEMODAL: 'HIDEMODAL'
+    HIDEMODAL: 'HIDEMODAL',
+    TOGGLELOADER:'TOGGLELOADER'
 };
 export default actionTypes;
