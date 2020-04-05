@@ -1,0 +1,296 @@
+$iWidth: 40px;
+
+.btn-custom {
+	position: relative;
+	text-align: center;
+	min-width: 100px;
+	color: #fff;
+	border: 1px solid transparent;
+	padding: 0.35rem 0.75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: 0.25rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+		box-shadow 0.15s ease-in-out;
+
+	.icon {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: $iWidth;
+		display: flex;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.1);
+
+		i {
+			font-size: 20px;
+		}
+	}
+
+	.text {
+		display: inline-block;
+		text-align: center;
+		margin-left: $iWidth;
+		padding: 0 10px;
+	}
+}
+
+.btn-action.ltr {
+	padding-right: 0;
+	padding-left: 10px;
+
+	.icon {
+		left: auto;
+		right: 0;
+	}
+
+	.text {
+		margin-left: unset;
+		margin-right: $iWidth;
+	}
+}
+
+.btn-action.w-100 {
+	max-width: 100% !important;
+}
+/*-----------------------------------
+            custom uploader
+------------------------------------*/
+.uploader-box {
+	border: dashed 2px #666;
+	display: inline-flex;
+	padding: 10px 15px;
+	position: relative;
+
+	button {
+		text-align: center;
+		background-color: #fff;
+		border: none;
+		flex-direction: column;
+		display: inline-flex;
+		justify-content: center;
+		width: 120px;
+		height: 120px;
+		overflow: hidden;
+		align-items: center;;
+
+		&:focus {
+			outline: none;
+		}
+
+		i {
+			font-size: 20px;
+		}
+
+		.img-uploader {
+			max-height: 80px;
+			max-width: 100%;
+		}
+		.title{
+			display: inline-block;
+			max-width: 80%;
+			overflow: hidden;
+			white-space: nowrap;
+			padding: 5px 0;
+		}
+	}
+
+	.remove{
+		position: absolute;
+		top:5px;
+		left:5px;
+		font-size: 20px;
+		cursor: pointer;
+	}
+}
+
+/*-----------------------------------
+              twilight loader
+------------------------------------*/
+.twilight-loader {
+	animation: twilight 1.5s infinite;
+}
+
+@keyframes twilight {
+	0% {
+		background-color: #d8d8d8;
+	}
+
+	50% {
+		background-color: #eaeaea;
+	}
+
+	100% {
+		background-color: #d8d8d8;
+	}
+}
+
+@-moz-keyframes twilight {
+	0% {
+		background-color: #d8d8d8;
+	}
+
+	50% {
+		background-color: #eaeaea;
+	}
+
+	100% {
+		background-color: #d8d8d8;
+	}
+}
+
+@-webkit-keyframes twilight {
+	0% {
+		background-color: #d8d8d8;
+	}
+
+	50% {
+		background-color: #eaeaea;
+	}
+
+	100% {
+		background-color: #d8d8d8;
+	}
+}
+/*-----------------------------------
+              three dot loader
+------------------------------------*/
+@-webkit-keyframes three-dot-loader-anime {
+	100%,
+	50% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	75% {
+		-webkit-transform: translateY(-5px);
+		-moz-transform: translateY(-5px);
+		-ms-transform: translateY(-5px);
+		-o-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+}
+
+@-moz-keyframes three-dot-loader-anime {
+	100%,
+	50% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	75% {
+		-webkit-transform: translateY(-5px);
+		-moz-transform: translateY(-5px);
+		-ms-transform: translateY(-5px);
+		-o-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+}
+
+@-o-keyframes three-dot-loader-anime {
+	100%,
+	50% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	75% {
+		-webkit-transform: translateY(-5px);
+		-moz-transform: translateY(-5px);
+		-ms-transform: translateY(-5px);
+		-o-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+}
+
+@keyframes three-dot-loader-anime {
+	100%,
+	50% {
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	75% {
+		-webkit-transform: translateY(-5px);
+		-moz-transform: translateY(-5px);
+		-ms-transform: translateY(-5px);
+		-o-transform: translateY(-5px);
+		transform: translateY(-5px);
+	}
+}
+
+.dot {
+	background-color: black;
+}
+
+.three-dot-loader .dot {
+	width: 3px !important;
+	height: 3px !important;
+	margin-left: 1px;
+	margin-right: 1px;
+	display: inline-block !important;
+	-webkit-border-radius: 200px !important;
+	-moz-border-radius: 200px !important;
+	-ms-border-radius: 200px !important;
+	-o-border-radius: 200px !important;
+	border-radius: 200px !important;
+	-webkit-animation-name: three-dot-loader-anime !important;
+	-moz-animation-name: three-dot-loader-anime !important;
+	-ms-animation-name: three-dot-loader-anime !important;
+	-o-animation-name: three-dot-loader-anime !important;
+	animation-name: three-dot-loader-anime !important;
+	-webkit-animation-duration: 1.5s !important;
+	-moz-animation-duration: 1.5s !important;
+	-ms-animation-duration: 1.5s !important;
+	-o-animation-duration: 1.5s !important;
+	animation-duration: 1.5s !important;
+	-webkit-animation-timing-function: ease-in-out !important;
+	-moz-animation-timing-function: ease-in-out !important;
+	-ms-animation-timing-function: ease-in-out !important;
+	-o-animation-timing-function: ease-in-out !important;
+	animation-timing-function: ease-in-out !important;
+	-webkit-animation-iteration-count: infinite !important;
+	-moz-animation-iteration-count: infinite !important;
+	-ms-animation-iteration-count: infinite !important;
+	-o-animation-iteration-count: infinite !important;
+	animation-iteration-count: infinite !important;
+}
+
+.three-dot-loader .dot:nth-child(1) {
+	-webkit-animation-delay: 0s !important;
+	-moz-animation-delay: 0s !important;
+	-ms-animation-delay: 0s !important;
+	-o-animation-delay: 0s !important;
+	animation-delay: 0s !important;
+}
+
+.three-dot-loader .dot:nth-child(2) {
+	-webkit-animation-delay: -0.25s !important;
+	-moz-animation-delay: -0.25s !important;
+	-ms-animation-delay: -0.25s !important;
+	-o-animation-delay: -0.25s !important;
+	animation-delay: -0.25s !important;
+}
+
+.three-dot-loader .dot:nth-child(3) {
+	-webkit-animation-delay: -0.5s !important;
+	-moz-animation-delay: -0.5s !important;
+	-ms-animation-delay: -0.5s !important;
+	-o-animation-delay: -0.5s !important;
+	animation-delay: -0.5s !important;
+}

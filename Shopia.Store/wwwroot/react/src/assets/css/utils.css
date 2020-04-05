@@ -1,0 +1,81 @@
+.rotate-90 {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.rotate-180 {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.default-i {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.block-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*-----------------------------------
+     remove browser autofill 
+------------------------------------*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  background-color: none;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*-----------------------------------
+              place holder
+------------------------------------*/
+.p-h-c::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.p-h-c:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+
+.p-h-c::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+
+.p-h-c:-ms-input-placeholder {
+  text-align: center;
+}
+
+.p-h-r::-webkit-input-placeholder {
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r:-ms-input-placeholder {
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+/*# sourceMappingURL=utils.css.map */

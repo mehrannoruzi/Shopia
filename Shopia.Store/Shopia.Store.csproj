@@ -15,6 +15,10 @@
     <ProjectReference Include="..\Shopia.DependencyResolver\Shopia.DependencyResolver.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\react\src\api\" />
+  </ItemGroup>
+
 
 
 </Project>

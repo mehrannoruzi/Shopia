@@ -1,0 +1,19 @@
+﻿html, body {
+    min-height: 100%;
+    font-size:13px;
+}
+.MuiFormLabel-root {
+    font-family: "iransans"!important;
+}
+ul{
+    margin-bottom:0;
+    padding: 0;
+}
+p{
+    margin: 0;
+}
+@import './../../libs/components/css/style.scss';
+@import './utils.scss';
+@import '../../shared/header/css/index.scss';
+@import '../../shared/logIn/css/index.scss';
+@import './rtl.scss';
