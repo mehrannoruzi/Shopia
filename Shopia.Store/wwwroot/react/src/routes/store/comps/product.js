@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class ProductList extends React.Component {
 
@@ -6,7 +7,9 @@ export default class ProductList extends React.Component {
         let product = this.props.product;
         return (
             <div className='product'>
-                <img src={product.imgUrl} />
+                <Link to={`/product/${product.id}`}>
+                    <img src={product.imgUrl} alt={product.name} />
+                </Link>
             </div>
         );
     }
