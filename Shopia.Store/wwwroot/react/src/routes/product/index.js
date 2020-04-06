@@ -25,8 +25,9 @@ class Product extends React.Component {
     async componentDidMount() {
         const { params } = this.props.match;
         this.setState(p => ({ ...p, loading: true }));
-        let product = await productApi.getProduct(params.id);
-        this.setState(p => ({ ...p, product: { ...product }, loading: false }));
+        let productRep = await productApi.getProduct(params.id);
+        if (productRep.success)
+            this.setState(p => ({ ...p, product: { ...productRep.result }, loading: false }));
         //let comp = this;
         //after api call
         // setTimeout(function () {

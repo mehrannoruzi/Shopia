@@ -1,0 +1,66 @@
+@import "./../../../assets/css/constant.scss";
+.home-page {
+    .info {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        .logo {
+            display: flex;
+            justify-content: flex-end;
+            img {
+                border-radius: 50%;
+                border: solid 2px $instagramColor;
+                padding: 5px;
+                max-width: 100px;
+            }
+        }
+        .posts,
+        .followers,
+        .following {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            justify-content: center;
+            align-items: center;
+            > :first-child {
+                margin-bottom: 10px;
+            }
+        }
+
+        .details {
+            > * {
+                text-align: left;
+            }
+        }
+    }
+
+    .nav-tabs {
+        border-top: 1px solid #dee2e6;
+        border-bottom: none;
+
+        .nav-item {
+            display: inline-block;
+
+            a {
+                display: inline-block;
+                color: $textColor;
+
+                &.nav-link.active {
+                    border: none;
+                    color: $primaryColor;
+                }
+            }
+        }
+    }
+
+    .products-list{
+        .product{
+            width: 33.33%;
+            float: right;
+            border: solid 1px #eee;
+            
+            img{
+                width: 100%;
+            }
+        }
+    }
+}

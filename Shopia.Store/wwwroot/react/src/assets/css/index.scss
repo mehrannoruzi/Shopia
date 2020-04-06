@@ -13,7 +13,7 @@ ul {
     padding: 0;
 }
 p {
-    margin: 0;
+    margin: 0; 
 }
 button {
     background: none;
@@ -25,10 +25,89 @@ button {
 ul,ol{
     padding: 0;
 }
+.rotate-90 {
+	transform: rotate(90deg);
+}
+
+.rotate-180 {
+	transform: rotate(180deg);
+}
+
+.default-i {
+	font-size: 20px;
+	vertical-align: middle;
+}
+.block-align-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.m-b {
+	margin-bottom: 15px;
+}
+/*-----------------------------------
+     remove browser autofill 
+------------------------------------*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	background-color: none;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+/*-----------------------------------
+              place holder
+------------------------------------*/
+.p-h-c::-webkit-input-placeholder {
+	text-align: center;
+}
+
+.p-h-c:-moz-placeholder {
+	/* Firefox 18- */
+	text-align: center;
+}
+
+.p-h-c::-moz-placeholder {
+	/* Firefox 19+ */
+	text-align: center;
+}
+
+.p-h-c:-ms-input-placeholder {
+	text-align: center;
+}
+
+.p-h-r::-webkit-input-placeholder {
+	text-align: right;
+	font-family: iransans;
+	direction: rtl;
+}
+
+.p-h-r:-moz-placeholder {
+	/* Firefox 18- */
+	text-align: right;
+	font-family: iransans;
+	direction: rtl;
+}
+
+.p-h-r::-moz-placeholder {
+	/* Firefox 19+ */
+	text-align: right;
+	font-family: iransans;
+	direction: rtl;
+}
+
+.p-h-r:-ms-input-placeholder {
+	text-align: right;
+	font-family: iransans;
+	direction: rtl;
+}
+@import "./rtl.scss";
 @import "./../../libs/components/css/style.scss";
+@import "./../../routes/home/css/index.scss";
+@import "./../../routes/product/css/index.scss";
 @import "./../../shared/Loader/css/index.scss";
-@import "./utils.scss";
 @import "../../shared/header/css/index.scss";
 @import "../../shared/logIn/css/index.scss";
-@import "./rtl.scss";
-@import "./../../routes//product/css/index.scss";
+@import "./../../shared/product-list/css/index.scss";

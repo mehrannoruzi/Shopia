@@ -13,7 +13,7 @@
 .header nav ul li a {
   display: inline-block;
   padding: 10px;
-  color: #e15891;
+  color: #0095f6;
 }
 
 .header .account {
@@ -32,7 +32,7 @@
 .header .loged-in-wrapper button {
   background: none;
   border: none;
-  color: #e15891;
+  color: #0095f6;
 }
 
 .header .loged-in-wrapper button i {

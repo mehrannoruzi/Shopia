@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from '../modal';
 import { connect } from 'react-redux'
-import CustomHeader from '../header';
-import Home from '../../routes/home';
+// import CustomHeader from '../header';
+import Store from '../../routes/store';
 import AboutUs from '../../routes/aboutus';
 import Product from '../../routes/product';
 import ContactUs from '../../routes/contactus';
@@ -19,9 +19,9 @@ class Layout extends React.Component {
     render() {
         return (
             <Router className="layout">
-                <CustomHeader />
+                {/* <CustomHeader /> */}
                 <Switch>
-                    <Route exact path="/"  component={Home}/>
+                    <Route exact path="/:id?"  component={Store}/>
                     <Route path="/aboutus" component={AboutUs}/>
                     <Route path="/contactus" component={ContactUs}/>
                     <Route path="/product/:id" component={Product}/>

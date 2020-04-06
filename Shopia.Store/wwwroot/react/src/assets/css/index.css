@@ -33,6 +33,122 @@ ul, ol {
   padding: 0;
 }
 
+.rotate-90 {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.rotate-180 {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.default-i {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.block-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.m-b {
+  margin-bottom: 15px;
+}
+
+/*-----------------------------------
+     remove browser autofill 
+------------------------------------*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  background-color: none;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/*-----------------------------------
+              place holder
+------------------------------------*/
+.p-h-c::-webkit-input-placeholder {
+  text-align: center;
+}
+
+.p-h-c:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: center;
+}
+
+.p-h-c::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: center;
+}
+
+.p-h-c:-ms-input-placeholder {
+  text-align: center;
+}
+
+.p-h-r::-webkit-input-placeholder {
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r:-moz-placeholder {
+  /* Firefox 18- */
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r::-moz-placeholder {
+  /* Firefox 19+ */
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+.p-h-r:-ms-input-placeholder {
+  text-align: right;
+  font-family: iransans;
+  direction: rtl;
+}
+
+@font-face {
+  font-family: "iransans";
+  src: url(../fonts/iransans.eot) format("embedded-opentype"), url(../fonts/iransans.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "iransans";
+  direction: rtl;
+  text-align: right;
+}
+
+body[dir="rtl"] .modal-title {
+  font-size: 1rem;
+}
+
+body[dir="rtl"] .modal-header .close {
+  margin: -1rem auto -1rem -1rem;
+}
+
+.dropdown-toggle::after {
+  margin-right: .255em;
+  margin-left: unset;
+  vertical-align: middle;
+}
+
+.dropdown-menu {
+  text-align: unset;
+}
+
 .btn-custom {
   position: relative;
   text-align: center;
@@ -256,17 +372,38 @@ ul, ol {
   animation-delay: -0.5s !important;
 }
 
-.page-loader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #fff;
-  z-index: 999;
+.home-page .info {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.home-page .info .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.home-page .info .logo img {
+  border-radius: 50%;
+  border: solid 2px #e15891;
+  padding: 5px;
+  max-width: 100px;
+}
+
+.home-page .info .posts,
+.home-page .info .followers,
+.home-page .info .following {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 15px 0;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -275,170 +412,43 @@ ul, ol {
           align-items: center;
 }
 
-.rotate-90 {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-}
-
-.rotate-180 {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
-}
-
-.default-i {
-  font-size: 20px;
-  vertical-align: middle;
-}
-
-.block-align-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/*-----------------------------------
-     remove browser autofill 
-------------------------------------*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  box-shadow: none;
-  -webkit-box-shadow: none;
-  background-color: none;
-  -webkit-transition: background-color 5000s ease-in-out 0s;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/*-----------------------------------
-              place holder
-------------------------------------*/
-.p-h-c::-webkit-input-placeholder {
-  text-align: center;
-}
-
-.p-h-c:-moz-placeholder {
-  /* Firefox 18- */
-  text-align: center;
-}
-
-.p-h-c::-moz-placeholder {
-  /* Firefox 19+ */
-  text-align: center;
-}
-
-.p-h-c:-ms-input-placeholder {
-  text-align: center;
-}
-
-.p-h-r::-webkit-input-placeholder {
-  text-align: right;
-  font-family: iransans;
-  direction: rtl;
-}
-
-.p-h-r:-moz-placeholder {
-  /* Firefox 18- */
-  text-align: right;
-  font-family: iransans;
-  direction: rtl;
-}
-
-.p-h-r::-moz-placeholder {
-  /* Firefox 19+ */
-  text-align: right;
-  font-family: iransans;
-  direction: rtl;
-}
-
-.p-h-r:-ms-input-placeholder {
-  text-align: right;
-  font-family: iransans;
-  direction: rtl;
-}
-
-.header {
-  border: solid 1px #ccc;
-}
-
-.header nav {
-  display: inline-block;
-}
-
-.header nav ul li {
-  display: inline-block;
-}
-
-.header nav ul li a {
-  display: inline-block;
-  padding: 10px;
-  color: #e15891;
-}
-
-.header .account {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  cursor: pointer;
-}
-
-.header .loged-in-wrapper button {
-  background: none;
-  border: none;
-  color: #e15891;
-}
-
-.header .loged-in-wrapper button i {
-  font-size: 20px;
-  padding: 0 5px;
-  vertical-align: middle;
-}
-
-.login-wrapper .form-group {
+.home-page .info .posts > :first-child,
+.home-page .info .followers > :first-child,
+.home-page .info .following > :first-child {
   margin-bottom: 10px;
-  text-align: center;
 }
 
-.login-wrapper .btn-group {
-  display: block;
-  text-align: center;
-  padding: 10px;
+.home-page .info .details > * {
+  text-align: left;
 }
 
-@font-face {
-  font-family: "iransans";
-  src: url(../fonts/iransans.eot) format("embedded-opentype"), url(../fonts/iransans.ttf) format("truetype");
-  font-weight: normal;
-  font-style: normal;
+.home-page .nav-tabs {
+  border-top: 1px solid #dee2e6;
+  border-bottom: none;
 }
 
-* {
-  font-family: "iransans";
-  direction: rtl;
-  text-align: right;
+.home-page .nav-tabs .nav-item {
+  display: inline-block;
 }
 
-body[dir="rtl"] .modal-title {
-  font-size: 1rem;
+.home-page .nav-tabs .nav-item a {
+  display: inline-block;
+  color: #8e8e8e;
 }
 
-body[dir="rtl"] .modal-header .close {
-  margin: -1rem auto -1rem -1rem;
+.home-page .nav-tabs .nav-item a.nav-link.active {
+  border: none;
+  color: #0095f6;
 }
 
-.dropdown-toggle::after {
-  margin-right: .255em;
-  margin-left: unset;
-  vertical-align: middle;
+.home-page .products-list .product {
+  width: 33.33%;
+  float: right;
+  border: solid 1px #eee;
 }
 
-.dropdown-menu {
-  text-align: unset;
+.home-page .products-list .product img {
+  width: 100%;
 }
 
 .icons {
@@ -457,9 +467,7 @@ body[dir="rtl"] .modal-header .close {
 .btn-purchase {
   position: fixed;
   bottom: 0;
-  left: 1.25rem;
-  right: 1.25rem;
-  width: calc(100% - 2.5rem);
+  width: 100%;
   padding: 10px;
   border: 1px solid transparent;
   color: #fff;
@@ -480,5 +488,78 @@ body[dir="rtl"] .modal-header .close {
 
 .carousel-indicators li.active {
   background-color: #0095f6;
+}
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header {
+  border: solid 1px #ccc;
+}
+
+.header nav {
+  display: inline-block;
+}
+
+.header nav ul li {
+  display: inline-block;
+}
+
+.header nav ul li a {
+  display: inline-block;
+  padding: 10px;
+  color: #0095f6;
+}
+
+.header .account {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.header .loged-in-wrapper button {
+  background: none;
+  border: none;
+  color: #0095f6;
+}
+
+.header .loged-in-wrapper button i {
+  font-size: 20px;
+  padding: 0 5px;
+  vertical-align: middle;
+}
+
+.login-wrapper .form-group {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.login-wrapper .btn-group {
+  display: block;
+  text-align: center;
+  padding: 10px;
 }
 /*# sourceMappingURL=index.css.map */

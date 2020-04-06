@@ -1,0 +1,79 @@
+.home-page .info {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.home-page .info .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.home-page .info .logo img {
+  border-radius: 50%;
+  border: solid 2px #e15891;
+  padding: 5px;
+  max-width: 100px;
+}
+
+.home-page .info .posts,
+.home-page .info .followers,
+.home-page .info .following {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 15px 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.home-page .info .posts > :first-child,
+.home-page .info .followers > :first-child,
+.home-page .info .following > :first-child {
+  margin-bottom: 10px;
+}
+
+.home-page .info .details > * {
+  text-align: left;
+}
+
+.home-page .nav-tabs {
+  border-top: 1px solid #dee2e6;
+  border-bottom: none;
+}
+
+.home-page .nav-tabs .nav-item {
+  display: inline-block;
+}
+
+.home-page .nav-tabs .nav-item a {
+  display: inline-block;
+  color: #8e8e8e;
+}
+
+.home-page .nav-tabs .nav-item a.nav-link.active {
+  border: none;
+  color: #0095f6;
+}
+
+.home-page .products-list .product {
+  width: 33.33%;
+  float: right;
+  border: solid 1px #eee;
+}
+
+.home-page .products-list .product img {
+  width: 100%;
+}
+/*# sourceMappingURL=index.css.map */

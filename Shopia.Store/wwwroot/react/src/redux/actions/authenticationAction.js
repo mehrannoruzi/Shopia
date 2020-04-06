@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import CryptoJS from 'crypto-js';
+import { storeUserInfo, removeUserInfo } from './../../shared/utils';
 
 export function LogInAction(token, userId, username) {
     console.log(token);
@@ -8,9 +8,7 @@ export function LogInAction(token, userId, username) {
         userId: userId,
         username: username
     };
-    let userInfo = JSON.stringify(user);
-    let encInfo = CryptoJS.AES.encrypt(userInfo, 'kingofday.ir').toString();
-    localStorage.setItem('user', encInfo);
+    storeUserInfo(user);
     return {
         type: actionTypes.LOGIN,
         token: token,
@@ -20,7 +18,7 @@ export function LogInAction(token, userId, username) {
 };
 
 export function LogOutAction() {
-    localStorage.removeItem('user');
+    removeUserInfo();
     return {
         type: actionTypes.LOGOUT,
         token: null
