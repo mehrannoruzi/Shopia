@@ -10,6 +10,7 @@
     "bootstrap": "^4.4.1",
     "crypto-js": "^4.0.0",
     "jss-rtl": "^0.3.0",
+    "mapir-react-component": "^1.6.4",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",

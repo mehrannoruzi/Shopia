@@ -6,7 +6,7 @@ import Loader from './../../shared/Loader';
 import storeApi from '../../api/storeApi';
 import { Nav, Tab } from 'react-bootstrap';
 
-class Home extends Component {
+class Store extends Component {
 
     constructor(props) {
         super(props);
@@ -63,4 +63,4 @@ const mapStateToProps = state => {
 // const mapDispatchToProps = dispatch => ({
 // });
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, null)(Store);
