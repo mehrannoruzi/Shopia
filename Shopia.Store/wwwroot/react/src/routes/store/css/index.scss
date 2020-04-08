@@ -1,5 +1,5 @@
 @import "./../../../assets/css/constant.scss";
-.home-page {
+.store-page {
     .info {
         padding-top: 15px;
         padding-bottom: 15px;
@@ -52,13 +52,17 @@
         }
     }
 
-    .products-list{
-        .product{
+    .products-list {
+        .img-loader {
+            width: 100%;
+        }
+
+        .product {
             width: 33.33%;
             float: right;
             border: solid 1px #eee;
-            
-            img{
+
+            img {
                 width: 100%;
             }
         }

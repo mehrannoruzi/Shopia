@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default class ProductList extends React.Component {
+export default class Product extends React.Component {
 
     render() {
         let product = this.props.product;

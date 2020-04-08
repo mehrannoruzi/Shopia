@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Product from './comps/product';
+import ProductsList from './comps/productsList';
 import Info from './comps/info';
 import Loader from './../../shared/Loader';
 import storeApi from '../../api/storeApi';
@@ -25,8 +25,9 @@ class Store extends Component {
     }
 
     render() {
+        const { params } = this.props.match;
         return (
-            <div className="home-page">
+            <div className="store-page">
                 <Info info={this.state} />
                 <Tab.Container id="tabs" defaultActiveKey="productsList">
                     <Nav variant="tabs">
@@ -41,7 +42,7 @@ class Store extends Component {
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="productsList" className="products-list">
-                            {this.state.products.map((p, idx) => (<Product key={idx} product={p} />))}
+                            <ProductsList storeId={params.id} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="second">
                             222

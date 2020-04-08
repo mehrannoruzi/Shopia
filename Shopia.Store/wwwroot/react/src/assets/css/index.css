@@ -188,12 +188,12 @@ body[dir="rtl"] .modal-header .close {
           align-items: center;
 }
 
-.home-page .info {
+.store-page .info {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-.home-page .info .logo {
+.store-page .info .logo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -202,16 +202,16 @@ body[dir="rtl"] .modal-header .close {
           justify-content: flex-end;
 }
 
-.home-page .info .logo img {
+.store-page .info .logo img {
   border-radius: 50%;
   border: solid 2px #e15891;
   padding: 5px;
   max-width: 100px;
 }
 
-.home-page .info .posts,
-.home-page .info .followers,
-.home-page .info .following {
+.store-page .info .posts,
+.store-page .info .followers,
+.store-page .info .following {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -228,42 +228,46 @@ body[dir="rtl"] .modal-header .close {
           align-items: center;
 }
 
-.home-page .info .posts > :first-child,
-.home-page .info .followers > :first-child,
-.home-page .info .following > :first-child {
+.store-page .info .posts > :first-child,
+.store-page .info .followers > :first-child,
+.store-page .info .following > :first-child {
   margin-bottom: 10px;
 }
 
-.home-page .info .details > * {
+.store-page .info .details > * {
   text-align: left;
 }
 
-.home-page .nav-tabs {
+.store-page .nav-tabs {
   border-top: 1px solid #dee2e6;
   border-bottom: none;
 }
 
-.home-page .nav-tabs .nav-item {
+.store-page .nav-tabs .nav-item {
   display: inline-block;
 }
 
-.home-page .nav-tabs .nav-item a {
+.store-page .nav-tabs .nav-item a {
   display: inline-block;
   color: #8e8e8e;
 }
 
-.home-page .nav-tabs .nav-item a.nav-link.active {
+.store-page .nav-tabs .nav-item a.nav-link.active {
   border: none;
   color: #0095f6;
 }
 
-.home-page .products-list .product {
+.store-page .products-list .img-loader {
+  width: 100%;
+}
+
+.store-page .products-list .product {
   width: 33.33%;
   float: right;
   border: solid 1px #eee;
 }
 
-.home-page .products-list .product img {
+.store-page .products-list .product img {
   width: 100%;
 }
 

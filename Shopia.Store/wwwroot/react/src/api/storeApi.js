@@ -15,28 +15,6 @@ export default class storeApi {
                     followersCount: '3000',
                     postsCount: '500',
                     followingCount: '100',
-                    products: [
-                        {
-                            id:1,
-                            name: 'محصول 1',
-                            imgUrl: 'https://shopia.me/store/7622291675/2279249235306330715_thumb.jpg'
-                        },
-                        {
-                            id:2,
-                            name: 'محصول 2',
-                            imgUrl: 'https://shopia.me/store/7622291675/2276375242555414083_thumb.jpg'
-                        },
-                        {
-                            id:3,
-                            name: 'محصول 3',
-                            imgUrl: 'https://shopia.me/store/7622291675/2274902529592740182_thumb.jpg'
-                        },
-                        {
-                            id:4,
-                            name: 'محصول 4',
-                            imgUrl: 'https://shopia.me/store/7622291675/2274136810626104389_thumb.jpg'
-                        }
-                    ]
                 }
             });
         }, 1000)

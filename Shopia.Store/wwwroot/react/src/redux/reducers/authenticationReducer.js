@@ -1,6 +1,5 @@
 ﻿import actionTypes from './../actions/actionTypes';
 import strings from './../../shared/constant';
-import CryptoJS from 'crypto-js';
 import { getUserInfo } from './../../shared/utils';
 const getInitilState = () => {
     if (!localStorage) {
