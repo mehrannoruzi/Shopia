@@ -9,9 +9,9 @@ export function ShowModalAction(title, body) {
     };
 };
 
-export function HideModalAction() {
+export function CloseModalAction() {
     return {
-        type: actionTypes.HIDEMODAL,
+        type: actionTypes.CLOSEMODAL,
         show: false
     };
 };

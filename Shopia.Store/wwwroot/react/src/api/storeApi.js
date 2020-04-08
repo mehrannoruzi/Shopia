@@ -1,3 +1,4 @@
+import addr from './addreses';
 export default class storeApi {
     static getSingleStore = (id) => new Promise((resolve) => {
         //simulate api

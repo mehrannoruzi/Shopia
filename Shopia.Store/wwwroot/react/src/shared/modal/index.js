@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
-import { HideModalAction } from '../../redux/actions/modalAction';
+import { CloseModalAction } from '../../redux/actions/modalAction';
 
 class CustomModal extends React.Component {
 
   _onHide(){
-    this.props.hideModal();
-    if(this.props.onHide) this.props.onHide();
+    this.props.closeModal();
+    if(this.props.onClose) this.props.onClose();
   }
+  
   render() {
     const Body = this.props.body;
     return (
@@ -45,7 +46,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  hideModal: () => { dispatch(HideModalAction()); }
+  closeModal: () => { dispatch(CloseModalAction()); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomModal);

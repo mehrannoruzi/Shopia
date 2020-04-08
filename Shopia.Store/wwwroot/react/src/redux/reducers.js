@@ -2,11 +2,13 @@
 import homeReducer from './reducers/homeReducer';
 import authenticationReducer from './reducers/authenticationReducer';
 import modalReducer from './reducers/modalReducer';
+import toastReducer from './reducers/toastReducer';
 
 const reducers = combineReducers({
     authenticationReducer,
     homeReducer,
-    modalReducer
+    modalReducer,
+    toastReducer
 });
 
 export default reducers;

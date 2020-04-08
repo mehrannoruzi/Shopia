@@ -1,7 +1,7 @@
 ﻿import actionTypes from './../actions/actionTypes';
 import strings from './../../shared/constant';
 import CryptoJS from 'crypto-js';
-
+import { getUserInfo } from './../../shared/utils';
 const getInitilState = () => {
     if (!localStorage) {
         alert(strings.browserIsOld);
@@ -12,28 +12,21 @@ const getInitilState = () => {
         };
     }
 
-    try {
-        let userInfo = localStorage.getItem('user');
-        if(userInfo == null)  return {
-            token: null,
-            userId: null,
-            username: ''
-        };
-        let bytes = CryptoJS.AES.decrypt(userInfo,'kingofday.ir');
-        let user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    let rep = getUserInfo();
+    if (rep.success)
         return {
-            token: user.token,
-            userId: user.userId,
-            username: user.username
+            token: rep.result.token,
+            userId: rep.result.userId,
+            username: rep.result.username
         };
-    }
-    catch{
+    else
         return {
             token: null,
             userId: null,
             username: ''
         };
-    }
+
 }
 const authenticationReducer = (state = getInitilState(), action) => {
     switch (action.type) {
@@ -52,7 +45,7 @@ const authenticationReducer = (state = getInitilState(), action) => {
                 username: ''
             };
         default:
-            return {...state};
+            return { ...state };
     }
 };
 

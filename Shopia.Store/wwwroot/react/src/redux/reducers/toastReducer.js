@@ -1,9 +1,9 @@
 ﻿import actionTypes from './../actions/actionTypes';
-export default function modalReducer(state = { show: false, title: '', body: null }, action) {
+export default function modalReducer(state = { show: false, title: '', body: '' }, action) {
     switch (action.type) {
-        case actionTypes.SHOWMODAL:
+        case actionTypes.SHOWTOAST:
             return { ...state, show: true, title: action.title, body: action.body };
-        case actionTypes.CLOSEMODAL:
+        case actionTypes.CLOSETOAST:
             return { ...state, show: false };
         default:
             return { ...state };

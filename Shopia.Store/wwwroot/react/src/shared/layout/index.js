@@ -1,11 +1,14 @@
 import React from 'react';
 import Modal from '../modal';
+import CustomToas from '../toast';
 import { connect } from 'react-redux'
-// import CustomHeader from '../header';
 import Store from '../../routes/store';
-import AboutUs from '../../routes/aboutus';
+import SignUpOrLogin from '../../routes/signUpOrLogin';
+import LogIn from '../../routes/logIn';
+import SignUp from '../../routes/signUp';
+import RecoverPassword from '../../routes/recoverPassword';
+import ChangePassword from '../../routes/changePasword';
 import Product from '../../routes/product';
-import ContactUs from '../../routes/contactus';
 import NotFound from '../../routes/notFound';
 import Error from '../../routes/error';
 
@@ -21,14 +24,18 @@ class Layout extends React.Component {
             <Router className="layout">
                 {/* <CustomHeader /> */}
                 <Switch>
-                    <Route exact path="/:id?"  component={Store}/>
-                    <Route path="/aboutus" component={AboutUs}/>
-                    <Route path="/contactus" component={ContactUs}/>
-                    <Route path="/product/:id" component={Product}/>
-                    <Route path="/notFound/:msg?" component={NotFound}/>
-                    <Route path="/error/:msg?" component={Error}/>
+                    <Route path="/signUpOrLogin" component={SignUpOrLogin} />
+                    <Route path="/logIn" component={LogIn} />
+                    <Route path="/signUp" component={SignUp} />
+                    <Route path="/recoverPassword" component={RecoverPassword} />
+                    <Route path="/changePassword" component={ChangePassword} />
+                    <Route path="/product/:id" component={Product} />
+                    <Route path="/notFound/:msg?" component={NotFound} />
+                    <Route path="/error/:msg?" component={Error} />
+                    <Route exact path="/:id?" component={Store} />
                 </Switch>
-                <Modal/>
+                <Modal />
+                <CustomToas />
             </Router>
         );
     }

@@ -1,13 +1,13 @@
 import React from 'react';
 import { LogInAction } from '../../redux/actions/authenticationAction';
-import { HideModalAction } from '../../redux/actions/modalAction';
+import { ShowToastAction } from '../../redux/actions/toastAction';
 import { connect } from 'react-redux'
-
-import strings from '../constant';
+import { Link } from 'react-router-dom';
+import strings from '../../shared/constant';
 import { Alert, Button } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
 
-class CustomHeader extends React.Component {
+class LogIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,15 +27,11 @@ class CustomHeader extends React.Component {
             }
         }
     }
-
-    usernameChanged(e) {
-        let v = e.target.value;
-        this.setState((p) => ({ ...p, username: { ...p.username, value: v } }));
-    }
-
-    passwordChanged(e) {
-        let v = e.target.value;
-        this.setState((p) => ({ ...p, password: { ...p.password, value:v  } }));
+    
+    _inputChanged(e){
+        let state =  this.state;
+        state[e.target.id].value =  e.target.value
+        this.setState((p) => ({ ...state }));
     }
 
     submit(e) {
@@ -43,14 +39,13 @@ class CustomHeader extends React.Component {
             this.setState(p => ({
                 ...p,
                 message: {
-                    variant:'danger',
-                    text:strings.wrongUsernameOrPassword
+                    variant: 'danger',
+                    text: strings.wrongUsernameOrPassword
                 }
             }))
             return;
         }
         this.props.logIn('xxx', 1, this.state.username.value);
-        this.props.hideModal();
     }
 
     render() {
@@ -70,24 +65,29 @@ class CustomHeader extends React.Component {
                         id="username"
                         label={strings.username}
                         value={this.state.username.value}
-                        onChange={this.usernameChanged.bind(this)}
+                        onChange={this._inputChanged.bind(this)}
                         helperText={this.state.username.errorMessage}
                         style={{ fontFamily: 'iransans' }}
+                        variant="outlined"
                     />
                 </div>
                 <div className="form-group">
                     <TextField
                         error={this.state.password.error}
                         id="password"
-                        type='passwrod'
+                        type='password'
                         label={strings.password}
                         value={this.state.password.value}
-                        onChange={this.passwordChanged.bind(this)}
+                        onChange={this._inputChanged.bind(this)}
                         helperText={this.state.password.errorMessage}
+                        variant="outlined"
                     />
                 </div>
                 <div className="btn-group">
                     <Button variant="outline-info" onClick={this.submit.bind(this)}>{strings.logIn}</Button>
+                </div>
+                <div className="recover-password">
+                    <Link to="/recoverPassword"><small>{strings.forgotMyPassword}</small></Link>
                 </div>
             </div>
         );
@@ -100,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     logIn: (token, userId, username) => { dispatch(LogInAction(token, userId, username)); },
-    hideModal: () => { dispatch(HideModalAction()); }
+    showToast: (title, body) => dispatch(ShowToastAction(title, body))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

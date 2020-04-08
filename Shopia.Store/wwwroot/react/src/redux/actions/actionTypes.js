@@ -1,8 +1,11 @@
 ﻿ const actionTypes = {
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
+    SIGNUP:'SIGNUP',
     SHOWMODAL: 'SHOWMODAL',
-    HIDEMODAL: 'HIDEMODAL',
+    CLOSEMODAL: 'CLOSEMODAL',
+    SHOWTOAST: 'SHOWTOAST',
+    CLOSETOAST: 'CLOSETOAST',
     TOGGLELOADER:'TOGGLELOADER'
 };
 export default actionTypes;

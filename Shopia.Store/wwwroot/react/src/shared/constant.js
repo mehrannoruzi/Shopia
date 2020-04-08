@@ -4,6 +4,7 @@
     contactus: 'تماس با ما',
     username: 'نام کاربری',
     password: 'گذرواژه',
+    confirmPassword:'تکرار کلمه عبور',
     signUp: 'ثبت نام',
     logIn: 'ورود',
     logOut: 'خروج',
@@ -13,6 +14,12 @@
     notAutheticated: 'لطفا ابتدا وارد حساب خود شوید',
     posts: 'posts',
     followers: 'followers',
-    following: 'following'
+    following: 'following',
+    loginToSystem: 'ورود به سیستم',
+    fullname: 'نام کامل',
+    mobile: 'شماره موبایل',
+    email: 'ایمیل',
+    recoverPassword:'بازیابی رمز عبور',
+    forgotMyPassword:'رمزم را فراموش کرده ام'
 };
 export default strings;

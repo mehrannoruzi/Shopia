@@ -1,13 +1,13 @@
 @font-face {
-    font-family: "iransans";
-    src: url(../fonts/iransans.eot) format("embedded-opentype"), url(../fonts/iransans.ttf) format("truetype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: "iransans";
+  src: url(../fonts/iransans.eot) format("embedded-opentype"), url(../fonts/iransans.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-*{
-    font-family: "iransans";
-    direction: rtl;
-    text-align: right;
+* {
+  font-family: "iransans";
+  direction: rtl;
+  text-align: right;
 }
 
 body[dir="rtl"] {
@@ -21,11 +21,22 @@ body[dir="rtl"] {
   }
 }
 
-.dropdown-toggle::after{
-  margin-right: .255em;
+.dropdown-toggle::after {
+  margin-right: 0.255em;
   margin-left: unset;
   vertical-align: middle;
 }
-.dropdown-menu{
+.dropdown-menu {
   text-align: unset;
+}
+
+.toast {
+  .toast-header {
+    justify-content: space-between;
+
+    .close {
+      margin-left: 0!important;
+      margin-right: 0.5rem !important;
+    }
+  }
 }

@@ -20,12 +20,23 @@ body[dir="rtl"] .modal-header .close {
 }
 
 .dropdown-toggle::after {
-  margin-right: .255em;
+  margin-right: 0.255em;
   margin-left: unset;
   vertical-align: middle;
 }
 
 .dropdown-menu {
   text-align: unset;
+}
+
+.toast .toast-header {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.toast .toast-header .close {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
 }
 /*# sourceMappingURL=rtl.css.map */

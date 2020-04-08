@@ -103,8 +103,16 @@ input:-webkit-autofill:active {
 	font-family: iransans;
 	direction: rtl;
 }
+.toast:not(.show){
+	display: none;
+}
+.form-group{
+	margin-bottom: 10px;
+	text-align: center;
+}
 @import "./rtl.scss";
 @import "./../../shared/Loader/css/index.scss";
 @import "./../../routes/Store/css/index.scss";
 @import "./../../routes/product/css/index.scss";
-@import "../../shared/logIn/css/index.scss";
+@import "./../../routes/signUpOrLogin/css/index.scss";
+@import "./../../routes/logIn/css/index.scss";
