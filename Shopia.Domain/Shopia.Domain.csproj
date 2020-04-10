@@ -9,10 +9,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Entity\Discount.cs" />
-    <Compile Remove="Entity\Discount.cs" />
+    <Compile Remove="Shopia\Entity\Discount.cs" />
+    <Compile Remove="Shopia\Entity\Discount.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resource\ErrorMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorMessage.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resource\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -21,10 +26,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resource\ErrorMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resource\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Shopia.Crawler\" />
+    <Folder Include="Shopia\Entity\" />
   </ItemGroup>
 
 </Project>

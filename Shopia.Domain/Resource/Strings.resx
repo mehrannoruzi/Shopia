@@ -135,6 +135,12 @@
   <data name="BankName" xml:space="preserve">
     <value>نام بانک</value>
   </data>
+  <data name="Bio" xml:space="preserve">
+    <value>بیوگرافی</value>
+  </data>
+  <data name="BioUrl" xml:space="preserve">
+    <value>آدرس بیوگرافی</value>
+  </data>
   <data name="CardNumber" xml:space="preserve">
     <value>شماره کارت</value>
   </data>
@@ -147,6 +153,9 @@
   <data name="Code" xml:space="preserve">
     <value>کد</value>
   </data>
+  <data name="CommentCount" xml:space="preserve">
+    <value>تعداد نظر</value>
+  </data>
   <data name="Content" xml:space="preserve">
     <value>متن</value>
   </data>
@@ -155,6 +164,9 @@
   </data>
   <data name="Count" xml:space="preserve">
     <value>تعداد</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>تاریخ ایجاد</value>
   </data>
   <data name="CustomerAddress" xml:space="preserve">
     <value>آدرس مشتری</value>
@@ -225,6 +237,15 @@
   <data name="IsActive" xml:space="preserve">
     <value>فعال است؟</value>
   </data>
+  <data name="IsAlbum" xml:space="preserve">
+    <value>آلبوم است؟</value>
+  </data>
+  <data name="IsBlocked" xml:space="preserve">
+    <value>بلاک شده؟</value>
+  </data>
+  <data name="IsBusinessAccount" xml:space="preserve">
+    <value>حساب تجاری است؟</value>
+  </data>
   <data name="IsConfirmed" xml:space="preserve">
     <value>تایید شده؟</value>
   </data>
@@ -234,6 +255,9 @@
   <data name="IsDeleted" xml:space="preserve">
     <value>حذف شده؟</value>
   </data>
+  <data name="IsPrivate" xml:space="preserve">
+    <value>شخصی است؟</value>
+  </data>
   <data name="IsPublicHoliday" xml:space="preserve">
     <value>تعطیل رسمی است؟</value>
   </data>
@@ -242,6 +266,9 @@
   </data>
   <data name="IsUsed" xml:space="preserve">
     <value>استفاده شده؟</value>
+  </data>
+  <data name="IsVerified" xml:space="preserve">
+    <value>تایید شده؟</value>
   </data>
   <data name="LastCrawlTime" xml:space="preserve">
     <value>آخرین به روز رسانی</value>
@@ -297,6 +324,9 @@
   <data name="OrderUrl" xml:space="preserve">
     <value>آدرس سفارش</value>
   </data>
+  <data name="Page" xml:space="preserve">
+    <value>صفحه</value>
+  </data>
   <data name="Parent" xml:space="preserve">
     <value>سر شاخه</value>
   </data>
@@ -314,6 +344,9 @@
   </data>
   <data name="Percent" xml:space="preserve">
     <value>درصد</value>
+  </data>
+  <data name="Post" xml:space="preserve">
+    <value>پست</value>
   </data>
   <data name="PostBackUrl" xml:space="preserve">
     <value>آدرس بازگشت</value>
@@ -338,6 +371,9 @@
   </data>
   <data name="ProductCount" xml:space="preserve">
     <value>تعداد کل محصولات</value>
+  </data>
+  <data name="ProfilePictureUrl" xml:space="preserve">
+    <value>آدرس عکس پروفایل</value>
   </data>
   <data name="Receiver" xml:space="preserve">
     <value>گیرنده</value>
@@ -431,6 +467,9 @@
   </data>
   <data name="ValidToDate" xml:space="preserve">
     <value>معتبر تا تاریخ</value>
+  </data>
+  <data name="ViewCount" xml:space="preserve">
+    <value>تعداد دیده شدن</value>
   </data>
   <data name="WhatsAppUrl" xml:space="preserve">
     <value>آدرس فروشگاه در واتس اپ</value>

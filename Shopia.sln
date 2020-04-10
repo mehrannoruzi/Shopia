@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Service", "Shopia.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.DependencyResolver", "Shopia.DependencyResolver\Shopia.DependencyResolver.csproj", "{40447C40-C6D0-4711-B3C9-D60CAB250D2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Store", "Shopia.Store\Shopia.Store.csproj", "{0D7C5A1F-14F7-489E-900D-BFA463969C35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Store", "Shopia.Store\Shopia.Store.csproj", "{0D7C5A1F-14F7-489E-900D-BFA463969C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Store.Api", "Shopia.Store.Api\Shopia.Store.Api.csproj", "{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Store.Api", "Shopia.Store.Api\Shopia.Store.Api.csproj", "{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.InfraStructure", "Shopia.InfraStructure\Shopia.InfraStructure.csproj", "{8532E0C3-CDB6-45CC-86C9-5295502E8235}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{40447C40-C6D0-4711-B3C9-D60CAB250D2A} = {D63B245E-44F4-4EB8-8E1E-CEF978023B86}
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35} = {55134684-BD76-44B9-B934-74912CD29CDC}
 		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490} = {55134684-BD76-44B9-B934-74912CD29CDC}
+		{8532E0C3-CDB6-45CC-86C9-5295502E8235} = {8A42C343-8B4E-4BE1-BCC6-05EE1468B57B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}

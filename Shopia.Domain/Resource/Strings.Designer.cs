@@ -115,6 +115,24 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بیوگرافی.
+        /// </summary>
+        public static string Bio {
+            get {
+                return ResourceManager.GetString("Bio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس بیوگرافی.
+        /// </summary>
+        public static string BioUrl {
+            get {
+                return ResourceManager.GetString("BioUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شماره کارت.
         /// </summary>
         public static string CardNumber {
@@ -151,6 +169,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تعداد نظر.
+        /// </summary>
+        public static string CommentCount {
+            get {
+                return ResourceManager.GetString("CommentCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to متن.
         /// </summary>
         public static string Content {
@@ -174,6 +201,15 @@ namespace Shopia.Domain.Resource {
         public static string Count {
             get {
                 return ResourceManager.GetString("Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاریخ ایجاد.
+        /// </summary>
+        public static string CreateDate {
+            get {
+                return ResourceManager.GetString("CreateDate", resourceCulture);
             }
         }
         
@@ -385,6 +421,33 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آلبوم است؟.
+        /// </summary>
+        public static string IsAlbum {
+            get {
+                return ResourceManager.GetString("IsAlbum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to بلاک شده؟.
+        /// </summary>
+        public static string IsBlocked {
+            get {
+                return ResourceManager.GetString("IsBlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to حساب تجاری است؟.
+        /// </summary>
+        public static string IsBusinessAccount {
+            get {
+                return ResourceManager.GetString("IsBusinessAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تایید شده؟.
         /// </summary>
         public static string IsConfirmed {
@@ -412,6 +475,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شخصی است؟.
+        /// </summary>
+        public static string IsPrivate {
+            get {
+                return ResourceManager.GetString("IsPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تعطیل رسمی است؟.
         /// </summary>
         public static string IsPublicHoliday {
@@ -435,6 +507,15 @@ namespace Shopia.Domain.Resource {
         public static string IsUsed {
             get {
                 return ResourceManager.GetString("IsUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تایید شده؟.
+        /// </summary>
+        public static string IsVerified {
+            get {
+                return ResourceManager.GetString("IsVerified", resourceCulture);
             }
         }
         
@@ -601,6 +682,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to صفحه.
+        /// </summary>
+        public static string Page {
+            get {
+                return ResourceManager.GetString("Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to سر شاخه.
         /// </summary>
         public static string Parent {
@@ -651,6 +741,15 @@ namespace Shopia.Domain.Resource {
         public static string Percent {
             get {
                 return ResourceManager.GetString("Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پست.
+        /// </summary>
+        public static string Post {
+            get {
+                return ResourceManager.GetString("Post", resourceCulture);
             }
         }
         
@@ -723,6 +822,15 @@ namespace Shopia.Domain.Resource {
         public static string ProductCount {
             get {
                 return ResourceManager.GetString("ProductCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آدرس عکس پروفایل.
+        /// </summary>
+        public static string ProfilePictureUrl {
+            get {
+                return ResourceManager.GetString("ProfilePictureUrl", resourceCulture);
             }
         }
         
@@ -1002,6 +1110,15 @@ namespace Shopia.Domain.Resource {
         public static string ValidToDate {
             get {
                 return ResourceManager.GetString("ValidToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد دیده شدن.
+        /// </summary>
+        public static string ViewCount {
+            get {
+                return ResourceManager.GetString("ViewCount", resourceCulture);
             }
         }
         
