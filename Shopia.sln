@@ -31,6 +31,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Store.Api", "Shopia.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.InfraStructure", "Shopia.InfraStructure\Shopia.InfraStructure.csproj", "{8532E0C3-CDB6-45CC-86C9-5295502E8235}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10-Crawler", "10-Crawler", "{E3731303-FAEE-4B2C-900F-F6913B203374}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-DataAccess", "02-DataAccess", "{F139C0CA-7074-45A7-8FD2-E2B25C0A6F6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.DataAccess.Ef", "Shopia.Crawler.DataAccess.Ef\Shopia.Crawler.DataAccess.Ef.csproj", "{B1F979F4-3420-417F-8049-839FDD6749D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.DataAccess.Dapper", "Shopia.Crawler.DataAccess.Dapper\Shopia.Crawler.DataAccess.Dapper.csproj", "{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +77,14 @@ Global
 		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8532E0C3-CDB6-45CC-86C9-5295502E8235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F979F4-3420-417F-8049-839FDD6749D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F979F4-3420-417F-8049-839FDD6749D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F979F4-3420-417F-8049-839FDD6749D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F979F4-3420-417F-8049-839FDD6749D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +98,9 @@ Global
 		{0D7C5A1F-14F7-489E-900D-BFA463969C35} = {55134684-BD76-44B9-B934-74912CD29CDC}
 		{1609B1C9-DEE1-4F26-9666-E4D67D6D0490} = {55134684-BD76-44B9-B934-74912CD29CDC}
 		{8532E0C3-CDB6-45CC-86C9-5295502E8235} = {8A42C343-8B4E-4BE1-BCC6-05EE1468B57B}
+		{F139C0CA-7074-45A7-8FD2-E2B25C0A6F6D} = {E3731303-FAEE-4B2C-900F-F6913B203374}
+		{B1F979F4-3420-417F-8049-839FDD6749D7} = {F139C0CA-7074-45A7-8FD2-E2B25C0A6F6D}
+		{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6} = {F139C0CA-7074-45A7-8FD2-E2B25C0A6F6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}
