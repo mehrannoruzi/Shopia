@@ -29,6 +29,7 @@
         .details {
             > * {
                 text-align: left;
+                direction: ltr;
             }
         }
     }
@@ -53,17 +54,33 @@
     }
 
     .products-list {
-        .img-loader {
-            width: 100%;
-        }
+        .arraned-row {
+            display: flex;
+            margin-bottom: 3px;
 
-        .product {
-            width: 33.33%;
-            float: right;
-            border: solid 1px #eee;
+            .product {
+                margin-right: 3px;
 
-            img {
-                width: 100%;
+                img {
+                    width: 100%;
+                }
+
+                &:first-child {
+                    margin-right: 0;
+                }
+            }
+
+            .skeleton-product {
+                flex: 1 0 0%;
+                margin-right: 3px;
+                min-width: calc((100% - 6px) / 3);
+
+                > span {
+                    padding-bottom: 100%;
+                }
+                &:first-child {
+                    margin-right: 0;
+                }
             }
         }
     }

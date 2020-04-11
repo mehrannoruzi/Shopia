@@ -1,4 +1,5 @@
-﻿html {
+﻿$marginBottom:15px;
+html {
     min-height: 100%;
     font-size: 13px;
 }
@@ -107,8 +108,15 @@ input:-webkit-autofill:active {
 	display: none;
 }
 .form-group{
-	margin-bottom: 10px;
+	margin-bottom: $marginBottom;
 	text-align: center;
+}
+.btn-group{
+	margin-bottom: $marginBottom;
+	width: 100%;
+}
+.MuiFormControl-root{
+	width:100%;
 }
 @import "./rtl.scss";
 @import "./../../shared/Loader/css/index.scss";
@@ -116,3 +124,4 @@ input:-webkit-autofill:active {
 @import "./../../routes/product/css/index.scss";
 @import "./../../routes/signUpOrLogin/css/index.scss";
 @import "./../../routes/logIn/css/index.scss";
+@import "./../../routes/singleAddress//css/index.scss";

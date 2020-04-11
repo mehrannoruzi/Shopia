@@ -1,12 +1,15 @@
 import React from 'react';
-import productApi from './../../../api/productApi';
 import Product from './product';
+import productApi from './../../../api/productApi';
 import { loaderImage } from './../../../shared/constant';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { arrangeInRows } from './../../../shared/utils';
 export default class ProductsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: null,
+            empty: true
         }
         this.loading = false;
         this.pageNumber = 1;
@@ -21,7 +24,7 @@ export default class ProductsList extends React.Component {
         if (productsRep.success) {
             if (productsRep.result.length === 0 && this.pageNumber > 1)
                 this.pageNumber--;
-            this.setState(p => ({ ...p, products: [...p.products, ...productsRep.result] }))
+            this.setState(p => ({ ...p, products: [...(p.products ? p.products : []), ...productsRep.result] }))
         }
 
     }
@@ -48,11 +51,7 @@ export default class ProductsList extends React.Component {
         }
     };
     render() {
-        return (
-            <div className='products-list' id='products-list'>
-                {this.state.products.length !== 0 ? this.state.products.map((p, idx) => (<Product key={idx} product={p} />)) :
-                    (<img className='img-loader' src={loaderImage} />)}
-            </div>
-        );
+        if (this.state.products) return (arrangeInRows(3, this.state.products.map((p, idx) => (<Product key={idx} product={p} />)), 'products-list'));
+        else return (arrangeInRows(3, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
     }
 }
