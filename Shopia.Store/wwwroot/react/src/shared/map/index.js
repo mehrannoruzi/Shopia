@@ -18,23 +18,27 @@ export default class CustomMap extends React.Component {
     super(props);
     this.state = {
       coords: {
-        lng: this.props.init ? this.props.init.lng : 51.338030,
-        lat: this.props.init ? this.props.init.lat : 35.700084
+        lng: this.props.location ? this.props.location.lng : 51.338030,
+        lat: this.props.location ? this.props.location.lat : 35.700084
       }
     }
   }
 
   _onClick(p) {
-    console.log(p.lngLat);
     this.setState(prev => ({
       ...prev,
       coords: {
-        lng: p.lngLat.lng,
-        lat: p.lngLat.lat
+        lng: p.lng,
+        lat: p.lat
       },
     }));
-    if( this.props.onChange)
-    this.props.onChange(p.lngLat.lng, p.lngLat.lat);
+    if (this.props.onChange)
+      if (this.props.onChanged)
+        this.props.onChanged(p.lng, p.lat);
+  }
+
+  _setLocation(lng, lat){
+    this._onClick({lng:lng,lat:lat});
   }
 
   _setUserLocation = (p) => {
@@ -52,28 +56,22 @@ export default class CustomMap extends React.Component {
   };
   componentDidMount() {
     this._setUserLocation();
+    console.log(this.props.location);
   }
   render() {
     return (
       <Mapir
         width='100%'
         style={{ width: '100px' }}
-        onClick={(e, p) => this._onClick(p)}
+        onClick={(e, p) => this._onClick(p.lngLat)}
         center={[this.state.coords.lng, this.state.coords.lat]}
-        movingMethod='jumpTo'
+        movingMethod='flyTo'
         minZoom={[13]}
-        //zoom={[14]}
-        //Image={markerImage}
         Map={Map}>
-        {/* <Mapir.Layer
-          type="symbol"
-          layout={{ "icon-image": "harbor-15" }}>
-        </Mapir.Layer> */}
         <Mapir.Marker
           coordinates={[this.state.coords.lng, this.state.coords.lat]}
-          anchor="bottom">
-            <img src={markerImage} style={{height:'30px'}}/>
-        </Mapir.Marker>
+          Image={markerImage}
+          anchor="bottom"> </Mapir.Marker>
       </Mapir>
     );
   }

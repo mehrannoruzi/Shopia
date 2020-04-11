@@ -9,6 +9,9 @@
   direction: rtl;
   text-align: right;
 }
+.MuiFormHelperText-root{
+  font-family: "iransans"!important;
+}
 
 body[dir="rtl"] {
   .modal-title {

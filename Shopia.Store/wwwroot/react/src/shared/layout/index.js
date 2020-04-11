@@ -9,6 +9,7 @@ import SignUp from '../../routes/signUp';
 import RecoverPassword from '../../routes/recoverPassword';
 import ChangePassword from '../../routes/changePasword';
 import Product from '../../routes/product';
+import SingleAddress from '../../routes/singleAddress';
 import NotFound from '../../routes/notFound';
 import Error from '../../routes/error';
 
@@ -30,6 +31,7 @@ class Layout extends React.Component {
                     <Route path="/recoverPassword" component={RecoverPassword} />
                     <Route path="/changePassword" component={ChangePassword} />
                     <Route path="/product/:id" component={Product} />
+                    <Route path="/singleAddress/:id?" component={SingleAddress} />
                     <Route path="/notFound/:msg?" component={NotFound} />
                     <Route path="/error/:msg?" component={Error} />
                     <Route exact path="/:id?" component={Store} />

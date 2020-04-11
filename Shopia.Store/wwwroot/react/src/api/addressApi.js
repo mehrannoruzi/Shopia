@@ -22,12 +22,32 @@ export default class addressApi {
                 success: true,
                 result: {
                     id: 1,
-                    lat: 35.699729,
+                    reciever: 'مهران نوروزی',
                     lng: 51.337941,
-                    details: 'میدان آزادی- کوچه بهار'
+                    lat: 34.699729,
+                    address: 'میدان آزادی- کوچه بهار'
                 }
             });
         }, 1000)
 
     });
+
+    static addAddress = ({ address, reciever, lng, lat }) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 1000)
+
+    });
+
+    static updateAddress = ({ id, address, reciever, lng, lat }) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 1000)
+
+    });
+
 }
