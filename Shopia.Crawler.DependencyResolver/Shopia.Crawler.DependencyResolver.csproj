@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shopia.Crawler.DataAccess.Dapper\Shopia.Crawler.DataAccess.Dapper.csproj" />
+    <ProjectReference Include="..\Shopia.Crawler.DataAccess.Ef\Shopia.Crawler.DataAccess.Ef.csproj" />
+    <ProjectReference Include="..\Shopia.Crawler.Service\Shopia.Crawler.Service.csproj" />
+  </ItemGroup>
+
+</Project>
