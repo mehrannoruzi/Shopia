@@ -57,7 +57,7 @@ namespace Shopia.Crawler
             services.AddSwagger(_swaggerSetting);
 
             services.AddTransient(_config);
-            services.Addcoped(_config);
+            services.AddScoped(_config);
             services.AddSingleton(_config);
         }
 
