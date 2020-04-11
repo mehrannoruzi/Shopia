@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Quartz" Version="3.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopia.Crawler.DataAccess.Dapper\Shopia.Crawler.DataAccess.Dapper.csproj" />
   </ItemGroup>
 

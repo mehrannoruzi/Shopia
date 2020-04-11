@@ -1,10 +1,10 @@
 ﻿using System;
 using Elk.Core;
 using Elk.Dapper;
-using System.Linq;
 using Shopia.Domain;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Crawler.DataAccess.Dapper
@@ -42,7 +42,7 @@ namespace Shopia.Crawler.DataAccess.Dapper
             }
         }
 
-        public async Task<int> UpdateAsync(CrawledPageDto model)
+        public async Task<bool> UpdateAsync(CrawledPageDto model)
         {
             try
             {
@@ -51,15 +51,15 @@ namespace Shopia.Crawler.DataAccess.Dapper
                 instagramPage.ModifyDateMi = DateTime.Now;
                 instagramPage.ModifyDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
 
-                var newPostCount = await _sqlConnection.ExecuteSpCommandAsync<int>("[Instagram].[UpdatePage]",
+                await _sqlConnection.ExecuteSpCommandAsync<int>("[Instagram].[UpdatePage]",
                     new { Page = instagramPage.ToTableValuedParameter("[dbo].[Tvp_Page]") });
 
-                return newPostCount.FirstOrDefault();
+                return true;
             }
             catch (Exception e)
             {
                 FileLoger.Error(e);
-                return 0;
+                return false;
             }
         }
 
@@ -86,6 +86,27 @@ namespace Shopia.Crawler.DataAccess.Dapper
                             "FROM   [Instagram].[Page] " +
                             "WHERE  [Username] = @Username";
                 return await _sqlConnection.ExecuteQuerySingleAsync<Page>(query, new { Username = pageId });
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Page>> GetAsync(DateTime lastCrawlDate, PagingParameter pagingParameter)
+        {
+            try
+            {
+                var query = "SELECT		* " +
+                            "FROM		[Instagram].[Page] p " +
+                            "WHERE      p.ModifyDateMi <= @lastCrawlDate " +
+                            "ORDER BY	p.PageId ASC " +
+                            "OFFSET		@PageSize * (@PageNumber - 1) ROWS " +
+                            "FETCH NEXT	@PageSize ROWS ONLY;";
+                return await _sqlConnection.ExecuteQueryAsync<Page>(query,
+                    new { lastCrawlDate = lastCrawlDate, pagingParameter.PageNumber, pagingParameter.PageSize });
             }
             catch (Exception e)
             {

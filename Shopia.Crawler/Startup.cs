@@ -59,6 +59,8 @@ namespace Shopia.Crawler
             services.AddTransient(_config);
             services.AddScoped(_config);
             services.AddSingleton(_config);
+
+            services.AddHostedService<QuartzHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

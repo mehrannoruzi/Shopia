@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Elk.AspNetCore" Version="1.1.0" />
-    <PackageReference Include="Elk.Dapper" Version="1.0.3" />
+    <PackageReference Include="Elk.Dapper" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>

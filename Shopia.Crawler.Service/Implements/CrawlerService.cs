@@ -1,5 +1,6 @@
 ﻿using System;
 using Elk.Core;
+using System.Linq;
 using System.Text;
 using Shopia.Domain;
 using Elk.AspNetCore;
@@ -139,6 +140,47 @@ namespace Shopia.Crawler.Service
             return newPost;
         }
 
+        private async Task<IResponse<bool>> CrawlNewPostAsync(IPostRepo postRepo, Page page, int newPostCount)
+        {
+            try
+            {
+                var postCount = 0;
+                var haveNextPage = false;
+                var cursor = string.Empty;
+                var postList = new List<CrawledPostDto>();
+
+                do
+                {
+                    #region Call Instagram Post Api
+                    var postInquiry = await CrawlPostFromInstagramAsync(page.UniqueId, newPostCount, cursor);
+                    if (postInquiry.status != "ok") return new Response<bool> { IsSuccessful = false, Message = ServiceMessage.Error };
+
+                    var postCollection = postInquiry.data.user.edge_Owner_To_Timeline_Media.edges;
+                    var totalPostCount = postInquiry.data.user.edge_Owner_To_Timeline_Media.count;
+                    cursor = postInquiry.data.user.edge_Owner_To_Timeline_Media.page_Info.end_cursor;
+                    haveNextPage = postInquiry.data.user.edge_Owner_To_Timeline_Media.page_Info.has_next_page;
+                    #endregion
+
+                    foreach (var post in postCollection)
+                    {
+                        postCount += 1;
+                        var newPost = ConvertToCrawledPostDto(post);
+
+                        newPost.PageId = page.PageId;
+                        await postRepo.AddAsync(newPost);
+                    }
+
+                } while (haveNextPage == true && postCount < newPostCount);
+
+                return new Response<bool> { Result = true, IsSuccessful = true, Message = ServiceMessage.Success };
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+                return new Response<bool> { IsSuccessful = false, Message = ServiceMessage.Exception };
+            }
+        }
+
 
         public async Task<IResponse<CrawledPageDto>> CrawlPageAsync(string username)
         {
@@ -212,47 +254,6 @@ namespace Shopia.Crawler.Service
             }
         }
 
-        public async Task<IResponse<bool>> CrawlNewPostAsync(Page page, int newPostCount)
-        {
-            try
-            {
-                var postCount = 0;
-                var haveNextPage = false;
-                var cursor = string.Empty;
-                var postList = new List<CrawledPostDto>();
-
-                do
-                {
-                    #region Call Instagram Post Api
-                    var postInquiry = await CrawlPostFromInstagramAsync(page.UniqueId, newPostCount, cursor);
-                    if (postInquiry.status != "ok") return new Response<bool> { IsSuccessful = false, Message = ServiceMessage.Error };
-
-                    var postCollection = postInquiry.data.user.edge_Owner_To_Timeline_Media.edges;
-                    var totalPostCount = postInquiry.data.user.edge_Owner_To_Timeline_Media.count;
-                    cursor = postInquiry.data.user.edge_Owner_To_Timeline_Media.page_Info.end_cursor;
-                    haveNextPage = postInquiry.data.user.edge_Owner_To_Timeline_Media.page_Info.has_next_page;
-                    #endregion
-
-                    foreach (var post in postCollection)
-                    {
-                        postCount += 1;
-                        var newPost = ConvertToCrawledPostDto(post);
-
-                        newPost.PageId = page.PageId;
-                        await _crawlerUnitOfWork.PostRepo.AddAsync(newPost);
-                    }
-
-                } while (haveNextPage == true && postCount < newPostCount);
-
-                return new Response<bool> { Result = true, IsSuccessful = true, Message = ServiceMessage.Success };
-            }
-            catch (Exception e)
-            {
-                FileLoger.Error(e);
-                return new Response<bool> { IsSuccessful = false, Message = ServiceMessage.Exception };
-            }
-        }
-
         public async Task<IResponse<IEnumerable<Post>>> GetPostAsync(string username, PagingParameter pagingParameter)
         {
             try
@@ -273,6 +274,42 @@ namespace Shopia.Crawler.Service
             {
                 FileLoger.Error(e);
                 return new Response<IEnumerable<Post>> { IsSuccessful = false, Message = ServiceMessage.Exception };
+            }
+        }
+
+        public async Task UpdatePageAndCrawlNewPostAsync()
+        {
+            try
+            {
+                var pageNumber = 0;
+                IEnumerable<Page> pages;
+                var pageRepo = _crawlerUnitOfWork.PageRepo;
+                var postRepo = _crawlerUnitOfWork.PostRepo;
+
+                do
+                {
+                    pageNumber += 1;
+                    pages = await pageRepo.GetAsync(DateTime.Now.Date,
+                        new PagingParameter { PageNumber = pageNumber, PageSize = _instagramSetting.CrawledPostPageSize });
+
+                    foreach (var page in pages)
+                    {
+                        var crawledpage = await CrawlPageFromInstagramAsync(page.Username);
+                        if (crawledpage.IsNull()) continue;
+
+                        crawledpage.PageId = page.PageId;
+                        await pageRepo.UpdateAsync(crawledpage);
+                        if (page.PostCount < crawledpage.PostCount)
+                            await CrawlNewPostAsync(postRepo, page, crawledpage.PostCount - page.PostCount);
+                    }
+                } while (pages.Count() > 0);
+
+                await Task.CompletedTask;
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+                await Task.FromException(e);
             }
         }
     }

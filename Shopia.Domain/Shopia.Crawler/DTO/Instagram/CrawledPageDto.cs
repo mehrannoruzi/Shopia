@@ -7,6 +7,7 @@ namespace Shopia.Domain
 {
     public class CrawledPageDto
     {
+        public int PageId { get; set; }
         public int PostCount { get; set; }
         public int FolowerCount { get; set; }
         public int FolowingCount { get; set; }

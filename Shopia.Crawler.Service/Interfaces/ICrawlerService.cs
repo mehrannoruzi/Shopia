@@ -9,7 +9,7 @@ namespace Shopia.Crawler.Service
     {
         Task<IResponse<CrawledPageDto>> CrawlPageAsync(string username);
         Task<IResponse<bool>> CrawlPostAsync(string username);
-        Task<IResponse<bool>> CrawlNewPostAsync(Page page, int newPostCount);
         Task<IResponse<IEnumerable<Post>>> GetPostAsync(string username, PagingParameter pagingParameter);
+        Task UpdatePageAndCrawlNewPostAsync();
     }
 }

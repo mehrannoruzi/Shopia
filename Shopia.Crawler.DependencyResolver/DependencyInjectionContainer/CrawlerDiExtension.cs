@@ -1,4 +1,7 @@
-﻿using Shopia.Domain;
+﻿using Quartz;
+using Quartz.Spi;
+using Quartz.Impl;
+using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using Shopia.Crawler.Service;
 using Microsoft.EntityFrameworkCore;
@@ -33,20 +36,28 @@ namespace Shopia.DependencyResolver
 
             #endregion
 
-
             return services;
         }
 
         public static IServiceCollection AddSingleton(this IServiceCollection services, IConfiguration _configuration)
         {
             //services.AddSingleton<IMemoryCacheProvider, MemoryCacheProvider>();
+            services.AddSingleton<IJobFactory, JobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+            services.AddSingleton<UpdatePageAndCrawlNewPost>();
+            services.AddSingleton(new JobSchedule(
+                                    jobType: typeof(UpdatePageAndCrawlNewPost),
+                                    cronExpression: _configuration["InstagramSetting:UpdatePostCronPattern"]));
+
 
             services.AddSingleton<InstagramSetting>(new InstagramSetting(
                 _configuration["InstagramSetting:PageUrlPattern"],
                 _configuration["InstagramSetting:PostUrlPattern"],
                 _configuration["InstagramSetting:QueryHash"],
                 int.Parse(_configuration["InstagramSetting:MaxCrawledPost"]),
-                int.Parse(_configuration["InstagramSetting:CrawledPostPageSize"])));
+                int.Parse(_configuration["InstagramSetting:CrawledPostPageSize"]),
+                _configuration["InstagramSetting:UpdatePostCronPattern"]));
 
             return services;
         }
