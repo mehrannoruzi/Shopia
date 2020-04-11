@@ -17,7 +17,7 @@ namespace Shopia.DependencyResolver
             return serviceCollection;
         }
 
-        public static IServiceCollection Addcoped(this IServiceCollection services, IConfiguration _configuration)
+        public static IServiceCollection AddScoped(this IServiceCollection services, IConfiguration _configuration)
         {
             services.AddContext<CrawlerDbContext>(_configuration.GetConnectionString("CrawlerDbContext"));
 

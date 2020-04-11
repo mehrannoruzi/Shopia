@@ -1,4 +1,5 @@
-﻿using Shopia.Crawler.Service;
+﻿using Elk.Core;
+using Shopia.Crawler.Service;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +16,19 @@ namespace Shopia.Crawler.Controllers
 
 
         [HttpGet]
+        public IActionResult Index()
+            => Ok("WellCome To Shopia.Crawler Api ...");
+
+        [HttpGet]
         public async Task<IActionResult> PageAsync(string Username)
             => Ok(await _crawlerService.CrawlPageAsync(Username));
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> PostAsync(string Username)
             => Ok(await _crawlerService.CrawlPostAsync(Username));
 
-        //[HttpGet]
-        //public async Task<IActionResult> PostAsync(string username, PagingParameter pagingParameter)
-        //    => Ok(await _crawlerService.GetPostAsync(username, pagingParameter));
+        [HttpGet]
+        public async Task<IActionResult> PostAsync(string username, PagingParameter pagingParameter)
+            => Ok(await _crawlerService.GetPostAsync(username, pagingParameter));
     }
 }
