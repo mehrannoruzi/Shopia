@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elk.AspNetCore" Version="1.1.0" />
     <PackageReference Include="Elk.Dapper" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
+    <ProjectReference Include="..\Shopia.InfraStructure\Shopia.InfraStructure.csproj" />
   </ItemGroup>
 
 </Project>

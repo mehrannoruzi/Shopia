@@ -79,65 +79,6 @@ namespace Shopia.Crawler.DataAccess.Dapper
             }
         }
 
-        public async Task<bool> AddNewPostAsync(int pageId, int newPost)
-        {
-            //_sqlConnection.Open();
-            //var transaction = await _sqlConnection.BeginTransactionAsync();
-            try
-            {
-                //    var post = new Post();
-                //    post.UpdateWith(model);
-                //    post.InsertDateMi = DateTime.Now;
-                //    post.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
-
-                //    var postId = _sqlConnection.ExecuteSpCommand<int>("[Instagram].[InsertPost]",
-                //        new { Post = post.ToTableValuedParameter("[dbo].[Tvp_Post]") }, transaction);
-                //    if (postId <= 0) return false;
-
-                //    if (!model.IsAlbum)
-                //    {
-                //        var postAsset = new PostAsset();
-                //        postAsset.UpdateWith(model);
-                //        postAsset.PostId = postId;
-                //        postAsset.InsertDateMi = DateTime.Now;
-                //        postAsset.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
-
-                //        await _sqlConnection.ExecuteSpCommandAsync<int>("[Instagram].[InsertPostAsset]",
-                //        new { PostAsset = postAsset.ToTableValuedParameter("[dbo].[Tvp_PostAsset]") }, transaction);
-                //    }
-                //    else
-                //    {
-                //        var postAssetList = new List<PostAsset>();
-                //        foreach (var item in model.Items)
-                //        {
-                //            var postAsset = new PostAsset();
-                //            postAsset.UpdateWith(item);
-                //            postAsset.PostId = postId;
-                //            postAsset.InsertDateMi = DateTime.Now;
-                //            postAsset.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
-
-                //            postAssetList.Add(postAsset);
-                //        }
-
-                //        await _sqlConnection.ExecuteSpCommandAsync<int>("[Instagram].[InsertPostAsset]",
-                //        new { PostAsset = postAssetList.ToTableValuedParameter("[dbo].[Tvp_PostAsset]") }, transaction);
-                //    }
-
-                //    transaction.Commit();
-                //    _sqlConnection.Close();
-                return true;
-            }
-            catch (Exception e)
-            {
-                FileLoger.Error(e);
-                //transaction.Rollback();
-                //_sqlConnection.Close();
-
-                if (e.Message.Contains("unique index")) return true;
-                return false;
-            }
-        }
-
         public async Task<IEnumerable<Post>> GetAsync(string username, PagingParameter pagingParameter)
         {
             try

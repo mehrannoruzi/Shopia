@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 /Shopia.InfraStructure
 /Shopia.Crawler.DataAccess.Dapper
+/Shopia.Crawler
+/Shopia.Crawler.DependencyResolver
+/Shopia.Crawler.Service
