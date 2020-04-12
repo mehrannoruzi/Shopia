@@ -5,6 +5,7 @@ import strings, { validationStrings } from '../../shared/constant';
 import CustomMap from './../../shared/map';
 import addressApi from './../../api/addressApi';
 import Loader from './../../shared/Loader';
+import Wrapper from './../../shared/purchaseDrawer';
 
 class SingleAddress extends React.Component {
     constructor(props) {
@@ -18,6 +19,21 @@ class SingleAddress extends React.Component {
                 text: ''
             },
             address: {
+                value: '',
+                error: false,
+                errorMessage: ''
+            },
+            plague: {
+                value: '',
+                error: false,
+                errorMessage: ''
+            },
+            unit: {
+                value: '',
+                error: false,
+                errorMessage: ''
+            },
+            mobileNumber: {
                 value: '',
                 error: false,
                 errorMessage: ''
@@ -51,15 +67,20 @@ class SingleAddress extends React.Component {
             this.setState(p => ({ ...state }));
         }
     }
+
     _inputChanged(e) {
         let state = this.state;
         state[e.target.id].value = e.target.value
         this.setState((p) => ({ ...state }));
     }
+
     _mapChangd(lng, lat) {
         this.setState((p) => ({ ...p, location: { lng: lng, lat: lat } }));
     }
+
     async _submit() {
+        this.props.changePanel(1);
+        return
         if (!this.state.address.value) {
             this.setState(p => ({ ...p, address: { ...p.address, error: true, errorMessage: validationStrings.required } }));
             return;
@@ -103,6 +124,10 @@ class SingleAddress extends React.Component {
                                         </Alert>) : null
                                 }
                             </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
                             <div className="form-group">
                                 <TextField
                                     error={this.state.address.error}
@@ -115,6 +140,58 @@ class SingleAddress extends React.Component {
                                     style={{ fontFamily: 'iransans' }}
                                 />
                             </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={3} sm={3}>
+                            <div className="form-group">
+                                <TextField
+                                    error={this.state.plague.error}
+                                    id="plague"
+                                    type='number'
+                                    variant='outlined'
+                                    label={strings.plague}
+                                    value={this.state.plague.value}
+                                    onChange={this._inputChanged.bind(this)}
+                                    helperText={this.state.plague.errorMessage}
+                                    style={{ fontFamily: 'iransans' }}
+                                />
+                            </div>
+
+                        </Col>
+                        <Col xs={3} sm={3}>
+                            <div className="form-group">
+                                <TextField
+                                    error={this.state.unit.error}
+                                    id="unit"
+                                    type='number'
+                                    variant='outlined'
+                                    label={strings.unit}
+                                    value={this.state.unit.value}
+                                    onChange={this._inputChanged.bind(this)}
+                                    helperText={this.state.unit.errorMessage}
+                                    style={{ fontFamily: 'iransans' }}
+                                />
+                            </div>
+
+                        </Col>
+                        <Col xs={6} sm={6}>
+                            <div className="form-group">
+                                <TextField
+                                    error={this.state.mobileNumber.error}
+                                    id="mobileNumber"
+                                    type='number'
+                                    variant='outlined'
+                                    label={strings.mobileNumber}
+                                    value={this.state.mobileNumber.value}
+                                    onChange={this._inputChanged.bind(this)}
+                                    helperText={this.state.mobileNumber.errorMessage}
+                                    style={{ fontFamily: 'iransans' }}
+                                />
+                            </div>
+
+                        </Col>
+                        <Col>
                             <div className="form-group">
                                 <TextField
                                     error={this.state.reciever.error}

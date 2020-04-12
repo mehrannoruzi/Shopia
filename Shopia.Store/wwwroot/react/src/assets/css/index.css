@@ -149,7 +149,7 @@ input:-webkit-autofill:active {
   text-align: right;
 }
 
-.MuiFormHelperText-root {
+.MuiFormHelperText-root, .MuiInputBase-input {
   font-family: "iransans" !important;
 }
 
@@ -331,6 +331,10 @@ body[dir="rtl"] .modal-header .close {
   text-align: center;
 }
 
+.img-slide {
+  height: 360px;
+}
+
 .carousel-indicators li {
   background-color: #000;
   border-radius: 50%;
@@ -389,7 +393,21 @@ body[dir="rtl"] .modal-header .close {
 
 .single-address-page .mapboxgl-map {
   width: 100% !important;
-  height: 300px !important;
+  height: 100px !important;
   margin-bottom: 15px;
+}
+
+.single-address-page .mapboxgl-canvas {
+  height: 100px;
+}
+
+.addresses-list-page .mapboxgl-map {
+  width: 100% !important;
+  height: 100px !important;
+  margin-bottom: 15px;
+}
+
+.addresses-list-page .mapboxgl-canvas {
+  height: 100px;
 }
 /*# sourceMappingURL=index.css.map */
