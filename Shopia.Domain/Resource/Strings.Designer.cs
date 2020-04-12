@@ -970,6 +970,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد تلگرام.
+        /// </summary>
+        public static string TelegramId {
+            get {
+                return ResourceManager.GetString("TelegramId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آدرس فروشگاه در تلگرام.
         /// </summary>
         public static string TelegramUrl {

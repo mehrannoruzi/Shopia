@@ -420,6 +420,9 @@
   <data name="Tag" xml:space="preserve">
     <value>تگ</value>
   </data>
+  <data name="TelegramId" xml:space="preserve">
+    <value>کد تلگرام</value>
+  </data>
   <data name="TelegramUrl" xml:space="preserve">
     <value>آدرس فروشگاه در تلگرام</value>
   </data>
