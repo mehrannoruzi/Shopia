@@ -29,27 +29,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Store", "Shopia.Stor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Store.Api", "Shopia.Store.Api\Shopia.Store.Api.csproj", "{1609B1C9-DEE1-4F26-9666-E4D67D6D0490}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.InfraStructure", "Shopia.InfraStructure\Shopia.InfraStructure.csproj", "{8532E0C3-CDB6-45CC-86C9-5295502E8235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.InfraStructure", "Shopia.InfraStructure\Shopia.InfraStructure.csproj", "{8532E0C3-CDB6-45CC-86C9-5295502E8235}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10-Crawler", "10-Crawler", "{E3731303-FAEE-4B2C-900F-F6913B203374}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-DataAccess", "02-DataAccess", "{F139C0CA-7074-45A7-8FD2-E2B25C0A6F6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.DataAccess.Ef", "Shopia.Crawler.DataAccess.Ef\Shopia.Crawler.DataAccess.Ef.csproj", "{B1F979F4-3420-417F-8049-839FDD6749D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Crawler.DataAccess.Ef", "Shopia.Crawler.DataAccess.Ef\Shopia.Crawler.DataAccess.Ef.csproj", "{B1F979F4-3420-417F-8049-839FDD6749D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.DataAccess.Dapper", "Shopia.Crawler.DataAccess.Dapper\Shopia.Crawler.DataAccess.Dapper.csproj", "{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Crawler.DataAccess.Dapper", "Shopia.Crawler.DataAccess.Dapper\Shopia.Crawler.DataAccess.Dapper.csproj", "{8EB49FC4-92F9-4CBB-80ED-7ED6D25884A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Service", "03-Service", "{2E4FBBFB-867A-4F84-81ED-E622849CAFD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.Service", "Shopia.Crawler.Service\Shopia.Crawler.Service.csproj", "{0145D3B3-C2CE-4C1B-AFF4-7980955E1A13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Crawler.Service", "Shopia.Crawler.Service\Shopia.Crawler.Service.csproj", "{0145D3B3-C2CE-4C1B-AFF4-7980955E1A13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-DependencyResolver", "04-DependencyResolver", "{1B3A2A84-2F71-42A0-815B-390F8C75AF33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler.DependencyResolver", "Shopia.Crawler.DependencyResolver\Shopia.Crawler.DependencyResolver.csproj", "{D80BB6A8-D596-43FB-8202-B84D989D39CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Crawler.DependencyResolver", "Shopia.Crawler.DependencyResolver\Shopia.Crawler.DependencyResolver.csproj", "{D80BB6A8-D596-43FB-8202-B84D989D39CC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-EndPoints", "05-EndPoints", "{7993ED2C-3215-417B-AA41-60E7294B4075}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Crawler", "Shopia.Crawler\Shopia.Crawler.csproj", "{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Crawler", "Shopia.Crawler\Shopia.Crawler.csproj", "{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Api", "Shopia.Api\Shopia.Api.csproj", "{4883EE41-2463-4738-A28D-A087DCA7182F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,10 @@ Global
 		{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4883EE41-2463-4738-A28D-A087DCA7182F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4883EE41-2463-4738-A28D-A087DCA7182F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4883EE41-2463-4738-A28D-A087DCA7182F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4883EE41-2463-4738-A28D-A087DCA7182F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,6 +137,7 @@ Global
 		{D80BB6A8-D596-43FB-8202-B84D989D39CC} = {1B3A2A84-2F71-42A0-815B-390F8C75AF33}
 		{7993ED2C-3215-417B-AA41-60E7294B4075} = {E3731303-FAEE-4B2C-900F-F6913B203374}
 		{28C6D3D6-4B3C-4D79-8FDF-AC71C5CD4AFE} = {7993ED2C-3215-417B-AA41-60E7294B4075}
+		{4883EE41-2463-4738-A28D-A087DCA7182F} = {55134684-BD76-44B9-B934-74912CD29CDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}
