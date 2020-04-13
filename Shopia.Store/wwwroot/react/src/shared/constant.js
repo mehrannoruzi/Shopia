@@ -32,8 +32,9 @@
     count:'تعداد',
     description:'توضیحات',
     next:'بعد',
-    setp:'مرحله'
-
+    setp:'مرحله',
+    return:'بازگشت',
+    write:'بنویسید'
 };
 export default strings;
 export const validationStrings = {
