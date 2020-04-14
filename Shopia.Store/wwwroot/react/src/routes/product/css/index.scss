@@ -1,4 +1,4 @@
-.product-page{
+.product-page {
     .icons {
         margin-bottom: 15px;
         .col-2 {
@@ -17,10 +17,14 @@
         border-radius: 4px;
         text-align: center;
     }
-    .img-slide {
-        height: 360px;
+    .carousel-item {
+        img {
+            max-height: 360px;
+        }
     }
+
     .carousel-indicators {
+        bottom: -30px;
         li {
             background-color: #000;
             border-radius: 50%;
@@ -29,13 +33,13 @@
             height: 6px;
             padding: 0;
             border: none;
-    
+
             &.active {
                 background-color: #0095f6;
             }
         }
     }
-    .add-comment-comp{
+    .add-comment-comp {
         display: flex;
         flex-direction: row;
         justify-content: space-between;

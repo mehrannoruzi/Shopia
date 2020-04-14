@@ -67,4 +67,21 @@ export default class productApi {
 
     });
 
+    static toggleLike = (id) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 3000)
+
+    });
+
+    static toggleFavorite = (id) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 3000)
+
+    });
 }

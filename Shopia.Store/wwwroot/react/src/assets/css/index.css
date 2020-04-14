@@ -331,8 +331,12 @@ body[dir="rtl"] .modal-header .close {
   text-align: center;
 }
 
-.product-page .img-slide {
-  height: 360px;
+.product-page .carousel-item img {
+  max-height: 360px;
+}
+
+.product-page .carousel-indicators {
+  bottom: -30px;
 }
 
 .product-page .carousel-indicators li {
