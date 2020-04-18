@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.product-page .icons button {
+  padding: 8px;
+}
+
 .product-page .btn-purchase {
   position: fixed;
   bottom: 0;
