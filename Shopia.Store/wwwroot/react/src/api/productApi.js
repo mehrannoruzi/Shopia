@@ -4,6 +4,7 @@ export default class productApi {
             resolve({
                 success: true,
                 result: [{
+                    id:1,
                     name: 'اتو مو',
                     likeCount: 20,
                     price: 50000,
@@ -11,6 +12,7 @@ export default class productApi {
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:2,
                     name: 'فر مو',
                     likeCount: 10,
                     price: 55000,
@@ -18,6 +20,7 @@ export default class productApi {
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Us/CT/UsCTo9s7QsnleL9E.jpg'
                 },
                 {
+                    id:3,
                     name: 'مزه مصنوعی',
                     likeCount: 10,
                     price: 55000,
@@ -25,6 +28,7 @@ export default class productApi {
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:4,
                     name: 'تل مو',
                     likeCount: 10,
                     price: 55000,
@@ -32,6 +36,7 @@ export default class productApi {
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:5,
                     name: 'کش مو',
                     likeCount: 10,
                     price: 57000,
@@ -39,6 +44,7 @@ export default class productApi {
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:6,
                     name: 'بند مو',
                     likeCount: 4,
                     price: 55000,
