@@ -40,9 +40,11 @@ class OrderProduct extends React.Component {
 
     _inputChanged(e) {
         let state = this.state;
-        state[e.target.name].value = e.target.value
+        if(e.target.id) state[e.target.id].value = e.target.value;
+        else state[e.target.name].value = e.target.value;
         this.setState((p) => ({ ...state }));
     }
+
     render() {
         let possibleCounts = [];
         for (let i = 1; i < 11; i++) {
