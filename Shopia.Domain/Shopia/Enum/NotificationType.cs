@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Shopia.Domain
 {
@@ -13,5 +12,17 @@ namespace Shopia.Domain
 
         [Description("ایمیل")]
         Email = 3,
+
+        [Description("ایمیل")]
+        SmsTelegram = 4,
+
+        [Description("ایمیل")]
+        SmsEmail = 5,
+
+        [Description("ایمیل")]
+        TelegramEmail = 6,
+
+        [Description("ایمیل")]
+        SmsTelegramEmail = 7
     }
 }
