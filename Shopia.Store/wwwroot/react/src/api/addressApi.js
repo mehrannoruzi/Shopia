@@ -1,7 +1,7 @@
 import { getUserInfo } from './../shared/utils';
 
 export default class addressApi {
-    static getAllAddress = () => new Promise((resolve) => {
+    static getAddresses = () => new Promise((resolve) => {
         let userRep = getUserInfo();
         setTimeout(function () {
             resolve({

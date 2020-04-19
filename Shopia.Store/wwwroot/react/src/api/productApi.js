@@ -4,39 +4,51 @@ export default class productApi {
             resolve({
                 success: true,
                 result: [{
+                    id:1,
                     name: 'اتو مو',
                     likeCount: 20,
                     price: 50000,
+                    count:3,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:2,
                     name: 'فر مو',
                     likeCount: 10,
                     price: 55000,
+                    count:2,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Us/CT/UsCTo9s7QsnleL9E.jpg'
                 },
                 {
+                    id:3,
                     name: 'مزه مصنوعی',
                     likeCount: 10,
                     price: 55000,
+                    count:1,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:4,
                     name: 'تل مو',
                     likeCount: 10,
                     price: 55000,
+                    count:4,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:5,
                     name: 'کش مو',
                     likeCount: 10,
                     price: 57000,
+                    count:6,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 },
                 {
+                    id:6,
                     name: 'بند مو',
                     likeCount: 4,
                     price: 55000,
+                    count:7,
                     imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg'
                 }]
             });
@@ -44,7 +56,7 @@ export default class productApi {
 
     });
 
-    static getProduct = (id) => new Promise((resolve) => {
+    static getSingleProduct = (id) => new Promise((resolve) => {
         setTimeout(function () {
             resolve({
                 success: true,
@@ -52,6 +64,7 @@ export default class productApi {
                     name: 'اتو مو',
                     likeCount: 20,
                     price: 50000,
+                    count:10,
                     slides: [{ imgUrl: 'https://storage.torob.com/backend-api/base/images/Ta/hO/TahOLrRj5RRh9W9n.jpg' },
                     { imgUrl: 'https://storage.torob.com/backend-api/base/images/Us/CT/UsCTo9s7QsnleL9E.jpg' }]
                 }
@@ -60,4 +73,21 @@ export default class productApi {
 
     });
 
+    static toggleLike = (id) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 3000)
+
+    });
+
+    static toggleFavorite = (id) => new Promise((resolve) => {
+        setTimeout(function () {
+            resolve({
+                success: true
+            });
+        }, 3000)
+
+    });
 }

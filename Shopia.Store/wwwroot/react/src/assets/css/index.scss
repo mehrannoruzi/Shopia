@@ -118,10 +118,14 @@ input:-webkit-autofill:active {
 .MuiFormControl-root{
 	width:100%;
 }
+
 @import "./rtl.scss";
 @import "./../../shared/Loader/css/index.scss";
+
 @import "./../../routes/Store/css/index.scss";
 @import "./../../routes/product/css/index.scss";
 @import "./../../routes/signUpOrLogin/css/index.scss";
 @import "./../../routes/logIn/css/index.scss";
-@import "./../../routes/singleAddress//css/index.scss";
+@import "./../../routes/singleAddress/css/index.scss";
+@import "./../../routes/addressesList/css/index.scss";
+@import "./../../routes/afterGateway/css/index.scss";

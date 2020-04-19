@@ -22,8 +22,19 @@
     recoverPassword:'بازیابی رمز عبور',
     forgotMyPassword:'رمزم را فراموش کرده ام',
     address:'آدرس',
+    plague:'پلاک',
+    unit:'واحد',
+    mobileNumber:'شماره موبایل',
     reciever:'نام تحویل گیرنده',
-    submit:'ثبت'
+    submit:'ثبت',
+    name:'نام',
+    product:'محصول',
+    count:'تعداد',
+    description:'توضیحات',
+    next:'بعد',
+    setp:'مرحله',
+    return:'بازگشت',
+    write:'بنویسید'
 };
 export default strings;
 export const validationStrings = {

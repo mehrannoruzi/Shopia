@@ -1,0 +1,14 @@
+.addresses-list-page {
+  padding-top: 30px;
+}
+
+.addresses-list-page .mapboxgl-map {
+  width: 100% !important;
+  height: 100px !important;
+  margin-bottom: 15px;
+}
+
+.addresses-list-page .mapboxgl-canvas {
+  height: 100px;
+}
+/*# sourceMappingURL=index.css.map */
