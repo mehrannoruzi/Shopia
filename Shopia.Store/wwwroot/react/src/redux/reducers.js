@@ -1,18 +1,18 @@
 ﻿import { combineReducers } from 'redux';
-import homeReducer from './reducers/homeReducer';
 import authenticationReducer from './reducers/authenticationReducer';
 import modalReducer from './reducers/modalReducer';
 import toastReducer from './reducers/toastReducer';
-import drawerReducer from './reducers/drawerReducer';
+import initErrorReducer from './reducers/initErrorReducer';
 import orderProductReducer from './reducers/orderProductReducer';
+import basketIconReducer from './reducers/basketIconReducer';
 
 const reducers = combineReducers({
     authenticationReducer,
-    homeReducer,
     modalReducer,
     toastReducer,
-    drawerReducer,
-    orderProductReducer
+    initErrorReducer,
+    orderProductReducer,
+    basketIconReducer
 });
 
 export default reducers;

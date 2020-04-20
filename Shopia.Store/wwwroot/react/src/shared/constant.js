@@ -34,7 +34,17 @@
     next:'بعد',
     setp:'مرحله',
     return:'بازگشت',
-    write:'بنویسید'
+    write:'بنویسید',
+    completeInformation:'تکمیل اطلاعات',
+    selectAddress:'انتخاب آدرس',
+    initialOrderSubmit:'ثبت اولیه سفارش',
+    retryPlease:'لطفا دوباره تلاش نمایید',
+    connecttionFailed:'اتصال برقرار نشد',
+    basket:'سبد خرید',
+    all:'همه',
+    newests:'تازه ترین ها',
+    favorites:'محبوب ترین ها',
+    bestSellers:'پرفروش ترین ها'
 };
 export default strings;
 export const validationStrings = {

@@ -3,39 +3,45 @@
     .info {
         padding-top: 15px;
         padding-bottom: 15px;
-        .logo {
+        .wrapper {
             display: flex;
-            justify-content: flex-end;
-            img {
-                border-radius: 50%;
-                border: solid 2px $instagramColor;
-                padding: 5px;
-                max-width: 100px;
-            }
-        }
-        .posts,
-        .followers,
-        .following {
-            display: flex;
-            flex-direction: column;
-            padding: 15px 0;
-            justify-content: center;
-            align-items: center;
-            > :first-child {
-                margin-bottom: 10px;
-            }
-        }
 
-        .details {
-            > * {
-                text-align: left;
-                direction: ltr;
+            .logo {
+                display: flex;
+                justify-content: flex-end;
+                img {
+                    border-radius: 50%;
+                    padding: 5px;
+                    max-width: 100px;
+                }
+            }
+            .name-wrapper {
+                display: flex;
+                padding: 10px;
+                justify-content: center;
+                align-items: flex-start;
+                flex-direction: column;
+                flex: 1;
+
+                .basket-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex: 1;
+                    width: 100%;
+
+                    .contactus {
+                        color: $textColor;
+                        border-radius: 30px;
+                        background-color: #ecf5fc;
+                        padding: 3px 8px;
+                    }
+                }
             }
         }
     }
 
     .nav-tabs {
-        border-top: 1px solid #dee2e6;
         border-bottom: none;
 
         .nav-item {
@@ -44,15 +50,29 @@
             a {
                 display: inline-block;
                 color: $textColor;
-
-                &.nav-link.active {
-                    border: none;
-                    color: $primaryColor;
+                color:#b1b1b1;
+                font-size: 0.9rem;
+                padding: 6px;
+                &.active{
+                    color: #666;
+                    border:none;
+                    border-bottom: solid 2px $primaryColor;
+                }
+                .icon {
+                    font-size: 15px;
+                    vertical-align: middle;
+    
+                    &.newests-icon {
+                        color: yellow;
+                    }
                 }
             }
         }
     }
-
+    .tab-content{
+        padding:10px;
+        background-color: #f8f8f8;
+    }
     .products-list {
         .arraned-row {
             display: flex;

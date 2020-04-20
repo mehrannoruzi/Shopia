@@ -1,0 +1,8 @@
+.MuiStepper-root {
+  padding: 15px 0 !important;
+}
+
+.MuiStepper-root .MuiStepIcon-root.MuiStepIcon-completed, .MuiStepper-root .MuiStepIcon-root.MuiStepIcon-active {
+  color: #8aadd8 !important;
+}
+/*# sourceMappingURL=index.css.map */

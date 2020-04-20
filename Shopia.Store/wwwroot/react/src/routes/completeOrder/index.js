@@ -7,7 +7,7 @@ import { TextField, Select, MenuItem, FormControl, InputLabel } from '@material-
 import productApi from './../../api/productApi';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-class OrderProduct extends React.Component {
+class CompleteOrder extends React.Component {
     constructor(props) {
         super(props);
         console.log(this.props.payload);

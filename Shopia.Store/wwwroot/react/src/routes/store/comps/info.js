@@ -2,52 +2,62 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import strings from './../../../shared/constant';
 import Skeleton from '@material-ui/lab/Skeleton';
+import storeApi from '../../../api/storeApi';
+import { ShowInitErrorAction} from '../../../redux/actions/InitErrorAction';
+import { connect } from 'react-redux';
+import BasketIcon from './../../../shared/basketIcon';
+import { Link } from 'react-router-dom';
 
-export default class Info extends React.Component {
+class Info extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            logoUrl: '',
+            loading: true
+        };
+    }
+    async _fetchData() {
+        let storeRep = await storeApi.getSingleStore(this.props.id);
+        if (storeRep.success) this.setState(p => ({ ...p, ...storeRep.result, loading: false }));
+        else this.props.showInitError(this._fetchData.bind(this));
+    }
+
+    async componentDidMount() {
+        //await this._fetchData();
+    }
 
     render() {
-        const info = this.props.info;
-        console.log(info);
         return (
             <div className="info">
                 <Container>
                     <Row className="m-b">
-                        <Col className="followers">
-                            <span> {info.followingCount ? info.followingCount : <Skeleton variant='text' height={15} width={40} />}</span>
-                            <small>{strings.following}</small>
-                        </Col>
-                        <Col className="followers">
-                            <span> {info.followersCount ? info.followersCount : <Skeleton variant='text' height={15} width={40} />}</span>
-                            <small>{strings.followers}</small>
-                        </Col>
-                        <Col className="posts">
-                            <span> {info.postsCount ? info.postsCount : <Skeleton variant='text' height={15} width={40} />}</span>
-                            <small>{strings.posts}</small>
-                        </Col>
-                        <Col className="logo">
-                            {info.logoUrl ? <img src={info.logoUrl} alt='logo' /> : <Skeleton variant='circle' width={100} height={100} />}
+                        <Col className='wrapper'>
+                            <div className="logo">
+                                {!this.state.loading ? <img src={this.state.logoUrl} alt='logo' /> : <Skeleton variant='circle' width={80} height={80} />}
+                            </div>
+                            <div className='name-wrapper'>
+                                {!this.state.loading ? <h2 className='name m-b'>{this.state.name}</h2> : <Skeleton className='m-b' variant='text' width={100} height={30} />}
+                                <div className='basket-wrapper'>
+                                    <BasketIcon />
+                                    <Link className='contactus' to='contactus'>{strings.contactus}</Link>
+                                </div>
+                            </div>
                         </Col>
                     </Row>
-                    <Row className="details" dir="ltr" >
 
-                        <Col className="name" xs={12} sm={6}>
-                            {info.name ? info.name : <Skeleton variant='text' height={20} width={50} />}
-                        </Col>
-                        <Col className="desc" xs={12} sm={6}>
-                            {info.desc ? info.desc : <Skeleton variant='text' height={20} width={100} />}
-                        </Col>
-                        <Col className="sccount-txt" xs={12} sm={6}>
-                            {info.accountText ? info.accountText : <Skeleton variant='text' height={20} width={100} />}
-                        </Col>
-                        <Col className="delivery-txt" xs={12} sm={6}>
-                            {info.deliveryText ? info.deliveryText : <Skeleton variant='text' height={20} width={150} />}
-                        </Col>
-                        <Col className="gateway-txt" xs={12}>
-                            {info.gatewayText ? info.gatewayText : <Skeleton variant='text' height={20} width={150} />}
-                        </Col>
-                    </Row>
                 </Container>
             </div >
         );
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return { ...ownProps };
+}
+
+const mapDispatchToProps = dispatch => ({
+    showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Info);

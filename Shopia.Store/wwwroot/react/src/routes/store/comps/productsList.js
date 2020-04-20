@@ -1,10 +1,12 @@
 import React from 'react';
 import Product from './product';
 import productApi from './../../../api/productApi';
-import { loaderImage } from './../../../shared/constant';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { arrangeInRows } from './../../../shared/utils';
-export default class ProductsList extends React.Component {
+import { ShowInitErrorAction} from '../../../redux/actions/InitErrorAction';
+import { connect } from 'react-redux';
+
+class ProductsList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,9 +25,11 @@ export default class ProductsList extends React.Component {
         this.loading = false;
         if (productsRep.success) {
             if (productsRep.result.length === 0 && this.pageNumber > 1)
-                this.pageNumber--;
+            this.pageNumber--;
             this.setState(p => ({ ...p, products: [...(p.products ? p.products : []), ...productsRep.result] }))
         }
+        else this.props.showInitError(this._fetchData.bind(this));
+
 
     }
 
@@ -55,3 +59,14 @@ export default class ProductsList extends React.Component {
         else return (arrangeInRows(3, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return { ...ownProps };
+}
+
+const mapDispatchToProps = dispatch => ({
+    showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);

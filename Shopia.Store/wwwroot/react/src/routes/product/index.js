@@ -1,9 +1,7 @@
 import React from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { ToggleDrawerAction } from "../../redux/actions/DrawerAction";
 import { SendProductInoAction } from "../../redux/actions/sendProductInfoAction";
-import Drawer from './../../shared/purchaseDrawer';
 import productApi from './../../api/productApi';
 import strings from './../../shared/constant';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -39,7 +37,7 @@ class Product extends React.Component {
         // }, 2000)
     }
     _purchase() {
-        this.props.toggleDrawer();
+        //this.props.toggleDrawer();
     }
 
     _like() {
@@ -90,7 +88,6 @@ class Product extends React.Component {
                 </Container>
 
                 <Button disabled={this.state.loading} className="btn-purchase" onClick={this._purchase.bind(this)}>{strings.purchase}</Button>
-                <Drawer />
             </div>
         );
     }
@@ -100,8 +97,8 @@ class Product extends React.Component {
 // }
 
 const mapDispatchToProps = dispatch => ({
-    toggleDrawer: () => dispatch(ToggleDrawerAction()),
-    sendProductIno: (payload) => dispatch(SendProductInoAction(payload))
+    // toggleDrawer: () => dispatch(ToggleDrawerAction()),
+    // sendProductIno: (payload) => dispatch(SendProductInoAction(payload))
 });
 
 export default connect(null, mapDispatchToProps)(Product);

@@ -6,7 +6,7 @@ import Store from '../../routes/store';
 import Product from '../../routes/product';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
-import Error from '../../routes/error';
+import InitError from '../../shared/initError';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -18,13 +18,12 @@ class Layout extends React.Component {
                 <Switch>
                     <Route path="/product/:id" component={Product} />
                     <Route path="/afterGateway/:id" component={AfterGateway} />
-                    <Route path="/error/:msg?" component={Error} />
                     <Route path="/notFound/:msg?" component={NotFound} />
                     <Route exact path="/:id?" component={Store} />
 
                 </Switch>
                 <Modal />
-                <CustomToas />
+                <InitError />
             </Router>
         );
     }

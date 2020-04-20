@@ -1,0 +1,64 @@
+.product-page .icons {
+  margin-bottom: 15px;
+}
+
+.product-page .icons .col-2 {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.product-page .icons button {
+  padding: 8px;
+}
+
+.product-page .btn-purchase {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #0095f6;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.product-page .carousel-item img {
+  max-height: 360px;
+}
+
+.product-page .carousel-indicators {
+  bottom: -30px;
+}
+
+.product-page .carousel-indicators li {
+  background-color: #000;
+  border-radius: 50%;
+  background: rgba(var(--ba8, 168, 168, 168), 1);
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: none;
+}
+
+.product-page .carousel-indicators li.active {
+  background-color: #0095f6;
+}
+
+.product-page .add-comment-comp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+/*# sourceMappingURL=index.css.map */

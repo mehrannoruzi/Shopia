@@ -1,0 +1,9 @@
+﻿@import './../../../assets//css/constant.scss';
+
+.MuiStepper-root{
+    padding: 15px 0!important;
+
+    .MuiStepIcon-root.MuiStepIcon-completed,.MuiStepIcon-root.MuiStepIcon-active{
+        color: $primaryColor!important;
+    }
+}
