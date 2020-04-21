@@ -4,10 +4,17 @@ html {
     font-size: 12px;
 }
 body {
-    min-height: 100vh;
+	min-height: 100vh;
+	background-color: #f8f8f8;
+}
+#root{
+	min-height: 100vh;
 }
 .MuiFormLabel-root {
     font-family: "iransans" !important;
+}
+h1,h2,h3{
+	margin: 0;
 }
 ul {
     margin-bottom: 0;
@@ -125,9 +132,12 @@ input:-webkit-autofill:active {
 @import "./../../shared/steps/css/index.scss";
 @import "./../../shared/basketIcon/css/index.scss";
 @import "./../../shared/initError/css/index.scss";
+@import "./../../shared/header/css/index.scss";
+@import "./../../shared/discountBadg/css/index.scss";
 
 @import "./../../routes/Store/css/index.scss";
 @import "./../../routes/product/css/index.scss";
+@import "./../../routes/contactUs/css/index.scss";
 @import "./../../routes/signUpOrLogin/css/index.scss";
 @import "./../../routes/logIn/css/index.scss";
 @import "./../../routes/singleAddress/css/index.scss";

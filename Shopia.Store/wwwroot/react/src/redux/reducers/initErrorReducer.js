@@ -2,13 +2,13 @@
 
 const initState = {
     show: false,
-    fetchData: null
+    fetchDatas: []
 };
 
 export default function initErrorReducer(state = initState, action) {
     switch (action.type) {
         case actionTypes.SHOW_INIT_ERROR:
-            return { ...state, show: true, fetchData: action.payload.fetchData };
+            return { ...state, show: true, fetchDatas: [...state.fetchDatas, action.payload.fetchData] };
         case actionTypes.Hide_INIT_ERROR:
             return { ...state, show: false };
         default:

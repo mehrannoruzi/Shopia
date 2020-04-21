@@ -3,6 +3,7 @@ import Modal from '../modal';
 import CustomToas from '../toast';
 import { connect } from 'react-redux'
 import Store from '../../routes/store';
+import ContactUs from '../../routes/contactUs';
 import Product from '../../routes/product';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
@@ -17,6 +18,7 @@ class Layout extends React.Component {
                 {/* <CustomHeader /> */}
                 <Switch>
                     <Route path="/product/:id" component={Product} />
+                    <Route path="/contactus" component={ContactUs} />
                     <Route path="/afterGateway/:id" component={AfterGateway} />
                     <Route path="/notFound/:msg?" component={NotFound} />
                     <Route exact path="/:id?" component={Store} />

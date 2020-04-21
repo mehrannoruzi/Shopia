@@ -3,7 +3,7 @@ import Product from './product';
 import productApi from './../../../api/productApi';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { arrangeInRows } from './../../../shared/utils';
-import { ShowInitErrorAction} from '../../../redux/actions/InitErrorAction';
+import { ShowInitErrorAction } from '../../../redux/actions/InitErrorAction';
 import { connect } from 'react-redux';
 
 class ProductsList extends React.Component {
@@ -21,11 +21,14 @@ class ProductsList extends React.Component {
     async _fetchData() {
         if (this.loading) return;
         this.loading = true;
-        let productsRep = await productApi.getProducts(this.props.storeId, this.pageNumber, this.pageSize);
+        let productsRep = await productApi.getProducts(this.props.storeId,
+            this.props.category,
+            this.pageNumber,
+            this.pageSize);
         this.loading = false;
         if (productsRep.success) {
             if (productsRep.result.length === 0 && this.pageNumber > 1)
-            this.pageNumber--;
+                this.pageNumber--;
             this.setState(p => ({ ...p, products: [...(p.products ? p.products : []), ...productsRep.result] }))
         }
         else this.props.showInitError(this._fetchData.bind(this));
@@ -55,8 +58,8 @@ class ProductsList extends React.Component {
         }
     };
     render() {
-        if (this.state.products) return (arrangeInRows(3, this.state.products.map((p, idx) => (<Product key={idx} product={p} />)), 'products-list'));
-        else return (arrangeInRows(3, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
+        if (this.state.products) return (arrangeInRows(2, this.state.products.map((p, idx) => (<Product key={idx} product={p} />)), 'products-list'));
+        else return (arrangeInRows(2, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
     }
 }
 

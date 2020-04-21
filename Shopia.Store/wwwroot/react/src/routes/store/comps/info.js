@@ -24,7 +24,7 @@ class Info extends React.Component {
     }
 
     async componentDidMount() {
-        //await this._fetchData();
+        await this._fetchData();
     }
 
     render() {

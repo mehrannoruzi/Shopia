@@ -5,10 +5,12 @@ import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 
 class InitError extends React.Component {
 
-    _fetchData() {
-        if (this.props.fetchData) {
+     _fetchData() {
+        if (this.props.fetchDatas.length>0) {
             this.props.hide();
-            this.props.fetchData();
+            this.props.fetchDatas.forEach(async function(fd){
+                await fd();
+            })
         }
 
     }

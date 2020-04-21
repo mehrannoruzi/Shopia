@@ -3,6 +3,7 @@
     .info {
         padding-top: 15px;
         padding-bottom: 15px;
+        background-color: #fff;
         .wrapper {
             display: flex;
 
@@ -22,7 +23,9 @@
                 align-items: flex-start;
                 flex-direction: column;
                 flex: 1;
-
+                .name {
+                    font-size: 1.2rem;
+                }
                 .basket-wrapper {
                     display: flex;
                     justify-content: space-between;
@@ -43,6 +46,8 @@
 
     .nav-tabs {
         border-bottom: none;
+        background-color: #fff;
+        box-shadow: 0px 2px 0px 0px rgba(0,0,0,0.1);
 
         .nav-item {
             display: inline-block;
@@ -50,28 +55,37 @@
             a {
                 display: inline-block;
                 color: $textColor;
-                color:#b1b1b1;
+                color: #b1b1b1;
                 font-size: 0.9rem;
-                padding: 6px;
-                &.active{
+                padding: 5px;
+
+                &.active {
+                    background-color: #fff;
                     color: #666;
-                    border:none;
-                    border-bottom: solid 2px $primaryColor;
+                    border: none;
+                    border-bottom: solid 3px $primaryColor;
                 }
+
                 .icon {
                     font-size: 15px;
                     vertical-align: middle;
-    
+
                     &.newests-icon {
                         color: yellow;
+                    }
+
+                    &.favorites-icon {
+                        color: red;
+                    }
+                    &.best-sellers-icon {
+                        color: #ff9f1d;
                     }
                 }
             }
         }
     }
-    .tab-content{
-        padding:10px;
-        background-color: #f8f8f8;
+    .tab-content {
+        margin-top: 10px;
     }
     .products-list {
         .arraned-row {
@@ -80,6 +94,13 @@
 
             .product {
                 margin-right: 3px;
+                position: relative;
+
+                .discount-badg {
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                }
 
                 img {
                     width: 100%;
