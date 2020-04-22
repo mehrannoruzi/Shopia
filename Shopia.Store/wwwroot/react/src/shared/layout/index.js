@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from '../modal';
-import CustomToas from '../toast';
 import { connect } from 'react-redux'
 import Store from '../../routes/store';
 import ContactUs from '../../routes/contactUs';
@@ -8,6 +7,7 @@ import Product from '../../routes/product';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
 import InitError from '../../shared/initError';
+import { ToastContainer} from 'react-toastify';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ class Layout extends React.Component {
                 </Switch>
                 <Modal />
                 <InitError />
+                <ToastContainer containerId={'common_toast'} rtl />
             </Router>
         );
     }

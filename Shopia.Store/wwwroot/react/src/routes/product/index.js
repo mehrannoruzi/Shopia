@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { ShowInitErrorAction } from "../../redux/actions/InitErrorAction";
+import { ShowInitErrorAction, HideInitErrorAction } from "../../redux/actions/InitErrorAction";
 import productApi from './../../api/productApi';
 import strings from './../../shared/constant';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Slider from './comps/slider';
 import Header from './../../shared/header';
 import DiscountBadg from './../../shared/discountBadg';
+import { AddToBasketAction } from './../../redux/actions/basketAction';
+import basketSrv from './../../service/basketSrv';
+import { commaThousondSeperator, checkLocalStorage } from './../../shared/utils';
 
 class Product extends React.Component {
     constructor(props) {
@@ -26,22 +29,29 @@ class Product extends React.Component {
                 desc: ''
             }
         };
+        this._isMounted = true;
     }
+
     async _fetchData() {
         const { params } = this.props.match;
         let apiRep = await productApi.getSingleProduct(params.id);
-        if (apiRep.code != 200) {
-            this.props.showInitError(this._fetchData.bind(this));
-            return;
-        }
+        console.log(apiRep);
+        if (!this._isMounted) return;
         if (!apiRep.success) {
-            //TODO:showToast
+            this.props.showInitError(this._fetchData.bind(this), apiRep.message);
+            return;
         }
         this.setState(p => ({ ...p, product: { ...apiRep.result }, loading: false }));
     }
 
     async componentDidMount() {
+        checkLocalStorage();
+        this.props.hideInitError();
         await this._fetchData();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     _plusCount() {
@@ -54,8 +64,9 @@ class Product extends React.Component {
         this.setState(p => ({ ...p, count: p.count - 1 }));
     }
 
-    _addToCart() {
-        //this.props.toggleDrawer();
+    _addToBasket() {
+        basketSrv.add(this.state.product, this.state.count);
+        this.props.addToBasket(this.state.product, this.state.count);
     }
 
     render() {
@@ -78,7 +89,7 @@ class Product extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={6} sm={6} >
+                        <Col xs={6} sm={6} className='d-flex align-items-center'>
                             <div className='counter'>
                                 <button disabled={this.state.loading} className='btn-plus' onClick={this._plusCount.bind(this)}>+</button>
                                 <span className='count'>{this.state.count}</span>
@@ -89,20 +100,23 @@ class Product extends React.Component {
 
                             {this.state.loading ? [1, 2].map(x => <Skeleton key={x} variant='text' height={20} />) :
                                 (<div className='price-wrapper'>
-                                    <div>
-                                        <span className='price'>{p.price} {p.currency}</span>
-                                        <DiscountBadg discount={p.discount} />
-                                    </div>
+                                    {
+                                        p.discount ? (
+                                            <div>
+                                                <span className='price'>{commaThousondSeperator(p.price.toString())} {p.currency}</span>
+                                                <DiscountBadg discount={p.discount} />
+                                            </div>) : null
+                                    }
                                     <div className='real-price-wrapper'>
-                                        <span className='real-price'>{p.realPrice}</span>
-                                        <span>&nbsp;{p.currency}</span>
+                                        <span className='real-price'>{commaThousondSeperator(p.realPrice.toString())}</span>
+                                        <span className='currency'>{p.currency}</span>
                                     </div>
                                 </div>)}
                         </Col>
                     </Row>
                 </Container>
 
-                <Button disabled={this.state.loading} className="btn-purchase" onClick={this._addToCart.bind(this)}>
+                <Button disabled={this.state.loading} className="btn-purchase" onClick={this._addToBasket.bind(this)}>
                     {`${strings.add} ${strings.to} ${strings.basket}`}
                 </Button>
             </div>
@@ -114,7 +128,9 @@ class Product extends React.Component {
 // }
 
 const mapDispatchToProps = dispatch => ({
-    showInitError: () => dispatch(ShowInitErrorAction()),
+    showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
+    hideInitError: () => dispatch(HideInitErrorAction()),
+    addToBasket: (product, count) => dispatch(AddToBasketAction(product, count))
     // sendProductIno: (payload) => dispatch(SendProductInoAction(payload))
 });
 

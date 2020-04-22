@@ -1,40 +1,43 @@
-﻿$marginBottom:15px;
+﻿$marginBottom: 15px;
 html {
-    min-height: 100%;
-    font-size: 12px;
+	min-height: 100%;
+	font-size: 12px;
 }
 body {
 	min-height: 100vh;
 	background-color: #f8f8f8;
 }
-#root{
+#root {
 	min-height: 100vh;
 }
 .MuiFormLabel-root {
-    font-family: "iransans" !important;
+	font-family: "iransans" !important;
 }
-h1,h2,h3{
+h1,
+h2,
+h3 {
 	margin: 0;
 }
 ul {
-    margin-bottom: 0;
-    padding: 0;
+	margin-bottom: 0;
+	padding: 0;
 }
 p {
-    margin: 0; 
+	margin: 0;
 }
-.m-b{
-	margin-bottom: 15px!important;
+.m-b {
+	margin-bottom: 15px !important;
 }
 button {
-    background: none;
-    border: none;
-    &:focus {
-        outline: none;
-    }
+	background: none;
+	border: none;
+	&:focus {
+		outline: none;
+	}
 }
-ul,ol{
-    padding: 0;
+ul,
+ol {
+	padding: 0;
 }
 .rotate-90 {
 	transform: rotate(90deg);
@@ -114,20 +117,21 @@ input:-webkit-autofill:active {
 	font-family: iransans;
 	direction: rtl;
 }
-.toast:not(.show){
+.toast:not(.show) {
 	display: none;
 }
-.form-group{
+.form-group {
 	margin-bottom: $marginBottom;
 	text-align: center;
 }
-.btn-group{
+.btn-group {
 	margin-bottom: $marginBottom;
 	width: 100%;
 }
-.MuiFormControl-root{
-	width:100%;
+.MuiFormControl-root {
+	width: 100%;
 }
+
 @import "./rtl.scss";
 @import "./../../shared/steps/css/index.scss";
 @import "./../../shared/basketIcon/css/index.scss";

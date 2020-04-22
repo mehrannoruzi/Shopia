@@ -4,6 +4,7 @@ import ProductsList from './comps/productsList';
 import Info from './comps/info';
 import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
 import strings from './../../shared/constant';
+import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 
 class Store extends Component {
 
@@ -16,7 +17,10 @@ class Store extends Component {
         };
     }
 
-
+    componentDidMount() {
+        this.props.hideInitError();
+    }
+    
     render() {
         const { params } = this.props.match;
         return (
@@ -78,8 +82,8 @@ class Store extends Component {
 //     return { ...state.initErrorReducer };
 // }
 
-// const mapDispatchToProps = dispatch => ({
-//     showInitError:()=>dispatch(ShowInitError());
-// });
+const mapDispatchToProps = dispatch => ({
+    hideInitError: () => dispatch(HideInitErrorAction())
+});
 
-export default connect(null, null)(Store);
+export default connect(null, mapDispatchToProps)(Store);

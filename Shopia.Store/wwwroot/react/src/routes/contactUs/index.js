@@ -1,7 +1,7 @@
 import React from 'react';
 import strings from '../../shared/constant';
 import { Container, Row, Col } from 'react-bootstrap';
-import generalApi from './../../api/generalApi';
+import generalSrv from './../../service/generalSrv';
 import Skeleton from '@material-ui/lab/Skeleton';
 import whatsappImage from './../../assets/images/whatsapp.png';
 import telegramImage from './../../assets/images/telegram.png';
@@ -18,10 +18,12 @@ class ConactUs extends React.Component {
     }
 
     async _fetchData() {
-        let info = await generalApi.getContactUsInfo();
-        if (info.success)
-            this.setState(p => ({ ...p, ...info.result, loading: false }));
-        else this.props.showInitError(this._fetchData.bind(this));
+        let srvRep = await generalSrv.getContactUsInfo();
+        if (!srvRep.success) {
+            this.props.showInitError(this._fetchData.bind(this), srvRep.message);
+            return;
+        }
+        this.setState(p => ({ ...p, ...srvRep.result, loading: false }));
     }
 
     async componentDidMount() {
@@ -68,7 +70,7 @@ class ConactUs extends React.Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData))
+    showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message))
 });
 
 export default connect(null, mapDispatchToProps)(ConactUs);

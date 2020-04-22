@@ -49,7 +49,7 @@
     phoneNumbers: 'شماره تلفن ها',
     add: 'افزودن',
     to: 'به',
-    basket: 'سبد خرید'
+    useModernBrowser:'لطفا از مرورگر جدید تری استفاده نمیید'
 };
 export default strings;
 export const validationStrings = {

@@ -1,10 +1,11 @@
 import actionTypes from './actionTypes';
 
-export  function ShowInitErrorAction(fetchData) {
+export  function ShowInitErrorAction(fetchData, message) {
     return {
         type: actionTypes.SHOW_INIT_ERROR,
         payload: {
-            fetchData
+            fetchData,
+            message
         }
     };
 };

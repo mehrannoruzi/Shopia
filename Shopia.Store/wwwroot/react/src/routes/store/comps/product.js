@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import DiscountBadg from './../../../shared/discountBadg';
 
 export default class Product extends React.Component {
-
     render() {
         let product = this.props.product;
         return (

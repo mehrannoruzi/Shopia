@@ -16,6 +16,7 @@ class ProductsList extends React.Component {
         this.loading = false;
         this.pageNumber = 1;
         this.pageSize = 12;
+        this._isMounted = true;
     }
 
     async _fetchData() {
@@ -25,6 +26,7 @@ class ProductsList extends React.Component {
             this.props.category,
             this.pageNumber,
             this.pageSize);
+        if (!this._isMounted) return;
         this.loading = false;
         if (productsRep.success) {
             if (productsRep.result.length === 0 && this.pageNumber > 1)
@@ -43,6 +45,7 @@ class ProductsList extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener("scroll", this._handleOnScroll.bind(this));
+        this._isMounted = false;
     }
     async _handleOnScroll() {
         const scrollTop = (document.documentElement && document.documentElement.scrollTop) ||

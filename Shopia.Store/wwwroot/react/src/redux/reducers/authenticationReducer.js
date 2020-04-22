@@ -1,6 +1,6 @@
 ﻿import actionTypes from './../actions/actionTypes';
 import strings from './../../shared/constant';
-import { getUserInfo } from './../../shared/utils';
+
 const getInitilState = () => {
     if (!localStorage) {
         alert(strings.browserIsOld);

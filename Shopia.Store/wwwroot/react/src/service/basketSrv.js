@@ -1,20 +1,26 @@
+import strings from './../shared/constant';
+
 export default class BasketSrv {
     static key = 'basket';
-    static add(product) {
+    static add(product, count) {
         try {
             let jsonBasket = localStorage.getItem(this.key);
             let basket = [];
             if (jsonBasket)
                 basket = JSON.parse(jsonBasket);
-            basket.push(product);
+            let idx = basket.findIndex(x => x.id === product.id);
+            if (idx !== -1) return { success: true, result: basket };
+            basket.push({ ...product, count });
             jsonBasket = JSON.stringify(basket);
             localStorage.setItem(this.key, jsonBasket);
+            return { success: true, result: basket };
         }
         catch{
             let basket = [];
             basket.push(product);
             let jsonBasket = JSON.stringify(basket);
             localStorage.setItem(this.key, jsonBasket);
+            return { success: true, result: basket };
         }
 
     }
@@ -39,7 +45,7 @@ export default class BasketSrv {
         return basket;
     }
 
-    static getCount(){
+    static getCount() {
         let jsonBasket = localStorage.getItem(this.key);
         let basket = [];
         if (jsonBasket)

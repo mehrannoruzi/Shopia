@@ -1,8 +1,8 @@
-import { getUserInfo } from './../shared/utils';
+
 
 export default class orderApi {
     static getInfo = (id) => new Promise((resolve) => {
-        let userRep = getUserInfo();
+        
         setTimeout(function () {
             resolve({
                 success: true,
