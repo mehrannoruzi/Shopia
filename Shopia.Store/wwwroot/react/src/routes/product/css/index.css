@@ -5,12 +5,6 @@
 .product-page .btn-purchase {
   position: fixed;
   bottom: 0;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid transparent;
-  color: #fff;
-  background-color: #23af66;
-  text-align: center;
 }
 
 .product-page .carousel-item {
@@ -48,33 +42,6 @@
   overflow: hidden;
   line-height: 20px;
   text-align: justify;
-}
-
-.product-page .counter {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.product-page .counter > * {
-  width: 30px;
-  height: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  font-size: 20px;
-}
-
-.product-page .counter .btn-minus,
-.product-page .counter .btn-plus {
-  border: solid 1px #ccc;
-  border-radius: 50%;
 }
 
 .product-page .price-wrapper {

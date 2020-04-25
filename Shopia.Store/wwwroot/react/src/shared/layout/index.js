@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Store from '../../routes/store';
 import ContactUs from '../../routes/contactUs';
 import Product from '../../routes/product';
+import Basket from './../../routes/basket';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
 import InitError from '../../shared/initError';
@@ -18,6 +19,7 @@ class Layout extends React.Component {
                 {/* <CustomHeader /> */}
                 <Switch>
                     <Route path="/product/:id" component={Product} />
+                    <Route path="/basket" component={Basket} />
                     <Route path="/contactus" component={ContactUs} />
                     <Route path="/afterGateway/:id" component={AfterGateway} />
                     <Route path="/notFound/:msg?" component={NotFound} />

@@ -49,7 +49,12 @@
     phoneNumbers: 'شماره تلفن ها',
     add: 'افزودن',
     to: 'به',
-    useModernBrowser:'لطفا از مرورگر جدید تری استفاده نمیید'
+    useModernBrowser: 'لطفا از مرورگر جدید تری استفاده نمیید',
+    continuePurchase: 'ادامه فرآیند خرید',
+    totalSum: 'جمغ گل',
+    delete: 'حذف',
+    cancel: 'انصراف',
+    areYouSureForDeleteingProduct: 'آیا از حذف محصول ##name## مطمن هستید؟'
 };
 export default strings;
 export const validationStrings = {

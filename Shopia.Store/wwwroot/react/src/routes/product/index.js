@@ -11,13 +11,17 @@ import DiscountBadg from './../../shared/discountBadg';
 import { AddToBasketAction } from './../../redux/actions/basketAction';
 import basketSrv from './../../service/basketSrv';
 import { commaThousondSeperator, checkLocalStorage } from './../../shared/utils';
+import Counter from './../../shared/counter';
 
 class Product extends React.Component {
     constructor(props) {
         super(props);
+        let count = 1;
+        const item = this.props.items.find(x => x.id == this.props.match.params.id);
+        if (item) count = item.count;
         this.state = {
             loading: true,
-            count: 1,
+            count: count,
             product: {
                 name: '',
                 price: 0,
@@ -54,14 +58,8 @@ class Product extends React.Component {
         this._isMounted = false;
     }
 
-    _plusCount() {
-        if (this.state.count === this.state.product.maxCount) return;
-        this.setState(p => ({ ...p, count: p.count + 1 }));
-    }
-
-    _minusCount() {
-        if (this.state.count === 1) return;
-        this.setState(p => ({ ...p, count: p.count - 1 }));
+    _changeCount(id, count) {
+        this.setState(p => ({ ...p, count: count }));
     }
 
     _addToBasket() {
@@ -79,7 +77,7 @@ class Product extends React.Component {
                     <Row className='name-row'>
                         <Col>
                             {this.state.loading ? <div className='name'><Skeleton variant='rect' height={20} width='60%' /></div> :
-                                <h2 className='name'>{p.name}</h2>}
+                                <h1 className='name'>{p.name}</h1>}
                         </Col>
                     </Row>
                     <Row className="details-row m-b">
@@ -90,11 +88,7 @@ class Product extends React.Component {
                     </Row>
                     <Row>
                         <Col xs={6} sm={6} className='d-flex align-items-center'>
-                            <div className='counter'>
-                                <button disabled={this.state.loading} className='btn-plus' onClick={this._plusCount.bind(this)}>+</button>
-                                <span className='count'>{this.state.count}</span>
-                                <button disabled={this.state.loading} className='btn-minus' onClick={this._minusCount.bind(this)}>-</button>
-                            </div>
+                            <Counter id={this.state.product.id} count={this.state.count} id={this.state.product.id} onChange={this._changeCount.bind(this)} max={this.state.product.maxCount} />
                         </Col>
                         <Col xs={6} sm={6}>
 
@@ -116,16 +110,16 @@ class Product extends React.Component {
                     </Row>
                 </Container>
 
-                <Button disabled={this.state.loading} className="btn-purchase" onClick={this._addToBasket.bind(this)}>
+                <Button disabled={this.state.loading} className="btn-purchase btn-next" onClick={this._addToBasket.bind(this)}>
                     {`${strings.add} ${strings.to} ${strings.basket}`}
                 </Button>
             </div>
         );
     }
 }
-// const mapStateToProps = state => {
-//     return { ...state.homeReducer };
-// }
+const mapStateToProps = state => {
+    return { ...state.basketReducer };
+}
 
 const mapDispatchToProps = dispatch => ({
     showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
@@ -134,4 +128,4 @@ const mapDispatchToProps = dispatch => ({
     // sendProductIno: (payload) => dispatch(SendProductInoAction(payload))
 });
 
-export default connect(null, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

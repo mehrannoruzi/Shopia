@@ -15,9 +15,16 @@ export function AddToBasketAction(product, count) {
     };
 };
 
+export function UpdateBasketAction(id, count) {
+    return {
+        type: actionTypes.UPDATE_BASKET,
+        payload: { id, count }
+    };
+};
+
 export function RemoveFromBasketAction(id) {
     return {
         type: actionTypes.REMOVE_FROM_BASKET,
-        payload: {id}
+        payload: { id }
     };
 };

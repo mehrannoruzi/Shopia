@@ -4,15 +4,11 @@ export default class BasketSrv {
     static key = 'basket';
     static add(product, count) {
         try {
-            let jsonBasket = localStorage.getItem(this.key);
-            let basket = [];
-            if (jsonBasket)
-                basket = JSON.parse(jsonBasket);
+            let basket = this.basket();
             let idx = basket.findIndex(x => x.id === product.id);
-            if (idx !== -1) return { success: true, result: basket };
-            basket.push({ ...product, count });
-            jsonBasket = JSON.stringify(basket);
-            localStorage.setItem(this.key, jsonBasket);
+            if (idx !== -1) basket[idx].count = count;
+            else basket.push({ ...product, count });
+            localStorage.setItem(this.key, JSON.stringify(basket));
             return { success: true, result: basket };
         }
         catch{
@@ -27,11 +23,10 @@ export default class BasketSrv {
 
     static remove(id) {
         try {
-            let jsonBasket = localStorage.getItem(this.key);
-            let basket = [];
-            if (!basket) return;
-            basket = JSON.parse(jsonBasket);
-            basket.splice(basket.findIndex(x => x.id = id), 1);
+            let basket = this.get();
+            if (basket.legnth == 0) return;
+            basket.splice(basket.findIndex(x => x.id === id), 1);
+            localStorage.setItem(this.key, JSON.stringify(basket));
         }
         catch{
         }
@@ -51,5 +46,22 @@ export default class BasketSrv {
         if (jsonBasket)
             basket = JSON.parse(jsonBasket);
         return basket.length;
+    }
+
+    static updateCount(id, count) {
+        try {
+            let basket = this.get();
+            let item = basket.find(x => x.id == id);
+            item.count = count;
+            localStorage.setItem(this.key, JSON.stringify(basket));
+            return { success: true }
+        }
+        catch{
+            return {
+                success: false,
+                message: strings.retryPlease
+            }
+        }
+
     }
 }

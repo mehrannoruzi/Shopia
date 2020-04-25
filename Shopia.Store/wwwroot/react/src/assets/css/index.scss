@@ -131,13 +131,21 @@ input:-webkit-autofill:active {
 .MuiFormControl-root {
 	width: 100%;
 }
-
+.btn-next{
+	width: 100%;
+	padding: 10px;
+	border: 1px solid transparent;
+	color: #fff;
+	background-color: #23af66;
+	text-align: center;
+}
 @import "./rtl.scss";
 @import "./../../shared/steps/css/index.scss";
 @import "./../../shared/basketIcon/css/index.scss";
 @import "./../../shared/initError/css/index.scss";
 @import "./../../shared/header/css/index.scss";
 @import "./../../shared/discountBadg/css/index.scss";
+@import "./../../shared/counter/css/index.scss";
 
 @import "./../../routes/Store/css/index.scss";
 @import "./../../routes/product/css/index.scss";
@@ -147,3 +155,4 @@ input:-webkit-autofill:active {
 @import "./../../routes/singleAddress/css/index.scss";
 @import "./../../routes/addressesList/css/index.scss";
 @import "./../../routes/afterGateway/css/index.scss";
+@import "./../../routes/basket/css/index.scss";
