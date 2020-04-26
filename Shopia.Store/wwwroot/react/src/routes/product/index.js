@@ -12,7 +12,7 @@ import { AddToBasketAction } from './../../redux/actions/basketAction';
 import basketSrv from './../../service/basketSrv';
 import { commaThousondSeperator, checkLocalStorage } from './../../shared/utils';
 import Counter from './../../shared/counter';
-
+import addToBasketImage from './../../assets/images/add-to-basket.svg';
 class Product extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +39,6 @@ class Product extends React.Component {
     async _fetchData() {
         const { params } = this.props.match;
         let apiRep = await productApi.getSingleProduct(params.id);
-        console.log(apiRep);
         if (!this._isMounted) return;
         if (!apiRep.success) {
             this.props.showInitError(this._fetchData.bind(this), apiRep.message);
@@ -112,6 +111,8 @@ class Product extends React.Component {
 
                 <Button disabled={this.state.loading} className="btn-purchase btn-next" onClick={this._addToBasket.bind(this)}>
                     {`${strings.add} ${strings.to} ${strings.basket}`}
+                    &nbsp;
+                    <img src={addToBasketImage} alt='add to basket'/>
                 </Button>
             </div>
         );

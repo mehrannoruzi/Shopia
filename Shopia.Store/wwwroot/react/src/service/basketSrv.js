@@ -4,7 +4,7 @@ export default class BasketSrv {
     static key = 'basket';
     static add(product, count) {
         try {
-            let basket = this.basket();
+            let basket = this.get();
             let idx = basket.findIndex(x => x.id === product.id);
             if (idx !== -1) basket[idx].count = count;
             else basket.push({ ...product, count });
@@ -63,5 +63,9 @@ export default class BasketSrv {
             }
         }
 
+    }
+
+    static clear(){
+        localStorage.removeItem(this.key);
     }
 }

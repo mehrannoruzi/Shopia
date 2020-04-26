@@ -73,6 +73,11 @@ ol {
   margin-bottom: 15px;
 }
 
+.ltr-input input {
+  direction: ltr;
+  text-align: left;
+}
+
 /*-----------------------------------
      remove browser autofill 
 ------------------------------------*/
@@ -207,12 +212,17 @@ body[dir="rtl"] .modal-header .close {
   margin-right: 0.5rem !important;
 }
 
-.MuiStepper-root {
+.steps-comp {
+  margin-bottom: 30px;
+}
+
+.steps-comp .MuiStepper-root {
+  background-color: #ededed !important;
   padding: 15px 0 !important;
 }
 
-.MuiStepper-root .MuiStepIcon-root.MuiStepIcon-completed, .MuiStepper-root .MuiStepIcon-root.MuiStepIcon-active {
-  color: #8aadd8 !important;
+.steps-comp .MuiStepper-root .MuiStepIcon-root.MuiStepIcon-completed, .steps-comp .MuiStepper-root .MuiStepIcon-root.MuiStepIcon-active, .steps-comp .MuiStepper-root .MuiStepLabel-active {
+  color: #2875d5 !important;
 }
 
 .basket-icon-comp .icon {
@@ -791,8 +801,70 @@ body[dir="rtl"] .modal-header .close {
   height: 100px;
 }
 
+.after-gateway-page .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.after-gateway-page .content .main-message {
+  margin: 15px 0 10px 0;
+  font-weight: 700;
+}
+
+.after-gateway-page .content .success {
+  color: green;
+}
+
+.after-gateway-page .content .error {
+  color: red;
+}
+
+.after-gateway-page .content .trace-id-text {
+  font-weight: 700;
+  margin: 50px 0 10px 0;
+}
+
+.after-gateway-page .content .trace-id {
+  padding: 8px 10px;
+  background-color: #ededed;
+}
+
+.basket-page .empty {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.basket-page .empty i {
+  margin-bottom: 15px;
+  font-size: 50px;
+}
+
 .basket-page .basket-wrapper {
-  margin-bottom: 80px;
+  margin-bottom: 90px;
 }
 
 .basket-page .basket-wrapper .item {
@@ -851,7 +923,7 @@ body[dir="rtl"] .modal-header .close {
 }
 
 .basket-page .basket-wrapper .item .info .name .hx {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .basket-page .basket-wrapper .item .info .price-wrapper {
@@ -893,5 +965,12 @@ body[dir="rtl"] .modal-header .close {
 .basket-page .footer-row .total-price-wrapper .total-price {
   font-size: 1.5rem;
   font-weight: 900;
+}
+
+.complete-information-page .btn-next {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 /*# sourceMappingURL=index.css.map */

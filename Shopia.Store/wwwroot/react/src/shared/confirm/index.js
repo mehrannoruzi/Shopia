@@ -40,7 +40,7 @@ export default class ConfirmModal extends React.Component {
                     <Button variant="danger" onClick={this._delete.bind(this)}>
                         {strings.delete}
                     </Button>
-                    <Button variant="secondary" onClick={this.props.submitInfo}>
+                    <Button variant="secondary" onClick={this._toggle.bind(this)}>
                         {strings.cancel}
                     </Button>
                 </Modal.Footer>

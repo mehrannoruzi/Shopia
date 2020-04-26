@@ -58,6 +58,12 @@ ol {
 .m-b {
 	margin-bottom: 15px;
 }
+.ltr-input {
+	input {
+		direction: ltr;
+		text-align: left;
+	}
+}
 /*-----------------------------------
      remove browser autofill 
 ------------------------------------*/
@@ -131,7 +137,7 @@ input:-webkit-autofill:active {
 .MuiFormControl-root {
 	width: 100%;
 }
-.btn-next{
+.btn-next {
 	width: 100%;
 	padding: 10px;
 	border: 1px solid transparent;
@@ -156,3 +162,4 @@ input:-webkit-autofill:active {
 @import "./../../routes/addressesList/css/index.scss";
 @import "./../../routes/afterGateway/css/index.scss";
 @import "./../../routes/basket/css/index.scss";
+@import "./../../routes/completeInformation/css/index.scss";

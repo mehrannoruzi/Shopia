@@ -12,7 +12,7 @@ export default class Header extends React.Component {
                 <Container>
                     <Row>
                         <Col className='wrapper'>
-                            {this.props.title ? <h2 className='heading'>{this.props.title}</h2> : <BasketIcon />}
+                            {this.props.hasTitle ? <h2 className='heading'>{this.props.title}</h2> : <BasketIcon />}
                             <button className='btn-back' onClick={this._goBack.bind(this)}>
                                 <i className='zmdi zmdi-chevron-left'></i>
                             </button></Col>

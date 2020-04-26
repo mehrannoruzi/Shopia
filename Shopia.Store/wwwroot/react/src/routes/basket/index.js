@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import basketSrv from './../../service/basketSrv';
 import strings from './../../shared/constant';
 import DiscountBadg from './../../shared/discountBadg';
@@ -26,7 +27,7 @@ class Basket extends React.Component {
     }
 
     async componentDidMount() {
-
+        console.log(this.props.items);
     }
 
     _changeCount(id, count) {
@@ -47,7 +48,12 @@ class Basket extends React.Component {
         const p = this.state.product;
         if (this.props.items.length == 0)
             return (<div className='basket-page'>
-                <i className='zmdi zmdi-mood-bad'></i>
+                <Header goBack={this.props.history.goBack} />
+                <div className='empty'>
+                    <i className='zmdi zmdi-mood-bad'></i>
+                    <span>{strings.basketIsEmpty}</span>
+                </div>
+
             </div>);
         return (
             <div className='basket-page'>
@@ -57,9 +63,9 @@ class Basket extends React.Component {
                         <Row key={x.id}>
                             <Col>
                                 <div className='item'>
-                                    {x.slides.length !== 0 ? (
+                                    {x.slides && x.slides.length !== 0 ? (
                                         <div className='img-wrapper'>
-                                            <img src={x.slides[0].imgUrl} alt='img item' />
+                                            <Link to={`product/${x.id}`}><img src={x.slides[0].imgUrl} alt='img item' /></Link>
                                         </div>) : null}
 
                                     <div className='info'>
@@ -92,9 +98,9 @@ class Basket extends React.Component {
                             </Col>
                         </Row>
                     </Container>
-                    <button className='btn-next'>
+                    <Link className='btn-next d-block' to='completeInformation'>
                         <span>{strings.continuePurchase}</span>
-                    </button>
+                    </Link>
                 </div>
                 <ConfirmModal ref={(i) => this.modal = i} onDelete={this._confirmDelete.bind(this)} />
             </div>

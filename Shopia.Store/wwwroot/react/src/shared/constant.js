@@ -38,7 +38,7 @@
     completeInformation: 'تکمیل اطلاعات',
     selectAddress: 'انتخاب آدرس',
     initialOrderSubmit: 'ثبت اولیه سفارش',
-    retryPlease: 'لطفا دوباره تلاش نمایید',
+    retryPlease: 'لطفا دوباره تلاش کنید',
     connecttionFailed: 'اتصال برقرار نشد',
     basket: 'سبد خرید',
     all: 'همه',
@@ -54,7 +54,13 @@
     totalSum: 'جمغ گل',
     delete: 'حذف',
     cancel: 'انصراف',
-    areYouSureForDeleteingProduct: 'آیا از حذف محصول ##name## مطمن هستید؟'
+    basketIsEmpty:'سبد خالی است',
+    areYouSureForDeleteingProduct: 'آیا از حذف محصول ##name## مطمن هستید؟',
+    thankYouForPurchase:'با تشکر از خرید شما',
+    successfulOrder:'سفارش شما با موفقیت ثبت شد',
+    purchaseFailed:'خرید شما موفقیت آمیر نبود',
+    orderTraceIdIs:'کد پیگیری سفارش به شرح زیر می باشد',
+    callYouLater:'برای پیگیری های بعدی با شما تماس خواهیم گرفت'
 };
 export default strings;
 export const validationStrings = {
