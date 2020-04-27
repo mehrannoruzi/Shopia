@@ -1,27 +1,25 @@
-﻿using Shopia.Domain;
-using System.Threading;
-using Shopia.DataAccess.Ef;
+﻿using Elk.Core;
+using Shopia.Domain;
+using Elk.AspNetCore;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Service
 {
     public class NotificationService : INotificationService
     {
-        readonly AppUnitOfWork _appUow;
+        private IConfiguration _configuration { get; }
 
-        public NotificationService(AppUnitOfWork appUOW)
+        public NotificationService(IConfiguration configuration)
         {
-            _appUow = appUOW;
+            _configuration = configuration;
         }
 
 
-        public async Task<bool> AddAsync(Notification model, CancellationToken token = default)
+        public async Task<bool> NotifyAsync(NotificationDto notifyDto)
         {
-            await _appUow.NotificationRepo.AddAsync(model, token);
-            var saveResult = await _appUow.ElkSaveChangesAsync(token);
-            return saveResult.IsSuccessful;
+            var requestResult = await HttpRequestTools.PostJsonAsync<IResponse<bool>>(_configuration.GetSection("CustomSettings:NotifierUrl").Value, notifyDto);
+            return requestResult.IsSuccessful;
         }
-
-
     }
 }

@@ -1033,6 +1033,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تعداد تلاش.
+        /// </summary>
+        public static string TryCount {
+            get {
+                return ResourceManager.GetString("TryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نوع.
         /// </summary>
         public static string Type {

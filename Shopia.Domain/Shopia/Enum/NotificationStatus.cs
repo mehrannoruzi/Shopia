@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Shopia.Domain
+﻿namespace Shopia.Domain
 {
     public enum NotificationStatus : int
     {

@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shopia.Domain
 {
-    [Table(nameof(Notification), Schema = "Base")]
-    public class Notification : IInsertDateProperties, IEntity
+    [Table(nameof(Notification), Schema = "Notifier")]
+    public class Notification : IInsertDateProperties, INotifierEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -20,6 +20,10 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.Type), ResourceType = typeof(Strings))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public NotificationType Type { get; set; }
+
+        [Display(Name = nameof(Strings.TryCount), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public byte TryCount { get; set; }
 
         [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
         public DateTime InsertDateMi { get; set; }

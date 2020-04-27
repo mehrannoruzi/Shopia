@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Shopia.DependencyResolver
 {
-    public static class DependencyInjectionExtension
+    public static class ShopiaDiExtension
     {
         public static IServiceCollection AddTransient(this IServiceCollection serviceCollection, IConfiguration _configuration)
         {
@@ -47,9 +47,10 @@ namespace Shopia.DependencyResolver
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITagRepo, TagRepo>();
             services.AddScoped<IGenericRepo<Tag>, TagRepo>();
-
+            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             #endregion
 

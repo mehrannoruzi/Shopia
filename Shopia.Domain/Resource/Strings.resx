@@ -441,6 +441,9 @@
   <data name="TransactionId" xml:space="preserve">
     <value>کد تراکنش</value>
   </data>
+  <data name="TryCount" xml:space="preserve">
+    <value>تعداد تلاش</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>نوع</value>
   </data>
