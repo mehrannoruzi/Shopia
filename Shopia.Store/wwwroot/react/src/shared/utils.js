@@ -1,28 +1,6 @@
-﻿import CryptoJS from 'crypto-js';
-import strings from './../shared/constant';
+﻿import strings from './../shared/constant';
 import React from 'react'
-
-export function getUserInfo() {
-    let ciphertext = localStorage.getItem('user');
-    if (ciphertext == null)
-        return { success: false, message: strings.notAutheticated, status: 401 };
-    var bytes = CryptoJS.AES.decrypt(ciphertext, 'kingofday.ir');
-    var user = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    return {
-        success: true,
-        result: user
-    }
-}
-
-export function storeUserInfo(user) {
-    let userInfo = JSON.stringify(user);
-    let encInfo = CryptoJS.AES.encrypt(userInfo, 'kingofday.ir').toString();
-    localStorage.setItem('user', encInfo);
-}
-
-export function removeUserInfo() {
-    localStorage.removeItem('user');
-}
+import { toast } from 'react-toastify';
 
 export function arrangeInRows(columnCount, items, wrapperClassName) {
     let rows = [];
@@ -33,4 +11,19 @@ export function arrangeInRows(columnCount, items, wrapperClassName) {
         {rows}
     </div>);
 
+}
+export function checkLocalStorage() {
+    if (!localStorage) toast(strings.useModernBrowser, {type: toast.TYPE.INFO});
+}
+
+export function commaThousondSeperator(str) { return str.replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
+
+export function getlocalStorageSizes(){
+    var total = 0;
+    for(var x in localStorage) {
+      var amount = (localStorage[x].length * 2) / 1024 / 1024;
+      total += amount;
+      console.log( x + " = " + amount.toFixed(2) + " MB");
+    }
+    console.log( "Total: " + total.toFixed(2) + " MB");
 }

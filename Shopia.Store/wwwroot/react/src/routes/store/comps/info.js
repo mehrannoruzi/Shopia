@@ -16,17 +16,21 @@ class Info extends React.Component {
             logoUrl: '',
             loading: true
         };
+        this._isMounted = true;
     }
     async _fetchData() {
         let storeRep = await storeApi.getSingleStore(this.props.id);
+        if(!this._isMounted) return;
         if (storeRep.success) this.setState(p => ({ ...p, ...storeRep.result, loading: false }));
         else this.props.showInitError(this._fetchData.bind(this));
     }
 
     async componentDidMount() {
-        //await this._fetchData();
+        await this._fetchData();
     }
-
+    componentWillUnmount(){
+        this._isMounted = false;
+    }
     render() {
         return (
             <div className="info">

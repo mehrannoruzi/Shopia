@@ -4,6 +4,7 @@ import ProductsList from './comps/productsList';
 import Info from './comps/info';
 import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
 import strings from './../../shared/constant';
+import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 
 class Store extends Component {
 
@@ -16,7 +17,10 @@ class Store extends Component {
         };
     }
 
-
+    componentDidMount() {
+        this.props.hideInitError();
+    }
+    
     render() {
         const { params } = this.props.match;
         return (
@@ -31,13 +35,13 @@ class Store extends Component {
                                         <Nav.Link eventKey="all">{strings.all}</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="newests"><i class="icon newests-icon zmdi zmdi-flash"></i> {strings.newests}</Nav.Link>
+                                        <Nav.Link eventKey="newests"><i className="icon newests-icon zmdi zmdi-flash"></i> {strings.newests}</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="favorites">{strings.favorites}</Nav.Link>
+                                        <Nav.Link eventKey="favorites"><i className="icon favorites-icon zmdi zmdi-favorite"></i> {strings.favorites}</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="best-sellers">{strings.bestSellers}</Nav.Link>
+                                        <Nav.Link eventKey="best-sellers"><i className='icon best-sellers-icon zmdi zmdi-fire'></i> {strings.bestSellers}</Nav.Link>
                                     </Nav.Item>
                                 </Col>
                             </Row>
@@ -45,21 +49,27 @@ class Store extends Component {
 
                     </Nav>
 
+                    <Container>
+                        <Row>
+                            <Col>
+                                <Tab.Content>
+                                    <Tab.Pane eventKey="all" className="all">
+                                        <ProductsList storeId={params.id} category='all' />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="newests">
+                                        <ProductsList storeId={params.id} category='newests' />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="favorites">
+                                        <ProductsList storeId={params.id} category='favorites' />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="best-sellers">
+                                        <ProductsList storeId={params.id} category='bestSellers' />
+                                    </Tab.Pane>
+                                </Tab.Content>
+                            </Col>
+                        </Row>
+                    </Container>
 
-                    <Tab.Content>
-                        <Tab.Pane eventKey="all" className="all">
-                            <ProductsList storeId={params.id} category='all' />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="newests">
-                            <ProductsList storeId={params.id} category='newests' />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="favorites">
-                            <ProductsList storeId={params.id} category='newests' />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="best-sellers">
-                            <ProductsList storeId={params.id} category='bestSellers' />
-                        </Tab.Pane>
-                    </Tab.Content>
                 </Tab.Container>
             </div>
 
@@ -72,8 +82,8 @@ class Store extends Component {
 //     return { ...state.initErrorReducer };
 // }
 
-// const mapDispatchToProps = dispatch => ({
-//     showInitError:()=>dispatch(ShowInitError());
-// });
+const mapDispatchToProps = dispatch => ({
+    hideInitError: () => dispatch(HideInitErrorAction())
+});
 
-export default connect(null, null)(Store);
+export default connect(null, mapDispatchToProps)(Store);

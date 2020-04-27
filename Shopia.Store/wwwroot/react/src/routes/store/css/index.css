@@ -1,6 +1,7 @@
 .store-page .info {
   padding-top: 15px;
   padding-bottom: 15px;
+  background-color: #fff;
 }
 
 .store-page .info .wrapper {
@@ -44,6 +45,10 @@
           flex: 1;
 }
 
+.store-page .info .wrapper .name-wrapper .name {
+  font-size: 1.2rem;
+}
+
 .store-page .info .wrapper .name-wrapper .basket-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -69,6 +74,9 @@
 
 .store-page .nav-tabs {
   border-bottom: none;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1);
 }
 
 .store-page .nav-tabs .nav-item {
@@ -80,13 +88,14 @@
   color: #7facde;
   color: #b1b1b1;
   font-size: 0.9rem;
-  padding: 6px;
+  padding: 5px;
 }
 
 .store-page .nav-tabs .nav-item a.active {
+  background-color: #fff;
   color: #666;
   border: none;
-  border-bottom: solid 2px #8aadd8;
+  border-bottom: solid 3px #8aadd8;
 }
 
 .store-page .nav-tabs .nav-item a .icon {
@@ -98,9 +107,16 @@
   color: yellow;
 }
 
+.store-page .nav-tabs .nav-item a .icon.favorites-icon {
+  color: red;
+}
+
+.store-page .nav-tabs .nav-item a .icon.best-sellers-icon {
+  color: #ff9f1d;
+}
+
 .store-page .tab-content {
-  padding: 10px;
-  background-color: #f8f8f8;
+  margin-top: 10px;
 }
 
 .store-page .products-list .arraned-row {
@@ -112,6 +128,13 @@
 
 .store-page .products-list .arraned-row .product {
   margin-right: 3px;
+  position: relative;
+}
+
+.store-page .products-list .arraned-row .product .discount-badg {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .store-page .products-list .arraned-row .product img {

@@ -1,12 +1,16 @@
 import React from 'react';
 import Modal from '../modal';
-import CustomToas from '../toast';
 import { connect } from 'react-redux'
 import Store from '../../routes/store';
+import ContactUs from '../../routes/contactUs';
 import Product from '../../routes/product';
+import Basket from './../../routes/basket';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
 import InitError from '../../shared/initError';
+import { ToastContainer} from 'react-toastify';
+import CompleteInfo from '../../routes/completeInformation';
+import AddressesList from '../../routes/addressesList';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -17,13 +21,18 @@ class Layout extends React.Component {
                 {/* <CustomHeader /> */}
                 <Switch>
                     <Route path="/product/:id" component={Product} />
-                    <Route path="/afterGateway/:id" component={AfterGateway} />
+                    <Route path="/basket" component={Basket} />
+                    <Route path="/completeInformation" component={CompleteInfo} />
+                    <Route path="/addressesList" component={AddressesList} />
+                    <Route path="/contactus" component={ContactUs} />
+                    <Route path="/afterGateway/:orderId" component={AfterGateway} />
                     <Route path="/notFound/:msg?" component={NotFound} />
                     <Route exact path="/:id?" component={Store} />
 
                 </Switch>
                 <Modal />
                 <InitError />
+                <ToastContainer containerId={'common_toast'} rtl />
             </Router>
         );
     }

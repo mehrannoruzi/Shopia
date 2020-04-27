@@ -6,16 +6,18 @@ import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 class InitError extends React.Component {
 
     _fetchData() {
-        if (this.props.fetchData) {
+        if (this.props.fetchDatas.length > 0) {
             this.props.hide();
-            this.props.fetchData();
+            this.props.fetchDatas.forEach(async function (fd) {
+                await fd();
+            })
         }
 
     }
     render() {
         return (
             <div className='retry-comp' style={{ display: this.props.show ? 'flex' : 'none' }}>
-                <label>{strings.connecttionFailed}</label>
+                <label>{this.props.message ? this.props.message : strings.connecttionFailed}</label>
                 <button onClick={this._fetchData.bind(this)} className='btn-retry'>
                     <i className='zmdi zmdi-refresh'></i>
                 </button>

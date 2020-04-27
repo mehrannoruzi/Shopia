@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import './assets/css/material-design-iconic-font.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './shared/layout';
 import * as serviceWorker from './serviceWorker';
 

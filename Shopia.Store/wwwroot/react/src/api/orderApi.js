@@ -1,23 +1,28 @@
-import { getUserInfo } from './../shared/utils';
+
 
 export default class orderApi {
-    static getInfo = (id) => new Promise((resolve) => {
-        let userRep = getUserInfo();
+
+    static sendCompleteInfo = (info) => new Promise((resolve) => {
+
         setTimeout(function () {
             resolve({
                 success: true,
-                result: {
-                    storeId:1,
-                    productCount: 2,
-                    productCode: 'p-12',
-                    traceId: '123',
-                    deliverDateTime: 'یکشنبه ار 09 تا 12',
-                    cost: 55000,
-
-                }
+                result: '123456-789'
             });
         }, 1000)
 
     });
 
+    static verify = (orderId) => new Promise((resolve) => {
+
+        setTimeout(function () {
+            resolve({
+                success: true,
+                result: {
+                    success: true,
+                    traceId:'1234567'
+                }
+            });
+        }, 1000);
+    });
 }

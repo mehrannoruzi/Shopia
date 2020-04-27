@@ -1,0 +1,24 @@
+﻿@import "./../../../assets//css/constant.scss";
+
+.header-comp {
+    background-color: #fff;
+    
+    .wrapper{
+        padding-top:15px;
+        padding-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .heading {
+            font-size: 1.1rem;
+            margin-bottom: 0;
+        }
+        .btn-back {
+            padding: 0;
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+
+}
