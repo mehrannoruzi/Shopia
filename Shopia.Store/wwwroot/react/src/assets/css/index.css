@@ -179,7 +179,7 @@ input:-webkit-autofill:active {
   text-align: right;
 }
 
-.MuiFormHelperText-root, .MuiInputBase-input, .MuiTypography-body2 {
+.MuiFormHelperText-root, .MuiInputBase-input, .MuiTypography-body2, .MuiTypography-body1 {
   font-family: "iransans" !important;
 }
 
@@ -777,28 +777,15 @@ body[dir="rtl"] .modal-header .close {
   text-align: center;
 }
 
-.single-address-page .mapboxgl-map {
-  width: 100% !important;
-  height: 100px !important;
-  margin-bottom: 15px;
+.select-address-page #address {
+  line-height: 20px;
 }
 
-.single-address-page .mapboxgl-canvas {
-  height: 100px;
-}
-
-.addresses-list-page {
-  padding-top: 30px;
-}
-
-.addresses-list-page .mapboxgl-map {
-  width: 100% !important;
-  height: 100px !important;
-  margin-bottom: 15px;
-}
-
-.addresses-list-page .mapboxgl-canvas {
-  height: 100px;
+.select-address-page .btn-next {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .after-gateway-page .content {

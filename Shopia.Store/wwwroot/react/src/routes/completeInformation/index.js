@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import strings, { validationStrings } from '../../shared/constant';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -88,7 +88,7 @@ class Completeinformation extends React.Component {
             return (<Redirect to='/addressesList' />);
         return (
             <div className="complete-information-page">
-                <Header hasTitle={true} goBack={this.props.history.goBack} />
+                <Header goBack={this.props.history.goBack} />
                 <Steps />
                 <Container>
                     <Row>
@@ -111,6 +111,7 @@ class Completeinformation extends React.Component {
                                 <TextField
                                     error={this.state.mobileNumber.error}
                                     id="mobileNumber"
+                                    type='number'
                                     className='ltr-input'
                                     label={strings.mobileNumber}
                                     value={this.state.mobileNumber.value}

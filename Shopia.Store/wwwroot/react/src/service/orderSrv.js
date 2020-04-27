@@ -5,7 +5,7 @@ export default class orderSrv {
 
     static infoKey = 'order_info';
 
-    static infoExpireInDays = 2;
+    static infoExpireInDays = 366;
 
     static async addInfo(info) {
         let savedInfo = this.getInfo();

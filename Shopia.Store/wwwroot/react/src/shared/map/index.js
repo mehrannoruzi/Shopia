@@ -63,7 +63,7 @@ export default class CustomMap extends React.Component {
     return (<Map
       center={[this.state.coords.lat, this.state.coords.lng]}
       zoom={this.state.zoom}
-      style={{ height: '200px',margin:'0 7%', width: '86%', overflow: 'hidden' }}
+      style={{ height: this.props.height?this.props.height:'200px',width: '100%', overflow: 'hidden' }}
       zoomControl={true}
       doubleClickZoom={true}
       scrollWheelZoom={true}

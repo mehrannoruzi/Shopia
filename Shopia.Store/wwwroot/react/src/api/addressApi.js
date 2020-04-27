@@ -1,7 +1,7 @@
 
 
 export default class addressApi {
-    static getAddresses = () => new Promise((resolve) => {
+    static getAddresses = (token) => new Promise((resolve) => {
         //let userRep = getUserInfo();
         setTimeout(function () {
             resolve({
@@ -10,7 +10,7 @@ export default class addressApi {
                     id: 1,
                     lat: 35.699729,
                     lng: 51.337941,
-                    details: 'میدان آزادی- کوچه بهار'
+                    address: 'میدان آزادی- کوچه بهار'
                 }]
             });
         }, 1000)

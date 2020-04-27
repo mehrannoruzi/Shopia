@@ -26,6 +26,7 @@
     unit: 'واحد',
     mobileNumber: 'شماره موبایل',
     reciever: 'نام تحویل گیرنده',
+    recieverMobileNumber:'شماره موبایل تحویل گیرنده',
     submit: 'ثبت',
     name: 'نام',
     product: 'محصول',
@@ -60,7 +61,8 @@
     successfulOrder:'سفارش شما با موفقیت ثبت شد',
     purchaseFailed:'خرید شما موفقیت آمیر نبود',
     orderTraceIdIs:'کد پیگیری سفارش به شرح زیر می باشد',
-    callYouLater:'برای پیگیری های بعدی با شما تماس خواهیم گرفت'
+    callYouLater:'برای پیگیری های بعدی با شما تماس خواهیم گرفت',
+    previouseAddresses:'آدرس های قبلی'
 };
 export default strings;
 export const validationStrings = {

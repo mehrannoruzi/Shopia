@@ -1,0 +1,11 @@
+.select-address-page #address {
+  line-height: 20px;
+}
+
+.select-address-page .btn-next {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+/*# sourceMappingURL=index.css.map */
