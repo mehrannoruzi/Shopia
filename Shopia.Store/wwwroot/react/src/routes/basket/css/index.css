@@ -12,13 +12,13 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 100%;
-  min-height: 100vh;
+  padding-top: 100px;
 }
 
 .basket-page .empty i {
   margin-bottom: 15px;
-  font-size: 50px;
+  font-size: 80px;
+  color: #ccc;
 }
 
 .basket-page .basket-wrapper {
@@ -123,5 +123,21 @@
 .basket-page .footer-row .total-price-wrapper .total-price {
   font-size: 1.5rem;
   font-weight: 900;
+}
+
+.confirm-modal .modal-body {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.confirm-modal .modal-footer {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.confirm-modal .modal-footer button {
+  padding: 8px 30px;
+  width: 105px;
 }
 /*# sourceMappingURL=index.css.map */

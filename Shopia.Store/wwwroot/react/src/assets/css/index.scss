@@ -137,6 +137,10 @@ input:-webkit-autofill:active {
 .MuiFormControl-root {
 	width: 100%;
 }
+.MuiFormHelperText-contained{
+	margin-right: 0!important;
+	margin-left: 0!important;
+}
 .btn-next {
 	width: 100%;
 	padding: 10px;
@@ -144,6 +148,9 @@ input:-webkit-autofill:active {
 	color: #fff;
 	background-color: #23af66;
 	text-align: center;
+}
+.with-header{
+	padding-top: 55px;
 }
 @import "./rtl.scss";
 @import "./../../shared/steps/css/index.scss";
@@ -160,6 +167,7 @@ input:-webkit-autofill:active {
 @import "./../../routes/logIn/css/index.scss";
 // @import "./../../routes/singleAddress/css/index.scss";
 @import "./../../routes/selectAddress/css/index.scss";
+@import "./../../routes/review/css/index.scss";
 @import "./../../routes/afterGateway/css/index.scss";
 @import "./../../routes/basket/css/index.scss";
 @import "./../../routes/completeInformation/css/index.scss";

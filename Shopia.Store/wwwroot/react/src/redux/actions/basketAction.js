@@ -10,7 +10,8 @@ export function AddToBasketAction(product, count) {
             price: product.price,
             discount: product.discount,
             realPrice: product.realPrice,
-            count
+            imgUrl: product.slides.length > 0 ? product.slides[0].imgUrl : null,
+            count,
         }
     };
 };

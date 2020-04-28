@@ -1,11 +1,38 @@
-.select-address-page{
-    #address{
+.select-address-page {
+    margin-bottom: 40px;
+    #address {
         line-height: 20px;
     }
-    .btn-next{
+    .btn-next {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
     }
+    .btn-remove-address{
+        i{
+            font-size: 20px;
+        }
+    }
 }
+.address-list-modal{
+    .empty-list {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 0;
+    
+        i {
+            font-size: 50px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+    }
+    .btn-select {
+        width: 100%;
+        padding: 10px;
+    }
+}
+

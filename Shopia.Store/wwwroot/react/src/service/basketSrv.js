@@ -3,17 +3,21 @@ import strings from './../shared/constant';
 export default class BasketSrv {
     static key = 'basket';
     static add(product, count) {
+        let imgUrl = product.slides.length > 0 ? product.slides[0].imgUrl : null;
+        let p = { ...product, imgUrl, count };
+        delete p.slides;
+
         try {
             let basket = this.get();
             let idx = basket.findIndex(x => x.id === product.id);
             if (idx !== -1) basket[idx].count = count;
-            else basket.push({ ...product, count });
+            else basket.push(p);
             localStorage.setItem(this.key, JSON.stringify(basket));
             return { success: true, result: basket };
         }
         catch{
             let basket = [];
-            basket.push(product);
+            basket.push(p);
             let jsonBasket = JSON.stringify(basket);
             localStorage.setItem(this.key, jsonBasket);
             return { success: true, result: basket };
@@ -65,7 +69,7 @@ export default class BasketSrv {
 
     }
 
-    static clear(){
+    static clear() {
         localStorage.removeItem(this.key);
     }
 }

@@ -7,13 +7,14 @@ import { TextField } from '@material-ui/core';
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
 import orderSrv from './../../service/orderSrv';
+import basketSrv from './../../service/basketSrv';
 import { toast } from 'react-toastify';
 
 class Completeinformation extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
+            redirect: null,
             loading: true,
             message: {
                 variant: '',
@@ -45,8 +46,15 @@ class Completeinformation extends React.Component {
     }
 
     componentDidMount() {
+        if (basketSrv.get().length === 0)
+            toast(strings.doPurchaseProcessAgain, {
+                type: toast.TYPE.INFO,
+                onClose: function () {
+                    this.setState(p => ({ ...p, redirect: '/basket' }));
+                }.bind(this)
+            });
+
         let info = orderSrv.getInfo();
-        console.log(info);
         if (info != null) {
             this.setState(p => ({
                 ...p,
@@ -79,15 +87,15 @@ class Completeinformation extends React.Component {
         if (!rep.success)
             toast(rep.message, { type: toast.TYPE.DANGER });
         else
-            this.setState(p => ({ redirect: true }));
+            this.setState(p => ({ redirect: '/selectAddress' }));
 
     }
 
     render() {
         if (this.state.redirect)
-            return (<Redirect to='/addressesList' />);
+            return (<Redirect to={this.state.redirect} />);
         return (
-            <div className="complete-information-page">
+            <div className="complete-information-page with-header">
                 <Header goBack={this.props.history.goBack} />
                 <Steps />
                 <Container>

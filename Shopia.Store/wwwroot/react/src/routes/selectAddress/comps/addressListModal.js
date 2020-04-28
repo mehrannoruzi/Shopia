@@ -14,6 +14,8 @@ class AddressListModal extends React.Component {
         this.state = {
             loading: true,
             show: false,
+            disabled: true,
+            id: '0',
             items: []
         };
         this._isMounted = true;
@@ -26,7 +28,13 @@ class AddressListModal extends React.Component {
         }
         let apiRep = await addressApi.getAddresses(info.token);
         if (!this._isMounted) return;
-        if (apiRep.success) this.setState(p => ({ ...p, items: [...apiRep.result], loading: false }));
+        if (apiRep.success) this.setState(p => ({
+            ...p,
+            items: [...apiRep.result],
+            id: apiRep.result.length > 0 ? apiRep.result[0].id.toString() : '0',
+            disabled: apiRep.result.length > 0 ? false : true,
+            loading: false
+        }));
         else this.props.showInitError(this._fetchData.bind(this));
     }
 
@@ -39,9 +47,15 @@ class AddressListModal extends React.Component {
     _toggle() {
         this.setState(p => ({ ...p, show: !p.show }))
     }
-    _onChange(e){
-        console.log(e);
-        //this.props.onChange();
+    _onChange(e) {
+        let val = e.target.value;
+        this.setState(p => ({ ...p, id: val }));
+    }
+
+    _select() {
+        let item = this.state.items.find(x => x.id == this.state.id);
+        this.props.onChange(item);
+        this._toggle();
     }
     render() {
         return (
@@ -52,7 +66,7 @@ class AddressListModal extends React.Component {
                 size='lg'
                 dialogClassName="modal-90w"
                 aria-labelledby="modal-title"
-                className='confirm-modal'
+                className='address-list-modal'
             >
                 <Modal.Header closeButton>
                     <Modal.Title>
@@ -61,20 +75,20 @@ class AddressListModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     {this.state.loading ? [0, 1, 2].map((x) => <Skeleton key={x} variant='rect' height={30} />) :
-                        (this.state.items.length === 0 ? (<div></div>) :
-                            (<RadioGroup aria-label="address" name="old-address" value={this.state.items[0].id} onChange={this._onChange.bind(this)}>
-                                {this.state.items.map((x) => <FormControlLabel key={x.id} className='m-b' value={x.id} control={<Radio color="primary" />} label={x.address} />)}
+                        (this.state.items.length === 0 ? (<div className='empty-list'>
+                            <i className='zmdi zmdi-mood-bad'></i>
+                            <span>{strings.thereIsNoList}</span>
+                        </div>) :
+                            (<RadioGroup aria-label="address" name="old-address" value={this.state.id.toString()} onChange={this._onChange.bind(this)}>
+                                {this.state.items.map((x) => <FormControlLabel key={x.id} className='m-b' value={x.id.toString()} control={<Radio color="primary" />} label={x.address} />)}
                             </RadioGroup>))
                     }
                 </Modal.Body>
-                {/* <Modal.Footer>
-                    <Button variant="danger" onClick={this._delete.bind(this)}>
-                        {strings.delete}
+                <Modal.Footer>
+                    <Button disabled={this.state.disabled} variant="primary" className='btn-select' onClick={this._select.bind(this)}>
+                        {strings.selectAsAddress}
                     </Button>
-                    <Button variant="secondary" onClick={this._toggle.bind(this)}>
-                        {strings.cancel}
-                    </Button>
-                </Modal.Footer> */}
+                </Modal.Footer>
             </Modal>
         );
     }

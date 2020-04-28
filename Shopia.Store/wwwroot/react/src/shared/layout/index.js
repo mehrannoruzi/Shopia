@@ -11,7 +11,7 @@ import InitError from '../../shared/initError';
 import { ToastContainer} from 'react-toastify';
 import CompleteInfo from '../../routes/completeInformation';
 import SelectAddress from '../../routes/selectAddress';
-
+import Review from './../../routes/review';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class Layout extends React.Component {
@@ -24,6 +24,7 @@ class Layout extends React.Component {
                     <Route path="/basket" component={Basket} />
                     <Route path="/completeInformation" component={CompleteInfo} />
                     <Route path="/selectAddress" component={SelectAddress} />
+                    <Route path="/review" component={Review}/>
                     <Route path="/contactus" component={ContactUs} />
                     <Route path="/afterGateway/:orderId" component={AfterGateway} />
                     <Route path="/notFound/:msg?" component={NotFound} />

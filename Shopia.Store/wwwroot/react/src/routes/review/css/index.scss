@@ -1,19 +1,6 @@
-.basket-page {
-    .empty{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding-top: 100px;
-
-        i{
-            margin-bottom: 15px;
-            font-size: 80px;
-            color: #ccc;
-        }
-    }
+.review-page {
     .basket-wrapper {
-        margin-bottom: 90px;
+        margin-bottom: 55px;
         .item {
             margin-top: 15px;
             display: flex;
@@ -36,6 +23,7 @@
                 display: flex;
                 flex: 1;
                 flex-direction: column;
+                justify-content: space-around;
 
                 .name {
                     display: flex;
@@ -49,52 +37,34 @@
                     }
                 }
 
-                .price-wrapper {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    .price {
+                .price{
+                    .val{
                         font-size: 1.5rem;
                         font-weight: 900;
                     }
-                    .btn-delete {
-                        font-size: 20px;
-                    }
+                }
+            }
+        }
+        .total-wrapper{
+            margin-top: 30px;
+            .price{
+                padding-top: 15px;
+                border-top: dashed 1px green;
+                display: inline-block;
+                color: green;
+
+                .val{
+                    font-size: 1.5rem;
+                    font-weight: 700;
                 }
             }
         }
     }
 
-    .footer-row {
+    .btn-next {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: #ededed;
-
-        .total-price-wrapper {
-            padding-top: 8px;
-            padding-bottom: 8px;
-            text-align: center;
-
-            .total-price{
-                font-size: 1.5rem;
-                font-weight: 900;
-            }
-        }
-    }
-}
-.confirm-modal{
-    .modal-body{
-        padding-top: 30px;
-        padding-bottom: 30px;
-    }
-    .modal-footer{
-        justify-content: center;
-
-        button{
-            padding: 8px 30px;
-            width: 105px;
-        }
     }
 }
