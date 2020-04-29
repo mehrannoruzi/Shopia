@@ -9,10 +9,10 @@ export default class Slider extends React.Component {
                 {this.props.slides.length === 0 ? (<Skeleton variant='rect' height={320} width='100%' />) :
                     (this.props.slides.map((s, idx) => (
                         <Carousel.Item key={idx}>
-                            <img className='img-slide' className="d-block w-100" src={s.imgUrl} alt="slide" />
+                            <img className='img-slide' className="d-block w-100" src={s} alt="slide" />
                             <Carousel.Caption>
-                                <h3>{s.Title}</h3>
-                                <p>{s.Desc}</p>
+                                {/* <h3>{s.Title}</h3>
+                                <p>{s.Desc}</p> */}
                             </Carousel.Caption>
                         </Carousel.Item>
                     )))}

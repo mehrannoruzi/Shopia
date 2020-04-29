@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import strings, { validationStrings } from '../../shared/constant';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
@@ -16,10 +16,7 @@ class Completeinformation extends React.Component {
         this.state = {
             redirect: null,
             loading: true,
-            message: {
-                variant: '',
-                text: ''
-            },
+            btnInProgresss: false,
             fullname: {
                 value: '',
                 error: false,
@@ -78,12 +75,13 @@ class Completeinformation extends React.Component {
             this.setState(p => ({ ...p, mobileNumber: { ...p.mobileNumber, error: true, message: validationStrings.required } }));
             return;
         }
-
+        this.setState(p => ({ ...p, btnInProgresss: true }));
         let rep = await orderSrv.addInfo({
             fullname: this.state.fullname.value,
             mobileNumber: this.state.mobileNumber.value,
             description: this.state.description.value
         });
+        this.setState(p => ({ ...p, btnInProgresss: false }));
         if (!rep.success)
             toast(rep.message, { type: toast.TYPE.DANGER });
         else
@@ -149,6 +147,7 @@ class Completeinformation extends React.Component {
 
                 <button className='btn-next' onClick={this._submit.bind(this)}>
                     {strings.continuePurchase}
+                    {this.state.btnInProgresss?<Spinner animation="border" size="sm" />:null}
                 </button>
             </div>
         );

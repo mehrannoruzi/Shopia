@@ -1,5 +1,7 @@
 import CryptoJS from 'crypto-js';
 import orderApi from './../api/orderApi';
+import strings from './../shared/constant';
+import basketSrv from './basketSrv';
 
 export default class orderSrv {
 
@@ -14,12 +16,12 @@ export default class orderSrv {
         let token = null;
         if (savedInfo) {
             token = savedInfo.token;
-            localStorage.setItem(this.infoKey, JSON.stringify({ ...savedInfo,...info, expDateTime: cdt.getTime() }));
+            localStorage.setItem(this.infoKey, JSON.stringify({ ...savedInfo, ...info, expDateTime: cdt.getTime() }));
             if (savedInfo.fullname === info.fullname || savedInfo.mobileNumber === info.mobileNumber || savedInfo.description === info.description)
                 return { success: true, result: savedInfo };
         }
         info.token = token;
-        let callRep = await orderApi.sendCompleteInfo(info);
+        let callRep = await orderApi.postCompleteInfo(info);
         if (!callRep.success)
             return callRep;
         info.token = callRep.result;
@@ -38,5 +40,18 @@ export default class orderSrv {
 
         }
         return null;
+    }
+
+    static async submit(address) {
+        let info = this.getInfo();
+        if (!info)
+            return { success: false, message: strings.doPurchaseProcessAgain };
+        let order = {};
+        order.user = info;
+        order.items = basketSrv.get().map((x) => ({ id: x.id, count: x.count }));
+        //order.address = address;
+        let apiRep = await orderApi.submit(order);
+        console.log(apiRep);
+        return apiRep;
     }
 }

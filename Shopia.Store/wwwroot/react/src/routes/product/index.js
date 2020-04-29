@@ -83,7 +83,7 @@ class Product extends React.Component {
                     <Row className="details-row m-b">
                         <Col>
                             {this.state.loading ? [1, 2, 3, 4].map(x => <Skeleton key={x} variant='text' />) :
-                                <p className='desc'>{p.desc}</p>}
+                                <p className='desc'>{p.description}</p>}
                         </Col>
                     </Row>
                     <Row>

@@ -2,28 +2,38 @@ import strings from './../shared/constant';
 import addr from './addreses';
 
 export default class addressApi {
-    static getAddresses = (token) => new Promise((resolve) => {
-        //let userRep = getUserInfo();
-        setTimeout(function () {
-            resolve({
-                success: true,
-                result:
-                    [{
-                        id: 1,
-                        lat: 35.699729,
-                        lng: 51.337941,
-                        address: 'میدان آزادی- کوچه بهار'
-                    },
-                    {
-                        id: 2,
-                        lat: 35.90,
-                        lng: 51.337941,
-                        address: 'میدان انقلاب- کوچه نسیم'
-                    }]
+    static async getAddresses (token){
+        console.log(token);
+        try {
+            const response = await fetch(`${addr.getAddresses}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8;',
+                    'token':token
+                }
             });
-        }, 1000)
+            const rep = await response.json();
+            if (!rep.IsSuccessful)
+                return {
+                    success: false,
+                    message: rep.Message
+                }
+            else
+                return {
+                    success: true,
+                    result: rep.Result.map((a) => ({
+                        id: a.Id,
+                        address: a.Address,
+                        lat: a.Lat,
+                        lng: a.Lng
+                    }))
+                }
+        } catch (error) {
+            return ({ success: false, message: strings.connecttionFailed });
+        }
+    }
 
-    });
     static getDeliveryCost = (token, address) => new Promise((resolve) => {
         try {
             setTimeout(function () {

@@ -17,7 +17,7 @@ namespace Shopia.Store.Api
     public class Startup
     {
         public IConfiguration _configuration { get; }
-
+        readonly string AllowedOrigins = "_Origins";
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -25,6 +25,16 @@ namespace Shopia.Store.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowedOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                            .AllowAnyMethod()
+                                            .AllowAnyHeader();
+                                  });
+            });
             services.AddControllersWithViews()
                 .AddJsonOptions(opts =>
                 {
@@ -39,7 +49,6 @@ namespace Shopia.Store.Api
             {
                 opt.Cookie.SameSite = SameSiteMode.Lax;
             });
-
             services.AddHttpContextAccessor();
 
             services.AddTransient(_configuration);
@@ -62,7 +71,6 @@ namespace Shopia.Store.Api
                     OnPrepareResponse = ctx => { ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}"); }
                 });
                 app.UseExceptionHandler("/Home/Error");
-                //app.UseHsts();
             }
             //app.UseHttpsRedirection();
             if (!env.IsDevelopment())
@@ -82,7 +90,7 @@ namespace Shopia.Store.Api
             app.UseRouting();
 
             app.UseAuthentication();
-
+            app.UseCors(AllowedOrigins);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -13,6 +13,7 @@ import basketSrv from './../../service/basketSrv';
 import orderSrv from './../../service/orderSrv';
 import { Redirect } from 'react-router-dom';
 import { SetAddrssAction } from './../../redux/actions/addressAction';
+import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 
 class SelectAddress extends React.Component {
     constructor(props) {
@@ -63,6 +64,7 @@ class SelectAddress extends React.Component {
     }
 
     async componentDidMount() {
+        this.props.hideInitError();
         if (basketSrv.get().length === 0)
             toast(strings.doPurchaseProcessAgain, {
                 type: toast.TYPE.INFO,
@@ -80,8 +82,8 @@ class SelectAddress extends React.Component {
             });
     }
 
-    _showModal() {
-        this.modal._toggle();
+    async _showModal() {
+        await this.modal._toggle();
     }
 
     async _submit() {
@@ -212,6 +214,7 @@ class SelectAddress extends React.Component {
 // }
 
 const mapDispatchToProps = dispatch => ({
+    hideInitError: () => dispatch(HideInitErrorAction()),
     setAddress: (address, cost, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
 });
 

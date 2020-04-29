@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Spinner, Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import strings from './../../shared/constant';
 import DiscountBadg from './../../shared/discountBadg';
 import orderSrv from './../../service/orderSrv';
@@ -18,10 +18,12 @@ class Review extends React.Component {
         super(props);
         this.state = {
             loading: true,
+            redirect: null,
             totalPrice: 0,
             discount: 0,
             cost: 0,
-            currency: ''
+            currency: '',
+            btnInProgresss: false
         };
     }
 
@@ -40,24 +42,23 @@ class Review extends React.Component {
     }
 
     async componentDidMount() {
+        if (this.props.items.length === 0)
+        {
+            this.setState(p => ({ ...p, redirect: '/basket' }));
+            return;
+        }
         this.props.hideInitError();
         await this._getDeliverCost();
     }
 
-    _pay() {
-
+    async _pay() {
+        this.setState(p => ({ ...p, btnInProgresss: true }));
+        let rep = await orderSrv.submit();
+        this.setState(p => ({ ...p, btnInProgresss: false }));
     }
     render() {
         const p = this.state.product;
-        if (this.props.items.length == 0)
-            return (<div className='review-page with-header'>
-                <Header goBack={this.props.history.goBack} />
-                <div className='empty'>
-                    <i className='zmdi zmdi-mood-bad'></i>
-                    <span>{strings.basketIsEmpty}</span>
-                </div>
-
-            </div>);
+        if (this.state.redirect) return <Redirect to={this.state.redirect} />
         return (
             <div className='review-page with-header'>
                 <Header goBack={this.props.history.goBack} />
@@ -111,6 +112,7 @@ class Review extends React.Component {
                 </Container>
                 <button className='btn-next' onClick={this._pay.bind(this)}>
                     {strings.payment}
+                    {this.state.btnInProgresss ? <Spinner animation="border" size="sm" /> : null}
                 </button>
             </div>
         );
