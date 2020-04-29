@@ -5,7 +5,7 @@ export default class orderSrv {
 
     static infoKey = 'order_info';
 
-    static infoExpireInDays = 2;
+    static infoExpireInDays = 366;
 
     static async addInfo(info) {
         let savedInfo = this.getInfo();
@@ -14,7 +14,7 @@ export default class orderSrv {
         let token = null;
         if (savedInfo) {
             token = savedInfo.token;
-            localStorage.setItem(this.infoKey, JSON.stringify({ ...info, expDateTime: cdt.getTime() }));
+            localStorage.setItem(this.infoKey, JSON.stringify({ ...savedInfo,...info, expDateTime: cdt.getTime() }));
             if (savedInfo.fullname === info.fullname || savedInfo.mobileNumber === info.mobileNumber || savedInfo.description === info.description)
                 return { success: true, result: savedInfo };
         }

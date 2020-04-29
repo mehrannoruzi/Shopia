@@ -1,5 +1,12 @@
 .header-comp {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   background-color: #fff;
+  -webkit-box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .header-comp .wrapper {

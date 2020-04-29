@@ -11,7 +11,7 @@
   text-align: right;
 }
 
-.MuiFormHelperText-root, .MuiInputBase-input, .MuiTypography-body2 {
+.MuiFormHelperText-root, .MuiInputBase-input, .MuiTypography-body2, .MuiTypography-body1 {
   font-family: "iransans" !important;
 }
 

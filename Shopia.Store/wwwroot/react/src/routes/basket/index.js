@@ -10,6 +10,7 @@ import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
 import { UpdateBasketAction, RemoveFromBasketAction } from './../../redux/actions/basketAction';
 import ConfirmModal from './../../shared/confirm';
+import redBasketImage from './../../assets/images/red-basket.svg';
 
 class Basket extends React.Component {
     constructor(props) {
@@ -47,25 +48,26 @@ class Basket extends React.Component {
     render() {
         const p = this.state.product;
         if (this.props.items.length == 0)
-            return (<div className='basket-page'>
+            return (<div className='basket-page with-header'>
                 <Header goBack={this.props.history.goBack} />
                 <div className='empty'>
                     <i className='zmdi zmdi-mood-bad'></i>
+                    {/* <img className='m-b' src={redBasketImage} alt='basket'/> */}
                     <span>{strings.basketIsEmpty}</span>
                 </div>
 
             </div>);
         return (
-            <div className='basket-page'>
+            <div className='basket-page with-header'>
                 <Header goBack={this.props.history.goBack} />
                 <Container className='basket-wrapper'>
                     {this.props.items.map((x) => (
                         <Row key={x.id}>
                             <Col>
                                 <div className='item'>
-                                    {x.slides && x.slides.length !== 0 ? (
-                                        <div className='img-wrapper'>
-                                            <Link to={`product/${x.id}`}><img src={x.slides[0].imgUrl} alt='img item' /></Link>
+                                    {x.imgUrl ?
+                                        (<div className='img-wrapper'>
+                                            <Link to={`product/${x.id}`}><img src={x.imgUrl} alt='img item' /></Link>
                                         </div>) : null}
 
                                     <div className='info'>

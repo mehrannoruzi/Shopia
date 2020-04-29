@@ -1,52 +1,48 @@
-
+import strings from './../shared/constant';
+import addr from './addreses';
 
 export default class addressApi {
-    static getAddresses = () => new Promise((resolve) => {
+    static getAddresses = (token) => new Promise((resolve) => {
         //let userRep = getUserInfo();
         setTimeout(function () {
             resolve({
                 success: true,
-                result: [{
-                    id: 1,
-                    lat: 35.699729,
-                    lng: 51.337941,
-                    details: 'میدان آزادی- کوچه بهار'
-                }]
+                result:
+                    [{
+                        id: 1,
+                        lat: 35.699729,
+                        lng: 51.337941,
+                        address: 'میدان آزادی- کوچه بهار'
+                    },
+                    {
+                        id: 2,
+                        lat: 35.90,
+                        lng: 51.337941,
+                        address: 'میدان انقلاب- کوچه نسیم'
+                    }]
             });
         }, 1000)
 
     });
-    static getSingleAddress = (id) => new Promise((resolve) => {
-        setTimeout(function () {
+    static getDeliveryCost = (token, address) => new Promise((resolve) => {
+        try {
+            setTimeout(function () {
+                resolve({
+                    success: true,
+                    result: {
+                        id:4,
+                        cost: 15000,
+                        currency:'تومان'
+                    }
+                });
+            }, 1000)
+        }
+        catch{
             resolve({
-                success: true,
-                result: {
-                    id: 1,
-                    reciever: 'مهران نوروزی',
-                    lng: 51.337941,
-                    lat: 34.699729,
-                    address: 'میدان آزادی- کوچه بهار'
-                }
+                success: false,
+                message: strings.connecttionFailed
             });
-        }, 1000)
-
-    });
-
-    static addAddress = ({ address, reciever, lng, lat }) => new Promise((resolve) => {
-        setTimeout(function () {
-            resolve({
-                success: true
-            });
-        }, 1000)
-
-    });
-
-    static updateAddress = ({ id, address, reciever, lng, lat }) => new Promise((resolve) => {
-        setTimeout(function () {
-            resolve({
-                success: true
-            });
-        }, 1000)
+        }
 
     });
 

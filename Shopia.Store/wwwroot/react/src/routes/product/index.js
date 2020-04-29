@@ -13,6 +13,7 @@ import basketSrv from './../../service/basketSrv';
 import { commaThousondSeperator, checkLocalStorage } from './../../shared/utils';
 import Counter from './../../shared/counter';
 import addToBasketImage from './../../assets/images/add-to-basket.svg';
+
 class Product extends React.Component {
     constructor(props) {
         super(props);
@@ -69,7 +70,7 @@ class Product extends React.Component {
     render() {
         const p = this.state.product;
         return (
-            <div className='product-page'>
+            <div className='product-page with-header'>
                 <Header goBack={this.props.history.goBack} />
                 <Slider slides={this.state.product.slides} />
                 <Container className='info'>

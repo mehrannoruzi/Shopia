@@ -26,6 +26,7 @@
     unit: 'واحد',
     mobileNumber: 'شماره موبایل',
     reciever: 'نام تحویل گیرنده',
+    recieverMobileNumber:'شماره موبایل تحویل گیرنده',
     submit: 'ثبت',
     name: 'نام',
     product: 'محصول',
@@ -60,7 +61,15 @@
     successfulOrder:'سفارش شما با موفقیت ثبت شد',
     purchaseFailed:'خرید شما موفقیت آمیر نبود',
     orderTraceIdIs:'کد پیگیری سفارش به شرح زیر می باشد',
-    callYouLater:'برای پیگیری های بعدی با شما تماس خواهیم گرفت'
+    callYouLater:'برای پیگیری های بعدی با شما تماس خواهیم گرفت',
+    previouseAddresses:'آدرس های قبلی',
+    selectAsAddress:'انتخاب بعنوان آدرس',
+    thereIsNoList:'لیستی وجود ندارد',
+    doPurchaseProcessAgain:'لطفا مراحل خرید را دوباره طی نمایید',
+    payment:'پرداخت',
+    deliverCost:'هزینه ارسال',
+    discount:'نخفیف',
+    priceToPay:'مبلغ قابل پرداخت'
 };
 export default strings;
 export const validationStrings = {
