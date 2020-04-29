@@ -90,4 +90,9 @@
   left: 0;
   right: 0;
 }
+
+.review-page .btn-next .spinner-border {
+  vertical-align: middle;
+  margin: 0 10px;
+}
 /*# sourceMappingURL=index.css.map */

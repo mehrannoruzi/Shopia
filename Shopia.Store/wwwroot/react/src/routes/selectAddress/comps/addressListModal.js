@@ -7,12 +7,15 @@ import { ShowInitErrorAction } from '../../../redux/actions/InitErrorAction';
 import { connect } from 'react-redux';
 import { Radio, FormControlLabel, RadioGroup } from '@material-ui/core';
 import orderSrv from './../../../service/orderSrv';
+import Error from './../../../shared/Error';
 
 class AddressListModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             loading: true,
+            error: false,
+            errorMessage: '',
             show: false,
             disabled: true,
             id: '0',
@@ -33,19 +36,21 @@ class AddressListModal extends React.Component {
             items: [...apiRep.result],
             id: apiRep.result.length > 0 ? apiRep.result[0].id.toString() : '0',
             disabled: apiRep.result.length > 0 ? false : true,
-            loading: false
+            loading: false,
+            error: false
         }));
-        else this.props.showInitError(this._fetchData.bind(this));
+        else this.setState(p => ({ ...p,loading: false, error: true, errorMessage: apiRep.message }));
+        console.log(apiRep);
     }
 
-    async componentDidMount() {
-        await this._fetchData();
-    }
     componentWillUnmount() {
         this._isMounted = false;
     }
-    _toggle() {
-        this.setState(p => ({ ...p, show: !p.show }))
+    async _toggle() {
+        if (this.state.show === false)
+            await this._fetchData();
+        this.setState(p => ({ ...p, show: !p.show }));
+
     }
     _onChange(e) {
         let val = e.target.value;
@@ -57,6 +62,7 @@ class AddressListModal extends React.Component {
         this.props.onChange(item);
         this._toggle();
     }
+
     render() {
         return (
             <Modal
@@ -74,14 +80,15 @@ class AddressListModal extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {this.state.loading ? [0, 1, 2].map((x) => <Skeleton key={x} variant='rect' height={30} />) :
-                        (this.state.items.length === 0 ? (<div className='empty-list'>
+                    {this.state.loading ? [0, 1, 2].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={30} />) :
+                        (this.state.error ? (<Error message={this.state.errorMessage}/>) : (this.state.items.length === 0 ? (<div className='empty-list'>
                             <i className='zmdi zmdi-mood-bad'></i>
                             <span>{strings.thereIsNoList}</span>
                         </div>) :
                             (<RadioGroup aria-label="address" name="old-address" value={this.state.id.toString()} onChange={this._onChange.bind(this)}>
                                 {this.state.items.map((x) => <FormControlLabel key={x.id} className='m-b' value={x.id.toString()} control={<Radio color="primary" />} label={x.address} />)}
-                            </RadioGroup>))
+                            </RadioGroup>)))
+
                     }
                 </Modal.Body>
                 <Modal.Footer>
@@ -98,8 +105,4 @@ const mapStateToProps = (state, ownProps) => {
     return { ...ownProps };
 }
 
-const mapDispatchToProps = dispatch => ({
-    showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(AddressListModal);
+export default connect(mapStateToProps, null, null, { forwardRef: true })(AddressListModal);

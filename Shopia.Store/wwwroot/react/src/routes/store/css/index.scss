@@ -19,10 +19,9 @@
             .name-wrapper {
                 display: flex;
                 padding: 10px;
-                justify-content: center;
+                justify-content: space-around;
                 align-items: flex-start;
                 flex-direction: column;
-                flex: 1;
                 .name {
                     font-size: 1.2rem;
                 }
@@ -30,7 +29,6 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    flex: 1;
                     width: 100%;
 
                     .contactus {
@@ -95,7 +93,7 @@
             .product {
                 margin-right: 3px;
                 position: relative;
-
+                max-width: 50%;
                 .discount-badg {
                     position: absolute;
                     top: 10px;
