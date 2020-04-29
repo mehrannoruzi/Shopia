@@ -129,7 +129,16 @@
   <data name="InvalidParameter" xml:space="preserve">
     <value>پارامتر ارسالی معتبر نمی باشد.</value>
   </data>
+  <data name="JunkMessage" xml:space="preserve">
+    <value>سیستم قادر به شناسایی پیام شما نمی باشد.</value>
+  </data>
+  <data name="SendMobileNumber" xml:space="preserve">
+    <value>ارسال شماره موبایل</value>
+  </data>
   <data name="Success" xml:space="preserve">
     <value>عملیات مورد نظر با موفقیت انجام شد.</value>
+  </data>
+  <data name="WelcomeMessage" xml:space="preserve">
+    <value>جهت دسترسی به بات، شماره موبایل خود را ارسال نمایید.</value>
   </data>
 </root>

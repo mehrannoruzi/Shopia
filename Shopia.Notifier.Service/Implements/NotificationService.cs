@@ -28,10 +28,7 @@ namespace Shopia.Notifier.Service
                 if (!eventMappers.Any()) return new Response<bool> { Message = ServiceMessage.EventNotExist };
 
                 foreach (var notifyStrategy in eventMappers)
-                {
-                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy, _notifierUnitOfWork)
-                         .Create(notifyDto);
-                }
+                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy, _notifierUnitOfWork).Create(notifyDto);
 
                 return new Response<bool> { IsSuccessful = true, Result = true, Message = ServiceMessage.Success };
             }
@@ -51,10 +48,7 @@ namespace Shopia.Notifier.Service
                 if (!notifications.Any()) return;
 
                 foreach (var notif in notifications)
-                {
-                    await SendNotificationFactory.GetStrategy(notif.Type, _notifierUnitOfWork)
-                             .Send(notif);
-                }
+                    await SendNotificationFactory.GetStrategy(notif.Type, _notifierUnitOfWork).SendAsync(notif);
             }
             catch (Exception e)
             {

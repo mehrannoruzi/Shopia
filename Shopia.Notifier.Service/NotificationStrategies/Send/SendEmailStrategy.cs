@@ -17,7 +17,7 @@ namespace Shopia.Notifier.Service
         }
 
 
-        public Task Send(Notification notification)
+        public Task SendAsync(Notification notification)
         {
             throw new NotImplementedException();
         }
