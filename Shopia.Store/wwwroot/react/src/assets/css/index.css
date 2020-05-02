@@ -234,13 +234,17 @@ body[dir="rtl"] .modal-header .close {
   color: #2875d5 !important;
 }
 
-.basket-icon-comp .icon {
+.basket-icon-comp a {
+  text-decoration: none;
+}
+
+.basket-icon-comp a .icon {
   color: #7facde;
   font-size: 20px;
   vertical-align: middle;
 }
 
-.basket-icon-comp .count {
+.basket-icon-comp a .count {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -480,6 +484,7 @@ body[dir="rtl"] .modal-header .close {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 100%;
   padding: 10px;
   -ms-flex-pack: distribute;
       justify-content: space-around;

@@ -117,7 +117,7 @@ class SelectAddress extends React.Component {
                 this.state.recieverMobileNumber.value
             );
         }
-        this.setState(p => ({ ...p, redirect: '/review' }));
+       this.setState(p => ({ ...p, redirect: '/review' }));
 
     }
 
@@ -215,7 +215,7 @@ class SelectAddress extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
-    setAddress: (address, cost, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
+    setAddress: (address, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
 });
 
 export default connect(null, mapDispatchToProps)(SelectAddress);

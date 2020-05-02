@@ -12,6 +12,7 @@ import { ShowInitErrorAction, HideInitErrorAction } from "../../redux/actions/In
 import deliveryCostImage from './../../assets/images/delivery-cost.svg';
 import discountImage from './../../assets/images/discount.svg';
 import Skeleton from '@material-ui/lab/Skeleton';
+import { toast } from 'react-toastify';
 
 class Review extends React.Component {
     constructor(props) {
@@ -41,9 +42,10 @@ class Review extends React.Component {
         this.setState(p => ({ ...p, cost: apiRep.result.cost, loading: false }));
     }
 
-    async componentDidMount() {
-        if (this.props.items.length === 0)
-        {
+    async componentDidMount() 
+    {
+        console.log(this.props.address);
+        if (this.props.items.length === 0) {
             this.setState(p => ({ ...p, redirect: '/basket' }));
             return;
         }
@@ -53,8 +55,12 @@ class Review extends React.Component {
 
     async _pay() {
         this.setState(p => ({ ...p, btnInProgresss: true }));
-        let rep = await orderSrv.submit();
+        let rep = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber);
         this.setState(p => ({ ...p, btnInProgresss: false }));
+        console.log(rep);
+        if (rep.success)
+            window.open(rep.result.url,'_self');//.location.href = rep.result;
+        else toast(rep.message, { type: toast.TYPE.ERROR })
     }
     render() {
         const p = this.state.product;

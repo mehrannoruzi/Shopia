@@ -26,7 +26,7 @@ class Layout extends React.Component {
                     <Route path="/selectAddress" component={SelectAddress} />
                     <Route path="/review" component={Review}/>
                     <Route path="/contactus" component={ContactUs} />
-                    <Route path="/afterGateway/:orderId" component={AfterGateway} />
+                    <Route path="/afterGateway/:status/:transId" component={AfterGateway} />
                     <Route path="/notFound/:msg?" component={NotFound} />
                     <Route exact path="/:id?" component={Store} />
 

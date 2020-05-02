@@ -25,20 +25,20 @@ export default class orderApi {
     static async submit(order) {
         try {
             const response = await fetch(addr.postOrder, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                //credentials: 'same-origin', // include, *same-origin, omit
+                method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8;'
                 },
-                //redirect: 'follow', // manual, *follow, error
-                //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(order) // body data type must match "Content-Type" header
             });
-            const json = await response.json();
-            return json;
-        } catch (error) {
+            const rep = await response.json();
+            console.log(rep);
+            if (rep.IsSuccessful) return { success: true, result: rep.Result };
+            else return { success: false, message: rep.Message };
+        }
+        catch (error) {
+            console.log(error);
             return ({ success: false, message: strings.connecttionFailed });
         }
     }

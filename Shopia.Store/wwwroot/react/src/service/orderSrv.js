@@ -42,16 +42,17 @@ export default class orderSrv {
         return null;
     }
 
-    static async submit(address) {
+    static async submit(address, reciever, recieverMobileNumber) {
         let info = this.getInfo();
         if (!info)
             return { success: false, message: strings.doPurchaseProcessAgain };
         let order = {};
         order.user = info;
         order.items = basketSrv.get().map((x) => ({ id: x.id, count: x.count }));
-        //order.address = address;
+        order.address = address;
+        order.reciever = reciever;
+        order.recieverMobileNumber = recieverMobileNumber;
         let apiRep = await orderApi.submit(order);
-        console.log(apiRep);
-        return apiRep;
+        return {...apiRep};
     }
 }

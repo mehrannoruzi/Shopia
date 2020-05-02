@@ -12,41 +12,20 @@ import Steps from './../../shared/steps';
 class AfterGateway extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            loading: true,
-            success: null,
-            traceId: null
-        }
-    }
-
-    async _fetchData() {
         const { params } = this.props.match;
-        let apiRep = await orderApi.verify(params.orderId);
-        if (!apiRep.success) {
-            this.props.showInitError(this._fetchData.bind(this), apiRep.message);
-            return;
-        }
-        this.setState(p => ({
-            ...p,
+        console.log(params.status);
+        this.state = {
             loading: false,
-            success: apiRep.result.success,
-            traceId: apiRep.result.traceId
-        }));
+            success: params.status === '1',
+            transId: params.transId
+        }
     }
 
-    async componentDidMount() {
-        this.props.hideInitError();
-        await this._fetchData();
-    }
-
-    _goBack() {
-
-    }
 
     render() {
         return (
-            <div className="after-gateway-page">
-                <Header hasTitle={true} goBack={this.props.history.goBack} />
+            <div className="after-gateway-page  with-header">
+                <Header goBack={this.props.history.goBack} />
                 <Steps activeStep={2} />
                 <div className='content'>
                     {this.state.loading ? <Skeleton variant='circle' height={107} width={107} /> :
@@ -56,24 +35,24 @@ class AfterGateway extends React.Component {
                         <span className={'main-message ' + (this.state.success ? 'success' : 'error')}>
                             {this.state.success ? strings.thankYouForPurchase : strings.purchaseFailed}
                         </span>}
-                    {this.state.loading ? <Skeleton  className='hint' width={120} variant='text' /> :
+                    {this.state.loading ? <Skeleton className='hint' width={120} variant='text' /> :
                         <span className='hint'>
                             {this.state.success ? strings.successfulOrder : strings.retryPlease}
                         </span>}
 
-                    {this.state.loading ? <Skeleton  className='trace-id-text' width={120} variant='text' /> :
+                    {this.state.loading ? <Skeleton className='trace-id-text' width={120} variant='text' /> :
                         <span className='trace-id-text'>
                             {strings.orderTraceIdIs}
                         </span>}
 
-                    {this.state.loading ? <Skeleton  className='m-b trace-id' width={50} variant='text' /> :
+                    {this.state.loading ? <Skeleton className='m-b trace-id' width={50} variant='text' /> :
                         <span className='m-b trace-id'>
-                            {this.state.traceId}
+                            {this.state.transId}
                         </span>}
-                    {!this.state.loading && this.state.success ?
+                    {(!this.state.loading && this.state.success) ?
                         <span>
                             {strings.callYouLater}
-                        </span> : <Skeleton width={120} variant='text' />}
+                        </span> : null}
                 </div>
 
             </div>
