@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Shopia.Notifier.DependencyResolver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shopia.Notifier.Service;
 
 namespace Shopia.Notifier
 {
@@ -62,6 +63,7 @@ namespace Shopia.Notifier
             services.AddSingleton(_config);
 
             services.AddHostedService<QuartzHostedService>();
+            TelegramBot.Initialize(_config["NotifierSettings:TelegramBotToken"]);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

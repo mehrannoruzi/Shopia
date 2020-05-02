@@ -5,6 +5,6 @@ namespace Shopia.Notifier.Service
 {
     public interface ISendStrategy
     {
-        Task Send(Notification notification);
+        Task SendAsync(Notification notification);
     }
 }

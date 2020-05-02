@@ -97,11 +97,38 @@ namespace Shopia.Notifier.Service.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سیستم قادر به شناسایی پیام شما نمی باشد..
+        /// </summary>
+        internal static string JunkMessage {
+            get {
+                return ResourceManager.GetString("JunkMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ارسال شماره موبایل.
+        /// </summary>
+        internal static string SendMobileNumber {
+            get {
+                return ResourceManager.GetString("SendMobileNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عملیات مورد نظر با موفقیت انجام شد..
         /// </summary>
         internal static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جهت دسترسی به بات، شماره موبایل خود را ارسال نمایید..
+        /// </summary>
+        internal static string WelcomeMessage {
+            get {
+                return ResourceManager.GetString("WelcomeMessage", resourceCulture);
             }
         }
     }
