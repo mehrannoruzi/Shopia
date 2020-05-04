@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Elk.Dapper" Version="1.0.5" />
+    <PackageReference Include="Elk.Dapper" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

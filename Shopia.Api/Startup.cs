@@ -1,5 +1,5 @@
 using System;
-using Elk.AspNetCore.Mvc;
+using Elk.AspNetCore;
 using Shopia.DependencyResolver;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;

@@ -1,13 +1,15 @@
 ﻿using Quartz;
+using Elk.Core;
 using Quartz.Spi;
 using Quartz.Impl;
 using Shopia.Domain;
+using Elk.EntityFrameworkCore;
 using Shopia.Notifier.Service;
+using Shopia.Notifier.DataAccess.Ef;
 using Microsoft.EntityFrameworkCore;
 using Shopia.Notifier.DataAccess.Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shopia.Notifier.DataAccess.Ef;
 
 namespace Shopia.Notifier.DependencyResolver
 {
@@ -25,6 +27,8 @@ namespace Shopia.Notifier.DependencyResolver
             services.AddContext<NotifierDbContext>(_configuration.GetConnectionString("NotifierDbContext"));
 
             services.AddScoped<NotifierUnitOfWork, NotifierUnitOfWork>();
+
+            services.AddScoped(typeof(IGenericRepo<>), typeof(EfGenericRepo<>));
 
 
             #region Notifier

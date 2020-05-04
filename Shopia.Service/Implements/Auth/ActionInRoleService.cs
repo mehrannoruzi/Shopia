@@ -27,7 +27,7 @@ namespace Shopia.Service
 
             if (model.IsDefault)
             {
-                var existActionInRole = await _authUow.ActionInRoleRepo.FirstOrDefaultAsync(x => x.RoleId == model.RoleId && x.IsDefault);
+                var existActionInRole = await _authUow.ActionInRoleRepo.FirstOrDefaultAsync(conditions: x => x.RoleId == model.RoleId && x.IsDefault);
                 existActionInRole.IsDefault = false;
             }
 

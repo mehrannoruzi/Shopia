@@ -1,9 +1,9 @@
 ﻿using System;
 using Elk.Core;
+using Elk.Http;
 using System.Linq;
 using System.Text;
 using Shopia.Domain;
-using Elk.AspNetCore;
 using Shopia.InfraStructure;
 using System.Threading.Tasks;
 using System.Collections.Generic;

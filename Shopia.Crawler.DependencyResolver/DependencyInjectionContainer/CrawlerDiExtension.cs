@@ -1,9 +1,11 @@
 ﻿using Quartz;
+using Elk.Core;
 using Quartz.Spi;
 using Quartz.Impl;
 using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using Shopia.Crawler.Service;
+using Elk.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shopia.Crawler.DataAccess.Dapper;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,8 @@ namespace Shopia.DependencyResolver
             services.AddContext<CrawlerDbContext>(_configuration.GetConnectionString("CrawlerDbContext"));
 
             services.AddScoped<CrawlerUnitOfWork, CrawlerUnitOfWork>();
+
+            services.AddScoped(typeof(IGenericRepo<>), typeof(EfGenericRepo<>));
 
 
             #region Crawler

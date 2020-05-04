@@ -1,5 +1,5 @@
+using Elk.Http;
 using System.Linq;
-using Elk.AspNetCore;
 using Shopia.DataAccess.Ef;
 using Shopia.DependencyResolver;
 using Microsoft.AspNetCore.Http;
@@ -16,8 +16,9 @@ namespace Shopia.Store.Api
 {
     public class Startup
     {
-        public IConfiguration _configuration { get; }
         readonly string AllowedOrigins = "_Origins";
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -35,12 +36,14 @@ namespace Shopia.Store.Api
                                             .AllowAnyHeader();
                                   });
             });
+
             services.AddControllersWithViews()
                 .AddJsonOptions(opts =>
                 {
                     opts.JsonSerializerOptions.PropertyNamingPolicy = null;
                     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
+
             services.AddContext<AppDbContext>(_configuration.GetConnectionString("EfDbContext"));
             services.AddContext<AuthDbContext>(_configuration.GetConnectionString("AuthDbContext"));
 

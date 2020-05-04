@@ -67,13 +67,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-EndPoints", "05-EndPoint
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Notifier.DataAccess.Ef", "Shopia.Notifier.DataAccess.Ef\Shopia.Notifier.DataAccess.Ef.csproj", "{1568F77A-1B96-49EA-B58D-814230D700B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Notifier.DataAccess.Dapper", "Shopia.Notifier.DataAccess.Dapper\Shopia.Notifier.DataAccess.Dapper.csproj", "{B5600AFC-EFF2-42A8-A222-5B7F54E929F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Notifier.DataAccess.Dapper", "Shopia.Notifier.DataAccess.Dapper\Shopia.Notifier.DataAccess.Dapper.csproj", "{B5600AFC-EFF2-42A8-A222-5B7F54E929F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Notifier.Service", "Shopia.Notifier.Service\Shopia.Notifier.Service.csproj", "{D68B0DDA-09B2-4919-A860-F12A735E819D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Notifier.Service", "Shopia.Notifier.Service\Shopia.Notifier.Service.csproj", "{D68B0DDA-09B2-4919-A860-F12A735E819D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Notifier.DependencyResolver", "Shopia.Notifier.DependencyResolver\Shopia.Notifier.DependencyResolver.csproj", "{42FD447D-9C48-4F63-AF1D-400F9C1B90F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Notifier.DependencyResolver", "Shopia.Notifier.DependencyResolver\Shopia.Notifier.DependencyResolver.csproj", "{42FD447D-9C48-4F63-AF1D-400F9C1B90F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Notifier", "Shopia.Notifier\Shopia.Notifier.csproj", "{81D0104E-B8D3-41E3-9F7B-2C5A14628816}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopia.Notifier", "Shopia.Notifier\Shopia.Notifier.csproj", "{81D0104E-B8D3-41E3-9F7B-2C5A14628816}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Delivery", "04-Delivery", "{F090400D-1613-4ADD-AE1E-3269182C951E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-EndPoints", "05-EndPoints", "{EF0DDA99-1811-4B03-A676-085412BDAC2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Delivery", "Shopia.Delivery\Shopia.Delivery.csproj", "{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-DependencyResolver", "04-DependencyResolver", "{F9832BCF-032D-4952-9698-9E3CA5FF711C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Service", "03-Service", "{EE862D69-5C31-4DC8-AB4C-D16A9FBF0776}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Delivery.Service", "Shopia.Delivery.Service\Shopia.Delivery.Service.csproj", "{9E2C706B-AC16-411E-86F5-5CA863AF981C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopia.Delivery.DependencyResolver", "Shopia.Delivery.DependencyResolver\Shopia.Delivery.DependencyResolver.csproj", "{AE5F6EC3-7198-4120-B266-E74DF43F7E12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,6 +171,18 @@ Global
 		{81D0104E-B8D3-41E3-9F7B-2C5A14628816}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81D0104E-B8D3-41E3-9F7B-2C5A14628816}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81D0104E-B8D3-41E3-9F7B-2C5A14628816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E2C706B-AC16-411E-86F5-5CA863AF981C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E2C706B-AC16-411E-86F5-5CA863AF981C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E2C706B-AC16-411E-86F5-5CA863AF981C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E2C706B-AC16-411E-86F5-5CA863AF981C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5F6EC3-7198-4120-B266-E74DF43F7E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5F6EC3-7198-4120-B266-E74DF43F7E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5F6EC3-7198-4120-B266-E74DF43F7E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5F6EC3-7198-4120-B266-E74DF43F7E12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +220,12 @@ Global
 		{D68B0DDA-09B2-4919-A860-F12A735E819D} = {50205C2B-1A23-4896-9B93-CDB4697EDBB5}
 		{42FD447D-9C48-4F63-AF1D-400F9C1B90F9} = {899C0858-71B2-4E3A-8B74-DFF68B2A3A99}
 		{81D0104E-B8D3-41E3-9F7B-2C5A14628816} = {ADE1DC01-73DD-4E7E-A535-578F9D512CDF}
+		{EF0DDA99-1811-4B03-A676-085412BDAC2C} = {F090400D-1613-4ADD-AE1E-3269182C951E}
+		{E1C8001D-14BE-47A6-AC7D-DE33A7010DD2} = {EF0DDA99-1811-4B03-A676-085412BDAC2C}
+		{F9832BCF-032D-4952-9698-9E3CA5FF711C} = {F090400D-1613-4ADD-AE1E-3269182C951E}
+		{EE862D69-5C31-4DC8-AB4C-D16A9FBF0776} = {F090400D-1613-4ADD-AE1E-3269182C951E}
+		{9E2C706B-AC16-411E-86F5-5CA863AF981C} = {EE862D69-5C31-4DC8-AB4C-D16A9FBF0776}
+		{AE5F6EC3-7198-4120-B266-E74DF43F7E12} = {F9832BCF-032D-4952-9698-9E3CA5FF711C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DAC9AD0E-6385-4BB3-9EC8-86B29B93AA55}

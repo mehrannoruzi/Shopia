@@ -87,8 +87,8 @@ namespace Shopia.Service
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _authUow.ActionRepo.Get(x => x.Name.Contains(searchParameter))
-            .Union(_authUow.ActionRepo.Get(x => x.ControllerName.Contains(searchParameter) || x.ActionName.Contains(searchParameter)))
+            => _authUow.ActionRepo.Get(conditions: x => x.Name.Contains(searchParameter))
+            .Union(_authUow.ActionRepo.Get(conditions: x => x.ControllerName.Contains(searchParameter) || x.ActionName.Contains(searchParameter)))
             .OrderByDescending(x => x.Name)
             .Take(take)
             .ToDictionary(k => (object)k.ActionId, v => (object)$"{v.Name}(/{v.ControllerName}/{v.ActionName})");

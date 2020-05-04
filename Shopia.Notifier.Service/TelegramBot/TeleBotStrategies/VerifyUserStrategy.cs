@@ -1,6 +1,6 @@
 ﻿using Elk.Core;
+using Elk.Http;
 using Telegram.Bot;
-using Elk.AspNetCore;
 using Telegram.Bot.Args;
 
 namespace Shopia.Notifier.Service

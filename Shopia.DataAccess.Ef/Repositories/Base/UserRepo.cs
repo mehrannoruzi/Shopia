@@ -9,6 +9,6 @@ namespace Shopia.DataAccess.Ef
         public UserRepo(AppDbContext appContext) : base(appContext)
         { }
 
-        public async Task<User> FindByMobileNumber(long mobileNumber) => await FirstOrDefaultAsync(x => x.MobileNumber == mobileNumber);
+        public async Task<User> FindByMobileNumber(long mobileNumber) => await FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber);
     }
 }

@@ -3,6 +3,7 @@ using Elk.Cache;
 using Shopia.Domain;
 using Shopia.Service;
 using Shopia.DataAccess.Ef;
+using Elk.EntityFrameworkCore;
 using Shopia.DataAccess.Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,8 @@ namespace Shopia.DependencyResolver
             services.AddScoped<AuthUnitOfWork, AuthUnitOfWork>();
             services.AddScoped<AppUnitOfWork, AppUnitOfWork>();
 
+            services.AddScoped(typeof(IGenericRepo<>), typeof(EfGenericRepo<>));
+
             #region Auth
 
             services.AddScoped<IGenericRepo<Role>, RoleRepo>();
@@ -46,7 +49,6 @@ namespace Shopia.DependencyResolver
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ITagRepo, TagRepo>();
-            services.AddScoped<IGenericRepo<Tag>, TagRepo>();
             
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();

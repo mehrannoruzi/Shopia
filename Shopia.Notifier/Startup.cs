@@ -1,5 +1,6 @@
 using System;
-using Elk.AspNetCore.Mvc;
+using Elk.AspNetCore;
+using Shopia.Notifier.Service;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Diagnostics;
 using Shopia.Notifier.DependencyResolver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shopia.Notifier.Service;
 
 namespace Shopia.Notifier
 {

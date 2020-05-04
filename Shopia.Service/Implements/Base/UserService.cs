@@ -230,8 +230,8 @@ namespace Shopia.Service
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _appUow.UserRepo.Get(x => x.FullName.Contains(searchParameter))
-                .Union(_appUow.UserRepo.Get(x => x.Email.Contains(searchParameter)))
+            => _appUow.UserRepo.Get(conditions: x => x.FullName.Contains(searchParameter))
+                .Union(_appUow.UserRepo.Get(conditions: x => x.Email.Contains(searchParameter)))
                 .Select(x => new
                 {
                     x.UserId,
