@@ -69,7 +69,13 @@
     payment:'پرداخت',
     deliverCost:'هزینه ارسال',
     discount:'نخفیف',
-    priceToPay:'مبلغ قابل پرداخت'
+    priceToPay:'مبلغ قابل پرداخت',
+    attention:'توجه',
+    basketProductsChanged:'توجه: برخی از محصولات سبد خرید تغییر کرده اند',
+    review:'بازبینی',
+    continue:'ادامه',
+    selectLocation:'انتخاب مکان',
+    map:'نقشه'
 };
 export default strings;
 export const validationStrings = {

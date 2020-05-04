@@ -14,7 +14,6 @@ export default class orderApi {
                 body: JSON.stringify(info)
             });
             const rep = await response.json();
-            console.log(rep);
             if (!rep.IsSuccessful) return ({ success: false, message: rep.Message });
             else return ({ success: true, result: rep.Result });
         } catch (error) {
@@ -33,13 +32,26 @@ export default class orderApi {
                 body: JSON.stringify(order) // body data type must match "Content-Type" header
             });
             const rep = await response.json();
-            console.log(rep);
-            if (rep.IsSuccessful) return { success: true, result: rep.Result };
+            if (rep.IsSuccessful)
+                return {
+                    success: true,
+                    result: {
+                        id: rep.Result.Id,
+                        basketChanged: rep.Result.BasketChanged,
+                        url:rep.Result.Url,
+                        changedProducts: rep.Result.BasketChanged ? rep.Result.ChangedProducts.map((p) => ({
+                            id: p.Id,
+                            price: p.Price,
+                            discount: p.Discount,
+                            maxCount:p.MaxCount
+                        })) : []
+                    }
+                };
             else return { success: false, message: rep.Message };
         }
         catch (error) {
             console.log(error);
-            return ({ success: false, message: strings.connecttionFailed });
+            return { success: false, message: strings.connecttionFailed };
         }
     }
 

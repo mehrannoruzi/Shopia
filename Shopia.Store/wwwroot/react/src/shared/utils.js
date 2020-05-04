@@ -13,17 +13,33 @@ export function arrangeInRows(columnCount, items, wrapperClassName) {
 
 }
 export function checkLocalStorage() {
-    if (!localStorage) toast(strings.useModernBrowser, {type: toast.TYPE.INFO});
+    if (!localStorage) toast(strings.useModernBrowser, { type: toast.TYPE.INFO });
 }
 
 export function commaThousondSeperator(str) { return str.replace(/\B(?=(\d{3})+(?!\d))/g, ","); };
 
-export function getlocalStorageSizes(){
+export function getlocalStorageSizes() {
     var total = 0;
-    for(var x in localStorage) {
-      var amount = (localStorage[x].length * 2) / 1024 / 1024;
-      total += amount;
-      console.log( x + " = " + amount.toFixed(2) + " MB");
+    for (var x in localStorage) {
+        var amount = (localStorage[x].length * 2) / 1024 / 1024;
+        total += amount;
+        console.log(x + " = " + amount.toFixed(2) + " MB");
     }
-    console.log( "Total: " + total.toFixed(2) + " MB");
+    console.log("Total: " + total.toFixed(2) + " MB");
+}
+
+export function getCurrentLocation() {
+
+    return new Promise((resolve) => {
+        if (!navigator.geolocation)
+            resolve(null);
+        navigator.geolocation.getCurrentPosition(function (position) {
+            resolve({
+                lng: position.coords.longitude,
+                lat: position.coords.latitude
+            });
+        }, function (error) {
+            resolve(null);
+        }, { enableHighAccuracy: false, maximumAge: 15000, timeout: 30000});
+    });
 }

@@ -32,6 +32,29 @@ namespace Shopia.Store.Api.Controllers
             });
         }
 
-
+        [HttpGet]
+        public IActionResult GetDeliveryCost(AddressDTO address)
+        {
+            var token = Request.Headers["token"];
+            return Json(new
+            {
+                IsSuccessful = true,
+                Result = new List<DeliveryDto>
+                {
+                    new DeliveryDto
+                    {
+                        Id =1,
+                        Name = "پست",
+                        Cost = 5000
+                    },
+                     new DeliveryDto
+                    {
+                        Id =2,
+                        Name = "پیک",
+                        Cost = 15000
+                    }
+                }
+            });
+        }
     }
 }

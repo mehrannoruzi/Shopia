@@ -37,23 +37,23 @@
                     }
                 }
 
-                .price{
-                    .val{
+                .price {
+                    .val {
                         font-size: 1.5rem;
                         font-weight: 900;
                     }
                 }
             }
         }
-        .total-wrapper{
+        .total-wrapper {
             margin-top: 30px;
-            .price{
+            .price {
                 padding-top: 15px;
                 border-top: dashed 1px green;
                 display: inline-block;
                 color: green;
 
-                .val{
+                .val {
                     font-size: 1.5rem;
                     font-weight: 700;
                 }
@@ -66,10 +66,20 @@
         bottom: 0;
         left: 0;
         right: 0;
-        
-        .spinner-border{
+
+        .spinner-border {
             vertical-align: middle;
             margin: 0 10px;
+        }
+    }
+}
+.products-changed-modal {
+    .modal-footer {
+        justify-content: center;
+        button {
+            color:#fff;
+            padding: 8px 30px;
+            width: 105px;
         }
     }
 }

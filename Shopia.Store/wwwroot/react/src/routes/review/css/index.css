@@ -95,4 +95,16 @@
   vertical-align: middle;
   margin: 0 10px;
 }
+
+.products-changed-modal .modal-footer {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.products-changed-modal .modal-footer button {
+  color: #fff;
+  padding: 8px 30px;
+  width: 105px;
+}
 /*# sourceMappingURL=index.css.map */

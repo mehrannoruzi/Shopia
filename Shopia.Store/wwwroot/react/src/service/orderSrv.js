@@ -6,7 +6,7 @@ import basketSrv from './basketSrv';
 export default class orderSrv {
 
     static infoKey = 'order_info';
-
+    static orderIdKey = 'order_id';
     static infoExpireInDays = 366;
 
     static async addInfo(info) {
@@ -29,7 +29,6 @@ export default class orderSrv {
         localStorage.setItem(this.infoKey, JSON.stringify(info));
         return { success: true };
     }
-
     static getInfo() {
         let jsonInfo = localStorage.getItem(this.infoKey);
         if (jsonInfo) {
@@ -41,18 +40,34 @@ export default class orderSrv {
         }
         return null;
     }
-
     static async submit(address, reciever, recieverMobileNumber) {
         let info = this.getInfo();
         if (!info)
             return { success: false, message: strings.doPurchaseProcessAgain };
         let order = {};
+        order.orderId = this.getOrderId();
         order.user = info;
         order.items = basketSrv.get().map((x) => ({ id: x.id, count: x.count }));
         order.address = address;
         order.reciever = reciever;
         order.recieverMobileNumber = recieverMobileNumber;
         let apiRep = await orderApi.submit(order);
-        return {...apiRep};
+        if (apiRep.success) {
+            this.setOrderId(apiRep.result.id);
+            if (apiRep.result.basketChanged)
+                basketSrv.update(apiRep.result.changedProducts);
+        }
+        return { ...apiRep };
+    }
+    static getOrderId() {
+        let id = localStorage.getItem(this.orderIdKey);
+        if (id) return id;
+        else return null;
+    }
+    static setOrderId(id) {
+        localStorage.setItem(this.orderIdKey, id);
+    }
+    static clearOrderId() {
+        localStorage.removeItem(this.orderIdKey);
     }
 }

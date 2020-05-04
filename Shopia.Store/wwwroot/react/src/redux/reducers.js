@@ -5,6 +5,7 @@ import initErrorReducer from './reducers/initErrorReducer';
 import orderProductReducer from './reducers/orderProductReducer';
 import basketReducer from './reducers/basketReducer';
 import reviewReducer from './reducers/reviewReducer';
+import mapReducer from './reducers/mapReducer';
 
 const reducers = combineReducers({
     modalReducer,
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     initErrorReducer,
     orderProductReducer,
     basketReducer,
-    reviewReducer
+    reviewReducer,
+    mapReducer
 });
 
 export default reducers;

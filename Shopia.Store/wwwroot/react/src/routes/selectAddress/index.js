@@ -11,9 +11,10 @@ import AddressListModal from './comps/addressListModal';
 import { Radio, FormControlLabel, RadioGroup } from '@material-ui/core';
 import basketSrv from './../../service/basketSrv';
 import orderSrv from './../../service/orderSrv';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { SetAddrssAction } from './../../redux/actions/addressAction';
 import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
+import { getCurrentLocation } from './../../shared/utils';
 
 class SelectAddress extends React.Component {
     constructor(props) {
@@ -37,8 +38,9 @@ class SelectAddress extends React.Component {
                 message: ''
             },
             location: {
-                lng: 51.337848,
-                lat: 35.699858
+                lng: this.props.lng,
+                lat: this.props.lat,
+                message: null
             },
             prevAddress: null
         };
@@ -64,6 +66,9 @@ class SelectAddress extends React.Component {
     }
 
     async componentDidMount() {
+        let loc = await getCurrentLocation();
+        if (loc)
+            this.setState(p => ({ ...p, location: { lng: loc.lng, lat: loc.lat } }));
         this.props.hideInitError();
         if (basketSrv.get().length === 0)
             toast(strings.doPurchaseProcessAgain, {
@@ -86,11 +91,19 @@ class SelectAddress extends React.Component {
         await this.modal._toggle();
     }
 
+    async _fetchAddresses(){
+
+    }
+    
     async _submit() {
 
         if (!this.state.prevAddress) {
             if (!this.state.address.value) {
                 this.setState(p => ({ ...p, address: { ...p.address, error: true, message: validationStrings.required } }))
+                return;
+            }
+            if (!this.props.lng || !this.props.lat) {
+                this.setState(p => ({ ...p, location: { ...p.location, message: validationStrings.required } }));
                 return;
             }
         }
@@ -105,7 +118,8 @@ class SelectAddress extends React.Component {
         if (!this.state.prevAddress) {
             this.props.setAddress({
                 address: this.state.address.value,
-                ...this.state.location
+                lng: this.props.lng,
+                lat: this.props.lat
             },
                 this.state.reciever.value,
                 this.state.recieverMobileNumber.value
@@ -117,7 +131,7 @@ class SelectAddress extends React.Component {
                 this.state.recieverMobileNumber.value
             );
         }
-       this.setState(p => ({ ...p, redirect: '/review' }));
+        this.setState(p => ({ ...p, redirect: '/review' }));
 
     }
 
@@ -144,6 +158,16 @@ class SelectAddress extends React.Component {
 
                     ) :
                         (<Row>
+                            <Col xs={12} className='m-b'>
+                                <Link className={'location-selector ' + (this.state.location.message ? 'error' : '')} to={`/selectLocation/${this.state.location.lng}/${this.state.location.lat}`}>
+                                    <CustomMap height='57px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
+                                    <label>
+                                        <span>{strings.selectLocation}</span>
+                                        <i className='zmdi zmdi-google-maps'></i>
+                                    </label>
+                                </Link>
+                                <p className='Mui-error'>{this.state.location.message}</p>
+                            </Col>
                             <Col xs={12} sm={6}>
                                 <div className="form-group">
                                     <TextField
@@ -157,9 +181,6 @@ class SelectAddress extends React.Component {
                                         helperText={this.state.address.message}
                                         variant="outlined" />
                                 </div>
-                            </Col>
-                            <Col xs={12} sm={6} className='m-b'>
-                                <CustomMap height={150} location={this.state.location} onChanged={this._mapChanged.bind(this)} />
                             </Col>
                         </Row>)}
 
@@ -204,18 +225,18 @@ class SelectAddress extends React.Component {
                     {strings.continuePurchase}
                 </button>
                 <AddressListModal ref={(comp) => this.modal = comp} onChange={this._selectAddress.bind(this)} />
-            </div>
+            </div >
         );
     }
 
 }
-// const mapStateToProps = state => {
-//     return { ...state.basketReducer };
-// }
+const mapStateToProps = state => {
+    return { ...state.mapReducer };
+}
 
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
     setAddress: (address, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
 });
 
-export default connect(null, mapDispatchToProps)(SelectAddress);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectAddress);

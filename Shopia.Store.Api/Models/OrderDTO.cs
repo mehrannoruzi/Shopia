@@ -4,7 +4,8 @@ namespace Shopia.Store.Api
 {
     public class OrderDTO
     {
-        public long? OrderId { get; set; }
+        public string OrderId { get; set; }
+        public int DeliveryId { get; set; }       
         public AddressDTO Address { get; set; }
         public UserDTO User { get; set; }
         public string Reciever { get; set; }

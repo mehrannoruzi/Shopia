@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import strings from '../../shared/constant';
-import orderApi from './../../api/orderApi';
+import orderSrv from './../../service/orderSrv';
+import basketSrv from './../../service/basketSrv';
 import greenBasketImage from './../../assets/images/green-basket.svg';
 import redBasketImage from './../../assets/images/red-basket.svg';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -20,7 +21,13 @@ class AfterGateway extends React.Component {
             transId: params.transId
         }
     }
-
+    componentDidMount(){
+        if(this.state.success)
+        {
+            orderSrv.clearOrderId();
+            basketSrv.clear();
+        }
+    }
 
     render() {
         return (

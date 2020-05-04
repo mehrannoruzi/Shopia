@@ -9,10 +9,12 @@ import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
 import addressApi from '../../api/addressApi';
 import { ShowInitErrorAction, HideInitErrorAction } from "../../redux/actions/InitErrorAction";
+import { ChangedBasketItemsAction } from './../../redux/actions/basketAction';
 import deliveryCostImage from './../../assets/images/delivery-cost.svg';
 import discountImage from './../../assets/images/discount.svg';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { toast } from 'react-toastify';
+import ProductsChangedModal from './comps/ProductsChangedModal';
 
 class Review extends React.Component {
     constructor(props) {
@@ -24,7 +26,8 @@ class Review extends React.Component {
             discount: 0,
             cost: 0,
             currency: '',
-            btnInProgresss: false
+            btnInProgresss: false,
+            gatewayUrl: ''
         };
     }
 
@@ -42,9 +45,8 @@ class Review extends React.Component {
         this.setState(p => ({ ...p, cost: apiRep.result.cost, loading: false }));
     }
 
-    async componentDidMount() 
-    {
-        console.log(this.props.address);
+    async componentDidMount() {
+        console.log(this.props.address)
         if (this.props.items.length === 0) {
             this.setState(p => ({ ...p, redirect: '/basket' }));
             return;
@@ -57,10 +59,24 @@ class Review extends React.Component {
         this.setState(p => ({ ...p, btnInProgresss: true }));
         let rep = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber);
         this.setState(p => ({ ...p, btnInProgresss: false }));
-        console.log(rep);
-        if (rep.success)
-            window.open(rep.result.url,'_self');//.location.href = rep.result;
+        if (rep.success) {
+            orderSrv.setOrderId(rep.result.id);
+            if (rep.result.basketChanged) {
+                this.setState(p => ({ ...p, gatewayUrl: rep.result.url }));
+                this.changedProductModal._toggle();
+                this.props.changeBasket(rep.result.changedProducts);
+            }
+            else window.open(rep.result.url, '_self');
+        }
         else toast(rep.message, { type: toast.TYPE.ERROR })
+    }
+
+    _goToBasket() {
+        this.setState(p => ({ ...p, redirect: '/basket' }));
+    }
+
+    _continue() {
+        window.open(this.state.gatewayUrl, '_self');
     }
     render() {
         const p = this.state.product;
@@ -120,6 +136,7 @@ class Review extends React.Component {
                     {strings.payment}
                     {this.state.btnInProgresss ? <Spinner animation="border" size="sm" /> : null}
                 </button>
+                <ProductsChangedModal ref={modal => this.changedProductModal = modal} show={this.state.show} continue={this._continue.bind(this)} goToBasket={this._goToBasket.bind(this)} />
             </div>
         );
     }
@@ -131,6 +148,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
     hideInitError: () => dispatch(HideInitErrorAction()),
+    changeBasket: (products) => dispatch(ChangedBasketItemsAction(products))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Review);

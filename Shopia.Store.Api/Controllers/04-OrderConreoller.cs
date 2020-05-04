@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -64,7 +65,25 @@ namespace Shopia.Store.Api.Controllers
                     var rep = JsonConvert.DeserializeObject<HillaPayGetTransResponse>(strRep);
                     //TODO:Update Order TransId
                     temp.TransId = rep.result_transaction_send.transaction_id;
-                    if (rep.status.status == 200) return Json(new { IsSuccessful = true, Result = new { token = model.order_id, url = rep.result_transaction_send.transaction_url } });
+                    if (rep.status.status == 200) return Json(new
+                    {
+                        IsSuccessful = true,
+                        Result = new
+                        {
+                            Id = rep.result_transaction_send.transaction_id,
+                            Url = rep.result_transaction_send.transaction_url,
+                            BasketChanged = true,
+                            ChangedProducts = new List<ProductDTO> {
+                                new ProductDTO
+                                {
+                                    Id = 1,
+                                    Discount=3,
+                                    Price = 40000,
+                                    MaxCount = 999
+                                }
+                            }
+                        }
+                    });
 
                     else return Json(new { IsSuccessful = false, Message = "خطایی رخ داده است، دوباره تلاش نمایید" });
                 }
