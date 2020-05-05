@@ -43,6 +43,7 @@ export default class addressApi {
                 }
             });
             const rep = await response.json();
+            console.log(rep);
             if (!rep.IsSuccessful)
                 return {
                     success: false,
@@ -51,11 +52,14 @@ export default class addressApi {
             else
                 return {
                     success: true,
-                    result: rep.Result.map(d => ({
-                        id: d.Id,
-                        name: d.Name,
-                        cost: d.Cost
-                    }))
+                    result: {
+                        placeName: rep.Result.PlaceName,
+                        items: rep.Result.Items.map(d => ({
+                            id: d.Id,
+                            name: d.Name,
+                            cost: d.Cost
+                        }))
+                    }
                 };
         } catch (error) {
             return ({ success: false, message: strings.connecttionFailed });
