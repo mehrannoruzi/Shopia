@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { TextField } from '@material-ui/core';
 import { Container, Row, Col } from 'react-bootstrap';
+import Skeleton from '@material-ui/lab/Skeleton';
 import CustomMap from '../../shared/map';
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
@@ -13,8 +14,10 @@ import basketSrv from './../../service/basketSrv';
 import orderSrv from './../../service/orderSrv';
 import { Redirect, Link } from 'react-router-dom';
 import { SetAddrssAction } from './../../redux/actions/addressAction';
-import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
-import { getCurrentLocation } from './../../shared/utils';
+import { ShowInitErrorAction, HideInitErrorAction } from './../../redux/actions/InitErrorAction';
+import { commaThousondSeperator } from './../../shared/utils';
+import addressApi from './../../api/addressApi';
+import addressSrv from './../../service/addressSrv';
 
 class SelectAddress extends React.Component {
     constructor(props) {
@@ -42,6 +45,9 @@ class SelectAddress extends React.Component {
                 lat: this.props.lat,
                 message: null
             },
+            deliveryId: '',
+            deliveryCost: null,
+            deliveryTypes: [],
             prevAddress: null
         };
     }
@@ -59,6 +65,8 @@ class SelectAddress extends React.Component {
 
     _selectAddress(item) {
         this.setState(p => ({ ...p, prevAddress: item }));
+        this.props.lat = null;
+        this.props.lng = null;
     }
 
     _remmoveAddress() {
@@ -66,9 +74,12 @@ class SelectAddress extends React.Component {
     }
 
     async componentDidMount() {
-        let loc = await getCurrentLocation();
-        if (loc)
-            this.setState(p => ({ ...p, location: { lng: loc.lng, lat: loc.lat } }));
+        let addressInfo = addressSrv.getInfo();
+
+        if (addressInfo) this.setState(p => ({ ...p, reciever: { ...p.reciever, value: addressInfo.reciever }, recieverMobileNumber: { ...p.recieverMobileNumber, value: addressInfo.recieverMobileNumber } }));
+
+        if (this.props.lat) await this._getDeliveryCost();
+
         this.props.hideInitError();
         if (basketSrv.get().length === 0)
             toast(strings.doPurchaseProcessAgain, {
@@ -91,10 +102,32 @@ class SelectAddress extends React.Component {
         await this.modal._toggle();
     }
 
-    async _fetchAddresses(){
+    async _getDeliveryCost() {
+        this.setState(p => ({ ...p, loading: true }));
+        let apiRep = await addressApi.getDeliveryCost(this.state.prevAddress ? this.state.prevAddress : {
+            address: this.state.address.value,
+            lng: this.props.lng,
+            lat: this.props.lat
+        });
+
+        if (!apiRep.success) {
+            this.setState(p => ({ ...p, loading: false }));
+            this.props.showInitError(this._getDeliveryCost.bind(this), apiRep.message);
+            return;
+        }
+        else {
+            console.log('here');
+            this.setState(p => ({ ...p, loading: false, deliveryCost: apiRep.result[0].cost, deliveryId: apiRep.result[0].id.toString(), deliveryTypes: apiRep.result }));
+        }
 
     }
-    
+    _selectDeliveryType(e) {
+        let deliveryId = e.target.value;
+        let type = this.state.deliveryTypes.find(x => x.id === parseInt(deliveryId));
+        console.log('->_selectDeliveryType');
+        console.log(type.cost)
+        this.setState(p => ({ ...p, deliveryId: deliveryId, deliveryCost: type.cost }));
+    }
     async _submit() {
 
         if (!this.state.prevAddress) {
@@ -122,15 +155,20 @@ class SelectAddress extends React.Component {
                 lat: this.props.lat
             },
                 this.state.reciever.value,
-                this.state.recieverMobileNumber.value
+                this.state.recieverMobileNumber.value,
+                this.state.deliveryId,
+                this.state.deliveryCost
             );
         }
         else {
             this.props.setAddress(this.state.prevAddress,
                 this.state.reciever.value,
-                this.state.recieverMobileNumber.value
+                this.state.recieverMobileNumber.value,
+                this.state.deliveryId,
+                this.state.deliveryCost
             );
         }
+        addressSrv.saveInfo(this.state.reciever.value, this.state.recieverMobileNumber.value);
         this.setState(p => ({ ...p, redirect: '/review' }));
 
     }
@@ -220,8 +258,16 @@ class SelectAddress extends React.Component {
                             </div>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            {this.state.loading ? [0, 1, 2].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={30} />) :
+                                <RadioGroup aria-label="address" name="old-address" value={this.state.deliveryId} onChange={this._selectDeliveryType.bind(this)}>
+                                    {this.state.deliveryTypes.map((d) => <FormControlLabel key={d.id} value={d.id.toString()} control={<Radio color="primary" />} label={`${d.name} (${d.cost} ${strings.currency})`} />)}
+                                </RadioGroup>}
+                        </Col>
+                    </Row>
                 </Container>
-                <button className='btn-next' onClick={this._submit.bind(this)}>
+                <button className='btn-next' onClick={this._submit.bind(this)} disabled={this.state.loading}>
                     {strings.continuePurchase}
                 </button>
                 <AddressListModal ref={(comp) => this.modal = comp} onChange={this._selectAddress.bind(this)} />
@@ -236,6 +282,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
+    showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
     setAddress: (address, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
 });
 

@@ -10,22 +10,20 @@ class SelectLocation extends React.Component {
     constructor(props) {
         super(props);
         const { params } = this.props.match;
-        this.lng = params.lng;
-        this.lat = params.lat;
+        this.lng = params.lng === 'null' ? null : parseInt(params.lng);
+        this.lat = params.lat === 'null' ? null : parseInt(params.lat);
     }
 
     _mapChanged(lng, lat) {
-        console.log('in map');
-        console.log(lng+'-'+lat);
         this.lng = lng;
         this.lat = lat;
     }
 
     _setLocation() {
+        console.log(this.lng + '-' + this.lat);
         this.props.setLocation(this.lng, this.lat);
         this.props.history.goBack();
     }
-
     render() {
         return (
             <div className="select-location-page with-header">

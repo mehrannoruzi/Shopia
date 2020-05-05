@@ -7,7 +7,8 @@ const initState = {
     mobileNumber: ''
 };
 
-export default function basketReducer(state = initState, action) {
+export default function reviewReducer(state = initState, action) {
+    console.log(action);
     switch (action.type) {
         case actionTypes.SET_ADDRESS:
             return { ...state, ...action.payload }

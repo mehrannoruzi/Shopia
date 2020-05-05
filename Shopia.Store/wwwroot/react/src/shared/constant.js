@@ -1,4 +1,5 @@
 ﻿const strings = {
+    currency:'ریال',
     home: 'خانه',
     aboutus: 'درباره ما',
     contactus: 'تماس با ما',

@@ -33,7 +33,7 @@ namespace Shopia.Store.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDeliveryCost(AddressDTO address)
+        public IActionResult GetDeliveryCost(LocationDTO location)
         {
             var token = Request.Headers["token"];
             return Json(new
