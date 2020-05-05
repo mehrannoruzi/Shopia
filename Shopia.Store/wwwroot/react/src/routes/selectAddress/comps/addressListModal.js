@@ -40,7 +40,6 @@ class AddressListModal extends React.Component {
             error: false
         }));
         else this.setState(p => ({ ...p,loading: false, error: true, errorMessage: apiRep.message }));
-        console.log(apiRep);
     }
 
     componentWillUnmount() {

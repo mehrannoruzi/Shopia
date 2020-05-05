@@ -5,6 +5,7 @@ const addr = {
     getSingleProduct:`${baseUrl}Product/GetSingle`,
     postCompleteInfo:`${baseUrl}order/CompleteInfo`,
     getAddresses:`${baseUrl}Address/Get`,
+    getDeliveryCost:`${baseUrl}Address/GetDeliveryCost`,
     postOrder:`${baseUrl}order/submit`
 } 
 export default addr;

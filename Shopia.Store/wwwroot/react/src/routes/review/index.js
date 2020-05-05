@@ -20,33 +20,21 @@ class Review extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: true,
             redirect: null,
             totalPrice: 0,
             discount: 0,
-            cost: 0,
             currency: '',
             btnInProgresss: false,
             gatewayUrl: ''
         };
-    }
-
-    async _getDeliverCost() {
-        let info = orderSrv.getInfo();
-        if (!info) {
-            return;
-        }
-        let apiRep = await addressApi.getDeliveryCost(info.token, this.state.address);
-        if (!apiRep.success)
-            if (!apiRep.success) {
-                this.props.showInitError(this._fetchData.bind(this), apiRep.message);
-                return;
-            }
-        this.setState(p => ({ ...p, cost: apiRep.result.cost, loading: false }));
+        console.log(this.props.address);
+        console.log(this.props.deliveryId);
+        console.log(this.props.deliveryCost);
     }
 
     async componentDidMount() {
-        console.log(this.props.address)
+
+
         if (this.props.items.length === 0) {
             this.setState(p => ({ ...p, redirect: '/basket' }));
             return;
@@ -78,8 +66,8 @@ class Review extends React.Component {
     _continue() {
         window.open(this.state.gatewayUrl, '_self');
     }
+
     render() {
-        const p = this.state.product;
         if (this.state.redirect) return <Redirect to={this.state.redirect} />
         return (
             <div className='review-page with-header'>
@@ -109,26 +97,21 @@ class Review extends React.Component {
                     ))}
                     <Row>
                         <Col className='total-wrapper'>
-                            {this.state.loading ? <div className='cost m-b'><Skeleton variant='rect' width={120} height={30} /></div> :
-                                (<div className='cost m-b'>
-                                    <img src={deliveryCostImage} alt='delivery' />&nbsp;
-                                    <span className='val'>{strings.deliverCost} : {this.state.cost} {this.state.currency}</span>
-                                </div>)}
+                            <div className='cost m-b'>
+                                <img src={deliveryCostImage} alt='delivery' />&nbsp;
+                                    <span className='val'>{strings.deliverCost} : {commaThousondSeperator(this.props.deliveryCost.toString())} {strings.currency}</span>
+                            </div>
 
-                            {this.state.loading ? <div className='discount m-b'><Skeleton variant='rect' width={120} height={30} /></div> :
-                                (<div className='discount m-b'>
-                                    <img src={discountImage} alt='discount' />&nbsp;
-                                    <span className='val'>{strings.discount} : {this.props.items.reduce(function (total, x) {
-                                        return total + x.price - x.realPrice;
-                                    }, 0)} {this.state.currency}</span>
-                                </div>)}
+                            <div className='discount m-b'>
+                                <img src={discountImage} alt='discount' />&nbsp;
+                                    <span className='val'>{strings.discount} : {this.props.totalDiscount} {strings.currency}</span>
+                            </div>
 
-                            {this.state.loading ? <div className='price m-b'><Skeleton variant='rect' width={200} height={30} /></div> :
-                                (<div className='price m-b'>
-                                    <span>{strings.priceToPay} : </span>
-                                    <span className='val'>{this.state.cost + this.props.totalPrice} {this.state.currency}</span>
-                                    <span>{this.props.items[0].currency}</span>
-                                </div>)}
+                            <div className='price m-b'>
+                                <span>{strings.priceToPay} : </span>
+                                <span className='val'>{commaThousondSeperator(this.props.deliveryCost + this.props.totalPrice)}</span>
+                                <span>{strings.currency}</span>
+                            </div>
                         </Col>
                     </Row>
                 </Container>

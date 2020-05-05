@@ -33,14 +33,13 @@ export default class addressApi {
         }
     }
 
-    static async getDeliveryCost(token, address) {
+    static async getDeliveryCost(address) {
         try {
-            const response = await fetch(`${addr.getAddresses}?lng=${address.lng}&lat=${address.lat}&address=${address.address}`, {
+            const response = await fetch(`${addr.getDeliveryCost}?lng=${address.lng}&lat=${address.lat}&address=${address.address}`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
-                    'Content-Type': 'application/json; charset=utf-8;',
-                    'token': token
+                    'Content-Type': 'application/json; charset=utf-8;'
                 }
             });
             const rep = await response.json();
@@ -52,11 +51,12 @@ export default class addressApi {
             else
                 return {
                     success: true,
-                    result: {
-                        postCost: rep.Result.PostCost,
-                        peykCost: rep.Result.PeykCost
-                    }
-                }
+                    result: rep.Result.map(d => ({
+                        id: d.Id,
+                        name: d.Name,
+                        cost: d.Cost
+                    }))
+                };
         } catch (error) {
             return ({ success: false, message: strings.connecttionFailed });
         }
