@@ -8,7 +8,6 @@ const initState = {
 };
 
 export default function reviewReducer(state = initState, action) {
-    console.log(action);
     switch (action.type) {
         case actionTypes.SET_ADDRESS:
             return { ...state, ...action.payload }

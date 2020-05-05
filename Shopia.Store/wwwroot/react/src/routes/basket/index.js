@@ -77,7 +77,7 @@ class Basket extends React.Component {
                                         </div>
                                         <Counter id={x.id} className='m-b' count={x.count} max={x.maxCount} onChange={this._changeCount.bind(this)} />
                                         <div className='price-wrapper'>
-                                            <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}</span>
+                                            <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}<small className='currency'> {strings.currency}</small></span>
                                             <button onClick={this._delete.bind(this, x.id, x.name)} className='btn-delete'><i className='zmdi zmdi-delete'></i></button>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@ class Basket extends React.Component {
                                 <span className='total-price'>
                                     {commaThousondSeperator(this.props.items.reduce((p, c) => (p + c.price * c.count), 0).toString())}
                                 </span>
-                                <small>&nbsp;{this.props.items[0].currency}</small>
+                                <small>&nbsp;{strings.currency}</small>
 
                             </Col>
                         </Row>

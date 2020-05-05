@@ -27,20 +27,14 @@ class Review extends React.Component {
             btnInProgresss: false,
             gatewayUrl: ''
         };
-        console.log(this.props.address);
-        console.log(this.props.deliveryId);
-        console.log(this.props.deliveryCost);
     }
 
     async componentDidMount() {
-
-
+        this.props.hideInitError();
         if (this.props.items.length === 0) {
             this.setState(p => ({ ...p, redirect: '/basket' }));
             return;
         }
-        this.props.hideInitError();
-        await this._getDeliverCost();
     }
 
     async _pay() {
@@ -88,7 +82,7 @@ class Review extends React.Component {
                                             <DiscountBadg discount={x.discount} />
                                         </div>
                                         <span className='count m-b'>{strings.count}: {x.count}</span>
-                                        <span className='price'><strong className='val'>{commaThousondSeperator((x.count * x.realPrice).toString())}</strong>{x.currency}</span>
+                                        <span className='price'><strong className='val'>{commaThousondSeperator((x.count * x.realPrice).toString())}</strong>{strings.currency}</span>
                                     </div>
                                 </div>
 
@@ -109,7 +103,7 @@ class Review extends React.Component {
 
                             <div className='price m-b'>
                                 <span>{strings.priceToPay} : </span>
-                                <span className='val'>{commaThousondSeperator(this.props.deliveryCost + this.props.totalPrice)}</span>
+                                <span className='val'>{commaThousondSeperator((this.props.deliveryCost + this.props.totalPrice).toString())}</span>
                                 <span>{strings.currency}</span>
                             </div>
                         </Col>
