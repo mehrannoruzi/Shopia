@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import basketSrv from './../../service/basketSrv';
@@ -10,7 +10,7 @@ import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
 import { UpdateBasketAction, RemoveFromBasketAction } from './../../redux/actions/basketAction';
 import ConfirmModal from './../../shared/confirm';
-import redBasketImage from './../../assets/images/red-basket.svg';
+import { HideInitErrorAction } from "../../redux/actions/InitErrorAction";
 
 class Basket extends React.Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class Basket extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this.props.items);
+        this.props.hideInitError();
     }
 
     _changeCount(id, count) {
@@ -114,6 +114,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    hideInitError: () => dispatch(HideInitErrorAction()),
     updateBasket: (id, count) => dispatch(UpdateBasketAction(id, count)),
     removeFromBasket: (id) => dispatch(RemoveFromBasketAction(id))
 });

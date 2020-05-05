@@ -72,7 +72,7 @@
     discount:'نخفیف',
     priceToPay:'مبلغ قابل پرداخت',
     attention:'توجه',
-    basketProductsChanged:'توجه: برخی از محصولات سبد خرید تغییر کرده اند',
+    basketProductsChanged:'برخی از محصولات سبد خرید تغییر کرده اند',
     review:'بازبینی',
     continue:'ادامه',
     selectLocation:'انتخاب مکان',
