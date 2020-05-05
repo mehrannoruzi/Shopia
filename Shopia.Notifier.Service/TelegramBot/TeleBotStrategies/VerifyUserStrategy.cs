@@ -15,7 +15,8 @@ namespace Shopia.Notifier.Service
                 ChatId = eventArgs.Message.From.Id
             };
 
-            HttpRequestTools.PostJson<IResponse<bool>>("http://shopia.me/notifier/verifyTelebotuser", TeleBotUser);
+            var registerResult = HttpRequestTools.PostJson<IResponse<bool>>("http://shopia.me/notifier/verifyTelebotuser", TeleBotUser);
+            //send register result message to user
         }
     }
 }
