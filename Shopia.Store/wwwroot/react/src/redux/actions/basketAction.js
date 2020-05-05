@@ -23,6 +23,13 @@ export function UpdateBasketAction(id, count) {
     };
 };
 
+export function ChangedBasketItemsAction(products) {
+    return {
+        type: actionTypes.CHANGED_BASKET_ITEMS,
+        payload: { products }
+    };
+};
+
 export function RemoveFromBasketAction(id) {
     return {
         type: actionTypes.REMOVE_FROM_BASKET,

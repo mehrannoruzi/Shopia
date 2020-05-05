@@ -1,17 +1,21 @@
-﻿@import '../../../assets/css/constant.scss';
+﻿@import "../../../assets/css/constant.scss";
 
-.basket-icon-comp{
-    .icon{
-        color: $textColor;
-        font-size: 20px;
-        vertical-align: middle;
-    }
-    .count{
-        display: inline-flex;
-        margin:0 10px;
-        width: auto;
-        height: auto;
-    }
+.basket-icon-comp {
+	a {
+		text-decoration: none;
+		color: $textColor;
+		.icon {
+			
+			font-size: 20px;
+			vertical-align: middle;
+		}
+		.count {
+			display: inline-flex;
+			margin: 0 10px;
+			width: auto;
+			height: auto;
+		}
+	}
 }
 
 .ripple-loader {

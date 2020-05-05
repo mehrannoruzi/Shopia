@@ -1,10 +1,14 @@
-.basket-icon-comp .icon {
-  color: #7facde;
+.basket-icon-comp a {
+  text-decoration: none;
+  color: #2776d3;
+}
+
+.basket-icon-comp a .icon {
   font-size: 20px;
   vertical-align: middle;
 }
 
-.basket-icon-comp .count {
+.basket-icon-comp a .count {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;

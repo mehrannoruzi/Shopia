@@ -14,7 +14,6 @@ export default class orderApi {
                 body: JSON.stringify(info)
             });
             const rep = await response.json();
-            console.log(rep);
             if (!rep.IsSuccessful) return ({ success: false, message: rep.Message });
             else return ({ success: true, result: rep.Result });
         } catch (error) {
@@ -25,21 +24,34 @@ export default class orderApi {
     static async submit(order) {
         try {
             const response = await fetch(addr.postOrder, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                //credentials: 'same-origin', // include, *same-origin, omit
+                method: 'POST',
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8;'
                 },
-                //redirect: 'follow', // manual, *follow, error
-                //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(order) // body data type must match "Content-Type" header
             });
-            const json = await response.json();
-            return json;
-        } catch (error) {
-            return ({ success: false, message: strings.connecttionFailed });
+            const rep = await response.json();
+            if (rep.IsSuccessful)
+                return {
+                    success: true,
+                    result: {
+                        id: rep.Result.Id,
+                        basketChanged: rep.Result.BasketChanged,
+                        url:rep.Result.Url,
+                        changedProducts: rep.Result.BasketChanged ? rep.Result.ChangedProducts.map((p) => ({
+                            id: p.Id,
+                            price: p.Price,
+                            discount: p.Discount,
+                            maxCount:p.MaxCount
+                        })) : []
+                    }
+                };
+            else return { success: false, message: rep.Message };
+        }
+        catch (error) {
+            console.log(error);
+            return { success: false, message: strings.connecttionFailed };
         }
     }
 

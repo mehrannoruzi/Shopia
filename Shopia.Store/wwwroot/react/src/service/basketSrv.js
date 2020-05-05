@@ -69,6 +69,22 @@ export default class BasketSrv {
 
     }
 
+    static update(products) {
+        let basket = this.get();
+        products.forEach(p => {
+            let idx = basket.findIndex(x => x.id === p.id);
+            if (idx > -1) {
+                if (p.maxCount === 0) basket.splice(idx, 1);
+                else {
+                    basket[idx].price = p.price;
+                    basket[idx].discount = p.discount;
+                }
+            }
+
+        });
+        localStorage.setItem(this.key, JSON.stringify(basket));
+    }
+
     static clear() {
         localStorage.removeItem(this.key);
     }

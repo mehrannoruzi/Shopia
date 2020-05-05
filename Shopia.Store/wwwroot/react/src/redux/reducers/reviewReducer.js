@@ -9,8 +9,8 @@ const initState = {
 
 export default function basketReducer(state = initState, action) {
     switch (action.type) {
-        case actionTypes.SELECT_ADDRESS:
-            return { ...action.payload }
+        case actionTypes.SET_ADDRESS:
+            return { ...state, ...action.payload }
         default:
             return { ...state };
     }
