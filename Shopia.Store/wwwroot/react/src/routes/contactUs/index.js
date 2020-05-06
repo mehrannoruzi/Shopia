@@ -32,7 +32,7 @@ class ConactUs extends React.Component {
 
     render() {
         return (
-            <div className="contact-us-page">
+            <div className="contact-us-page with-header">
                 <Header title={strings.contactus} goBack={this.props.history.goBack} />
                 <Container>
                     <Row className='socials'>
