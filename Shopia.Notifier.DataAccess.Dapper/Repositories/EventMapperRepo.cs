@@ -27,7 +27,7 @@ namespace Shopia.Notifier.DataAccess.Dapper
                 model.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
 
                 await _sqlConnection.ExecuteSpCommandAsync<int>("[Notifier].[InsertEventMapper]",
-                    new { Page = model.ToTableValuedParameter("[dbo].[Tvp_EventMapper]") });
+                    new { Tvp_EventMapper = model.ToTableValuedParameter("[dbo].[Tvp_EventMapper]") });
 
                 return true;
             }
