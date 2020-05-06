@@ -1,26 +1,38 @@
 import strings from './../shared/constant';
+import addr from './addreses';
 
 export default class generalApi {
-    static getContactUsInfo = () => new Promise((resolve) => {
+    static async getContactUsInfo() {
         try {
-            setTimeout(function () {
-                resolve({
+            const response = await fetch(`${addr.getContactUs}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8;'
+                }
+            });
+            const rep = await response.json();
+            console.log(rep);
+            if (!rep.IsSuccessful)
+                return {
+                    success: false,
+                    message: rep.Message
+                }
+            else
+                return {
                     success: true,
                     result: {
-                        whatsappLink: 'https://wa.me/989116107197',
-                        telegramLink: 'https://t.me/kingofday',
-                        phoneNumbers: ['9334188188', '933561109'],
-                        websiteName: 'shopia.ir',
-                        websiteUrl: 'https://kingofday.ir'
+                        whatsappLink: rep.Result.WhatsappLink,
+                        telegramLink: rep.Result.TelegramLink,
+                        phoneNumbers: rep.Result.PhoneNumbers,
+                        websiteName: rep.Result.WebsiteName,
+                        websiteUrl: rep.Result.WebsiteUrl
                     }
-                });
-            }, 1000);
-        }
-        catch{
-            resolve({ success: false, message: strings.connecttionFailed });
+                };
+        } catch (error) {
+            return ({ success: false, message: strings.connecttionFailed });
         }
 
-
-    });
+    }
 
 }

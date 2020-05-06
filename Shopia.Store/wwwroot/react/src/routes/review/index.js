@@ -7,20 +7,22 @@ import DiscountBadg from './../../shared/discountBadg';
 import orderSrv from './../../service/orderSrv';
 import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
-import addressApi from '../../api/addressApi';
 import { ShowInitErrorAction, HideInitErrorAction } from "../../redux/actions/InitErrorAction";
 import { ChangedBasketItemsAction } from './../../redux/actions/basketAction';
 import deliveryCostImage from './../../assets/images/delivery-cost.svg';
 import discountImage from './../../assets/images/discount.svg';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { toast } from 'react-toastify';
 import ProductsChangedModal from './comps/ProductsChangedModal';
 
 class Review extends React.Component {
     constructor(props) {
         super(props);
+        let redirect = null;
+        if (!this.props.deliveryId) redirect = '/selectAddress';
+
+        if (this.props.items.length === 0) redirect = '/basket';
         this.state = {
-            redirect: null,
+            redirect: redirect,
             totalPrice: 0,
             discount: 0,
             currency: '',
@@ -31,15 +33,11 @@ class Review extends React.Component {
 
     async componentDidMount() {
         this.props.hideInitError();
-        if (this.props.items.length === 0) {
-            this.setState(p => ({ ...p, redirect: '/basket' }));
-            return;
-        }
     }
 
     async _pay() {
         this.setState(p => ({ ...p, btnInProgresss: true }));
-        let rep = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber);
+        let rep = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber, this.props.deliveryId);
         this.setState(p => ({ ...p, btnInProgresss: false }));
         if (rep.success) {
             orderSrv.setOrderId(rep.result.id);

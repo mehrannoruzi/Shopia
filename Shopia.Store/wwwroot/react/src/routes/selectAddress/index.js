@@ -78,8 +78,6 @@ class SelectAddress extends React.Component {
         let addressInfo = addressSrv.getInfo();
 
         if (addressInfo) this.setState(p => ({ ...p, reciever: { ...p.reciever, value: addressInfo.reciever }, recieverMobileNumber: { ...p.recieverMobileNumber, value: addressInfo.recieverMobileNumber } }));
-        console.log('lat');
-        console.log(this.props.lat);
         if (this.props.lat) await this._getDeliveryCost();
 
         if (basketSrv.get().length === 0)
@@ -128,12 +126,12 @@ class SelectAddress extends React.Component {
     async _submit() {
 
         if (!this.state.prevAddress) {
-            if (!this.state.address.value) {
-                this.setState(p => ({ ...p, address: { ...p.address, error: true, message: validationStrings.required } }))
-                return;
-            }
             if (!this.state.location.lng || !this.state.location.lat) {
                 this.setState(p => ({ ...p, location: { ...p.location, message: validationStrings.required } }));
+                return;
+            }
+            if (!this.state.address.value) {
+                this.setState(p => ({ ...p, address: { ...p.address, error: true, message: validationStrings.required } }))
                 return;
             }
         }
@@ -195,7 +193,7 @@ class SelectAddress extends React.Component {
                         (<Row>
                             <Col xs={12} className='m-b'>
                                 <Link className={'location-selector ' + (this.state.location.message ? 'error' : '')} to={`/selectLocation/${this.state.location.lng}/${this.state.location.lat}`}>
-                                    <CustomMap height='57px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
+                                    <CustomMap height='50px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
                                     <label>
                                         <span>{this.state.placeName ? this.state.placeName : strings.selectLocation}</span>
                                         <i className='zmdi zmdi-google-maps'></i>
@@ -210,7 +208,7 @@ class SelectAddress extends React.Component {
                                         error={this.state.address.error}
                                         label={strings.address}
                                         multiline
-                                        rows={1}
+                                        rows={2}
                                         value={this.state.address.value}
                                         onChange={this._inputChanged.bind(this)}
                                         helperText={this.state.address.message}
@@ -246,7 +244,7 @@ class SelectAddress extends React.Component {
                                     id="recieverMobileNumber"
                                     type='number'
                                     className='ltr-input'
-                                    label={strings.mobileNumber}
+                                    label={strings.recieverMobileNumber}
                                     value={this.state.recieverMobileNumber.value}
                                     onChange={this._inputChanged.bind(this)}
                                     helperText={this.state.recieverMobileNumber.message}
@@ -257,7 +255,7 @@ class SelectAddress extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            {this.state.loading ? [0, 1, 2].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={30} />) :
+                            {this.state.loading ? [0, 1].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={25} />) :
                                 <RadioGroup aria-label="address" name="old-address" value={this.state.deliveryId} onChange={this._selectDeliveryType.bind(this)}>
                                     {this.state.deliveryTypes.map((d) => <FormControlLabel key={d.id} value={d.id.toString()} control={<Radio color="primary" />} label={`${d.name} (${d.cost} ${strings.currency})`} />)}
                                 </RadioGroup>}
