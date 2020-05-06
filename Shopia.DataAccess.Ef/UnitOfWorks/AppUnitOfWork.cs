@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
 {
@@ -45,9 +46,7 @@ namespace Shopia.DataAccess.Ef
         #endregion
 
         #region Store
-
-
-
+        public StoreRepo StoreRepo => new StoreRepo(_appDbContext);
         #endregion
 
 

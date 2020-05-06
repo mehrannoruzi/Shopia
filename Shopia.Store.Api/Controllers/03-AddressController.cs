@@ -39,20 +39,24 @@ namespace Shopia.Store.Api.Controllers
             return Json(new
             {
                 IsSuccessful = true,
-                Result = new List<DeliveryDto>
+                Result = new
                 {
-                    new DeliveryDto
-                    {
-                        Id =1,
-                        Name = "پست",
-                        Cost = 5000
-                    },
-                     new DeliveryDto
-                    {
-                        Id =2,
-                        Name = "پیک",
-                        Cost = 15000
-                    }
+                    PlaceName = "تهران بریانک",
+                    Items = new List<DeliveryDto>
+                        {
+                            new DeliveryDto
+                            {
+                                Id =1,
+                                Name = "پست",
+                                Cost = 5000
+                            },
+                             new DeliveryDto
+                            {
+                                Id =2,
+                                Name = "پیک",
+                                Cost = 15000
+                            }
+                        }
                 }
             });
         }

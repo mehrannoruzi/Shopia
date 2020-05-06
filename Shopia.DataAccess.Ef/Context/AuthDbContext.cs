@@ -15,7 +15,7 @@ namespace Shopia.DataAccess.Ef
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.OverrideDeleteBehavior();
-            builder.RegisterAllEntities<IAuthEntity>(typeof(User).Assembly);
+            builder.RegisterAllEntities<IAuthEntity>(typeof(Role).Assembly);
         }
     }
 }

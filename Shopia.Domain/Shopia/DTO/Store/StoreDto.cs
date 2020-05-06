@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shopia.Domain.DTO.Store
+﻿namespace Shopia.Domain
 {
     public class StoreDTO
     {
-        public int? PostCount { get; set; }
+        public string Name { get; set; }
 
-        public int? FolowerCount { get; set; }
-
-        public int? FolowingCount { get; set; }
+        public string LogoUrl { get; set; }
     }
 }

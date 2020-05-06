@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import basketSrv from './../../service/basketSrv';
@@ -10,7 +10,8 @@ import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
 import { UpdateBasketAction, RemoveFromBasketAction } from './../../redux/actions/basketAction';
 import ConfirmModal from './../../shared/confirm';
-import redBasketImage from './../../assets/images/red-basket.svg';
+import { HideInitErrorAction } from "../../redux/actions/InitErrorAction";
+import emptyBasketImage from './../../assets/images/empty-basket.png';
 
 class Basket extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Basket extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this.props.items);
+        this.props.hideInitError();
     }
 
     _changeCount(id, count) {
@@ -51,8 +52,8 @@ class Basket extends React.Component {
             return (<div className='basket-page with-header'>
                 <Header goBack={this.props.history.goBack} />
                 <div className='empty'>
-                    <i className='zmdi zmdi-mood-bad'></i>
-                    {/* <img className='m-b' src={redBasketImage} alt='basket'/> */}
+                    {/* <i className='zmdi zmdi-mood-bad'></i> */}
+                    <img className='m-b' src={emptyBasketImage} alt='basket'/>
                     <span>{strings.basketIsEmpty}</span>
                 </div>
 
@@ -77,7 +78,7 @@ class Basket extends React.Component {
                                         </div>
                                         <Counter id={x.id} className='m-b' count={x.count} max={x.maxCount} onChange={this._changeCount.bind(this)} />
                                         <div className='price-wrapper'>
-                                            <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}</span>
+                                            <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}<small className='currency'> {strings.currency}</small></span>
                                             <button onClick={this._delete.bind(this, x.id, x.name)} className='btn-delete'><i className='zmdi zmdi-delete'></i></button>
                                         </div>
                                     </div>
@@ -95,7 +96,7 @@ class Basket extends React.Component {
                                 <span className='total-price'>
                                     {commaThousondSeperator(this.props.items.reduce((p, c) => (p + c.price * c.count), 0).toString())}
                                 </span>
-                                <small>&nbsp;{this.props.items[0].currency}</small>
+                                <small>&nbsp;{strings.currency}</small>
 
                             </Col>
                         </Row>
@@ -114,6 +115,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    hideInitError: () => dispatch(HideInitErrorAction()),
     updateBasket: (id, count) => dispatch(UpdateBasketAction(id, count)),
     removeFromBasket: (id) => dispatch(RemoveFromBasketAction(id))
 });

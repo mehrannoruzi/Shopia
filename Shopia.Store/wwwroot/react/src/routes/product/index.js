@@ -97,13 +97,13 @@ class Product extends React.Component {
                                     {
                                         p.discount ? (
                                             <div>
-                                                <span className='price'>{commaThousondSeperator(p.price.toString())} {p.currency}</span>
+                                                <span className='price'>{commaThousondSeperator(p.price.toString())} {strings.currency}</span>
                                                 <DiscountBadg discount={p.discount} />
                                             </div>) : null
                                     }
                                     <div className='real-price-wrapper'>
                                         <span className='real-price'>{commaThousondSeperator(p.realPrice.toString())}</span>
-                                        <span className='currency'>{p.currency}</span>
+                                        <span className='currency'>{strings.currency}</span>
                                     </div>
                                 </div>)}
                         </Col>

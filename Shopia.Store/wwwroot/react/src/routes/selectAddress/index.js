@@ -45,6 +45,7 @@ class SelectAddress extends React.Component {
                 lat: this.props.lat,
                 message: null
             },
+            placeName: '',
             deliveryId: '',
             deliveryCost: null,
             deliveryTypes: [],
@@ -63,10 +64,9 @@ class SelectAddress extends React.Component {
         this.setState(p => ({ ...p, location: { lng: lng, lat: lat } }));
     }
 
-    _selectAddress(item) {
-        this.setState(p => ({ ...p, prevAddress: item }));
-        this.props.lat = null;
-        this.props.lng = null;
+    async _selectAddress(item) {
+        this.setState(p => ({ ...p, prevAddress: item, lng: null, lat: null, deliveryId: '', deliveryCost: null, placeName: null }));
+        await this._getDeliveryCost();
     }
 
     _remmoveAddress() {
@@ -74,13 +74,12 @@ class SelectAddress extends React.Component {
     }
 
     async componentDidMount() {
+        this.props.hideInitError();
         let addressInfo = addressSrv.getInfo();
 
         if (addressInfo) this.setState(p => ({ ...p, reciever: { ...p.reciever, value: addressInfo.reciever }, recieverMobileNumber: { ...p.recieverMobileNumber, value: addressInfo.recieverMobileNumber } }));
-
         if (this.props.lat) await this._getDeliveryCost();
 
-        this.props.hideInitError();
         if (basketSrv.get().length === 0)
             toast(strings.doPurchaseProcessAgain, {
                 type: toast.TYPE.INFO,
@@ -106,8 +105,8 @@ class SelectAddress extends React.Component {
         this.setState(p => ({ ...p, loading: true }));
         let apiRep = await addressApi.getDeliveryCost(this.state.prevAddress ? this.state.prevAddress : {
             address: this.state.address.value,
-            lng: this.props.lng,
-            lat: this.props.lat
+            lng: this.state.location.lng,
+            lat: this.state.location.lat
         });
 
         if (!apiRep.success) {
@@ -115,28 +114,24 @@ class SelectAddress extends React.Component {
             this.props.showInitError(this._getDeliveryCost.bind(this), apiRep.message);
             return;
         }
-        else {
-            console.log('here');
-            this.setState(p => ({ ...p, loading: false, deliveryCost: apiRep.result[0].cost, deliveryId: apiRep.result[0].id.toString(), deliveryTypes: apiRep.result }));
-        }
+        else this.setState(p => ({ ...p, loading: false, deliveryCost: apiRep.result.items[0].cost, deliveryId: apiRep.result.items[0].id.toString(), deliveryTypes: apiRep.result.items, placeName: apiRep.result.placeName }));
+
 
     }
     _selectDeliveryType(e) {
         let deliveryId = e.target.value;
         let type = this.state.deliveryTypes.find(x => x.id === parseInt(deliveryId));
-        console.log('->_selectDeliveryType');
-        console.log(type.cost)
         this.setState(p => ({ ...p, deliveryId: deliveryId, deliveryCost: type.cost }));
     }
     async _submit() {
 
         if (!this.state.prevAddress) {
-            if (!this.state.address.value) {
-                this.setState(p => ({ ...p, address: { ...p.address, error: true, message: validationStrings.required } }))
+            if (!this.state.location.lng || !this.state.location.lat) {
+                this.setState(p => ({ ...p, location: { ...p.location, message: validationStrings.required } }));
                 return;
             }
-            if (!this.props.lng || !this.props.lat) {
-                this.setState(p => ({ ...p, location: { ...p.location, message: validationStrings.required } }));
+            if (!this.state.address.value) {
+                this.setState(p => ({ ...p, address: { ...p.address, error: true, message: validationStrings.required } }))
                 return;
             }
         }
@@ -198,9 +193,9 @@ class SelectAddress extends React.Component {
                         (<Row>
                             <Col xs={12} className='m-b'>
                                 <Link className={'location-selector ' + (this.state.location.message ? 'error' : '')} to={`/selectLocation/${this.state.location.lng}/${this.state.location.lat}`}>
-                                    <CustomMap height='57px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
+                                    <CustomMap height='50px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
                                     <label>
-                                        <span>{strings.selectLocation}</span>
+                                        <span>{this.state.placeName ? this.state.placeName : strings.selectLocation}</span>
                                         <i className='zmdi zmdi-google-maps'></i>
                                     </label>
                                 </Link>
@@ -213,7 +208,7 @@ class SelectAddress extends React.Component {
                                         error={this.state.address.error}
                                         label={strings.address}
                                         multiline
-                                        rows={1}
+                                        rows={2}
                                         value={this.state.address.value}
                                         onChange={this._inputChanged.bind(this)}
                                         helperText={this.state.address.message}
@@ -249,7 +244,7 @@ class SelectAddress extends React.Component {
                                     id="recieverMobileNumber"
                                     type='number'
                                     className='ltr-input'
-                                    label={strings.mobileNumber}
+                                    label={strings.recieverMobileNumber}
                                     value={this.state.recieverMobileNumber.value}
                                     onChange={this._inputChanged.bind(this)}
                                     helperText={this.state.recieverMobileNumber.message}
@@ -260,7 +255,7 @@ class SelectAddress extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            {this.state.loading ? [0, 1, 2].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={30} />) :
+                            {this.state.loading ? [0, 1].map((x) => <Skeleton className='m-b' key={x} variant='rect' height={25} />) :
                                 <RadioGroup aria-label="address" name="old-address" value={this.state.deliveryId} onChange={this._selectDeliveryType.bind(this)}>
                                     {this.state.deliveryTypes.map((d) => <FormControlLabel key={d.id} value={d.id.toString()} control={<Radio color="primary" />} label={`${d.name} (${d.cost} ${strings.currency})`} />)}
                                 </RadioGroup>}
@@ -283,7 +278,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
     showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
-    setAddress: (address, reciever, recieverMobileNumber) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber))
+    setAddress: (address, reciever, recieverMobileNumber, deliveryId, deliveryCost) => dispatch(SetAddrssAction(address, reciever, recieverMobileNumber, deliveryId, deliveryCost))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectAddress);
