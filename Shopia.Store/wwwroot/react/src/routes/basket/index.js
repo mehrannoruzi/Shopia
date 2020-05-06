@@ -11,6 +11,7 @@ import { commaThousondSeperator } from './../../shared/utils';
 import { UpdateBasketAction, RemoveFromBasketAction } from './../../redux/actions/basketAction';
 import ConfirmModal from './../../shared/confirm';
 import { HideInitErrorAction } from "../../redux/actions/InitErrorAction";
+import emptyBasketImage from './../../assets/images/empty-basket.png';
 
 class Basket extends React.Component {
     constructor(props) {
@@ -51,8 +52,8 @@ class Basket extends React.Component {
             return (<div className='basket-page with-header'>
                 <Header goBack={this.props.history.goBack} />
                 <div className='empty'>
-                    <i className='zmdi zmdi-mood-bad'></i>
-                    {/* <img className='m-b' src={redBasketImage} alt='basket'/> */}
+                    {/* <i className='zmdi zmdi-mood-bad'></i> */}
+                    <img className='m-b' src={emptyBasketImage} alt='basket'/>
                     <span>{strings.basketIsEmpty}</span>
                 </div>
 
