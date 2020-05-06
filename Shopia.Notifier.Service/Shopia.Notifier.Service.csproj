@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shopia.InfraStructure\Shopia.InfraStructure.csproj" />
     <ProjectReference Include="..\Shopia.Notifier.DataAccess.Dapper\Shopia.Notifier.DataAccess.Dapper.csproj" />
     <ProjectReference Include="..\Shopia.Notifier.DataAccess.Ef\Shopia.Notifier.DataAccess.Ef.csproj" />
   </ItemGroup>
