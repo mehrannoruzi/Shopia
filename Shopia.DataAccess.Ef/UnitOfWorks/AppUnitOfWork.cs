@@ -46,7 +46,9 @@ namespace Shopia.DataAccess.Ef
         #endregion
 
         #region Store
-        public StoreRepo StoreRepo => new StoreRepo(_appDbContext);
+        public IStoreRepo StoreRepo => _serviceProvider.GetService<IStoreRepo>();
+        public IProductRepo ProductRepo => _serviceProvider.GetService<IProductRepo>();
+        public IDiscountRepo DiscountRepo => _serviceProvider.GetService<IDiscountRepo>();
         #endregion
 
 
