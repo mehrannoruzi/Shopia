@@ -2,11 +2,11 @@
 using Elk.Core;
 using System.Linq;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Elk.Http;
-using Shopia.InfraStructure;
-using Shopia.Domain;
 using System.Text;
+using Shopia.Domain;
+using Shopia.InfraStructure;
+using System.Threading.Tasks;
 
 namespace Shopia.Delivery.Service
 {
@@ -20,10 +20,10 @@ namespace Shopia.Delivery.Service
             return null;
         }
 
-        public static async Task<AloPeikUser> GetAddressDetails(long lat, long lng)
+        public static async Task<AloPeikUser> GetAddressDetails(LocationDTO location)
         {
             var authResult = await HttpRequestTools.GetAsync<AloPeikAuthResult>(
-                $"{GlobalVariables.DeliveryProviders.AloPeik.Url}/locations?latlng={lat},{lng}", Encoding.UTF8);
+                $"{GlobalVariables.DeliveryProviders.AloPeik.Url}/locations?latlng={location.Lat},{location.Lng}", Encoding.UTF8);
             if (authResult.Status == "success") return authResult.Object.User;
 
             return null;

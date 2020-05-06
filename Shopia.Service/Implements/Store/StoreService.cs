@@ -1,8 +1,8 @@
-﻿using Shopia.Domain;
+﻿using Elk.Core;
+using Shopia.Domain;
 using System.Threading;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
-using Elk.Core;
 
 namespace Shopia.Service
 {
@@ -16,10 +16,12 @@ namespace Shopia.Service
             _storeRepo = appUOW.StoreRepo;
         }
 
-        public async Task<IResponse<Store>> Find(int id)
+        public async Task<IResponse<StoreDTO>> Find(int id)
         {
             var store = _storeRepo.FindAsync(id);
-            store.
+            //store.
+
+            return null;
         }
 
         public async Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default)

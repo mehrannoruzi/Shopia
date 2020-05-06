@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Shopia.Domain;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Shopia.Store.Api.Controllers

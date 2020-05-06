@@ -1,4 +1,4 @@
-﻿namespace Shopia.Store.Api
+﻿namespace Shopia.Domain
 {
     public class AddressDTO : LocationDTO
     {
