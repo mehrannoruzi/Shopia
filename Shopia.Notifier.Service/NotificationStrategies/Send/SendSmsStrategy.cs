@@ -32,7 +32,10 @@ namespace Shopia.Notifier.Service
             if (sendResult.Split(':')[1] == "1")
                 updateModel.Status = NotificationStatus.Success;
             else
+            {
                 updateModel.Status = NotificationStatus.Failed;
+                updateModel.IsLock = false;
+            }
 
             await _notifierUnitOfWork.NotificationRepo.UpdateAsync(updateModel);
         }

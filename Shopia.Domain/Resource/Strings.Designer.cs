@@ -475,6 +475,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to قفل شده است؟.
+        /// </summary>
+        public static string IsLock {
+            get {
+                return ResourceManager.GetString("IsLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شخصی است؟.
         /// </summary>
         public static string IsPrivate {

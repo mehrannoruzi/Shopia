@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.DataAccess.Ef;
 
 namespace Shopia.DataAccess.Ef.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200509074528_RemoveEmailAndTelegramRequired")]
+    partial class RemoveEmailAndTelegramRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -670,10 +672,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
                     b.Property<int?>("FolowingCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("varchar(40)")
-                        .HasMaxLength(40);
-
                     b.Property<DateTime>("InsertDateMi")
                         .HasColumnType("datetime2");
 
@@ -706,10 +704,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
                     b.Property<int?>("ProductCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProfilePictureUrl")
-                        .HasColumnType("varchar(1000)")
-                        .HasMaxLength(1000);
-
                     b.Property<string>("ShopiaUrl")
                         .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
@@ -730,10 +724,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("varchar(25)")
-                        .HasMaxLength(25);
 
                     b.Property<string>("WhatsAppUrl")
                         .HasColumnType("varchar(150)")
