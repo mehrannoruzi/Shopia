@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Shopia.Domain;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

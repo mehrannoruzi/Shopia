@@ -3,10 +3,10 @@ using Elk.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
 {
-    public class ProductRepo : EfGenericRepo<Product>,IProductRepo
+    public class AddressRepo : EfGenericRepo<Address>, IAddressRepo
     {
         readonly AppDbContext _appContext;
-        public ProductRepo(AppDbContext appContext) : base(appContext)
+        public AddressRepo(AppDbContext appContext) : base(appContext)
         {
             _appContext = appContext;
         }

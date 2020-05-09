@@ -18,14 +18,9 @@ namespace Shopia.Service
             _storeRepo = appUOW.StoreRepo;
         }
 
-        public IResponse<StoreDTO> Find(int id)
+        public async Task<IResponse<StoreDTO>> FindAsync(int id)
         {
-            var store = _storeRepo.Get(selector: x => new StoreDTO
-            {
-                Name = x.FullName,
-                LogoUrl = x.ProfilePictureUrl
-            },
-            conditions: x => x.StoreId == id && x.IsActive).FirstOrDefault();
+            var store = await _storeRepo.FindAsync(id);
             if (store == null) return new Response<StoreDTO>
             {
                 IsSuccessful = false,
@@ -35,7 +30,11 @@ namespace Shopia.Service
             return new Response<StoreDTO>
             {
                 IsSuccessful = true,
-                Result = store
+                Result = new StoreDTO
+                {
+                    Name = store.FullName,
+                    LogoUrl = store.ProfilePictureUrl
+                }
             };
         }
 

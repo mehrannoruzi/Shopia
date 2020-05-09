@@ -44,9 +44,6 @@ namespace Shopia.Store.Api
                     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
-            services.AddContext<AppDbContext>(_configuration.GetConnectionString("EfDbContext"));
-            services.AddContext<AuthDbContext>(_configuration.GetConnectionString("AuthDbContext"));
-
             services.AddMemoryCache();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(opt =>
             {

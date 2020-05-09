@@ -7,7 +7,7 @@ namespace Shopia.Service
 {
     public interface IStoreService
     {
-        IResponse<StoreDTO> Find(int id);
+        Task<IResponse<StoreDTO>> FindAsync(int id);
         Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default);
     }
 }

@@ -30,6 +30,7 @@ namespace Shopia.DataAccess.Ef
         #region Base
         public IUserRepo UserRepo => _serviceProvider.GetService<IUserRepo>();
         public ITagRepo TagRepo => _serviceProvider.GetService<ITagRepo>();
+        public IAddressRepo AddressRepo => _serviceProvider.GetService<IAddressRepo>();
         public INotificationRepo NotificationRepo => _serviceProvider.GetService<INotificationRepo>();
         #endregion
 

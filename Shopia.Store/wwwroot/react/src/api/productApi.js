@@ -20,7 +20,7 @@ export default class productApi {
             else
                 return {
                     success: true,
-                    result: rep.Result.map((p) => ({
+                    result: rep.Result.Items.map((p) => ({
                         id: p.Id,
                         name: p.Name,
                         price: p.Price,

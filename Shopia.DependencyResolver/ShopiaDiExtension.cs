@@ -56,7 +56,13 @@ namespace Shopia.DependencyResolver
 
             #endregion
 
-
+            #region Store
+            services.AddScoped<IStoreRepo, StoreRepo>();
+            services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<IProductRepo, ProductRepo>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IDiscountRepo, DiscountRepo>();
+            #endregion
             #region Dapper Sp
 
             services.AddScoped<DashboardMenuSp>(factory => new DashboardMenuSp(_configuration.GetConnectionString("AuthDbContext")));
