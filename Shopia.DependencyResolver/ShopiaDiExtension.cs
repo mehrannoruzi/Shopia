@@ -53,6 +53,8 @@ namespace Shopia.DependencyResolver
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IAddressRepo, AddressRepo>();
+            services.AddScoped<IAddressService, AddressService>();
 
             #endregion
 

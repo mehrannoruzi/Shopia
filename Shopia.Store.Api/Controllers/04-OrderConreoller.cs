@@ -1,32 +1,59 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using System;
 using Shopia.Domain;
-using System;
-using System.Collections.Generic;
+using Shopia.Service;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using Elk.Core;
+using Shopia.Store.Api.Resources;
 
 namespace Shopia.Store.Api.Controllers
 {
     public class OrderController : Controller
     {
+        readonly IUserService _userService;
+        public OrderController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpPost]
-        public IActionResult CompleteInfo([FromBody]UserDTO model)
+        public async Task<IActionResult> CompleteInfo([FromBody]UserDTO model)
         {
-            if (model.Token == null)
+            User user = null;
+            if (model.Token == Guid.Empty)
             {
-                //create new user & return token
+                var findUser = await _userService.FindAsync(model.Token);
+                if (!findUser.IsSuccessful)
+                    user = findUser.Result;
             }
-            else
+            if (user == null)
             {
-                //update user info if params changed & return token
+                var addUser = await _userService.AddAsync(new User
+                {
+                    MobileNumber = model.MobileNumber,
+                    FullName = model.Fullname,
+                    Password = HashGenerator.Hash(model.MobileNumber.ToString())
+                });
+                if (!addUser.IsSuccessful)
+                    return Json(new
+                    {
+                        IsSuccessful = false,
+                        addUser.Message
+                    });
+                else return Json(new
+                {
+                    IsSuccessful = true,
+                    Result = addUser.Result.UserId
+                });
             }
             return Json(new
             {
                 IsSuccessful = true,
-                Result = Guid.NewGuid().ToString()//token
+                Result = model.Token
             });
         }
 

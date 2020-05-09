@@ -1,42 +1,36 @@
-﻿using Shopia.Domain;
+﻿using System;
+using Elk.Core;
+using Shopia.Domain;
+using Shopia.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Shopia.Store.Api.Resources;
 
 namespace Shopia.Store.Api.Controllers
 {
     public class AddressController : Controller
     {
-        //سه آدرس آخر ثبت شده برای کاربر
+        readonly IAddressService _addressService;
+        public AddressController(IAddressService addressService)
+        {
+            _addressService = addressService;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
-            var token = Request.Headers["token"];
-            return Json(new
-            {
-                IsSuccessful = true,
-                Result = new List<AddressDTO> {
-                    new AddressDTO
-                    {
-                        Id = 1,
-                        Address="میدان کاج، انتهای خیابان زحمت، کوچه توحید، پلاک 4، طبفه اول، واحد 2",
-                        Lat = 35.781973,
-                        Lng = 51.374830
-                    },
-                    new AddressDTO
-                    {
-                        Id = 2,
-                        Address="میدان توحید، انتهای خیابان الوند، کوچه نرگس، پلاک 43، طبفه دوم، واحد 12",
-                        Lat = 35.781973,
-                        Lng = 51.374830
-                    }
-                }
-            });
+            if (!Guid.TryParse(Request.Headers["token"], out Guid userId))
+                return Json(new Response<List<AddressDTO>>
+                {
+                    IsSuccessful = false,
+                    Message = Strings.ThereIsNoToken
+                });
+            return Json(_addressService.Get(userId));
         }
 
         [HttpGet]
         public IActionResult GetDeliveryCost(LocationDTO location)
         {
-            var token = Request.Headers["token"];
             return Json(new
             {
                 IsSuccessful = true,
