@@ -8,5 +8,6 @@ namespace Shopia.Domain
         public NotificationStatus Status { get; set; }
         public string SendStatus { get; set; }
         public DateTime SendDateMi { get; set; }
+        public bool IsLock { get; set; }
     }
 }

@@ -25,6 +25,10 @@ namespace Shopia.Domain
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public byte TryCount { get; set; }
 
+        [Display(Name = nameof(Strings.IsLock), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public bool IsLock { get; set; }
+
         [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
         public DateTime InsertDateMi { get; set; }
 

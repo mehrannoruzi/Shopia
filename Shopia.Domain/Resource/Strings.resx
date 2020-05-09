@@ -255,6 +255,9 @@
   <data name="IsDeleted" xml:space="preserve">
     <value>حذف شده؟</value>
   </data>
+  <data name="IsLock" xml:space="preserve">
+    <value>قفل شده است؟</value>
+  </data>
   <data name="IsPrivate" xml:space="preserve">
     <value>شخصی است؟</value>
   </data>
