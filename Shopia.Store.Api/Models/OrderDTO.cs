@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Shopia.Domain;
+using System.Collections.Generic;
 
 namespace Shopia.Store.Api
 {

@@ -95,6 +95,21 @@ namespace Shopia.Domain
         [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string WhatsAppUrl { get; set; }
 
+        [Column(TypeName = "varchar(25)")]
+        [Display(Name = nameof(Strings.Username), ResourceType = typeof(Strings))]
+        [MaxLength(25, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string Username { get; set; }
+
+        [Column(TypeName = "varchar(40)")]
+        [Display(Name = nameof(Strings.FullName), ResourceType = typeof(Strings))]
+        [MaxLength(40, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string FullName { get; set; }
+
+        [Column(TypeName = "varchar(1000)")]
+        [Display(Name = nameof(Strings.ProfilePictureUrl), ResourceType = typeof(Strings))]
+        [MaxLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string ProfilePictureUrl { get; set; }
+
 
         public List<Product> Products { get; set; }
     }

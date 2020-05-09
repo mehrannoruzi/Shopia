@@ -1,13 +1,14 @@
 ﻿using PayamakProvider;
+using Shopia.InfraStructure;
 using System.Threading.Tasks;
 
 namespace Shopia.Notifier.Service
 {
     public class LinePayamakProvider
     {
-        private static readonly string _password = "80225353";
-        private static readonly string _username = "500096998998";
-        private static readonly string _senderId = "500096998998";
+        private static readonly string _password = GlobalVariables.SmsProviders.LinePayamak.Password;
+        private static readonly string _username = GlobalVariables.SmsProviders.LinePayamak.Username;
+        private static readonly string _senderId = GlobalVariables.SmsProviders.LinePayamak.SenderId;
 
         public static async Task<string> SendSimpleSmsAsync(string to, string content)
         {

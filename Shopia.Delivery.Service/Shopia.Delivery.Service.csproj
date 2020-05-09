@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Elk.Http" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
+    <ProjectReference Include="..\Shopia.InfraStructure\Shopia.InfraStructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +26,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ServiceMessage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DeliveryProvider\AloPeik\" />
   </ItemGroup>
 
 </Project>
