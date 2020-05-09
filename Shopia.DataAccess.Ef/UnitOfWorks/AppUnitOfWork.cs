@@ -1,20 +1,16 @@
 ﻿using System;
-using Elk.Core;
 using Shopia.Domain;
 using System.Threading;
 using System.Threading.Tasks;
 using Elk.EntityFrameworkCore;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
 {
     public sealed class AppUnitOfWork : IElkUnitOfWork
     {
-        private Dictionary<Type, object> _repositories;
         private readonly AppDbContext _appDbContext;
         private readonly IServiceProvider _serviceProvider;
 
@@ -22,8 +18,6 @@ namespace Shopia.DataAccess.Ef
         {
             _appDbContext = appDbContext;
             _serviceProvider = serviceProvider;
-
-            _repositories = new Dictionary<Type, object>();
         }
 
 
@@ -53,17 +47,7 @@ namespace Shopia.DataAccess.Ef
         #endregion
 
 
-        public IGenericRepo<T> GetRepository<T>() where T : class
-        {
-            var type = typeof(T);
-            if (!_repositories.ContainsKey(type))
-            {
-                _repositories.Add(type, _serviceProvider.GetService<IGenericRepo<T>>());
-            }
-
-            return (IGenericRepo<T>)_repositories[type];
-        }
-
+        
         public ChangeTracker ChangeTracker { get => _appDbContext.ChangeTracker; }
         public DatabaseFacade Database { get => _appDbContext.Database; }
 
