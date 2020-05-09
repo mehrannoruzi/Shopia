@@ -1,24 +1,12 @@
 ﻿using System;
-using Elk.Core;
-using System.Linq;
 using Shopia.Domain;
 using System.Threading.Tasks;
-using Shopia.Notifier.DataAccess.Dapper;
-using PayamakProvider;
 
 namespace Shopia.Notifier.Service
 {
     public class SendSmsStrategy : ISendStrategy
     {
-        private NotifierUnitOfWork _notifierUnitOfWork { get; }
-
-        public SendSmsStrategy(NotifierUnitOfWork notifierUnitOfWork)
-        {
-            _notifierUnitOfWork = notifierUnitOfWork;
-        }
-
-
-        public async Task SendAsync(Notification notification)
+        public async Task SendAsync(Notification notification, INotificationRepo notificationRepo)
         {
             var sendResult = await LinePayamakProvider.SendSmsAsync(notification.Receiver, notification.Content);
 
@@ -37,7 +25,7 @@ namespace Shopia.Notifier.Service
                 updateModel.IsLock = false;
             }
 
-            await _notifierUnitOfWork.NotificationRepo.UpdateAsync(updateModel);
+            await notificationRepo.UpdateAsync(updateModel);
         }
     }
 }

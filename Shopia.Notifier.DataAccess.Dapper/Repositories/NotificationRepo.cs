@@ -99,8 +99,7 @@ namespace Shopia.Notifier.DataAccess.Dapper
         {
             try
             {
-                var notifications = await _sqlConnection.ExecuteSpCommandAsync<Notification>("[Notifier].[GetUnProccessNotification]",
-                    new { Status = NotificationStatus.Insert, TryCount = 3 });
+                var notifications = await _sqlConnection.ExecuteSpCommandAsync<Notification>("[Notifier].[GetUnProccessNotification]");
 
                 if (notifications.Any()) return notifications;
                 return new List<Notification>();

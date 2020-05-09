@@ -44,11 +44,12 @@ namespace Shopia.Notifier.Service
         {
             try
             {
-                var notifications = await _notifierUnitOfWork.NotificationRepo.GetUnProccessAsync();
+                var notifRepo = _notifierUnitOfWork.NotificationRepo;
+                var notifications = await notifRepo.GetUnProccessAsync();
                 if (!notifications.Any()) return;
 
                 foreach (var notif in notifications)
-                    await SendNotificationFactory.GetStrategy(notif.Type, _notifierUnitOfWork).SendAsync(notif);
+                    await SendNotificationFactory.GetStrategy(notif.Type).SendAsync(notif, notifRepo);
             }
             catch (Exception e)
             {

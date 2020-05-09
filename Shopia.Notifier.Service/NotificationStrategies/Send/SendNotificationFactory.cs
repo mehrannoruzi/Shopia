@@ -1,25 +1,24 @@
 ﻿using Shopia.Domain;
-using Shopia.Notifier.DataAccess.Dapper;
 
 namespace Shopia.Notifier.Service
 {
     public class SendNotificationFactory
     {
-        public static ISendStrategy GetStrategy(NotificationType type, NotifierUnitOfWork notifierUnitOfWork)
+        public static ISendStrategy GetStrategy(NotificationType type)
         {
             switch (type)
             {
                 case NotificationType.Sms:
-                    return new SendSmsStrategy(notifierUnitOfWork);
+                    return new SendSmsStrategy();
 
                 case NotificationType.TeleBot:
-                    return new SendTeleBotStrategy(notifierUnitOfWork);
+                    return new SendTeleBotStrategy();
 
                 case NotificationType.Email:
-                    return new SendEmailStrategy(notifierUnitOfWork);
+                    return new SendEmailStrategy();
 
                 default:
-                    return new SendSmsStrategy(notifierUnitOfWork);
+                    return new SendSmsStrategy();
             }
         }
     }

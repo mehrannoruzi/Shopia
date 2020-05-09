@@ -1,21 +1,12 @@
 ﻿using System;
 using Shopia.Domain;
 using System.Threading.Tasks;
-using Shopia.Notifier.DataAccess.Dapper;
 
 namespace Shopia.Notifier.Service
 {
     public class SendTeleBotStrategy : ISendStrategy
     {
-        private NotifierUnitOfWork _notifierUnitOfWork { get; }
-
-        public SendTeleBotStrategy(NotifierUnitOfWork notifierUnitOfWork)
-        {
-            _notifierUnitOfWork = notifierUnitOfWork;
-        }
-
-
-        public async Task SendAsync(Notification notification)
+        public async Task SendAsync(Notification notification, INotificationRepo notificationRepo)
         {
             await TelegramBot._client.SendTextMessageAsync(notification.Receiver, notification.Content);
 
@@ -26,7 +17,7 @@ namespace Shopia.Notifier.Service
                 SendDateMi = DateTime.Now,
                 SendStatus = "Success"
             };
-            await _notifierUnitOfWork.NotificationRepo.UpdateAsync(updateModel);
+            await notificationRepo.UpdateAsync(updateModel);
         }
     }
 }
