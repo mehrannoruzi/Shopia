@@ -19,7 +19,7 @@ namespace Shopia.Notifier.Controllers
         public IActionResult Index()
             => Ok("WellCome To Shopia.Notifier Api ...");
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> AddAsync(NotificationDto notifyDto)
             => Ok(await _notificationService.AddAsync(notifyDto));
 
