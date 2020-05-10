@@ -78,6 +78,7 @@ export default class BasketSrv {
                 else {
                     basket[idx].price = p.price;
                     basket[idx].discount = p.discount;
+                    basket[idx].realPrice = p.realPrice;
                 }
             }
 

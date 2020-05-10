@@ -138,4 +138,7 @@
   <data name="RecoverPassword" xml:space="preserve">
     <value>بازیابی رمز عبور</value>
   </data>
+  <data name="UserInfoMissing" xml:space="preserve">
+    <value>اطلاعات کاربری شما ثبت نشده است، لطفا فرایند خرید را دوباره طی نمایید</value>
+  </data>
 </root>

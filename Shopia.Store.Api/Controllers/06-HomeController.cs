@@ -5,6 +5,8 @@ namespace Shopia.Store.Api.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Index() => Json(new {IsSuccessful = true,Message="Welcome to Shopia Store Api" });
+
         public IActionResult ContactUs()
         {
             return Json(new

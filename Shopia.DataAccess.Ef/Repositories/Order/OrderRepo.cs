@@ -4,9 +4,9 @@ using Elk.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
 {
-    public class AddressRepo : EfGenericRepo<Address>, IAddressRepo
+    public class OrderRepo : EfGenericRepo<Order>, IOrderRepo
     {
-        public AddressRepo(AppDbContext appContext) : base(appContext)
+        public OrderRepo(AppDbContext appContext) : base(appContext)
         { }
 
     }

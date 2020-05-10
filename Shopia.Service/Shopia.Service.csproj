@@ -14,4 +14,19 @@
     <ProjectReference Include="..\Shopia.DataAccess.Ef\Shopia.DataAccess.Ef.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resource\ServiceMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ServiceMessage.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource\ServiceMessage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ServiceMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

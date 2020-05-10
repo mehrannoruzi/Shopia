@@ -5,17 +5,18 @@ using System.Threading;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
 using Shopia.Service.Resource;
+using Elk.EntityFrameworkCore;
 
 namespace Shopia.Service
 {
     public class StoreService : IStoreService
     {
         readonly AppUnitOfWork _appUow;
-        readonly IStoreRepo _storeRepo;
+        readonly IGenericRepo<Domain.Store> _storeRepo;
         public StoreService(AppUnitOfWork appUOW)
         {
             _appUow = appUOW;
-            _storeRepo = appUOW.StoreRepo;
+           _storeRepo = appUOW.StoreRepo;
         }
 
         public async Task<IResponse<StoreDTO>> FindAsync(int id)

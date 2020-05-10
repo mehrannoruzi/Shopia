@@ -1,4 +1,4 @@
-﻿using Elk.Core;
+using Elk.Core;
 
 namespace Shopia.Domain
 {

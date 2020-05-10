@@ -1,4 +1,4 @@
-﻿using Shopia.Domain;
+using Shopia.Domain;
 using Elk.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
@@ -7,7 +7,6 @@ namespace Shopia.DataAccess.Ef
     {
         public DiscountRepo(AppDbContext appContext) : base(appContext)
         { }
-
 
     }
 }

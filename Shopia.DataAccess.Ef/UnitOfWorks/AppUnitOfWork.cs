@@ -1,4 +1,5 @@
 ﻿using System;
+using Elk.Core;
 using Shopia.Domain;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,9 +30,7 @@ namespace Shopia.DataAccess.Ef
         #endregion
 
         #region Order
-
-
-
+        public IOrderRepo OrderRepo => _serviceProvider.GetService<IOrderRepo>();
         #endregion
 
         #region Payment
