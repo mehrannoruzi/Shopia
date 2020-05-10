@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200510081958_AddApplication.cs" />
+    <Compile Remove="Migrations\20200510081958_AddApplication.Designer.cs" />
+    <Compile Remove="Migrations\20200510082410_AddApplication.cs" />
+    <Compile Remove="Migrations\20200510082410_AddApplication.Designer.cs" />
+    <Compile Remove="Migrations\20200510083847_AddApplication.cs" />
+    <Compile Remove="Migrations\20200510083847_AddApplication.Designer.cs" />
+    <Compile Remove="Migrations\20200510084328_AddApplication.cs" />
+    <Compile Remove="Migrations\20200510084328_AddApplication.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
   </ItemGroup>
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.Notifier.DataAccess.Ef;
 
 namespace Shopia.Notifier.DataAccess.Ef.Migrations
 {
     [DbContext(typeof(NotifierDbContext))]
-    partial class NotifierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200510084424_AddApplication")]
+    partial class AddApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,18 +134,7 @@ namespace Shopia.Notifier.DataAccess.Ef.Migrations
 
                     b.HasKey("NotificationId");
 
-                    b.HasIndex("ApplicationId");
-
                     b.ToTable("Notification","Notifier");
-                });
-
-            modelBuilder.Entity("Shopia.Domain.Notification", b =>
-                {
-                    b.HasOne("Shopia.Domain.Application", "Application")
-                        .WithMany("Notifications")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

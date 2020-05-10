@@ -18,7 +18,7 @@ namespace Shopia.Notifier.Service
         }
 
 
-        public async Task<IResponse<bool>> AddAsync(NotificationDto notifyDto)
+        public async Task<IResponse<bool>> AddAsync(NotificationDto notifyDto, int applicationId)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Shopia.Notifier.Service
 
                 var notifRepo = _notifierUnitOfWork.NotificationRepo;
                 foreach (var notifyStrategy in eventMappers)
-                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy).Create(notifyDto, notifRepo);
+                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy).Create(notifyDto, notifRepo, applicationId);
 
                 return new Response<bool> { IsSuccessful = true, Result = true, Message = ServiceMessage.Success };
             }

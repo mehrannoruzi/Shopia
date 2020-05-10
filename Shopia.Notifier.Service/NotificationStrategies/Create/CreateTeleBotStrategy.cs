@@ -5,7 +5,7 @@ namespace Shopia.Notifier.Service
 {
     public class CreateTeleBotStrategy : ICreateStrategy
     {
-        public Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo)
+        public Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo, int applicationId)
         {
             var notification = new Notification
             {
@@ -13,6 +13,7 @@ namespace Shopia.Notifier.Service
                 Type = NotificationType.TeleBot,
                 Status = NotificationStatus.Insert,
 
+                ApplicationId = applicationId,
                 ExtraData = notifyDto.UserId.ToString(),
                 Content = notifyDto.Content,
                 FullName = notifyDto.FullName,

@@ -1,6 +1,7 @@
 ﻿using Shopia.Domain;
 using System.Threading.Tasks;
 using Shopia.Notifier.Service;
+using Shopia.Notifier.Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Shopia.Notifier.Controllers
@@ -19,9 +20,9 @@ namespace Shopia.Notifier.Controllers
         public IActionResult Index()
             => Ok("WellCome To Shopia.Notifier Api ...");
 
-        [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] NotificationDto notifyDto)
-            => Ok(await _notificationService.AddAsync(notifyDto));
+        [HttpPost, AuthenticationFilter]
+        public async Task<IActionResult> AddAsync([FromBody] NotificationDto notifyDto, Application application)
+            => Ok(await _notificationService.AddAsync(notifyDto, application.ApplicationId));
 
     }
 }

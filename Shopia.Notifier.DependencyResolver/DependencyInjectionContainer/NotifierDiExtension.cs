@@ -34,6 +34,7 @@ namespace Shopia.Notifier.DependencyResolver
             #region Notifier
 
             services.AddScoped<IEventMapperRepo, EventMapperRepo>();
+            services.AddScoped<IApplicationRepo, ApplicationRepo>();
             services.AddScoped<INotificationRepo, NotificationRepo>();
 
             services.AddScoped<INotificationService, NotificationService>();

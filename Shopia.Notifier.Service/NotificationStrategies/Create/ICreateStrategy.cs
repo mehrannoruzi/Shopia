@@ -5,6 +5,6 @@ namespace Shopia.Notifier.Service
 {
     public interface ICreateStrategy
     {
-        Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo);
+        Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo, int applicationId);
     }
 }

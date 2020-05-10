@@ -1,0 +1,9 @@
+﻿using Elk.EntityFrameworkCore;
+
+namespace Shopia.DataAccess.Ef
+{
+    public class AuthGenericRepo<T> : EfGenericRepo<T> where T : class
+    {
+        public AuthGenericRepo(AppDbContext appDbContext) : base(appDbContext) { }
+    }
+}

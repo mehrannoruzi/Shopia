@@ -106,6 +106,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اپلیکیشن.
+        /// </summary>
+        public static string Application {
+            get {
+                return ResourceManager.GetString("Application", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام بانک.
         /// </summary>
         public static string BankName {
@@ -1011,6 +1020,15 @@ namespace Shopia.Domain.Resource {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to توکن دسترسی.
+        /// </summary>
+        public static string Token {
+            get {
+                return ResourceManager.GetString("Token", resourceCulture);
             }
         }
         

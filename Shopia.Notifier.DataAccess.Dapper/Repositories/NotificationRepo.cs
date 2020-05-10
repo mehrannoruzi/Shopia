@@ -70,9 +70,6 @@ namespace Shopia.Notifier.DataAccess.Dapper
             }
             else
             {
-                var fields1 = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(x => x.CanRead && x.CanWrite).ToList();
-
                 var assemblyName = typeof(T).Assembly.FullName.Split(',')[0];
                 var fields = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                     .Where(x => x.CanRead && x.CanWrite &&
@@ -116,7 +113,7 @@ namespace Shopia.Notifier.DataAccess.Dapper
                 model.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
 
                 await _sqlConnection.ExecuteSpCommandAsync<int>("[Notifier].[InsertNotification]",
-                    new { Notification = model.ToTableValuedParameter2("[dbo].[Tvp_Notification]") });
+                    new { Notification = model.ToTableValuedParameter("[dbo].[Tvp_Notification]") });
 
                 return true;
             }

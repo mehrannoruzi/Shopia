@@ -24,10 +24,15 @@ namespace Shopia.DependencyResolver
         {
             services.AddContext<AppDbContext>(_configuration.GetConnectionString("AppDbContext"));
             services.AddContext<AuthDbContext>(_configuration.GetConnectionString("AuthDbContext"));
+
+            services.AddScoped<AppDbContext>();
+            services.AddScoped<AuthDbContext>();
+
             services.AddScoped<AuthUnitOfWork, AuthUnitOfWork>();
             services.AddScoped<AppUnitOfWork, AppUnitOfWork>();
 
-            services.AddScoped(typeof(IGenericRepo<>), typeof(EfGenericRepo<>));
+            services.AddScoped(typeof(IGenericRepo<>), typeof(AppGenericRepo<>));
+            services.AddScoped(typeof(IGenericRepo<>), typeof(AuthGenericRepo<>));
 
             #region Auth
 
