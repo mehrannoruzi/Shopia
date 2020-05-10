@@ -1,20 +1,11 @@
 ﻿using Shopia.Domain;
 using System.Threading.Tasks;
-using Shopia.Notifier.DataAccess.Dapper;
 
 namespace Shopia.Notifier.Service
 {
     public class CreateEmailStrategy : ICreateStrategy
     {
-        private NotifierUnitOfWork _notifierUnitOfWork { get; }
-
-        public CreateEmailStrategy(NotifierUnitOfWork notifierUnitOfWork)
-        {
-            _notifierUnitOfWork = notifierUnitOfWork;
-        }
-
-
-        public Task Create(NotificationDto notifyDto)
+        public Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo)
         {
             var notification = new Notification
             {
@@ -27,7 +18,7 @@ namespace Shopia.Notifier.Service
                 FullName = notifyDto.FullName,
                 Receiver = notifyDto.Email
             };
-            _notifierUnitOfWork.NotificationRepo.AddAsync(notification);
+            notificationRepo.AddAsync(notification);
 
             return Task.CompletedTask;
         }

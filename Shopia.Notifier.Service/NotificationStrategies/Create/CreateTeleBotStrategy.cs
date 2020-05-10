@@ -1,20 +1,11 @@
 ﻿using Shopia.Domain;
 using System.Threading.Tasks;
-using Shopia.Notifier.DataAccess.Dapper;
 
 namespace Shopia.Notifier.Service
 {
     public class CreateTeleBotStrategy : ICreateStrategy
     {
-        private NotifierUnitOfWork _notifierUnitOfWork { get; }
-
-        public CreateTeleBotStrategy(NotifierUnitOfWork notifierUnitOfWork)
-        {
-            _notifierUnitOfWork = notifierUnitOfWork;
-        }
-
-
-        public Task Create(NotificationDto notifyDto)
+        public Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo)
         {
             var notification = new Notification
             {
@@ -27,7 +18,7 @@ namespace Shopia.Notifier.Service
                 FullName = notifyDto.FullName,
                 Receiver = notifyDto.TelegramChatId
             };
-            _notifierUnitOfWork.NotificationRepo.AddAsync(notification);
+            notificationRepo.AddAsync(notification);
 
             return Task.CompletedTask;
         }

@@ -1,20 +1,11 @@
 ﻿using Shopia.Domain;
 using System.Threading.Tasks;
-using Shopia.Notifier.DataAccess.Dapper;
 
 namespace Shopia.Notifier.Service
 {
     public class CreateSmsStrategy : ICreateStrategy
     {
-        private NotifierUnitOfWork _notifierUnitOfWork { get; }
-
-        public CreateSmsStrategy(NotifierUnitOfWork notifierUnitOfWork)
-        {
-            _notifierUnitOfWork = notifierUnitOfWork;
-        }
-
-
-        public Task Create(NotificationDto notifyDto)
+        public Task Create(NotificationDto notifyDto, INotificationRepo notificationRepo)
         {
             var notification = new Notification { 
                 TryCount = 0,
@@ -26,7 +17,7 @@ namespace Shopia.Notifier.Service
                 FullName = notifyDto.FullName,
                 Receiver = notifyDto.MobileNumber.ToString()
             };
-            _notifierUnitOfWork.NotificationRepo.AddAsync(notification);
+            notificationRepo.AddAsync(notification);
 
             return Task.CompletedTask;
         }

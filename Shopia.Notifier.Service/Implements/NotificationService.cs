@@ -27,8 +27,9 @@ namespace Shopia.Notifier.Service
                 var eventMappers = await _notifierUnitOfWork.EventMapperRepo.GetAsync(notifyDto.Type);
                 if (!eventMappers.Any()) return new Response<bool> { Message = ServiceMessage.EventNotExist };
 
+                var notifRepo = _notifierUnitOfWork.NotificationRepo;
                 foreach (var notifyStrategy in eventMappers)
-                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy, _notifierUnitOfWork).Create(notifyDto);
+                    await CreateNotificationFactory.GetStrategy(notifyStrategy.NotifyStrategy).Create(notifyDto, notifRepo);
 
                 return new Response<bool> { IsSuccessful = true, Result = true, Message = ServiceMessage.Success };
             }
