@@ -99,6 +99,16 @@ namespace Shopia.Service
         public Task<IEnumerable<UserAction>> GetUserActionsAsync(string userId, string urlPrefix = "")
             => (Task.Run(() => GetAvailableActions(Guid.Parse(userId), null, urlPrefix).ActionList));
 
+        public async Task<IResponse<User>> FindByMobileNumber(long mobileNumber)
+        {
+            var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);
+            return new Response<User>
+            {
+                IsSuccessful = user != null,
+                Result = user,
+                Message = user == null ? ServiceMessage.RecordNotExist : string.Empty
+            };
+        }
         public async Task<IResponse<User>> Authenticate(long mobileNumber, string password)
         {
             var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);

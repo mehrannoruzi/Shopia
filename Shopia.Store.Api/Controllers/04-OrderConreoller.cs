@@ -26,37 +26,34 @@ namespace Shopia.Store.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CompleteInfo([FromBody]UserDTO model)
         {
-            User user = null;
-            if (model.Token == Guid.Empty)
+            if (model.Token != null)
             {
-                var findUser = await _userService.FindAsync(model.Token??Guid.Empty);
-                if (!findUser.IsSuccessful)
-                    user = findUser.Result;
-            }
-            if (user == null)
-            {
-                var addUser = await _userService.AddAsync(new User
-                {
-                    MobileNumber = model.MobileNumber,
-                    FullName = model.Fullname,
-                    Password = HashGenerator.Hash(model.MobileNumber.ToString())
-                });
-                if (!addUser.IsSuccessful)
+                var findUser = await _userService.FindAsync(model.Token ?? Guid.Empty);
+                if (findUser.IsSuccessful)
                     return Json(new
                     {
-                        IsSuccessful = false,
-                        addUser.Message
+                        IsSuccessful = true,
+                        Result = findUser.Result.UserId
                     });
-                else return Json(new
-                {
-                    IsSuccessful = true,
-                    Result = addUser.Result.UserId
-                });
             }
-            return Json(new
+
+            var prevUser = await _userService.FindByMobileNumber(model.MobileNumber);
+            if (prevUser.IsSuccessful) return Json(new
             {
                 IsSuccessful = true,
-                Result = model.Token
+                Result = prevUser.Result.UserId
+            });
+            var addUser = await _userService.AddAsync(new User
+            {
+                MobileNumber = model.MobileNumber,
+                FullName = model.Fullname,
+                Password = HashGenerator.Hash(model.MobileNumber.ToString())
+            });
+            return Json(new
+            {
+                addUser.IsSuccessful,
+                addUser.Message,
+                Result = addUser.IsSuccessful ? addUser.Result.UserId : Guid.Empty
             });
         }
 
