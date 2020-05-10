@@ -48,7 +48,7 @@ export default class orderSrv {
         order.orderId = this.getOrderId();
         order.deliveryId = parseInt(deliveryId);
         order.user = info;
-        order.items = basketSrv.get().map((x) => ({ id: x.id, count: x.count }));
+        order.items = basketSrv.get().map((x) => ({ id: x.id, price: x.price, discount: x.discount, count: x.count }));
         order.address = address;
         order.reciever = reciever;
         order.recieverMobileNumber = recieverMobileNumber;

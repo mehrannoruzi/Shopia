@@ -1,7 +1,6 @@
-﻿using Shopia.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Shopia.Store.Api
+namespace Shopia.Domain
 {
     public class OrderDTO
     {

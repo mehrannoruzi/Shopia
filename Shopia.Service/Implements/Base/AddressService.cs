@@ -3,14 +3,13 @@ using Elk.Core;
 using System.Linq;
 using Shopia.Domain;
 using Shopia.DataAccess.Ef;
-using System.Threading.Tasks;
 
 namespace Shopia.Service
 {
     public class AddressService : IAddressService
     {
         readonly AppUnitOfWork _appUow;
-        readonly IAddressRepo _addressRepo;
+        readonly IGenericRepo<Address> _addressRepo;
         public AddressService(AppUnitOfWork appUOW)
         {
             _appUow = appUOW;

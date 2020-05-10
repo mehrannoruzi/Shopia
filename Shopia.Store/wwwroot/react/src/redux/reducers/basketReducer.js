@@ -40,6 +40,7 @@ export default function basketReducer(state = initState, action) {
                     else {
                         state.items[idx].price = p.price;
                         state.items[idx].discount = p.discount;
+                        state.items[idx].realPrice = p.realPrice;
                     }
                 }
     

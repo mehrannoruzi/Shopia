@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using Shopia.Service.Resource;
+using Elk.EntityFrameworkCore;
 
 namespace Shopia.Service
 {
@@ -40,6 +41,7 @@ namespace Shopia.Service
             {
                 foreach (var p in products.Items)
                 {
+                    if (p.Discount != null) continue;
                     p.Discount = discount.Percent;
                     var discountAmount = p.Price * p.Discount / 100;
                     if (discountAmount > discount.MaxPrice)
@@ -80,6 +82,39 @@ namespace Shopia.Service
                 }
             };
 
+        }
+
+        public async Task<(bool Changed, IEnumerable<OrderItemDTO> Items)> CheckChanges(IEnumerable<OrderItemDTO> items)
+        {
+            var products = _productRepo.Get(conditions: x => items.Select(x => x.Id).Contains(x.ProductId),
+            orderBy: o => o.OrderByDescending(x => x.ProductId),
+            new List<Expression<Func<Product, object>>> { x => x.Store });
+            bool changed = false;
+            foreach (var item in items)
+            {
+                var product = products.FirstOrDefault(x => x.ProductId == item.Id);
+                if (product == null)
+                {
+                    changed = true;
+                    item.MaxCount = 0;
+                    continue;
+                }
+                var currentDT = DateTime.Now;
+                var discount = await _appUow.DiscountRepo.FirstOrDefaultAsync(conditions: x => x.StoreId == product.StoreId && x.ValidFromDateMi <= currentDT && x.ValidToDateMi >= currentDT);
+                if (discount != null && product.DiscountPercent == null)
+                {
+                    product.DiscountPercent = discount.Percent;
+                    var discountAmount = product.Price * product.DiscountPercent / 100;
+                    if (discountAmount > discount.MaxPrice)
+                        product.DiscountPercent = (float)Math.Floor((float)(100 * discount.MaxPrice / product.Price));
+                }
+                if (item.Price != product.Price || item.Discount != product.DiscountPercent)
+                    changed = true;
+                item.Price = product.Price;
+                item.Discount = product.DiscountPercent??0;
+
+            }
+            return (changed, items);
         }
     }
 }

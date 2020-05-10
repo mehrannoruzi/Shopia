@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Elk.Core;
-using Shopia.Store.Api.Resources;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Store.Api.Controllers
 {
     public class OrderController : Controller
     {
         readonly IUserService _userService;
-        public OrderController(IUserService userService)
+        //readonly IUserService _userService;
+        readonly IConfiguration _configuration;
+        public OrderController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -60,11 +63,13 @@ namespace Shopia.Store.Api.Controllers
         [HttpPost, EnableCors]
         public async Task<IActionResult> Submit([FromBody]OrderDTO order)
         {
-            var apiKey = "xkeysib1";
             var hillapayUrl = "https://api.hillapay.ir/ipg/v3/send";
             if (order.OrderId == null)
             {
                 //TODO:Add TO DB AND Calculate Total Price Again
+                //add order
+                //add order items
+
             }
             else
             {
@@ -76,7 +81,7 @@ namespace Shopia.Store.Api.Controllers
 
             using (var http = new HttpClient())
             {
-                http.DefaultRequestHeaders.Add("api-key", apiKey);
+                http.DefaultRequestHeaders.Add("api-key", _configuration["HillPay:ApiKey"]);
                 var model = new
                 {
                     amount = 1000,
