@@ -27,7 +27,7 @@ namespace Shopia.Notifier.DataAccess.Dapper
                 model.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
 
                 await _sqlConnection.ExecuteSpCommandAsync<int>("[Notifier].[InsertEventMapper]",
-                    new { Tvp_EventMapper = model.ToTableValuedParameter("[dbo].[Tvp_EventMapper]") });
+                    new { EventMapper = model.ToTableValuedParameter("[dbo].[Tvp_EventMapper]") });
 
                 return true;
             }
@@ -46,8 +46,8 @@ namespace Shopia.Notifier.DataAccess.Dapper
             {
                 var query = "SELECT		* " +
                             "FROM		[Notifier].[EventMapper] e " +
-                            "WHERE		e.EventType = @EventType ";
-                return await _sqlConnection.ExecuteQueryAsync<EventMapper>(query, new { EventType = eventType });
+                            "WHERE		e.Type = @EventType ";
+                return await _sqlConnection.ExecuteQueryAsync<EventMapper>(query, new { EventType = (byte)eventType });
             }
             catch (Exception e)
             {

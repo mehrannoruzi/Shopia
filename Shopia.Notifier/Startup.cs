@@ -91,8 +91,7 @@ namespace Shopia.Notifier
 
             app.UseMvc(routeConfig =>
             {
-                routeConfig.MapRoute("Crawl", "{controller=Crawler}/{action=Store}/{Username?}");
-                routeConfig.MapRoute("Get", "{controller=Crawler}/{action=Store}/{Username}/{PageNumber}/{PageSize}");
+                routeConfig.MapRoute("Default", "{controller=Notification}/{action=Index}");
             });
         }
     }

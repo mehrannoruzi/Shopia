@@ -20,7 +20,7 @@ namespace Shopia.Notifier.Controllers
             => Ok("WellCome To Shopia.Notifier Api ...");
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(NotificationDto notifyDto)
+        public async Task<IActionResult> AddAsync([FromBody] NotificationDto notifyDto)
             => Ok(await _notificationService.AddAsync(notifyDto));
 
     }
