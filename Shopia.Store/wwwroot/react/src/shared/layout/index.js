@@ -21,6 +21,7 @@ class Layout extends React.Component {
             <Router className="layout">
                 {/* <CustomHeader /> */}
                 <Switch>
+                    <Route exact path="/:id" component={Store} />
                     <Route path="/product/:id" component={Product} />
                     <Route path="/basket" component={Basket} />
                     <Route path="/completeInformation" component={CompleteInfo} />
@@ -29,9 +30,7 @@ class Layout extends React.Component {
                     <Route path="/review" component={Review}/>
                     <Route path="/contactus" component={ContactUs} />
                     <Route path="/afterGateway/:status/:transId" component={AfterGateway} />
-                    <Route path="/notFound/:msg?" component={NotFound} />
-                    <Route exact path="/:id?" component={Store} />
-
+                    <Route path="/:msg?" component={NotFound} />
                 </Switch>
                 <Modal />
                 <InitError />

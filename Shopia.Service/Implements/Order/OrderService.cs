@@ -3,6 +3,7 @@ using System.Linq;
 using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
+using Shopia.Service.Resource;
 
 namespace Shopia.Service
 {
@@ -20,6 +21,12 @@ namespace Shopia.Service
 
         public async Task<IResponse<Order>> Add(OrderDTO model)
         {
+            if (!await _appUow.UserRepo.AnyAsync(x => x.UserId == model.UserToken))
+                return new Response<Order>
+                {
+                    IsSuccessful = false,
+                    Message = ServiceMessage.UserInfoMissing
+                };
             var chkResult = await _productSrv.CheckChanges(model.Items);
             var storeId = await _appUow.ProductRepo.FirstOrDefaultAsync(selector: x => x.StoreId, conditions: x => x.ProductId == chkResult.Items.Where(x => x.MaxCount != 0).First().Id);
             var orderDetails = chkResult.Items.Where(x => x.MaxCount != 0).Select(i => new OrderDetail
@@ -33,6 +40,7 @@ namespace Shopia.Service
             await _orderRepo.AddAsync(new Order
             {
                 StoreId = storeId,
+                UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
                 DeliveryType = (DeliveryType)model.DeliveryId,

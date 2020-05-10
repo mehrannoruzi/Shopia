@@ -122,5 +122,14 @@ namespace Shopia.Service.Resource {
                 return ResourceManager.GetString("RecoverPassword", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اطلاعات کاربری شما ثبت نشده است، لطفا فرایند خرید را دوباره طی نمایید.
+        /// </summary>
+        public static string UserInfoMissing {
+            get {
+                return ResourceManager.GetString("UserInfoMissing", resourceCulture);
+            }
+        }
     }
 }

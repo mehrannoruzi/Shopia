@@ -29,7 +29,7 @@ namespace Shopia.Store.Api.Controllers
             User user = null;
             if (model.Token == Guid.Empty)
             {
-                var findUser = await _userService.FindAsync(model.Token);
+                var findUser = await _userService.FindAsync(model.Token??Guid.Empty);
                 if (!findUser.IsSuccessful)
                     user = findUser.Result;
             }
@@ -85,8 +85,8 @@ namespace Shopia.Store.Api.Controllers
                 var model = new
                 {
                     amount = 1000,
-                    mobile = order.User.MobileNumber,
-                    description = order.User.Description,
+                    //mobile = order.User.MobileNumber,
+                    //description = order.User.Description,
                     order_id = orderId,//order.Token == null ? DateTime.Now.Ticks : order.Token,
                     callback = $"https://localhost:44328/Payment/AfterGateway"
                 };

@@ -40,6 +40,7 @@
     completeInformation: 'تکمیل اطلاعات',
     selectAddress: 'انتخاب آدرس',
     initialOrderSubmit: 'ثبت اولیه سفارش',
+    pleasWait:'لطفا منتظر بمانید',
     retryPlease: 'لطفا دوباره تلاش کنید',
     connecttionFailed: 'اتصال برقرار نشد',
     basket: 'سبد خرید',

@@ -29,6 +29,7 @@ export default class orderSrv {
         localStorage.setItem(this.infoKey, JSON.stringify(info));
         return { success: true };
     }
+
     static getInfo() {
         let jsonInfo = localStorage.getItem(this.infoKey);
         if (jsonInfo) {
@@ -40,14 +41,15 @@ export default class orderSrv {
         }
         return null;
     }
+
     static async submit(address, reciever, recieverMobileNumber, deliveryId) {
         let info = this.getInfo();
         if (!info)
             return { success: false, message: strings.doPurchaseProcessAgain };
         let order = {};
+        order.UserToken = info.token;
         order.orderId = this.getOrderId();
         order.deliveryId = parseInt(deliveryId);
-        order.user = info;
         order.items = basketSrv.get().map((x) => ({ id: x.id, price: x.price, discount: x.discount, count: x.count }));
         order.address = address;
         order.reciever = reciever;

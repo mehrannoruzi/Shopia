@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
+import Strings from './../../shared/constant';
 
 class NotFound extends Component {
+    componentDidMount(){
+        window.location.href = "https://about.shopia.me/contact/";
+    }
     render() {
         console.log('not found');
         return (
             <div className="not-found" style={{ textAlign: 'center' }}>
-                <p className="text-center" style={{ padding: '50px' }}>this is not Found</p>
+                <p className="text-center" style={{ padding: '50px' }}>{Strings.pleasWait}...</p>
             </div>
 
         );
     };
 
 }
-
-// const mapStateToProps = state => {
-//     return { ...state.homeReducer };
-// }
-
-// const mapDispatchToProps = dispatch => ({
-// });
 
 export default NotFound;
