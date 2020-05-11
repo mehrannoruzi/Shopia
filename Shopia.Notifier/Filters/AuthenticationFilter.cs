@@ -30,7 +30,7 @@ namespace Shopia.Notifier.Filters
                     {
                         FileLoger.Info($"Invalid Token To Access Api  !" + Environment.NewLine +
                             "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
-                            $"Token:{filterContext.HttpContext.Request.Headers["ApiKey"][0]}");
+                            $"Token:{filterContext.HttpContext.Request.Headers["Token"][0]}");
 
                         filterContext.HttpContext.Response.StatusCode = 200;
                         filterContext.Result = new JsonResult(new
@@ -45,7 +45,7 @@ namespace Shopia.Notifier.Filters
                 {
                     FileLoger.Info($"Invalid Token To Access Api  !" + Environment.NewLine +
                             "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
-                            $"Token:{filterContext.HttpContext.Request.Headers["ApiKey"][0]}");
+                            $"Token:{filterContext.HttpContext.Request.Headers["Token"][0]}");
 
                     filterContext.HttpContext.Response.StatusCode = 200;
                     filterContext.Result = new JsonResult(new
@@ -60,7 +60,7 @@ namespace Shopia.Notifier.Filters
             {
                 FileLoger.Info($"UnAuthorized Access To Api ! " + Environment.NewLine +
                     "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
-                    $"Token:{filterContext.HttpContext.Request.Headers["ApiKey"][0]}");
+                    $"Token:");
 
                 filterContext.HttpContext.Response.StatusCode = 403;
                 filterContext.Result = new JsonResult(new
