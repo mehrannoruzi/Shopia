@@ -480,6 +480,9 @@
   <data name="ValidFromDate" xml:space="preserve">
     <value>معتبر از تاریخ</value>
   </data>
+  <data name="ValidIp" xml:space="preserve">
+    <value>آی پی های معتبر (,)</value>
+  </data>
   <data name="ValidToDate" xml:space="preserve">
     <value>معتبر تا تاریخ</value>
   </data>

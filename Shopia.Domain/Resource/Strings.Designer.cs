@@ -1150,6 +1150,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آی پی های معتبر (,).
+        /// </summary>
+        public static string ValidIp {
+            get {
+                return ResourceManager.GetString("ValidIp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to معتبر تا تاریخ.
         /// </summary>
         public static string ValidToDate {

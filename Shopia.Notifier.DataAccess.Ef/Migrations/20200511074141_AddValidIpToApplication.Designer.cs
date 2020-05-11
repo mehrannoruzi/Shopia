@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.Notifier.DataAccess.Ef;
 
 namespace Shopia.Notifier.DataAccess.Ef.Migrations
 {
     [DbContext(typeof(NotifierDbContext))]
-    partial class NotifierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200511074141_AddValidIpToApplication")]
+    partial class AddValidIpToApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace Shopia.Notifier.DataAccess.Ef.Migrations
 
                     b.Property<string>("ValidIp")
                         .IsRequired()
-                        .HasColumnType("varchar(150)")
+                        .HasColumnType("nvarchar(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("ApplicationId");

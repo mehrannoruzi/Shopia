@@ -36,6 +36,13 @@ namespace Shopia.Domain
         [StringLength(100, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string Name { get; set; }
 
+        [Column(TypeName = "varchar(150)")]
+        [Display(Name = nameof(Strings.ValidIp), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [MaxLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string ValidIp { get; set; }
+
 
         public List<Notification> Notifications { get; set; }
     }
