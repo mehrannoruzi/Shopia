@@ -91,12 +91,6 @@ namespace Shopia.Domain
         public string ModifyDateSh { get; set; }
 
         [Column(TypeName = "varchar(32)")]
-        [Display(Name = nameof(Strings.TransactionId), ResourceType = typeof(Strings))]
-        [MaxLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [StringLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string TransactionId { get; set; }
-
-        [Column(TypeName = "varchar(32)")]
         [Display(Name = nameof(Strings.DeliverTrackingId), ResourceType = typeof(Strings))]
         [MaxLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         [StringLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
