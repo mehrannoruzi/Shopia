@@ -8,7 +8,7 @@ import Basket from './../../routes/basket';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
 import InitError from '../../shared/initError';
-import { ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import CompleteInfo from '../../routes/completeInformation';
 import SelectAddress from '../../routes/selectAddress';
 import SelectLocation from '../../routes/selectLocation';
@@ -21,14 +21,14 @@ class Layout extends React.Component {
             <Router className="layout">
                 {/* <CustomHeader /> */}
                 <Switch>
-                    <Route exact path="/:id" component={Store} />
-                    <Route path="/product/:id" component={Product} />
-                    <Route path="/basket" component={Basket} />
+                    <Route exact path="/store/:id" component={Store} />
+                    <Route exact path="/product/:id" component={Product} />
+                    <Route exact path="/contactus" component={ContactUs} />
+                    <Route exact path="/basket" component={Basket} />
                     <Route path="/completeInformation" component={CompleteInfo} />
                     <Route path="/selectAddress" component={SelectAddress} />
                     <Route path="/selectLocation/:lng/:lat" component={SelectLocation} />
-                    <Route path="/review" component={Review}/>
-                    <Route path="/contactus" component={ContactUs} />
+                    <Route path="/review" component={Review} />
                     <Route path="/afterGateway/:status/:transId" component={AfterGateway} />
                     <Route path="/:msg?" component={NotFound} />
                 </Switch>

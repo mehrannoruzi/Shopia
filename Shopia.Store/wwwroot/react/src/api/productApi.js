@@ -46,6 +46,7 @@ export default class productApi {
                 }
             });
             const rep = await response.json();
+            console.log(rep);
             if (!rep.IsSuccessful)
                 return {
                     success: false,
@@ -63,7 +64,7 @@ export default class productApi {
                         maxCount: rep.Result.MaxCount,
                         currency: rep.Result.Currency,
                         description: rep.Result.Description,
-                        slides: rep.Result.Slides,
+                        slides: rep.Result.Slides ? rep.Result.Slides : [],
                     }
                 }
         } catch (error) {

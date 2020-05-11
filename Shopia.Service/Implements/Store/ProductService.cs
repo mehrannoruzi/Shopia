@@ -37,7 +37,8 @@ namespace Shopia.Service
             },
             conditions: x => x.StoreId == filter.StoreId,
             pagingParameter: filter,
-            orderBy: o => o.OrderByDescending(x => x.ProductId));
+            orderBy: o => o.OrderByDescending(x => x.ProductId),
+            new List<Expression<Func<Product, object>>> { x => x.ProductAssets });
             if (discount != null)
             {
                 foreach (var p in products.Items)
@@ -78,8 +79,8 @@ namespace Shopia.Service
                     Price = product.Price,
                     Discount = product.DiscountPercent,
                     Name = product.Name,
-                    ImageUrl = product.ProductAssets == null ? null : product.ProductAssets[0].FileUrl,
-                    Description = product.Description
+                    Description = product.Description,
+                    Slides = product.ProductAssets?.Select(x => x.FileUrl).ToList()
                 }
             };
 

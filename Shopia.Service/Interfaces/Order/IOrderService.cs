@@ -7,6 +7,6 @@ namespace Shopia.Service
     public interface IOrderService
     {
         Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model);
-        Task<IResponse<Order>> Update(int orderId, OrderStatus status);
+        Task<IResponse<string>> Verify(Payment payment, VerifyRequest request, object[] args);
     }
 }

@@ -16,6 +16,7 @@ import emptyBasketImage from './../../assets/images/empty-basket.png';
 class Basket extends React.Component {
     constructor(props) {
         super(props);
+        console.log('fired');
         this.state = {
             loading: true,
             product: {
@@ -47,7 +48,8 @@ class Basket extends React.Component {
         this.props.removeFromBasket(id);
     }
     render() {
-        const p = this.state.product;
+        //const p = this.state.product;
+        
         if (this.props.items.length == 0)
             return (<div className='basket-page with-header'>
                 <Header goBack={this.props.history.goBack} />

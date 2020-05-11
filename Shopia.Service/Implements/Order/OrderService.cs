@@ -12,13 +12,17 @@ namespace Shopia.Service
         readonly AppUnitOfWork _appUow;
         readonly IGenericRepo<Order> _orderRepo;
         readonly IProductService _productSrv;
+        readonly IPaymentService _paymentSrv;
+        readonly IGatewayService _gatewaySrv;
         readonly IGenericRepo<Product> _productRepo;
-        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IProductService productSrv)
+        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IPaymentService paymentSrv, IGatewayService gatewaySrv, IProductService productSrv)
         {
             _appUow = appUOW;
             _orderRepo = orderRepo;
             _productRepo = productRepo;
             _productSrv = productSrv;
+            _paymentSrv = paymentSrv;
+            _gatewaySrv = gatewaySrv;
         }
 
         public async Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model)
@@ -56,16 +60,20 @@ namespace Shopia.Service
             };
         }
 
-        public async Task<IResponse<Order>> Update(int orderId, OrderStatus status)
+        public async Task<IResponse<string>> Verify(Payment payment, VerifyRequest request, object[] args)
         {
-            var order = await _orderRepo.FindAsync(orderId);
-            if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
-            order.OrderStatus = status;
+            var verify = await _gatewaySrv.VerifyTransaction(request, args);
+            if (!verify.IsSuccessful) return new Response<string> { IsSuccessful = false, Result = payment.TransactionId };
+            var order = await _orderRepo.FindAsync(payment.OrderId);
+            if (order == null) return new Response<string> { Message = ServiceMessage.RecordNotExist };
+            order.OrderStatus = OrderStatus.WaitForDelivery;
+            payment.PaymentStatus = PaymentStatus.Success;
             var update = await _appUow.ElkSaveChangesAsync();
-            return new Response<Order>
+
+            return new Response<string>
             {
                 IsSuccessful = update.IsSuccessful,
-                Result = order,
+                Result = payment.TransactionId,
                 Message = update.Message
 
             };

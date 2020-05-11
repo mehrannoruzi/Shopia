@@ -18,6 +18,7 @@ class Store extends Component {
     }
 
     componentDidMount() {
+        console.log('store page');
         this.props.hideInitError();
     }
     

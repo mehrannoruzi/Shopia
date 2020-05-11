@@ -107,5 +107,12 @@ namespace Shopia.Store.Api.Controllers
             });
         }
 
+
+        [HttpGet]
+        public IActionResult ShowResult(Response<string> model)
+        {
+            return Redirect($"{_configuration["ShowPaymentResult:ReactUrl"]}{Convert.ToByte(model.IsSuccessful)}/{model.Result}");
+        }
+
     }
 }
