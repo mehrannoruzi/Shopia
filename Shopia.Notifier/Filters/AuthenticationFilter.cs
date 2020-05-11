@@ -1,10 +1,12 @@
 ﻿using System;
 using Elk.Core;
+using Elk.Http;
+using System.Linq;
 using Shopia.Domain;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shopia.Notifier.DataAccess.Dapper;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Shopia.Notifier.Filters
 {
@@ -13,6 +15,7 @@ namespace Shopia.Notifier.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var ip = ClientInfo.GetIP(filterContext.HttpContext);
             if (filterContext.HttpContext.Request.Headers["Token"].Count > 0)
             {
                 if (Guid.TryParse(filterContext.HttpContext.Request.Headers["Token"][0], out Guid token))
@@ -21,15 +24,32 @@ namespace Shopia.Notifier.Filters
                     var application = applicationRepo.GetAsync(token).Result;
                     if (application != null)
                     {
-                        if (filterContext.ActionArguments.ContainsKey("Application"))
-                            filterContext.ActionArguments["Application"] = application;
+                        if (application.ValidIp.Split(',').Any(x => x == ip))
+                        {
+                            if (filterContext.ActionArguments.ContainsKey("Application"))
+                                filterContext.ActionArguments["Application"] = application;
 
-                        base.OnActionExecuting(filterContext);
+                            base.OnActionExecuting(filterContext);
+                        }
+                        else
+                        {
+                            FileLoger.Info($"Invalid Token To Access Api. Ip Not Valid !" + Environment.NewLine +
+                            $"IP:{ip}" + Environment.NewLine +
+                            $"Token:{filterContext.HttpContext.Request.Headers["Token"][0]}");
+
+                            filterContext.HttpContext.Response.StatusCode = 403;
+                            filterContext.Result = new JsonResult(new
+                            {
+                                IsSuccessful = false,
+                                Result = 403,
+                                Message = "UnAuthorized Access. Ip Not Valid."
+                            });
+                        }
                     }
                     else
                     {
                         FileLoger.Info($"Invalid Token To Access Api  !" + Environment.NewLine +
-                            "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
+                            $"IP:{ip}" + Environment.NewLine +
                             $"Token:{filterContext.HttpContext.Request.Headers["Token"][0]}");
 
                         filterContext.HttpContext.Response.StatusCode = 200;
@@ -43,8 +63,8 @@ namespace Shopia.Notifier.Filters
                 }
                 else
                 {
-                    FileLoger.Info($"Invalid Token To Access Api  !" + Environment.NewLine +
-                            "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
+                    FileLoger.Info($"Invalid Token Type To Access Api  !" + Environment.NewLine +
+                            $"IP:{ip}" + Environment.NewLine +
                             $"Token:{filterContext.HttpContext.Request.Headers["Token"][0]}");
 
                     filterContext.HttpContext.Response.StatusCode = 200;
@@ -58,9 +78,7 @@ namespace Shopia.Notifier.Filters
             }
             else
             {
-                FileLoger.Info($"UnAuthorized Access To Api ! " + Environment.NewLine +
-                    "IP:{filterContext.HttpContext?.Connection?.RemoteIpAddress?.ToString()}" + Environment.NewLine +
-                    $"Token:");
+                FileLoger.Info($"UnAuthorized Access To Api ! IP:{ip}");
 
                 filterContext.HttpContext.Response.StatusCode = 403;
                 filterContext.Result = new JsonResult(new
