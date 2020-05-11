@@ -50,6 +50,7 @@ namespace Shopia.DependencyResolver
             
             #endregion
 
+
             #region Base
 
             services.AddScoped<IUserRepo, UserRepo>();
@@ -60,15 +61,17 @@ namespace Shopia.DependencyResolver
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IAddressService, AddressService>();
 
-            services.AddScoped<IAddressRepo, AddressRepo>();
+            //services.AddScoped<IAddressRepo, AddressRepo>();
             #endregion
-
+            #region Order
+            services.AddScoped<IOrderService, OrderService>(); 
+            #endregion
             #region Store
-            services.AddScoped<IStoreRepo, StoreRepo>();
+            //services.AddScoped<IStoreRepo, StoreRepo>();
             services.AddScoped<IStoreService, StoreService>();
-            services.AddScoped<IProductRepo, ProductRepo>();
+            //services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IDiscountRepo, DiscountRepo>();
+            //services.AddScoped<IDiscountRepo, DiscountRepo>();
             #endregion
             #region Dapper Sp
 

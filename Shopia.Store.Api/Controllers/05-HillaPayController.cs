@@ -1,14 +1,21 @@
 ﻿using Elk.Core;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Shopia.Domain;
+using Shopia.Service;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Shopia.Store.Api.Controllers
 {
-    public class PaymentController : Controller
+    public class HillaPayController : Controller
     {
+        readonly IOrderService _orderSrv;
+        public HillaPayController(IOrderService orderSrv)
+        {
+            _orderSrv = orderSrv;
+        }
         [HttpPost]
         public async Task<IActionResult> AfterGateway(HillaPayAfterGatewayModel model)
         {

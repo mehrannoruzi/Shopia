@@ -48,6 +48,7 @@ export default class orderSrv {
             return { success: false, message: strings.doPurchaseProcessAgain };
         let order = {};
         order.UserToken = info.token;
+        order.description = info.description;
         order.orderId = this.getOrderId();
         order.deliveryId = parseInt(deliveryId);
         order.items = basketSrv.get().map((x) => ({ id: x.id, price: x.price, discount: x.discount, count: x.count }));

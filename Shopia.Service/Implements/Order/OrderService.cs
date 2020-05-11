@@ -7,47 +7,68 @@ using Shopia.Service.Resource;
 
 namespace Shopia.Service
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         readonly AppUnitOfWork _appUow;
-        readonly IOrderRepo _orderRepo;
+        readonly IGenericRepo<Order> _orderRepo;
         readonly IProductService _productSrv;
-        public OrderService(AppUnitOfWork appUOW, IProductService productSrv)
+        readonly IGenericRepo<Product> _productRepo;
+        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IProductService productSrv)
         {
             _appUow = appUOW;
-            _orderRepo = appUOW.OrderRepo;
+            _orderRepo = orderRepo;
+            _productRepo = productRepo;
             _productSrv = productSrv;
         }
 
-        public async Task<IResponse<Order>> Add(OrderDTO model)
+        public async Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model)
         {
-            if (!await _appUow.UserRepo.AnyAsync(x => x.UserId == model.UserToken))
-                return new Response<Order>
-                {
-                    IsSuccessful = false,
-                    Message = ServiceMessage.UserInfoMissing
-                };
             var chkResult = await _productSrv.CheckChanges(model.Items);
-            var storeId = await _appUow.ProductRepo.FirstOrDefaultAsync(selector: x => x.StoreId, conditions: x => x.ProductId == chkResult.Items.Where(x => x.MaxCount != 0).First().Id);
+            var storeId = await _productRepo.FirstOrDefaultAsync(selector: x => x.StoreId, conditions: x => x.ProductId == chkResult.Items.Where(x => x.MaxCount != 0).First().Id);
             var orderDetails = chkResult.Items.Where(x => x.MaxCount != 0).Select(i => new OrderDetail
             {
                 ProductId = i.Id,
                 Count = i.Count,
                 DiscountPrice = i.Count * (i.Price - i.RealPrice),
                 Price = i.Price,
-                TotalPrice = i.RealPrice * i.Count
+                TotalPrice = i.RealPrice * i.Count,
+                DiscountPercent = i.Discount
             }).ToList();
-            await _orderRepo.AddAsync(new Order
+            var order = new Order
             {
                 StoreId = storeId,
+                TotalPrice = orderDetails.Sum(x => x.TotalPrice),
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
                 DeliveryType = (DeliveryType)model.DeliveryId,
+                UserComment = model.Description,
                 OrderDetails = orderDetails
-            });
+            };
+            await _orderRepo.AddAsync(order);
             var addOrder = await _appUow.ElkSaveChangesAsync();
-            return null;
+            if (!addOrder.IsSuccessful)
+                return new Response<(Order, bool)> { Message = addOrder.Message };
+            return new Response<(Order, bool)>
+            {
+                IsSuccessful = true,
+                Result = (order, chkResult.Changed)
+            };
+        }
+
+        public async Task<IResponse<Order>> Update(int orderId, OrderStatus status)
+        {
+            var order = await _orderRepo.FindAsync(orderId);
+            if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            order.OrderStatus = status;
+            var update = await _appUow.ElkSaveChangesAsync();
+            return new Response<Order>
+            {
+                IsSuccessful = update.IsSuccessful,
+                Result = order,
+                Message = update.Message
+
+            };
         }
     }
 }
