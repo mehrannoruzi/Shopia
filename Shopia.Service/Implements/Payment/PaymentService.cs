@@ -10,8 +10,8 @@ namespace Shopia.Service
     public class PaymentService : IPaymentService
     {
         readonly AppUnitOfWork _appUow;
-        readonly EfGenericRepo<Payment> _paymentRepo;
-        public PaymentService(AppUnitOfWork appUOW, EfGenericRepo<Payment> paymentRepo)
+        readonly IGenericRepo<Payment> _paymentRepo;
+        public PaymentService(AppUnitOfWork appUOW, IGenericRepo<Payment> paymentRepo)
         {
             _appUow = appUOW;
             _paymentRepo = paymentRepo;
