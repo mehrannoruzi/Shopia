@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Shopia.Crawler.Service.Resource;
 using Shopia.Crawler.DataAccess.Dapper;
-using System.Net;
 
 namespace Shopia.Crawler.Service
 {
@@ -30,9 +29,6 @@ namespace Shopia.Crawler.Service
             #region Call Instagram Page Api
             var requestUrl = _instagramSetting.PageUrlPattern.Fill(username);
 
-            //var xxx = new WebClient();
-            //var xxx1 = xxx.DownloadString(requestUrl);
-            
             var requestResult = await HttpRequestTools.GetAsync(requestUrl, Encoding.UTF8);
             if (string.IsNullOrWhiteSpace(requestResult)) return null;
             #endregion
