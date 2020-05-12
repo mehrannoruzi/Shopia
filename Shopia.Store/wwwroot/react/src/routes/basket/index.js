@@ -78,7 +78,7 @@ class Basket extends React.Component {
                                             <h2 className='hx'>{x.name}</h2>
                                             <DiscountBadg discount={x.discount} />
                                         </div>
-                                        <Counter id={x.id} className='m-b' count={x.count} max={x.maxCount} onChange={this._changeCount.bind(this)} />
+                                        <Counter id={x.id} className='m-b' count={x.count} onChange={this._changeCount.bind(this)} />
                                         <div className='price-wrapper'>
                                             <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}<small className='currency'> {strings.currency}</small></span>
                                             <button onClick={this._delete.bind(this, x.id, x.name)} className='btn-delete'><i className='zmdi zmdi-delete'></i></button>

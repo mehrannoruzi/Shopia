@@ -28,7 +28,6 @@ export default class productApi {
                         realPrice: p.RealPrice,
                         currency: p.Currency,
                         imgUrl: p.ImageUrl,
-                        maxCount: p.MaxCount
                     }))
                 }
         } catch (error) {
@@ -61,7 +60,6 @@ export default class productApi {
                         price: rep.Result.Price,
                         discount: rep.Result.Discount,
                         realPrice: rep.Result.RealPrice,
-                        maxCount: rep.Result.MaxCount,
                         currency: rep.Result.Currency,
                         description: rep.Result.Description,
                         slides: rep.Result.Slides ? rep.Result.Slides : [],

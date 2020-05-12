@@ -6,7 +6,6 @@ export function AddToBasketAction(product, count) {
         payload: {
             id: product.id,
             name: product.name,
-            maxCount: product.maxCount,
             price: product.price,
             discount: product.discount,
             realPrice: product.realPrice,

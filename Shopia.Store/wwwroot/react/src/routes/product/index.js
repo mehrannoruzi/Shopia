@@ -26,7 +26,6 @@ class Product extends React.Component {
             product: {
                 name: '',
                 price: 0,
-                maxCount: 0,
                 realPrice: 0,
                 discount: 0,
                 likeCount: 0,
@@ -88,7 +87,7 @@ class Product extends React.Component {
                     </Row>
                     <Row>
                         <Col xs={6} sm={6} className='d-flex align-items-center'>
-                            <Counter id={this.state.product.id} count={this.state.count} id={this.state.product.id} onChange={this._changeCount.bind(this)} max={this.state.product.maxCount} />
+                            <Counter id={this.state.product.id} count={this.state.count} id={this.state.product.id} onChange={this._changeCount.bind(this)} />
                         </Col>
                         <Col xs={6} sm={6}>
 

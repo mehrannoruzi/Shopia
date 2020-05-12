@@ -35,11 +35,12 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> AddAsync(User model)
         {
+            model.UserId = Guid.NewGuid();
             model.Password = HashGenerator.Hash(model.Password);
             await _appUow.UserRepo.AddAsync(model);
 
-            var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<User> { Result = model, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<User> { Result = model, IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
         }
 
         public async Task<IResponse<User>> UpdateProfile(User model)

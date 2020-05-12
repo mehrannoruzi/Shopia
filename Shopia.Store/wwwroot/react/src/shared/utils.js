@@ -40,6 +40,14 @@ export function getCurrentLocation() {
             });
         }, function (error) {
             resolve(null);
-        }, { enableHighAccuracy: false, maximumAge: 15000, timeout: 30000});
+        }, { enableHighAccuracy: false, maximumAge: 15000, timeout: 30000 });
     });
 }
+
+export const validate = {
+    mobileNumber: function (mobNumber) {
+        if (isNaN(mobNumber)) return false;
+        else if (!new RegExp(/^9\d{9}$/g).test(mobNumber)) return false;
+        else return true;
+    }
+};

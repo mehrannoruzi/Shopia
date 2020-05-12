@@ -12,24 +12,27 @@ namespace Shopia.Service
         readonly AppUnitOfWork _appUow;
         readonly IGenericRepo<Order> _orderRepo;
         readonly IProductService _productSrv;
-        readonly IPaymentService _paymentSrv;
         readonly IGatewayService _gatewaySrv;
         readonly IGenericRepo<Product> _productRepo;
-        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IPaymentService paymentSrv, IGatewayService gatewaySrv, IProductService productSrv)
+        readonly IGenericRepo<Address> _addressRepo;
+        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IGatewayService gatewaySrv, IProductService productSrv, IGenericRepo<Address> addressRepo)
         {
             _appUow = appUOW;
             _orderRepo = orderRepo;
             _productRepo = productRepo;
             _productSrv = productSrv;
-            _paymentSrv = paymentSrv;
             _gatewaySrv = gatewaySrv;
+            _addressRepo = addressRepo;
         }
 
         public async Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model)
         {
             var chkResult = await _productSrv.CheckChanges(model.Items);
-            var storeId = await _productRepo.FirstOrDefaultAsync(selector: x => x.StoreId, conditions: x => x.ProductId == chkResult.Items.Where(x => x.MaxCount != 0).First().Id);
-            var orderDetails = chkResult.Items.Where(x => x.MaxCount != 0).Select(i => new OrderDetail
+            var productId = chkResult.Items.Where(x => x.Count != 0).First().Id;
+            var store = await _productRepo.FirstOrDefaultAsync(x => new { x.StoreId, x.Store.AddressId }, x => x.ProductId == productId);
+            if (store == null) return new Response<(Order, bool)> { Message = ServiceMessage.RecordNotExist };
+
+            var orderDetails = chkResult.Items.Where(x => x.Count != 0).Select(i => new OrderDetail
             {
                 ProductId = i.Id,
                 Count = i.Count,
@@ -40,13 +43,23 @@ namespace Shopia.Service
             }).ToList();
             var order = new Order
             {
-                StoreId = storeId,
+                StoreId = store.StoreId,
                 TotalPrice = orderDetails.Sum(x => x.TotalPrice),
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
                 DeliveryType = (DeliveryType)model.DeliveryId,
                 UserComment = model.Description,
+                ToAddressId = model.Address.Id ?? 0,
+                ToAddress = model.Address.Id == null ? new Address
+                {
+                    UserId = model.UserToken,
+                    AddressType = AddressType.Home,
+                    Latitude = model.Address.Lat,
+                    Longitude = model.Address.Lng,
+                    AddressDetails = model.Address.Address
+                } : null,
+                FromAddressId = store.AddressId ?? 0,
                 OrderDetails = orderDetails
             };
             await _orderRepo.AddAsync(order);

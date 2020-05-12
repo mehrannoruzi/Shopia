@@ -5,7 +5,7 @@ import basketSrv from './basketSrv';
 
 export default class orderSrv {
 
-    static infoKey = 'order_info';
+    static infoKey = 'user_info';
     static orderIdKey = 'order_id';
     static infoExpireInDays = 366;
 
@@ -14,16 +14,18 @@ export default class orderSrv {
         let cdt = new Date();
         cdt.setDate(cdt.getDate() + this.infoExpireInDays);
         let token = null;
+        console.log(info);
         if (savedInfo) {
+            console.log(savedInfo);
             token = savedInfo.token;
-            localStorage.setItem(this.infoKey, JSON.stringify({ ...savedInfo, ...info, expDateTime: cdt.getTime() }));
-            if (savedInfo.fullname === info.fullname || savedInfo.mobileNumber === info.mobileNumber || savedInfo.description === info.description)
+            if (savedInfo.fullname === info.fullname && savedInfo.mobileNumber === info.mobileNumber && savedInfo.description === info.description)
                 return { success: true, result: savedInfo };
         }
         info.token = token;
         let callRep = await orderApi.postCompleteInfo(info);
         if (!callRep.success)
             return callRep;
+        localStorage.setItem(this.infoKey, JSON.stringify({ ...savedInfo, ...info, expDateTime: cdt.getTime() }));
         info.token = callRep.result;
         info.expDateTime = cdt.getTime();
         localStorage.setItem(this.infoKey, JSON.stringify(info));

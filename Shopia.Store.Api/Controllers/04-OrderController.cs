@@ -80,18 +80,20 @@ namespace Shopia.Store.Api.Controllers
                 CallbackUrl = _configuration["HillaPay:CallBackUrl"],
                 Url = _configuration["HillaPay:TransactionUrl"]
             };
+            //TODO:Use Gateway Factory
             var createTrans = await _gatewayService.CreateTrasaction(transModel, null);
             if (!createTrans.IsSuccessful)
                 return Json(new Response<Order> { Message = createTrans.Message });
             var paymentModel = new PaymentAddModel().CopyFrom(transModel);
             paymentModel.TransactionId = createTrans.Result.TransactionId;
+            paymentModel.GatewayId = int.Parse(_configuration["HillaPay:Id"]);
             var addPayment = await _paymentService.Add(paymentModel);
             if (!addPayment.IsSuccessful)
                 return Json(new Response<Order> { Message = addPayment.Message });
             return Json(new
             {
                 IsSuccessful = true,
-                Result = new
+                Result = new AddOrderReponse
                 {
                     Id = createTrans.Result.TransactionId,
                     Url = createTrans.Result.GatewayUrl,
@@ -101,7 +103,7 @@ namespace Shopia.Store.Api.Controllers
                         Id = x.ProductId,
                         Discount = x.DiscountPercent ?? 0,
                         Price = x.Price,
-                        MaxCount = x.Count
+                        Count = x.Count
                     })
                 }
             });

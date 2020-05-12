@@ -74,7 +74,7 @@ export default class BasketSrv {
         products.forEach(p => {
             let idx = basket.findIndex(x => x.id === p.id);
             if (idx > -1) {
-                if (p.maxCount === 0) basket.splice(idx, 1);
+                if (p.count === 0) basket.splice(idx, 1);
                 else {
                     basket[idx].price = p.price;
                     basket[idx].discount = p.discount;

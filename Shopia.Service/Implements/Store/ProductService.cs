@@ -98,7 +98,7 @@ namespace Shopia.Service
                 if (product == null)
                 {
                     changed = true;
-                    item.MaxCount = 0;
+                    item.Count = 0;
                     continue;
                 }
                 var currentDT = DateTime.Now;
@@ -112,6 +112,7 @@ namespace Shopia.Service
                 }
                 if (item.Price != product.Price || item.Discount != product.DiscountPercent)
                     changed = true;
+                //item.MaxCount
                 item.Price = product.Price;
                 item.Discount = product.DiscountPercent;
 

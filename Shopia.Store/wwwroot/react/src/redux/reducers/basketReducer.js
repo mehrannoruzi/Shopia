@@ -36,7 +36,7 @@ export default function basketReducer(state = initState, action) {
             action.payload.products.forEach(p => {
                 let idx = state.items.findIndex(x => x.id === p.id);
                 if (idx > -1) {
-                    if (p.maxCount === 0) state.items.splice(idx, 1);
+                    if (p.count === 0) state.items.splice(idx, 1);
                     else {
                         state.items[idx].price = p.price;
                         state.items[idx].discount = p.discount;

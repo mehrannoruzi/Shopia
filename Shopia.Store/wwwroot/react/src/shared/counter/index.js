@@ -9,7 +9,6 @@ export default class Counter extends React.Component {
     }
 
     _plusCount() {
-        if (this.state.count === this.props.max) return;
         this.props.onChange(this.props.id, this.state.count + 1);
         this.setState(p => ({ ...p, count: p.count + 1 }));
 

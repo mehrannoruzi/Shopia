@@ -11,7 +11,7 @@ namespace Shopia.Domain
     public class User : IInsertDateProperties, IEntity
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UserId { get; set; }
 
         [Display(Name = nameof(Strings.MobileNumber), ResourceType = typeof(Strings))]

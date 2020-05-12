@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import strings, { validationStrings } from '../../shared/constant';
+import { toast } from 'react-toastify';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
+import { validate } from './../../shared/utils';
+import strings, { validationStrings } from '../../shared/constant';
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
 import orderSrv from './../../service/orderSrv';
 import basketSrv from './../../service/basketSrv';
-import { toast } from 'react-toastify';
 
 class Completeinformation extends React.Component {
     constructor(props) {
@@ -71,19 +72,23 @@ class Completeinformation extends React.Component {
             this.setState(p => ({ ...p, mobileNumber: { ...p.mobileNumber, error: true, message: validationStrings.required } }));
             return;
         }
-        if (!this.state.description.value) {
-            this.setState(p => ({ ...p, mobileNumber: { ...p.mobileNumber, error: true, message: validationStrings.required } }));
+        if (!validate.mobileNumber(this.state.mobileNumber.value)) {
+            this.setState(p => ({ ...p, mobileNumber: { ...p.mobileNumber, error: true, message: validationStrings.invalidMobileNumber } }));
             return;
         }
+        // if (!this.state.description.value) {
+        //     this.setState(p => ({ ...p, description: { ...p.description, error: true, message: validationStrings.required } }));
+        //     return;
+        // }
         this.setState(p => ({ ...p, btnInProgresss: true }));
         let rep = await orderSrv.addInfo({
             fullname: this.state.fullname.value,
-            mobileNumber: this.state.mobileNumber.value,
+            mobileNumber: parseInt(this.state.mobileNumber.value),
             description: this.state.description.value
         });
         this.setState(p => ({ ...p, btnInProgresss: false }));
         if (!rep.success)
-            toast(rep.message, { type: toast.TYPE.DANGER });
+            toast(rep.message, { type: toast.TYPE.ERROR });
         else
             this.setState(p => ({ redirect: '/selectAddress' }));
 
@@ -147,7 +152,7 @@ class Completeinformation extends React.Component {
 
                 <button className='btn-next' onClick={this._submit.bind(this)}>
                     {strings.continuePurchase}
-                    {this.state.btnInProgresss?<Spinner animation="border" size="sm" />:null}
+                    {this.state.btnInProgresss ? <Spinner animation="border" size="sm" /> : null}
                 </button>
             </div>
         );

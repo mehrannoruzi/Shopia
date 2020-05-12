@@ -14,6 +14,7 @@ export default class orderApi {
                 body: JSON.stringify(info)
             });
             const rep = await response.json();
+            
             if (!rep.IsSuccessful) return ({ success: false, message: rep.Message });
             else return ({ success: true, result: rep.Result });
         } catch (error) {
@@ -43,7 +44,7 @@ export default class orderApi {
                             id: p.Id,
                             price: p.Price,
                             discount: p.Discount,
-                            maxCount:p.MaxCount
+                            count:p.Count
                         })) : []
                     }
                 };
