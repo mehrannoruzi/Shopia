@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.DataAccess.Ef;
 
 namespace Shopia.DataAccess.Ef.Migrations.AppDb
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200512080443_EditPasswordLength")]
+    partial class EditPasswordLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +125,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte>("DeliveryType")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("InquiryUrl")
                         .HasColumnType("varchar(150)")
@@ -258,6 +257,9 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
 
                     b.Property<int>("DeliveryTime")
                         .HasColumnType("int");
+
+                    b.Property<byte>("DeliveryType")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("DiscountId")
                         .HasColumnType("int");
@@ -459,11 +461,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
                         .IsRequired()
                         .HasColumnType("varchar(25)")
                         .HasMaxLength(25);
-
-                    b.Property<string>("VerifyUrl")
-                        .IsRequired()
-                        .HasColumnType("varchar(150)")
-                        .HasMaxLength(150);
 
                     b.HasKey("PaymentGatewayId");
 

@@ -1168,6 +1168,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آدرس تایید پرداخت.
+        /// </summary>
+        public static string VerifyUrl {
+            get {
+                return ResourceManager.GetString("VerifyUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تعداد دیده شدن.
         /// </summary>
         public static string ViewCount {

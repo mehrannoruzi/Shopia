@@ -13,6 +13,10 @@ namespace Shopia.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DeliveryProviderId { get; set; }
 
+        [Display(Name = nameof(Strings.DeliveryType), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public DeliveryType DeliveryType { get; set; }
+
         [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
         public DateTime InsertDateMi { get; set; }
 

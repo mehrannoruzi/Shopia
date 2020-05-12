@@ -60,10 +60,6 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.TotalPriceAfterDiscount), ResourceType = typeof(Strings))]
         public int TotalPriceAfterDiscount { get; set; }
 
-        [Display(Name = nameof(Strings.DeliveryType), ResourceType = typeof(Strings))]
-        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public DeliveryType DeliveryType { get; set; }
-
         [Display(Name = nameof(Strings.OrderStatus), ResourceType = typeof(Strings))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public OrderStatus OrderStatus { get; set; }
