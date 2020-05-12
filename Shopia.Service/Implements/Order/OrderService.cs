@@ -45,7 +45,7 @@ namespace Shopia.Service
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
-                DeliveryType = (DeliveryType)model.DeliveryId,
+                //DeliveryType = (DeliveryType)model.DeliveryId,
                 UserComment = model.Description,
                 OrderDetails = orderDetails
             };

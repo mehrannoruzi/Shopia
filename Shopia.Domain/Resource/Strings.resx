@@ -486,6 +486,9 @@
   <data name="ValidToDate" xml:space="preserve">
     <value>معتبر تا تاریخ</value>
   </data>
+  <data name="VerifyUrl" xml:space="preserve">
+    <value>آدرس تایید پرداخت</value>
+  </data>
   <data name="ViewCount" xml:space="preserve">
     <value>تعداد دیده شدن</value>
   </data>

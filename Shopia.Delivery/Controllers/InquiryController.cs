@@ -21,6 +21,7 @@ namespace Shopia.Delivery.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Price(DeliveryType type)
-            => Ok(await _deliveryService.InquiryDeliveryPriceAsync(type));
+            => Ok();
+            //=> Ok(await _deliveryService.InquiryDeliveryPriceAsync(type));
     }
 }

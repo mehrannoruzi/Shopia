@@ -71,6 +71,14 @@ namespace Shopia.Domain
         [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string PostBackUrl { get; set; }
 
+        [Column(TypeName = "varchar(150)")]
+        [Display(Name = nameof(Strings.VerifyUrl), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [MaxLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string VerifyUrl { get; set; }
+
+
 
         public List<Payment> Payments { get; set; }
     }
