@@ -79,6 +79,15 @@ namespace Shopia.Service.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطا در ارتباط با درگاه پرداخت، دوباره تلاش نمایید.
+        /// </summary>
+        public static string CreateTransactionFailed {
+            get {
+                return ResourceManager.GetString("CreateTransactionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رکورد مورد نظر هم اکنون وجود دارد.
         /// </summary>
         public static string DuplicateRecord {
@@ -93,6 +102,15 @@ namespace Shopia.Service.Resource {
         public static string InvalidUsernameOrPassword {
             get {
                 return ResourceManager.GetString("InvalidUsernameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تراکنش معتبر نیست.
+        /// </summary>
+        public static string InvaliedTransaction {
+            get {
+                return ResourceManager.GetString("InvaliedTransaction", resourceCulture);
             }
         }
         
@@ -129,6 +147,15 @@ namespace Shopia.Service.Resource {
         public static string UserInfoMissing {
             get {
                 return ResourceManager.GetString("UserInfoMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تایید تراکنش ناموفق بود، دوباره تلاش نمایید.
+        /// </summary>
+        public static string VerifyTransactionFailed {
+            get {
+                return ResourceManager.GetString("VerifyTransactionFailed", resourceCulture);
             }
         }
     }

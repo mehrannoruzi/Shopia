@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopia.Domain;
 using Shopia.Service;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Shopia.Store.Api.Controllers

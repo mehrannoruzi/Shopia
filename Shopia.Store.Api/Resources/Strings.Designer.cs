@@ -61,6 +61,15 @@ namespace Shopia.Store.Api.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to توکن ارسالی معتبر نمی باشد.
+        /// </summary>
+        public static string InvalidToken {
+            get {
+                return ResourceManager.GetString("InvalidToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to توکنی وجود ندارد.
         /// </summary>
         public static string ThereIsNoToken {

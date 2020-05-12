@@ -41,5 +41,8 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.TotalPrice), ResourceType = typeof(Strings))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public int TotalPrice { get; set; }
+
+        [NotMapped]
+        public float? DiscountPercent { get; set; }
     }
 }

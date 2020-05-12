@@ -1,11 +1,9 @@
 ﻿using Elk.Core;
-using System.Linq;
 using Shopia.Domain;
 using System.Threading;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
 using Shopia.Service.Resource;
-using Elk.EntityFrameworkCore;
 
 namespace Shopia.Service
 {
@@ -13,10 +11,11 @@ namespace Shopia.Service
     {
         readonly AppUnitOfWork _appUow;
         readonly IGenericRepo<Domain.Store> _storeRepo;
-        public StoreService(AppUnitOfWork appUOW)
+        public StoreService(AppUnitOfWork appUOW, IGenericRepo<Domain.Store> storeRepo)
         {
             _appUow = appUOW;
-           _storeRepo = appUOW.StoreRepo;
+            _storeRepo = storeRepo;
+           //_storeRepo = appUOW.StoreRepo;
         }
 
         public async Task<IResponse<StoreDTO>> FindAsync(int id)

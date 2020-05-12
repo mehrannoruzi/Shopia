@@ -25,12 +25,12 @@ namespace Shopia.DataAccess.Ef
         #region Base
         public IUserRepo UserRepo => _serviceProvider.GetService<IUserRepo>();
         public ITagRepo TagRepo => _serviceProvider.GetService<ITagRepo>();
-        public IAddressRepo AddressRepo => _serviceProvider.GetService<IAddressRepo>();
+        //public IAddressRepo AddressRepo => _serviceProvider.GetService<IAddressRepo>();
         public INotificationRepo NotificationRepo => _serviceProvider.GetService<INotificationRepo>();
         #endregion
 
         #region Order
-        public IOrderRepo OrderRepo => _serviceProvider.GetService<IOrderRepo>();
+        //public IOrderRepo OrderRepo => _serviceProvider.GetService<IOrderRepo>();
         #endregion
 
         #region Payment
@@ -40,9 +40,9 @@ namespace Shopia.DataAccess.Ef
         #endregion
 
         #region Store
-        public IStoreRepo StoreRepo => _serviceProvider.GetService<IStoreRepo>();
-        public IProductRepo ProductRepo => _serviceProvider.GetService<IProductRepo>();
-        public IDiscountRepo DiscountRepo => _serviceProvider.GetService<IDiscountRepo>();
+        //public IStoreRepo StoreRepo => _serviceProvider.GetService<IStoreRepo>();
+        //public IProductRepo ProductRepo => _serviceProvider.GetService<IProductRepo>();
+        //public IDiscountRepo DiscountRepo => _serviceProvider.GetService<IDiscountRepo>();
         #endregion
 
 

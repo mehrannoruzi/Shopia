@@ -10,10 +10,10 @@ namespace Shopia.Service
     {
         readonly AppUnitOfWork _appUow;
         readonly IGenericRepo<Address> _addressRepo;
-        public AddressService(AppUnitOfWork appUOW)
+        public AddressService(AppUnitOfWork appUOW, IGenericRepo<Address> addressRepo)
         {
             _appUow = appUOW;
-            _addressRepo = appUOW.AddressRepo;
+            _addressRepo = addressRepo;
         }
 
         public IResponse<PagingListDetails<AddressDTO>> Get(Guid userId)

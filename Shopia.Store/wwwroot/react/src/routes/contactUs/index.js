@@ -27,6 +27,7 @@ class ConactUs extends React.Component {
     }
 
     async componentDidMount() {
+        console.log('here');
         await this._fetchData();
     }
 
