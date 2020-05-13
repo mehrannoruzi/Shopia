@@ -13,6 +13,13 @@ namespace Shopia.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EventMapperId { get; set; }
 
+        [ForeignKey(nameof(ApplicationId))]
+        [Display(Name = nameof(Strings.Application), ResourceType = typeof(Strings))]
+        public Application Application { get; set; }
+        [Display(Name = nameof(Strings.Application), ResourceType = typeof(Strings))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public int ApplicationId { get; set; }
+
         [Display(Name = nameof(Strings.Type), ResourceType = typeof(Strings))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public EventType Type { get; set; }

@@ -24,7 +24,7 @@ namespace Shopia.Notifier.Service
             {
                 if (notifyDto == null || string.IsNullOrWhiteSpace(notifyDto.Content)) return new Response<bool> { IsSuccessful = false, Message = ServiceMessage.InvalidParameter };
 
-                var eventMappers = await _notifierUnitOfWork.EventMapperRepo.GetAsync(notifyDto.Type);
+                var eventMappers = await _notifierUnitOfWork.EventMapperRepo.GetAsync(notifyDto.Type, applicationId);
                 if (!eventMappers.Any()) return new Response<bool> { Message = ServiceMessage.EventNotExist };
 
                 var notifRepo = _notifierUnitOfWork.NotificationRepo;

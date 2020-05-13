@@ -7,6 +7,6 @@ namespace Shopia.Domain
     public interface IEventMapperRepo : IScopedInjection
     {
         Task<bool> AddAsync(EventMapper model);
-        Task<IEnumerable<EventMapper>> GetAsync(EventType eventType);
+        Task<IEnumerable<EventMapper>> GetAsync(EventType eventType, int applicationId);
     }
 }

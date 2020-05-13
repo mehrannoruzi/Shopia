@@ -40,14 +40,14 @@ namespace Shopia.Notifier.DataAccess.Dapper
             }
         }
 
-        public async Task<IEnumerable<EventMapper>> GetAsync(EventType eventType)
+        public async Task<IEnumerable<EventMapper>> GetAsync(EventType eventType, int applicationId)
         {
             try
             {
                 var query = "SELECT		* " +
                             "FROM		[Notifier].[EventMapper] e " +
-                            "WHERE		e.Type = @EventType ";
-                return await _sqlConnection.ExecuteQueryAsync<EventMapper>(query, new { EventType = (byte)eventType });
+                            "WHERE		e.ApplicationId = @ApplicationId AND e.Type = @EventType ";
+                return await _sqlConnection.ExecuteQueryAsync<EventMapper>(query, new { ApplicationId = applicationId, EventType = (byte)eventType });
             }
             catch (Exception e)
             {
