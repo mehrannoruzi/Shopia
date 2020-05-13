@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.Notifier.DataAccess.Ef;
 
 namespace Shopia.Notifier.DataAccess.Ef.Migrations
 {
     [DbContext(typeof(NotifierDbContext))]
-    partial class NotifierDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200513065951_AddApplicationIdToEventMapper")]
+    partial class AddApplicationIdToEventMapper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

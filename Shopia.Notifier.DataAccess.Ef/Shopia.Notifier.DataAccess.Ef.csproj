@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200510083847_AddApplication.Designer.cs" />
     <Compile Remove="Migrations\20200510084328_AddApplication.cs" />
     <Compile Remove="Migrations\20200510084328_AddApplication.Designer.cs" />
+    <Compile Remove="Migrations\20200513065558_AddApplicationIdToEventMapper.cs" />
+    <Compile Remove="Migrations\20200513065558_AddApplicationIdToEventMapper.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
