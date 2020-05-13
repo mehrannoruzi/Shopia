@@ -18,7 +18,10 @@ namespace Shopia.Notifier.Service
             };
 
             if (sendResult.Split(':')[1] == "1")
+            {
                 updateModel.Status = NotificationStatus.Success;
+                updateModel.IsLock = true;
+            }
             else
             {
                 updateModel.Status = NotificationStatus.Failed;

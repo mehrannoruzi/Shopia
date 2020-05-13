@@ -15,7 +15,8 @@ namespace Shopia.Notifier.Service
                 NotificationId = notification.NotificationId,
                 Status = NotificationStatus.Success,
                 SendDateMi = DateTime.Now,
-                SendStatus = "Success"
+                SendStatus = "Success",
+                IsLock = true
             };
             await notificationRepo.UpdateAsync(updateModel);
         }

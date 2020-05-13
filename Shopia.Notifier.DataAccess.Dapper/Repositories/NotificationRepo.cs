@@ -46,7 +46,7 @@ namespace Shopia.Notifier.DataAccess.Dapper
             try
             {
                 await _sqlConnection.ExecuteSpCommandAsync<int>("[Notifier].[UpdateNotification]",
-                    new { NotificationId = model.NotificationId, Status = model.Status, SendStatus = model.SendStatus, SendDateMi = model.SendDateMi });
+                    new { NotificationId = model.NotificationId, Status = model.Status, SendStatus = model.SendStatus, SendDateMi = model.SendDateMi , IsLock =model.IsLock});
 
                 return true;
             }
