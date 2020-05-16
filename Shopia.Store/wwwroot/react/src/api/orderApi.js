@@ -37,7 +37,7 @@ export default class orderApi {
                 return {
                     success: true,
                     result: {
-                        id: rep.Result.Id,
+                        id: rep.Result.OrderId,
                         basketChanged: rep.Result.BasketChanged,
                         url:rep.Result.Url,
                         changedProducts: rep.Result.BasketChanged ? rep.Result.ChangedProducts.map((p) => ({

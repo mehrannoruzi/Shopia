@@ -12,16 +12,16 @@ namespace Shopia.Service
         readonly AppUnitOfWork _appUow;
         readonly IGenericRepo<Order> _orderRepo;
         readonly IProductService _productSrv;
-        readonly IGatewayService _gatewaySrv;
+        readonly IGatewayFactory _gatewayFactory;
         readonly IGenericRepo<Product> _productRepo;
         readonly IGenericRepo<Address> _addressRepo;
-        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IGatewayService gatewaySrv, IProductService productSrv, IGenericRepo<Address> addressRepo)
+        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IGatewayFactory gatewayFactory, IProductService productSrv, IGenericRepo<Address> addressRepo)
         {
             _appUow = appUOW;
             _orderRepo = orderRepo;
             _productRepo = productRepo;
             _productSrv = productSrv;
-            _gatewaySrv = gatewaySrv;
+            _gatewayFactory = gatewayFactory;
             _addressRepo = addressRepo;
         }
 
@@ -31,6 +31,7 @@ namespace Shopia.Service
             var productId = chkResult.Items.Where(x => x.Count != 0).First().Id;
             var store = await _productRepo.FirstOrDefaultAsync(x => new { x.StoreId, x.Store.AddressId }, x => x.ProductId == productId);
             if (store == null) return new Response<(Order, bool)> { Message = ServiceMessage.RecordNotExist };
+            //TODO:Calculate Order Delivery Cost
 
             var orderDetails = chkResult.Items.Where(x => x.Count != 0).Select(i => new OrderDetail
             {
@@ -48,7 +49,7 @@ namespace Shopia.Service
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
-                //DeliveryType = (DeliveryType)model.DeliveryId,
+                DeliveryProviderId = model.DeliveryId,
                 UserComment = model.Description,
                 ToAddressId = model.Address.Id ?? 0,
                 ToAddress = model.Address.Id == null ? new Address
@@ -73,9 +74,18 @@ namespace Shopia.Service
             };
         }
 
-        public async Task<IResponse<string>> Verify(Payment payment, VerifyRequest request, object[] args)
+        public async Task<IResponse<string>> Verify(Payment payment, object[] args)
         {
-            var verify = await _gatewaySrv.VerifyTransaction(request, args);
+            var findGateway = await _gatewayFactory.GetInsance(payment.PaymentGatewayId);
+            if (!findGateway.IsSuccessful)
+                return new Response<string> { Message = ServiceMessage.RecordNotExist };
+            var verify = await findGateway.Result.Service.VerifyTransaction(new VerifyRequest
+            {
+                OrderId = payment.OrderId,
+                TransactionId = payment.TransactionId,
+                ApiKey = findGateway.Result.Gateway.MerchantId,
+                Url = findGateway.Result.Gateway.VerifyUrl
+            }, args);
             if (!verify.IsSuccessful) return new Response<string> { IsSuccessful = false, Result = payment.TransactionId };
             var order = await _orderRepo.FindAsync(payment.OrderId);
             if (order == null) return new Response<string> { Message = ServiceMessage.RecordNotExist };

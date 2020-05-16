@@ -64,7 +64,7 @@ namespace Shopia.Service
                     if (rep.status.status == 500)
                         return new Response<string>
                         {
-                            IsSuccessful = false,
+                            IsSuccessful = true,
                             Message = ServiceMessage.VerifyTransactionFailed,
                             Result = rep.result_transaction_verify.transaction_id
                         };

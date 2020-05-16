@@ -67,7 +67,7 @@ export default class orderSrv {
     }
     static getOrderId() {
         let id = localStorage.getItem(this.orderIdKey);
-        if (id) return id;
+        if (id) return parseInt(id);
         else return null;
     }
     static setOrderId(id) {

@@ -1,11 +1,8 @@
 ﻿using Elk.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Shopia.Domain;
 using Shopia.Service;
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Shopia.Store.Api.Controllers
@@ -34,15 +31,8 @@ namespace Shopia.Store.Api.Controllers
             {
                 var findPayment = await _paymentSrv.FindAsync(model.result_transaction_callback.transaction_id);
                 if (!findPayment.IsSuccessful) return RedirectToAction(action, controller, new Response<string> { IsSuccessful = false, Result = model.result_transaction_callback.transaction_id });
-                var verify = await _orderSrv.Verify(findPayment.Result, new VerifyRequest
-                {
-                    OrderId = findPayment.Result.OrderId,
-                    ApiKey = _configuration["HillaPay:ApiKey"],
-                    TransactionId = model.result_transaction_callback.transaction_id,
-                    Url = _configuration["HillaPay:VerifyUrl"]
-                }, new object[1] { model.result_transaction_callback.rrn });
+                var verify = await _orderSrv.Verify(findPayment.Result, new object[1] { model.result_transaction_callback.rrn });
                 return RedirectToAction(action, controller, new Response<string> { IsSuccessful = verify.IsSuccessful, Result = model.result_transaction_callback.transaction_id });
-
             }
 
         }

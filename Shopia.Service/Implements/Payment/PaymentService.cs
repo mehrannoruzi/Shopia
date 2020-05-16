@@ -3,7 +3,6 @@ using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
 using Shopia.Service.Resource;
-using Elk.EntityFrameworkCore;
 
 namespace Shopia.Service
 {
@@ -17,6 +16,13 @@ namespace Shopia.Service
             _paymentRepo = paymentRepo;
         }
 
+        public async Task<IResponse<Payment>> Add(CreateTransactionRequest model, string transId, int gatewayId)
+        {
+            var paymentModel = new PaymentAddModel().CopyFrom(model);
+            paymentModel.TransactionId = transId;
+            paymentModel.GatewayId = gatewayId;
+            return await Add(paymentModel);
+        }
         public async Task<IResponse<Payment>> Add(PaymentAddModel model)
         {
             var payment = new Payment

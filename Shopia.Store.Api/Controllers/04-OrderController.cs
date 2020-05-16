@@ -1,16 +1,13 @@
 ﻿using System;
+using Elk.Core;
+using System.Linq;
 using Shopia.Domain;
 using Shopia.Service;
-using Newtonsoft.Json;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using Elk.Core;
 using Microsoft.Extensions.Configuration;
 using Shopia.Store.Api.Resources;
-using System.Linq;
 
 namespace Shopia.Store.Api.Controllers
 {
@@ -19,14 +16,14 @@ namespace Shopia.Store.Api.Controllers
         readonly IUserService _userService;
         readonly IOrderService _orderService;
         readonly IPaymentService _paymentService;
-        readonly IGatewayService _gatewayService;
+        readonly IGatewayFactory _gatewayFectory;
         readonly IConfiguration _configuration;
-        public OrderController(IUserService userService, IOrderService orderService, IPaymentService paymentService, IGatewayService gatewayService, IConfiguration configuration)
+        public OrderController(IUserService userService, IOrderService orderService, IPaymentService paymentService, IGatewayFactory gatewayFactory, IConfiguration configuration)
         {
             _userService = userService;
             _orderService = orderService;
             _paymentService = paymentService;
-            _gatewayService = gatewayService;
+            _gatewayFectory = gatewayFactory;
             _configuration = configuration;
         }
 
@@ -64,38 +61,33 @@ namespace Shopia.Store.Api.Controllers
             });
         }
 
-        [HttpPost, EnableCors]
-        public async Task<IActionResult> Submit([FromBody]OrderDTO order)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody]OrderDTO order)
         {
             var findUser = await _userService.FindAsync(order.UserToken);
-            if (!findUser.IsSuccessful)
-                return Json(new Response<string> { Message = Strings.InvalidToken });
+            if (!findUser.IsSuccessful) return Json(new Response<string> { Message = Strings.InvalidToken });
             var addOrder = await _orderService.Add(order);
+            if (!addOrder.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = addOrder.Message });
+            var fatcory = await _gatewayFectory.GetInsance(int.Parse(_configuration["DefaultGatewayId"]));
             var transModel = new CreateTransactionRequest
             {
                 OrderId = addOrder.Result.Order.OrderId,
                 Amount = addOrder.Result.Order.TotalPrice,
                 MobileNumber = findUser.Result.MobileNumber.ToString(),
-                ApiKey = _configuration["HillaPay:ApiKey"],
-                CallbackUrl = _configuration["HillaPay:CallBackUrl"],
-                Url = _configuration["HillaPay:TransactionUrl"]
+                ApiKey = fatcory.Result.Gateway.MerchantId,
+                CallbackUrl = fatcory.Result.Gateway.PostBackUrl,
+                Url = fatcory.Result.Gateway.Url
             };
-            //TODO:Use Gateway Factory
-            var createTrans = await _gatewayService.CreateTrasaction(transModel, null);
-            if (!createTrans.IsSuccessful)
-                return Json(new Response<Order> { Message = createTrans.Message });
-            var paymentModel = new PaymentAddModel().CopyFrom(transModel);
-            paymentModel.TransactionId = createTrans.Result.TransactionId;
-            paymentModel.GatewayId = int.Parse(_configuration["HillaPay:Id"]);
-            var addPayment = await _paymentService.Add(paymentModel);
-            if (!addPayment.IsSuccessful)
-                return Json(new Response<Order> { Message = addPayment.Message });
-            return Json(new
+            var createTrans = await fatcory.Result.Service.CreateTrasaction(transModel, null);
+            if (!createTrans.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = createTrans.Message, Result = new AddOrderReponse { OrderId = addOrder.Result.Order.OrderId } });
+            var addPayment = await _paymentService.Add(transModel, createTrans.Result.TransactionId, fatcory.Result.Gateway.PaymentGatewayId);
+            if (!addPayment.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = addPayment.Message, Result = new AddOrderReponse { OrderId = addOrder.Result.Order.OrderId } });
+            return Json(new Response<AddOrderReponse>
             {
                 IsSuccessful = true,
                 Result = new AddOrderReponse
                 {
-                    Id = createTrans.Result.TransactionId,
+                    OrderId = addOrder.Result.Order.OrderId,
                     Url = createTrans.Result.GatewayUrl,
                     BasketChanged = addOrder.Result.IsChanged,
                     ChangedProducts = addOrder.Result.Order.OrderDetails.Select(x => new ProductDTO

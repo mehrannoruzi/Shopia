@@ -5,7 +5,7 @@ namespace Shopia.Store.Api
 {
     public class AddOrderReponse
     {
-        public string Id { get; set; }
+        public int OrderId { get; set; }
         public string Url { get; set; }
         public bool BasketChanged { get; set; }
         public IEnumerable<ProductDTO> ChangedProducts { get; set; }

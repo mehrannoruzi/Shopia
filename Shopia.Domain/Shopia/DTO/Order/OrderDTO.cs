@@ -5,7 +5,8 @@ namespace Shopia.Domain
 {
     public class OrderDTO
     {
-        public string OrderId { get; set; }
+        public int? OrderId { get; set; }
+        public int GatewayId { get; set; }
         public int DeliveryId { get; set; }       
         public AddressDTO Address { get; set; }
         public Guid UserToken { get; set; }
