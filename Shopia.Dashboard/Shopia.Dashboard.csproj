@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shopia.Delivery.Service\Shopia.Delivery.Service.csproj" />
     <ProjectReference Include="..\Shopia.DependencyResolver\Shopia.DependencyResolver.csproj" />
-    <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
-    <ProjectReference Include="..\Shopia.Service\Shopia.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
