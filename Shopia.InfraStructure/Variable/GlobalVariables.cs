@@ -1,4 +1,6 @@
-﻿namespace Shopia.InfraStructure
+﻿using System;
+
+namespace Shopia.InfraStructure
 {
     public static class GlobalVariables
     {
@@ -19,6 +21,11 @@
                 public static string Url = "https://sandbox-api.alopeyk.com/api/v2/";
                 public static string Token = "";
             }
+        }
+
+        public static class CacheSettings
+        {
+            public static string MenuModelCacheKey(Guid userId) => $"MenuModel_{userId.ToString().Replace("-", "_")}";
         }
     }
 }

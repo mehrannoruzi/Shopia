@@ -583,6 +583,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مدیریت.
+        /// </summary>
+        public static string Management {
+            get {
+                return ResourceManager.GetString("Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to سقف سفارش.
         /// </summary>
         public static string MaxOrderCount {
@@ -651,6 +660,15 @@ namespace Shopia.Domain.Resource {
         public static string NameFa {
             get {
                 return ResourceManager.GetString("NameFa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to گذرواژه جدید.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
             }
         }
         

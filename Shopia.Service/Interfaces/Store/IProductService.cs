@@ -12,5 +12,15 @@ namespace Shopia.Service
         Task<IResponse<ProductDTO>> FindAsync(int id);
 
         Task<(bool Changed, IEnumerable<OrderItemDTO> Items)> CheckChanges(IEnumerable<OrderItemDTO> items);
+
+        Task<IResponse<Product>> AddAsync(Product model);
+
+        Task<IResponse<Product>> FindWithAssetsAsync(int id);
+
+        Task<IResponse<Product>> UpdateAsync(Product model);
+
+        Task<IResponse<bool>> DeleteAsync(int id);
+
+        PagingListDetails<Product> Get(ProductSearchFilter filter);
     }
 }

@@ -59,7 +59,7 @@ export default class orderSrv {
         order.recieverMobileNumber = recieverMobileNumber;
         let apiRep = await orderApi.submit(order);
         if (apiRep.success) {
-            this.setOrderId(apiRep.result.id);
+            //this.setOrderId(apiRep.result.id);
             if (apiRep.result.basketChanged)
                 basketSrv.update(apiRep.result.changedProducts);
         }

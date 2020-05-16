@@ -119,5 +119,60 @@ namespace Shopia.Service
             }
             return (changed, items);
         }
+
+        public async Task<IResponse<Product>> AddAsync(Product model)
+        {
+            await _productRepo.AddAsync(model);
+
+            var saveResult = _appUow.ElkSaveChangesAsync();
+            return new Response<Product> { Result = model, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+        }
+
+        public async Task<IResponse<Product>> FindWithAssetsAsync(int id)
+        {
+            var product = await _productRepo.FindAsync(id);
+            if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
+
+            return new Response<Product> { Result = product, IsSuccessful = true };
+        }
+
+        public async Task<IResponse<Product>> UpdateAsync(Product model)
+        {
+            var findedRole = await _productRepo.FindAsync(model.ProductId);
+            if (findedRole == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
+
+            findedRole.Name = model.Name;
+            findedRole.Price = model.Price;
+            findedRole.DiscountPercent = model.DiscountPercent;
+
+            var saveResult = _appUow.ElkSaveChangesAsync();
+            return new Response<Product> { Result = findedRole, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+        }
+
+        public async Task<IResponse<bool>> DeleteAsync(int id)
+        {
+            _productRepo.Delete(new Product { ProductId = id });
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<bool>
+            {
+                Message = saveResult.Message,
+                Result = saveResult.IsSuccessful,
+                IsSuccessful = saveResult.IsSuccessful,
+            };
+        }
+
+        public PagingListDetails<Product> Get(ProductSearchFilter filter)
+        {
+            Expression<Func<Product, bool>> conditions = x => true;
+            if (filter != null)
+            {
+                if (!string.IsNullOrWhiteSpace(filter.Name))
+                    conditions = conditions.And(x => x.Name.Contains(filter.Name));
+            }
+
+            return _productRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.ProductId));
+        }
+
+
     }
 }

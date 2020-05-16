@@ -1,0 +1,25 @@
+@model Product
+@{
+    Layout = null;
+}
+    @Html.HiddenFor(x => x.ProductId)
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <custom-input-for for="Name" />
+    </div>
+    <div class="col-12 col-sm-6">
+        <custom-input-for for="Price" class="form-control ltr-elm"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <custom-input-for for="DiscountPercent" class="form-control ltr-elm" />
+    </div>
+    <div class="col-12 col-sm-6">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <custom-checkbox-for wrapper-class="chb-group" for="IsActive" />
+    </div>
+</div>

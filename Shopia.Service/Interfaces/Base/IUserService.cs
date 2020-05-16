@@ -14,7 +14,6 @@ namespace Shopia.Service
         Task<IResponse<bool>> DeleteAsync(Guid userId);
         Task<IResponse<User>> FindAsync(Guid userId);
         Task<IResponse<User>> FindByMobileNumber(long mobileNumber);
-
         MenuModel GetAvailableActions(Guid userId, List<MenuSPModel> spResult = null, string urlPrefix = "");
         Task<IResponse<User>> Authenticate(long mobileNumber, string password);
         void SignOut(Guid userId);

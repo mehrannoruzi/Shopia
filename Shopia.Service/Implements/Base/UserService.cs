@@ -110,6 +110,7 @@ namespace Shopia.Service
                 Message = user == null ? ServiceMessage.RecordNotExist : string.Empty
             };
         }
+
         public async Task<IResponse<User>> Authenticate(long mobileNumber, string password)
         {
             var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);

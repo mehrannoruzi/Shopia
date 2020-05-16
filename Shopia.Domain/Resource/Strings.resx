@@ -291,6 +291,9 @@
   <data name="Longitude" xml:space="preserve">
     <value>طول جغرافیایی</value>
   </data>
+  <data name="Management" xml:space="preserve">
+    <value>مدیریت</value>
+  </data>
   <data name="MaxOrderCount" xml:space="preserve">
     <value>سقف سفارش</value>
   </data>
@@ -314,6 +317,9 @@
   </data>
   <data name="NameFa" xml:space="preserve">
     <value>نام فارسی</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>گذرواژه جدید</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>سفارش</value>
