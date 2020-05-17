@@ -70,6 +70,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شماره موبایل صحیح نیست.
+        /// </summary>
+        public static string InvalidMobileNumber {
+            get {
+                return ResourceManager.GetString("InvalidMobileNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to لطفا بیشتر از {1} کاراکتر وارد نکنید.
         /// </summary>
         public static string MaxLength {

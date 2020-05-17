@@ -22,53 +22,5 @@
     </div>
     <partial name="Partials/_LayoutFooter" />
     @RenderSection("Scripts", false)
-    @*<script>
-            const urlPrefix = '@Configuration["UrlPrefix"]';
-            const strings = {
-                error: '@Strings.Error',
-                success: "@Strings.Success",
-                pleaseSelect: '@Strings.SelectPlease',
-                thereIsNoResult: '@Strings.ThereIsNoRecord',
-                yes: '@Strings.Yes',
-                no: '@Strings.No',
-                close: '@Strings.Close',
-                AreYouSure: '@Strings.AreYouSure',
-                unAuthorizedErrorMessage: "@Strings.UnAuthorizedPageMessage",
-                signInUrl: "@Url.Action("SignIn","Auth")",
-                searching: '@Strings.Searching'
-            };
-
-            const validationMessages = {
-                Required: "@Strings.Required",
-                remote: "@Strings.FillFieldCorrectly",
-                email: "@Strings.InvalidEmail",
-                url: "@Strings.IncorrectUrl",
-                date: "@Strings.IncorrectDate",
-                dateISO: "@Strings.IncorrectDateISO",
-                number: "@Strings.ValueMustBeNumber",
-                digits: "@Strings.ValueMustBeDigit",
-                equalTo: "@Strings.ValueNotMatched",
-                accept: "@Strings.IncorrectFormat",
-                maxlength: "@Strings.MaxLengthExeeded",
-                minlength: "@Strings.MinLengthNotReached",
-                rangelength: "@Strings.LenghIsNotInRange",
-                range: "@Strings.ValueIsNotInRange",
-                max: "@Strings.MaxValueExceeded",
-                min: "@Strings.MinValueNotReached"
-            };
-
-
-        </script>
-
-        <partial name="Partials/_Modal" />
-        <environment include="Development">
-            <script src="@Url.Content("~/Scripts/Libs/libs.js")"></script>
-            <script src="@Url.Content("~/Scripts/App/app.js")"></script>
-        </environment>
-        <environment include="Production ">
-            <script src="@Url.Content("~/Scripts/Libs/libs.min.js")"></script>
-            <script src="@Url.Content("~/Scripts/App/app.min.js")"></script>
-        </environment>
-        @RenderSection("Scripts", false)*@
 </body>
 </html>

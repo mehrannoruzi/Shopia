@@ -12,9 +12,10 @@ namespace Shopia.Dashboard
         private readonly AuthDbContext _db;
         private readonly AppDbContext _appDb;
 
-        public AclSeed(AuthDbContext db,AppDbContext appDb)
+        public AclSeed(AuthDbContext db, AppDbContext appDb)
         {
             _db = db;
+            _appDb = appDb;
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Shopia.Dashboard
                 Enabled = true
             };
             _db.Set<Role>().Add(role);
-
+            var roleAdd =  _db.SaveChanges();
             var user = new User()
             {
                 UserId = Guid.NewGuid(),
@@ -89,8 +90,8 @@ namespace Shopia.Dashboard
                 InsertDateSh = "1397/06/04",
                 InsertDateMi = new DateTime(2018, 8, 26)
             };
-            _db.Set<User>().Add(user);
-            var res = _db.SaveChanges();
+            _appDb.Set<User>().Add(user);
+            var res = _appDb.SaveChanges();
             if (res == 0) return (false, 0, Guid.Empty);
             else return (true, role.RoleId, user.UserId);
         }

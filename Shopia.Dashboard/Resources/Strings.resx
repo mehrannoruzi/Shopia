@@ -150,6 +150,12 @@
   <data name="CannotUploadAnyMoreFiles" xml:space="preserve">
     <value>امکان آپلود بیشتر از {{maxFiles}} فایل نیست</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>بررسی</value>
+  </data>
+  <data name="CheckResult" xml:space="preserve">
+    <value>نتیجه بررسی</value>
+  </data>
   <data name="CickHere" xml:space="preserve">
     <value>اینجا کلیک کنید</value>
   </data>
@@ -207,6 +213,9 @@
   <data name="Home" xml:space="preserve">
     <value>صفحه اصلی</value>
   </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
   <data name="InActive" xml:space="preserve">
     <value>غیرفعال</value>
   </data>
@@ -224,6 +233,9 @@
   </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>ایمیل وارد شده صحیح نمی باشد</value>
+  </data>
+  <data name="InvalidMobileNumber" xml:space="preserve">
+    <value>شماره موبایل صحیح نیست</value>
   </data>
   <data name="Item" xml:space="preserve">
     <value>آیتم</value>
@@ -338,6 +350,9 @@
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>ثبت نام</value>
+  </data>
+  <data name="StoreSignUp" xml:space="preserve">
+    <value>ثبت نام فروشگاه</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>ثبت</value>

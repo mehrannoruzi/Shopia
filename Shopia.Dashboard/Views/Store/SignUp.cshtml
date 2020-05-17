@@ -1,0 +1,53 @@
+﻿@model StoreSignUpModel
+@{
+    ViewBag.Title = Strings.StoreSignUp;
+    Layout = Url.Content("~/Views/Shared/_LayoutPublic.cshtml");
+}
+@section styles{
+    <link href="@Url.Content("~/Styles/App/Store/sign-up.min.css")" rel="stylesheet" />
+}
+<div class=" store-sign-up-page">
+    <div class="form-wrapper">
+        <div class="container">
+            <div class="row" dir="ltr">
+                <div class="col-8 offset-2">
+                    <h4 class="title text-center">@Strings.StoreSignUp</h4>
+                    <form class="m-t m-t" data-url="@Url.Action("SignUp","Store")" dir="rtl">
+                        <div class="alert alert-danger">
+                            <p class="text"></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <custom-select-for for="StoreType" class="form-control" items="(List<SelectListItem>)ViewBag.Types" />
+                            </div>
+                            <div class="col-12 col-sm-6 position-relative">
+                                <custom-input-for for="Username" class="form-control ltr-elm"></custom-input-for>
+                                <button class="btn-check" type="button" data-url="@Url.Action("ShowPage","Store")">
+                                    @Strings.Check
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <custom-input-for for="FullName"></custom-input-for>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <custom-input-for for="MobileNumber"></custom-input-for>
+                            </div>
+                        </div>
+                        <button class="btn-submit">
+                            @Strings.Submit
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/App/Store/sign-up.js")"></script>
+}
