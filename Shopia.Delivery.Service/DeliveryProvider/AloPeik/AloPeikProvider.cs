@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shopia.Delivery.Service
 {
-    public class AloPeikProvider
+    public static class AloPeikProvider
     {
         public static async Task<AloPeikUser> Authenticate()
         {

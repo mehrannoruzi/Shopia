@@ -62,8 +62,8 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet]
         public virtual ActionResult SignIn()
         {
-            var t = new AclSeed(_db);
-            var rep = t.Init();
+            //var t = new AclSeed(_db);
+            //var rep = t.Init();
 
             if (User.Identity.IsAuthenticated)
             {

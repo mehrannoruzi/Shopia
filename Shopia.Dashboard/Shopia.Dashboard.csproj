@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shopia.DependencyResolver\Shopia.DependencyResolver.csproj" />
+    <ProjectReference Include="..\Shopia.InfraStructure\Shopia.InfraStructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

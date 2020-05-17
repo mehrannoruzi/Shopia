@@ -19,9 +19,19 @@ namespace Shopia.Delivery.Controllers
         public IActionResult Index()
             => Ok("WellCome To Shopia.Delivery Api ...");
 
+        
         [HttpGet]
-        public async Task<IActionResult> Price(DeliveryType type)
-            => Ok();
-            //=> Ok(await _deliveryService.InquiryDeliveryPriceAsync(type));
+        public async Task<IActionResult> Address(LocationDTO location)
+            => Ok(await _deliveryService.AddressInquiry(location));
+
+
+        [HttpGet]
+        public async Task<IActionResult> Price(LocationDTO source, LocationDTO destination)
+            => Ok(await _deliveryService.PriceInquiry(source, destination, false, false));
+
+
+        [HttpGet]
+        public async Task<IActionResult> DeliveryPrice(LocationDTO source, LocationDTO destination)
+            => Ok(await _deliveryService.DeliveryPriceAsync(source, destination));
     }
 }
