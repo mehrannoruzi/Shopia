@@ -1,0 +1,23 @@
+﻿@model CrawledPageDto
+@{
+    Layout = null;
+}
+
+<div class="instagram-partial">
+    <img src="@Model.BioUrl" />
+    <div class="info-wrapepr">
+        <div class="info">
+            <label>@Html.DisplayNameFor(x => x.FolowingCount)</label>
+            <span>@Model.FolowingCount</span>
+        </div>
+        <div class="info">
+            <label>@Html.DisplayNameFor(x => x.FolowerCount)</label>
+            <span>@Model.FolowingCount</span>
+        </div>
+        <div class="info">
+            <label>@Html.DisplayNameFor(x => x.PostCount)</label>
+            <span>@Model.PostCount</span>
+        </div>
+    </div>
+</div>
+

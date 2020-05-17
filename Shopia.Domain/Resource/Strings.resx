@@ -231,11 +231,17 @@
   <data name="Icon" xml:space="preserve">
     <value>آیکون</value>
   </data>
+  <data name="Identifier" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
   <data name="InquiryUrl" xml:space="preserve">
     <value>آدرس استعلام</value>
   </data>
   <data name="InsertDate" xml:space="preserve">
     <value>تاریخ ثبت</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>اینستاگرام</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>فعال است؟</value>
@@ -432,6 +438,9 @@
   <data name="Tag" xml:space="preserve">
     <value>تگ</value>
   </data>
+  <data name="Telegram" xml:space="preserve">
+    <value>تلگرام</value>
+  </data>
   <data name="TelegramId" xml:space="preserve">
     <value>کد تلگرام</value>
   </data>
@@ -497,6 +506,9 @@
   </data>
   <data name="ViewCount" xml:space="preserve">
     <value>تعداد دیده شدن</value>
+  </data>
+  <data name="WhatsApp" xml:space="preserve">
+    <value>واتس اپ</value>
   </data>
   <data name="WhatsAppUrl" xml:space="preserve">
     <value>آدرس فروشگاه در واتس اپ</value>

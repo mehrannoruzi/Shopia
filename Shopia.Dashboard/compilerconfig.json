@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "wwwroot/Styles/App/Store/sign-up.css",
+    "inputFile": "wwwroot/Styles/App/Store/sign-up.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/App/public-layout.css",
+    "inputFile": "wwwroot/Styles/App/public-layout.scss"
+  }
+]

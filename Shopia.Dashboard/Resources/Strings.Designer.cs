@@ -160,6 +160,24 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to بررسی.
+        /// </summary>
+        public static string Check {
+            get {
+                return ResourceManager.GetString("Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نتیجه بررسی.
+        /// </summary>
+        public static string CheckResult {
+            get {
+                return ResourceManager.GetString("CheckResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اینجا کلیک کنید.
         /// </summary>
         public static string CickHere {
@@ -331,6 +349,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شناسه.
+        /// </summary>
+        public static string Identifier {
+            get {
+                return ResourceManager.GetString("Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to غیرفعال.
         /// </summary>
         public static string InActive {
@@ -381,6 +408,15 @@ namespace Shopia.Dashboard.Resources {
         public static string InvalidEmail {
             get {
                 return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to شماره موبایل صحیح نیست.
+        /// </summary>
+        public static string InvalidMobileNumber {
+            get {
+                return ResourceManager.GetString("InvalidMobileNumber", resourceCulture);
             }
         }
         
@@ -723,6 +759,15 @@ namespace Shopia.Dashboard.Resources {
         public static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ثبت نام فروشگاه.
+        /// </summary>
+        public static string StoreSignUp {
+            get {
+                return ResourceManager.GetString("StoreSignUp", resourceCulture);
             }
         }
         

@@ -25,14 +25,15 @@ namespace Shopia.Dashboard.Controllers
         private const string UrlPrefixKey = "CustomSettings:UrlPrefix";
 
         private readonly AuthDbContext _db;
+        private readonly AppDbContext _appDb;
 
-        public AuthController(IHttpContextAccessor httpAccessor, IConfiguration configuration,
-            IUserService userSrv, AuthDbContext db)
+        public AuthController(IHttpContextAccessor httpAccessor, IConfiguration configuration,IUserService userSrv, AuthDbContext db, AppDbContext appDb)
         {
             _userSrv = userSrv;
             _config = configuration;
             _httpAccessor = httpAccessor;
             _db = db;
+            _appDb = appDb;
         }
 
         private async Task CreateCookie(User user, bool remeberMe)
@@ -62,9 +63,8 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet]
         public virtual ActionResult SignIn()
         {
-            var t = new AclSeed(_db);
-            var rep = t.Init();
-
+            //var t = new AclSeed(_db, _appDb);
+            //var rep = t.Init();
             if (User.Identity.IsAuthenticated)
             {
                 var urlPrefix = _config.GetValue<string>(UrlPrefixKey);
@@ -78,8 +78,9 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> SignIn(SignInModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            if(!long.TryParse(model.Mobilenumber,out long mobNum)) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
 
-            var chkRep = await _userSrv.Authenticate(model.Mobilenumber, model.Password);
+            var chkRep = await _userSrv.Authenticate(mobNum, model.Password);
             if (!chkRep.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = chkRep.Message });
 
             var menuRep = _userSrv.GetAvailableActions(chkRep.Result.UserId, null, _config.GetValue<string>(UrlPrefixKey));

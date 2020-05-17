@@ -403,6 +403,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شناسه.
+        /// </summary>
+        public static string Identifier {
+            get {
+                return ResourceManager.GetString("Identifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آدرس استعلام.
         /// </summary>
         public static string InquiryUrl {
@@ -417,6 +426,15 @@ namespace Shopia.Domain.Resource {
         public static string InsertDate {
             get {
                 return ResourceManager.GetString("InsertDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اینستاگرام.
+        /// </summary>
+        public static string Instagram {
+            get {
+                return ResourceManager.GetString("Instagram", resourceCulture);
             }
         }
         
@@ -1006,6 +1024,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تلگرام.
+        /// </summary>
+        public static string Telegram {
+            get {
+                return ResourceManager.GetString("Telegram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کد تلگرام.
         /// </summary>
         public static string TelegramId {
@@ -1200,6 +1227,15 @@ namespace Shopia.Domain.Resource {
         public static string ViewCount {
             get {
                 return ResourceManager.GetString("ViewCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to واتس اپ.
+        /// </summary>
+        public static string WhatsApp {
+            get {
+                return ResourceManager.GetString("WhatsApp", resourceCulture);
             }
         }
         
