@@ -7,8 +7,9 @@ namespace Shopia.Delivery.Service
 {
     public interface IDeliveryService
     {
-        Task<AloPeikAddressInquiry> AddressInquiry(LocationDTO location);
-        Task<IResponse<List<DeliveryPrice>>> DeliveryPriceAsync(LocationDTO source, LocationDTO destination);
-        Task<AloPeikPriceInquiryResult> PriceInquiry(LocationDTO source, LocationDTO destination, bool cashed, bool hasReturn);
+        Task<IResponse<dynamic>> AddressInquiry(LocationDTO location);
+        Task<IResponse<List<PriceInquiryResult>>> PriceInquiry(LocationsDTO priceInquiry, bool cashed, bool hasReturn);
+        Task<IResponse<OrderResult>> RegisterPeykOrder(DeliveryOrderDTO deliveryOrderDTO);
+        Task<IResponse<OrderResult>> RegisterPostOrder(DeliveryOrderDTO deliveryOrderDTO);
     }
 }

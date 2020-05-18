@@ -1,16 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace Shopia.Domain
+﻿namespace Shopia.Domain
 {
-    public class AloPeikAddressInquiry
-    {
-        public List<string> Address { get; set; }
-        public string Province { get; set; }
-        public string Region { get; set; }
-        public string District { get; set; }
-        public string City_fa { get; set; }
-    }
-
     public class AloPeikAddress : LocationDTO
     {
         public string Address { get; set; }

@@ -2,8 +2,12 @@
 
 namespace Shopia.Domain
 {
-    public class AloPeikPriceInquiryResult
+    public class PriceInquiryResult
     {
+        public int DeliveryProviderId { get; set; }
+        public string DeliveryType { get; set; }
+        public string DeliveryType_Fa { get; set; }
+
         public int Price { get; set; }
         public List<AloPeikAddress> Addresses { get; set; }
         public string Distance { get; set; }
