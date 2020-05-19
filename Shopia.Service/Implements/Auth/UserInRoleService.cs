@@ -13,19 +13,21 @@ namespace Shopia.Service
     public class UserInRoleService : IUserInRoleService
     {
         private readonly AuthUnitOfWork _authUow;
-
-        public UserInRoleService(AuthUnitOfWork uow)
+        IGenericRepo<UserInRole> _userInRoleRepo;
+        public UserInRoleService(AuthUnitOfWork uow,IGenericRepo<UserInRole> userInRoleRepo)
         {
             _authUow = uow;
+            _userInRoleRepo = userInRoleRepo;
         }
 
 
         public async Task<IResponse<UserInRole>> Add(UserInRole model)
         {
-            if (await _authUow.UserInRoleRepo.AnyAsync(x => x.UserId == model.UserId && x.RoleId == model.RoleId))
+            
+            if (await _userInRoleRepo.AnyAsync(x => x.UserId == model.UserId && x.RoleId == model.RoleId))
                 return new Response<UserInRole> { Message = ServiceMessage.DuplicateRecord, IsSuccessful = false };
 
-            await _authUow.UserInRoleRepo.AddAsync(model);
+            await _userInRoleRepo.AddAsync(model);
             var saveResult = await _authUow.ElkSaveChangesAsync();
             return new Response<UserInRole>
             {
@@ -37,7 +39,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<bool>> Delete(int userInRoleId)
         {
-            _authUow.UserInRoleRepo.Delete(new UserInRole { UserInRoleId = userInRoleId });
+            _userInRoleRepo.Delete(new UserInRole { UserInRoleId = userInRoleId });
             var saveResult = await _authUow.ElkSaveChangesAsync();
             return new Response<bool>
             {
@@ -48,7 +50,7 @@ namespace Shopia.Service
         }
 
         public IEnumerable<UserInRole> Get(Guid userId)
-            => _authUow.UserInRoleRepo.Get(x => x.UserId == userId,
+            => _userInRoleRepo.Get(x => x.UserId == userId,
             x => x.OrderByDescending(uir => uir.UserId),
             new List<Expression<Func<UserInRole, object>>> { x => x.Role }).ToList();
     }

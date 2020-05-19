@@ -180,6 +180,15 @@ namespace Shopia.Service
             #region Find Default View
             foreach (var menuItem in spResult)
             {
+                if (menuItem.IsAction && menuItem.IsDefault)
+                {
+                    userMenu.DefaultUserAction = new UserAction
+                    {
+                        Action = menuItem.ActionName,
+                        Controller = menuItem.ControllerName
+                    };
+                    break;
+                }
                 var actions = menuItem.ActionsList;
                 if (actions.Any(x => x.IsDefault))
                 {

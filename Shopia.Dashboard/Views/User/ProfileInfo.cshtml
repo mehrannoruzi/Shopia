@@ -1,6 +1,19 @@
-@model User
+﻿@model User
 @{
     ViewBag.Title = Strings.Profile;
+    var t1 = HashGenerator.Hash(Model.MobileNumber.ToString());
+    var t2 = Model.Password;
+}
+
+@if (HashGenerator.Hash(Model.MobileNumber.ToString()) == Model.Password)
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success">
+                <p>به داشبورد مدیریت شاپیا خوش آمدید، برای شما با شماره موبایل بعنوان نام کاربری و رمز عبور حسابی ایجاد شده است، از این پس میتوانید با این از امکانات شاپیا در منوی خود بهره ببرید</p>
+            </div>
+        </div>
+    </div>
 }
 
 <div class="row">

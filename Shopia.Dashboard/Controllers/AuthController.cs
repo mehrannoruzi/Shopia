@@ -17,7 +17,7 @@ using Elk.AspNetCore;
 
 namespace Shopia.Dashboard.Controllers
 {
-    public partial class AuthController : Controller
+    public partial class AuthController : AuthBaseController
     {
         private readonly IUserService _userSrv;
         private IConfiguration _config { get; set; }
@@ -27,7 +27,7 @@ namespace Shopia.Dashboard.Controllers
         private readonly AuthDbContext _db;
 
         public AuthController(IHttpContextAccessor httpAccessor, IConfiguration configuration,
-            IUserService userSrv, AuthDbContext db)
+            IUserService userSrv, AuthDbContext db) : base(httpAccessor)
         {
             _userSrv = userSrv;
             _config = configuration;
@@ -35,29 +35,6 @@ namespace Shopia.Dashboard.Controllers
             _db = db;
         }
 
-        private async Task CreateCookie(User user, bool remeberMe)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("Fullname", user.FullName)
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
-            {
-                AllowRefresh = true,
-                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8),
-                IsPersistent = remeberMe,
-            };
-            await _httpAccessor.HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-        }
 
         [HttpGet]
         public virtual ActionResult SignIn()
@@ -68,7 +45,7 @@ namespace Shopia.Dashboard.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var urlPrefix = _config.GetValue<string>(UrlPrefixKey);
-                var defaultUA =  _userSrv.GetAvailableActions(User.GetUserId(), null, urlPrefix).DefaultUserAction;
+                var defaultUA = _userSrv.GetAvailableActions(User.GetUserId(), null, urlPrefix).DefaultUserAction;
                 return Redirect($"{urlPrefix}/{defaultUA.Controller}/{defaultUA.Action}");
             }
             return View(new SignInModel { RememberMe = true });
@@ -83,7 +60,7 @@ namespace Shopia.Dashboard.Controllers
             var chkRep = await _userSrv.Authenticate(mobNum, model.Password);
             if (!chkRep.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = chkRep.Message });
 
-            var menuRep = _userSrv.GetAvailableActions(chkRep.Result.UserId, null, _config.GetValue<string>(UrlPrefixKey));
+            var menuRep = _userSrv.GetAvailableActions(chkRep.Result.UserId, null, _config["CustomSettings:UrlPrefixKey"]);
             if (menuRep == null) return Json(new Response<string> { IsSuccessful = false, Message = Strings.ThereIsNoViewForUser });
 
             await CreateCookie(chkRep.Result, model.RememberMe);

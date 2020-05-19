@@ -1,7 +1,9 @@
-﻿using Elk.Core;
+﻿using System;
+using Elk.Core;
 using Shopia.Domain;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Shopia.Service
 {
@@ -9,5 +11,7 @@ namespace Shopia.Service
     {
         Task<IResponse<StoreDTO>> FindAsync(int id);
         Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default);
+        Task<IResponse<Domain.Store>> SignUp(StoreSignUpModel model, CrawledPageDto crawl);
+        IEnumerable<Domain.Store> GetAll(Guid userId);
     }
 }
