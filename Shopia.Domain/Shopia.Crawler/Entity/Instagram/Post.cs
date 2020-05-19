@@ -48,6 +48,12 @@ namespace Shopia.Domain
         [MaxLength(10, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string InsertDateSh { get; set; }
 
+        [Column(TypeName = "nvarchar(1000)")]
+        [Display(Name = nameof(Strings.Description), ResourceType = typeof(Strings))]
+        [MaxLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string Description { get; set; }
+
         [NotMapped]
         public string PostAssets { get; set; }
 

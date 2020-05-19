@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopia.DataAccess.Ef;
 
 namespace Shopia.Crawler.DataAccess.Ef.Migrations
 {
     [DbContext(typeof(CrawlerDbContext))]
-    partial class CrawlerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200519093149_AddDescription2Post")]
+    partial class AddDescription2Post
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
