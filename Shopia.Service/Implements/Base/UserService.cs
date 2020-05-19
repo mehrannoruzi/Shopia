@@ -60,7 +60,7 @@ namespace Shopia.Service
             var findedUser = await _appUow.UserRepo.FindAsync(model.UserId);
             if (findedUser == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
-            if (model.IsRecoveredPassword)
+            if (model.MustChangePassword)
                 findedUser.Password = HashGenerator.Hash(model.Password);
 
             findedUser.FullName = model.FullName;
@@ -268,7 +268,7 @@ namespace Shopia.Service
             var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);
             if (user == null) return new Response<string> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
-            user.IsRecoveredPassword = true;
+            user.MustChangePassword = true;
             var newPassword = Randomizer.GetUniqueKey(6);
             user.Password = HashGenerator.Hash(newPassword);
             _appUow.UserRepo.Update(user);

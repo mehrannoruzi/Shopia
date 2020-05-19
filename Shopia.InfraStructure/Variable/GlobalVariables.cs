@@ -18,8 +18,8 @@ namespace Shopia.InfraStructure
         {
             public static class AloPeik
             {
-                public static string Url = "https://sandbox-api.alopeyk.com/api/v2/";
-                public static string Token = "";
+                public static string Url = "https://sandbox-api.alopeyk.com/api/v2";
+                public static string Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjExMjkwLCJpc3MiOiJodHRwczovL3NhbmRib3gtYXBpLmFsb3BleWsuY29tL2FwaS92MiIsImlhdCI6MTU4MjgxNDk1NCwiZXhwIjo1MTgyODE0OTU0LCJuYmYiOjE1ODI4MTQ5NTQsImp0aSI6Ikpob1l6Mjh6d1VlME1Ec0QifQ.lyXrDtUXjNmouQPwpZ-dQSyWftjIsChhJdgB9FZvBhQ";
             }
         }
 

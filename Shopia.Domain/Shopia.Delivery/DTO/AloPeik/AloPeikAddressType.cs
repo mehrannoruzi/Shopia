@@ -2,7 +2,7 @@
 {
     public enum AloPeikAddressType
     {
-        Origin,
-        Destination
+        origin,
+        destination
     }
 }

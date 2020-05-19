@@ -10,42 +10,101 @@ namespace Shopia.Delivery.Service
 {
     public class DeliveryService : IDeliveryService
     {
-        public async Task<AloPeikAddressInquiry> AddressInquiry(LocationDTO location)
+        public async Task<IResponse<dynamic>> AddressInquiry(LocationDTO location)
             => await AloPeikProvider.AddressInquiry(location);
 
-        public async Task<AloPeikPriceInquiryResult> PriceInquiry(LocationDTO source, LocationDTO destination, bool cashed, bool hasReturn)
-            => await AloPeikProvider.PriceInquiry(source, destination, cashed, hasReturn);
-
-        public async Task<IResponse<List<DeliveryPrice>>> DeliveryPriceAsync(LocationDTO source, LocationDTO destination)
+        public async Task<IResponse<List<PriceInquiryResult>>> PriceInquiry(LocationsDTO priceInquiry, bool cashed, bool hasReturn)
         {
-            var response = new Response<List<DeliveryPrice>>();
+            var result = new Response<List<PriceInquiryResult>>();
+            result.Result = new List<PriceInquiryResult>();
             try
             {
-                var InquiryResult = new List<DeliveryPrice>();
+                var peyk = await AloPeikProvider.PriceInquiry(priceInquiry.Source, priceInquiry.Destination, cashed, hasReturn);
+                var post = await PostProvider.PriceInquiry(priceInquiry.Source, priceInquiry.Destination, cashed, hasReturn);
 
-                foreach (var item in EnumExtension.GetEnumElements<DeliveryType>())
-                {
-                    if (item.Name == DeliveryType.Peik.ToString())
-                    {
-                        InquiryResult.Add(new DeliveryPrice { Price = 20000, Name = DeliveryType.Peik.ToString(), DeliveryProviderId = 1, DeliveryType = DeliveryType.Peik, Address = "زعفرانیه" });
-                    }
-                    else if (item.Name == DeliveryType.Post.ToString())
-                    {
-                        InquiryResult.Add(new DeliveryPrice { Price = 7000, Name = DeliveryType.Post.ToString(), DeliveryProviderId = 2, DeliveryType = DeliveryType.Post, Address = "زعفرانیه" });
-                    }
-                }
-
-                response.IsSuccessful = true;
-                response.Result = InquiryResult;
-                response.Message = ServiceMessage.Success;
-                return response;
+                if (peyk.IsNotNull()) result.Result.Add(peyk);
+                if (post.IsNotNull()) result.Result.Add(post);
+                result.IsSuccessful = true;
+                result.Message = ServiceMessage.Success;
+                return result;
             }
             catch (Exception e)
             {
                 FileLoger.Error(e);
 
-                response.Message = ServiceMessage.Exception;
-                return response;
+                result.Message = ServiceMessage.Exception;
+                return result;
+            }
+        }
+
+        public async Task<IResponse<OrderResult>> RegisterPeykOrder(DeliveryOrderDTO deliveryOrderDTO)
+        {
+            var result = new Response<OrderResult>();
+            try
+            {
+                var registerOrderResult = await AloPeikProvider.RegisterOrder(deliveryOrderDTO.Addresses.FirstOrDefault(x=> x.Type == "origin"), deliveryOrderDTO.Addresses.FirstOrDefault(x => x.Type == "destination"), false, false, deliveryOrderDTO.ExtraParams);
+                if (registerOrderResult == null) return new Response<OrderResult>() { Message = ServiceMessage.Error };
+
+                result.Result = new OrderResult
+                {
+                    OrderId = registerOrderResult.Id,
+                    OrderToken = registerOrderResult.Order_Token,
+                    OrderDiscount = registerOrderResult.Order_Discount,
+                    Price = registerOrderResult.Final_Price,
+                    //ExtraParams = registerOrderResult.Extra_Param,
+                    PayAtDestination = registerOrderResult.Pay_At_Dest,
+                    Cashed = registerOrderResult.Cashed,
+                    Delay = registerOrderResult.Delay,
+                    Duration = registerOrderResult.Duration,
+                    Distance = registerOrderResult.Distance,
+                    Has_Return = registerOrderResult.Has_Return,
+                    Addresses = registerOrderResult.Addresses
+                };
+                result.IsSuccessful = true;
+                result.Message = ServiceMessage.Success;
+                return result;
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+
+                result.Message = ServiceMessage.Exception;
+                return result;
+            }
+        }
+
+        public async Task<IResponse<OrderResult>> RegisterPostOrder(DeliveryOrderDTO deliveryOrderDTO)
+        {
+            var result = new Response<OrderResult>();
+            try
+            {
+                var registerOrderResult = await AloPeikProvider.RegisterOrder(deliveryOrderDTO.Addresses.FirstOrDefault(x => x.Type == "origin"), deliveryOrderDTO.Addresses.FirstOrDefault(x => x.Type == "destination"), false, false, deliveryOrderDTO.ExtraParams);
+
+                result.Result = new OrderResult
+                {
+                    OrderId = registerOrderResult.Id,
+                    OrderToken = registerOrderResult.Order_Token,
+                    OrderDiscount = registerOrderResult.Order_Discount,
+                    Price = registerOrderResult.Final_Price,
+                    //ExtraParams = registerOrderResult.Extra_Param,
+                    PayAtDestination = registerOrderResult.Pay_At_Dest,
+                    Cashed = registerOrderResult.Cashed,
+                    Delay = registerOrderResult.Delay,
+                    Duration = registerOrderResult.Duration,
+                    Distance = registerOrderResult.Distance,
+                    Has_Return = registerOrderResult.Has_Return,
+                    Addresses = registerOrderResult.Addresses
+                };
+                result.IsSuccessful = true;
+                result.Message = ServiceMessage.Success;
+                return result;
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+
+                result.Message = ServiceMessage.Exception;
+                return result;
             }
         }
     }
