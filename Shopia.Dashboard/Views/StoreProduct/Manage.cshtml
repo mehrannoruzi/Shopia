@@ -1,0 +1,29 @@
+﻿@model StoreSignUpModel
+@{
+    ViewBag.Title = "مدیریت محصولات";
+    Layout = Url.Content("~/Views/Shared/_Layout.cshtml");
+}
+@section styles{
+    <link href="@Url.Content("~/Styles/App/02-Store/Product/manage.min.css")" rel="stylesheet" />
+}
+
+<div class="product-manage-page">
+    <div class="ibox collapsed">
+        <div class="ibox-title">
+            <h5>قیمت گذاری محصولات</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="zmdi zmdi-chevron-down"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content text-center">
+            <custom-button id="btn-get-posts" class="btn btn-info" icon="zmdi zmdi-download" text="دریافت پست ها"></custom-button>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/App/02-Store/Product/manage.js")"></script>
+}

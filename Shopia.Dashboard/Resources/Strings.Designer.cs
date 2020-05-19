@@ -61,6 +61,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to درباره ما.
+        /// </summary>
+        public static string AboutUs {
+            get {
+                return ResourceManager.GetString("AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عملیات.
         /// </summary>
         public static string Actions {
@@ -898,7 +907,7 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to به داشبورد مدیریت رومانتیکا خوش آمدید.
+        ///   Looks up a localized string similar to به داشبورد مدیریت شاپیا خوش آمدید.
         /// </summary>
         public static string WelcomeMessage {
             get {

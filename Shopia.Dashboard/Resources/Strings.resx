@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>درباره ما</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>عملیات</value>
   </data>
@@ -397,7 +400,7 @@
     <value>لطفا همان مقدار را دوباره وارد نمایید</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>به داشبورد مدیریت رومانتیکا خوش آمدید</value>
+    <value>به داشبورد مدیریت شاپیا خوش آمدید</value>
   </data>
   <data name="WithoutAccountText" xml:space="preserve">
     <value>هیچ حسابی نداید؟</value>

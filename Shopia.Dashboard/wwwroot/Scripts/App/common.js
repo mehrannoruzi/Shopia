@@ -26,7 +26,7 @@ $(document).ready(function () {
         });
     }();
 
-    //fireGlobalPlugins();
+    fireGlobalPlugins();
 
     //auto submit form with ajax
     $(document).on('click', '[data-ajax-submit="true"]', function () {

@@ -58,6 +58,18 @@ namespace Shopia.Dashboard
                     ActionId = x.ActionId,
                     IsDefault = x.ActionName == "ProfileInfo" ? true : false
                 }));
+                var addStoreRole = AddStoreRole();
+                if (!addStoreRole.Success)
+                {
+                    bt.Rollback();
+                    return false;
+                }
+                _db.Set<ActionInRole>().Add(new ActionInRole
+                {
+                    RoleId = addStoreRole.RoleId,
+                    ActionId = actionsRep.actions[0].ActionId,
+                    IsDefault = true
+                });
                 if (_db.SaveChanges() == 0)
                 {
                     bt.Rollback();
@@ -77,7 +89,8 @@ namespace Shopia.Dashboard
                 Enabled = true
             };
             _db.Set<Role>().Add(role);
-            var roleAdd =  _db.SaveChanges();
+            var roleAdd = _db.SaveChanges();
+            if (roleAdd == 0) return (false, 0, Guid.Empty);
             var user = new User()
             {
                 UserId = Guid.NewGuid(),
@@ -96,6 +109,19 @@ namespace Shopia.Dashboard
             else return (true, role.RoleId, user.UserId);
         }
 
+        public (bool Success, int RoleId) AddStoreRole()
+        {
+            var storeRole = new Role()
+            {
+                RoleNameEn = "Store",
+                RoleNameFa = "مدیر فروشگاه",
+                Enabled = true
+            };
+            _db.Set<Role>().Add(storeRole);
+            var roleAdd = _db.SaveChanges();
+            if (roleAdd == 0) return (false, 0);
+            else return (true, storeRole.RoleId);
+        }
         public (bool Success, List<Domain.Action> actions) AddActions()
         {
             var ActionList = new List<Domain.Action> {

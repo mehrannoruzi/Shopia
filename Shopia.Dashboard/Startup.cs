@@ -91,7 +91,7 @@ namespace Shopia.Dashboard
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Auth}/{action=SignIn}");
+                    pattern: "{controller=Public}/{action=SignUp}");
             });
         }
     }
