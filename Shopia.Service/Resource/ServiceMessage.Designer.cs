@@ -88,11 +88,29 @@ namespace Shopia.Service.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سرویس استعلام هزینه ارسال جوابگو نمی باشد، دوباره تلاش نمایید.
+        /// </summary>
+        public static string DeliveryAPIFailed {
+            get {
+                return ResourceManager.GetString("DeliveryAPIFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to رکورد مورد نظر هم اکنون وجود دارد.
         /// </summary>
         public static string DuplicateRecord {
             get {
                 return ResourceManager.GetString("DuplicateRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to روش ارسال معتبر نمی باشد.
+        /// </summary>
+        public static string InvalidDeliveryType {
+            get {
+                return ResourceManager.GetString("InvalidDeliveryType", resourceCulture);
             }
         }
         

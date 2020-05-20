@@ -66,6 +66,7 @@ namespace Shopia.DependencyResolver
             #endregion
             #region Order
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IDeliveryService, DeliveryService>();
             #endregion
             #region Payment
             services.AddScoped<IPaymentService, PaymentService>();

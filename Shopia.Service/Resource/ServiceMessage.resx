@@ -126,8 +126,14 @@
   <data name="CreateTransactionFailed" xml:space="preserve">
     <value>خطا در ارتباط با درگاه پرداخت، دوباره تلاش نمایید</value>
   </data>
+  <data name="DeliveryAPIFailed" xml:space="preserve">
+    <value>سرویس استعلام هزینه ارسال جوابگو نمی باشد، دوباره تلاش نمایید</value>
+  </data>
   <data name="DuplicateRecord" xml:space="preserve">
     <value>رکورد مورد نظر هم اکنون وجود دارد</value>
+  </data>
+  <data name="InvalidDeliveryType" xml:space="preserve">
+    <value>روش ارسال معتبر نمی باشد</value>
   </data>
   <data name="InvalidUsernameOrPassword" xml:space="preserve">
     <value>نام کاربری یا رمز عبور اشتباه است</value>

@@ -35,7 +35,10 @@ export default class addressApi {
 
     static async getDeliveryCost(address) {
         try {
-            const response = await fetch(`${addr.getDeliveryCost}?lng=${address.lng}&lat=${address.lat}&address=${address.address}`, {
+            let storeId = localStorage.getItem('storeId');
+            console.log(storeId);
+
+            const response = await fetch(`${addr.getDeliveryCost}?storeId=${storeId}&lng=${address.lng}&lat=${address.lat}`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {

@@ -15,7 +15,7 @@ namespace Shopia.Store.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSingle(int id)
         {
-            return Json(await _storeService.FindAsync(id));
+            return Json(await _storeService.FindAsDtoAsync(id));
         }
     }
 }

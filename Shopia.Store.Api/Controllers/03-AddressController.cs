@@ -6,15 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Shopia.Store.Api.Resources;
 using System.Net.Http;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Shopia.Store.Api.Controllers
 {
     public class AddressController : Controller
     {
+        readonly IConfiguration _configuration;
         readonly IAddressService _addressService;
-        public AddressController(IAddressService addressService)
+        readonly IDeliveryService _deliverySrv;
+        public AddressController(IAddressService addressService, IDeliveryService deliverySrv, IConfiguration configuration)
         {
             _addressService = addressService;
+            _deliverySrv = deliverySrv;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -30,34 +37,7 @@ namespace Shopia.Store.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDeliveryCost(int storeId, LocationDTO location)
-        {
-
-            using var deliveryPriceHttp = new HttpClient();
-
-            return Json(new
-            {
-                IsSuccessful = true,
-                Result = new
-                {
-                    PlaceName = "تهران بریانک",
-                    Items = new List<DeliveryDto>
-                        {
-                            new DeliveryDto
-                            {
-                                Id =1,
-                                Name = "پست",
-                                Cost = 5000
-                            },
-                             new DeliveryDto
-                            {
-                                Id =2,
-                                Name = "پیک",
-                                Cost = 15000
-                            }
-                        }
-                }
-            });
-        }
+        public async Task<IActionResult> GetDeliveryCost(int storeId, LocationDTO location)
+            => Json(await _deliverySrv.GetDeliveryTypes(storeId, location));
     }
 }

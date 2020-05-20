@@ -16,17 +16,35 @@ namespace Shopia.Service
         readonly AuthUnitOfWork _authUow;
         readonly IGenericRepo<Domain.Store> _storeRepo;
         readonly IGenericRepo<User> _userRepo;
+        readonly IGenericRepo<Address> _addressRepo;
         readonly IGenericRepo<UserInRole> _userInRoleRepo;
-        public StoreService(AppUnitOfWork appUOW, AuthUnitOfWork authUow, IGenericRepo<Domain.Store> storeRepo, IGenericRepo<User> userRepo, IGenericRepo<UserInRole> userInRoleRepo)
+        public StoreService(AppUnitOfWork appUOW, AuthUnitOfWork authUow, IGenericRepo<Domain.Store> storeRepo, IGenericRepo<User> userRepo, IGenericRepo<Address> addressRepo, IGenericRepo<UserInRole> userInRoleRepo)
         {
             _appUow = appUOW;
             _authUow = authUow;
             _storeRepo = storeRepo;
             _userRepo = userRepo;
+            _addressRepo = addressRepo;
             _userInRoleRepo = userInRoleRepo;
         }
 
-        public async Task<IResponse<StoreDTO>> FindAsync(int id)
+        public async Task<IResponse<LocationDTO>> GetLocationAsync(int id)
+        {
+            var addressId = await _storeRepo.FirstOrDefaultAsync(selector: x => x.AddressId, conditions: x => x.StoreId == id && x.IsActive, includeProperties: null);
+            if (addressId == null) return new Response<LocationDTO> { Message = ServiceMessage.RecordNotExist };
+            var address = await _addressRepo.FindAsync(addressId);
+            if (address == null) return new Response<LocationDTO> { Message = ServiceMessage.RecordNotExist };
+            return new Response<LocationDTO>
+            {
+                IsSuccessful = true,
+                Result = new LocationDTO
+                {
+                    Lat = address.Latitude,
+                    Lng = address.Longitude
+                }
+            };
+        }
+        public async Task<IResponse<StoreDTO>> FindAsDtoAsync(int id)
         {
             var store = await _storeRepo.FindAsync(id);
             if (store == null) return new Response<StoreDTO>

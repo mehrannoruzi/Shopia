@@ -9,7 +9,8 @@ namespace Shopia.Service
 {
     public interface IStoreService
     {
-        Task<IResponse<StoreDTO>> FindAsync(int id);
+        Task<IResponse<LocationDTO>> GetLocationAsync(int id);
+        Task<IResponse<StoreDTO>> FindAsDtoAsync(int id);
         Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default);
         Task<IResponse<Domain.Store>> SignUp(StoreSignUpModel model, CrawledPageDto crawl);
         IEnumerable<Domain.Store> GetAll(Guid userId);

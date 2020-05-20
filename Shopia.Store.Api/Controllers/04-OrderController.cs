@@ -4,10 +4,9 @@ using System.Linq;
 using Shopia.Domain;
 using Shopia.Service;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Shopia.Store.Api.Resources;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Store.Api.Controllers
 {
@@ -100,7 +99,6 @@ namespace Shopia.Store.Api.Controllers
                 }
             });
         }
-
 
         [HttpGet]
         public IActionResult ShowResult(Response<string> model)
