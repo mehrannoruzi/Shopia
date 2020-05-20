@@ -31,11 +31,11 @@
 
 <div class="row btn-group">
     <div class="col-12 text-center">
-        <custom-button icon="zmdi zmdi-chevron-left" class="btn btn-info" text="بعدی"></custom-button>
-        <button type="button" class="btn btn-primary" id="btn-submit" data-url="@Url.Action("AddRange","StoreProduct")">
+        <custom-button icon="zmdi zmdi-chevron-left" class="btn btn-info" text="بعدی" id="btn-prev-posts" data-url="@Url.Action("Post","StoreProduct")"></custom-button>
+        <button type="button" class="btn btn-primary" id="btn-submit">
             @Strings.Submit
         </button>
-        <custom-button icon="zmdi zmdi-chevron-right" class="btn btn-info ltr" text="قبلی"></custom-button>
+        <custom-button icon="zmdi zmdi-chevron-right" class="btn btn-info ltr" text="قبلی" id="btn-next-posts" data-url="@Url.Action("Post","StoreProduct")"></custom-button>
 
     </div>
 </div>

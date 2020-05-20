@@ -2,6 +2,7 @@
 $(document).ready(function () {
     //Search
     $(document).on('click', 'button.search', function () {
+        console.log('here');
         refreshList();
     });
 
@@ -80,6 +81,7 @@ var refreshList = function (pageNumber) {
             });
         })
         .fail(function (e) {
+            console.log(e);
             $wrapper.loadOverStop();
         });
 };
@@ -88,6 +90,7 @@ var ajaxActionLink = new (function () {
     var ins = function () { };
     var $elm = null, elmHtml = null;
     ins.prototype.inProgress = function ($a) {
+        console.log('here');
         $elm = $a.closest('.dropdown').find('[data-toggle="dropdown"]');
         elmHtml = $elm.html();
         $elm.html($circularLoader);

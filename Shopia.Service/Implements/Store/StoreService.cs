@@ -94,7 +94,7 @@ namespace Shopia.Service
                 await _userInRoleRepo.AddAsync(new UserInRole
                 {
                     UserId = store.UserId,
-                    RoleId = model.StoreRoleId??0
+                    RoleId = model.StoreRoleId ?? 0
                 });
                 var saveUserInRole = await _authUow.ElkSaveChangesAsync();
                 if (!saveUserInRole.IsSuccessful) tb.Rollback();
@@ -117,5 +117,12 @@ namespace Shopia.Service
 
         public IEnumerable<Domain.Store> GetAll(Guid userId)
         => _storeRepo.Get(x => x.UserId == userId, o => o.OrderByDescending(x => x.StoreId), null);
+
+        public IDictionary<object, object> Search(string searchParameter, Guid? userId, int take = 10)
+            => _storeRepo.Get(conditions: x => x.FullName.Contains(searchParameter) && userId == null ? true : x.UserId == userId)
+            .OrderByDescending(x => x.StoreId)
+            .Take(take)
+            .ToDictionary(k => (object)k.StoreId, v => (object)v.FullName);
+
     }
 }

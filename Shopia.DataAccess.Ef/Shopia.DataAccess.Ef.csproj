@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\AppDb\20200520100203_AddOrderDetail2Order.cs" />
+    <Compile Remove="Migrations\AppDb\20200520100203_AddOrderDetail2Order.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
   </ItemGroup>
 

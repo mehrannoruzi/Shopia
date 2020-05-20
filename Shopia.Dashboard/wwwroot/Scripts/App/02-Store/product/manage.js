@@ -4,26 +4,17 @@ var posts = [];
 var selectedPosts = [];
 $(document).ready(function () {
     $('.product-manage-page').on('click', '#btn-get-posts', function () {
-        let $btn = $(this);
-        console.log($('#select-store option:selected').data('un'));
-        ajaxBtn.inProgress($btn);
-        $.get($btn.data('url'), { username: $('#select-store option:selected').data('un'), pageNumber: postsPageNumber})
-            .done(function (rep) {
-                ajaxBtn.normal();
-                console.log(rep);
-                if (rep.IsSuccessful) {
-                    posts = rep.Result.Posts;
-                    $('#posts-wrapper').html(rep.Result.Partial);
-                }
-                else {
-
-                }
-            })
-            .fail(function (e) {
-                ajaxBtn.normal();
-            });
+        getPosts($(this));
     });
-
+    $('.product-manage-page').on('click', '#btn-next-posts', function () {
+        if (postsPageNumber === 1) return;
+        postsPageNumber--;
+        getPosts($(this));
+    });
+    $('.product-manage-page').on('click', '#btn-prev-posts', function () {
+        postsPageNumber++;
+        getPosts($(this));
+    });
     $('.product-manage-page').on('input', '.input-price', function () {
         let $i = $(this);
         let $figure = $i.closest('figure');
@@ -38,9 +29,11 @@ $(document).ready(function () {
         if (price > 1000) {
             $figure.addClass('valid');
             let id = $i.data('id');
-            selectedPosts.push(posts.find(function (x) {
+            let post = posts.find(function (x) {
                 return x.UniqueId === id;
-            }));
+            });
+            post.Price = price;
+            selectedPosts.push(post);
         }
         else {
             $figure.removeClass('valid');
@@ -60,6 +53,7 @@ $(document).ready(function () {
                 ajaxBtn.normal();
                 if (rep.IsSuccessful) {
                     showNotif(notifyType.success, rep.Message);
+                    $('button.search').trigger('click');
                 }
                 else {
                     showNotif(notifyType.danger, rep.Message);
@@ -71,5 +65,40 @@ $(document).ready(function () {
 
             });
     });
+
+    $(document).on('click', '.btn-submit-product', function (e) {
+        e.stopPropagation();
+        let $btn = $(this);
+        submitAjaxForm($btn,
+            function (rep) {
+                if ($('#ProductId').val() === '0') {
+                    $btn.closest('form')[0].reset();
+                }
+                else {
+                    $('#modal').modal('hide');
+                }
+            },
+            null,
+            false
+        );
+    });
 });
+function getPosts($btn) {
+    ajaxBtn.inProgress($btn);
+    console.log($btn.data('url'));
+    $.get($btn.data('url'), { username: $('#select-store option:selected').data('un'), pageNumber: postsPageNumber })
+        .done(function (rep) {
+            ajaxBtn.normal();
+            if (rep.IsSuccessful) {
+                posts = rep.Result.Posts;
+                $('#posts-wrapper').html(rep.Result.Partial);
+            }
+            else {
+                showNotif(notifyType.danger, rep.Message);
+            }
+        })
+        .fail(function (e) {
+            ajaxBtn.normal();
+        });
+}
 

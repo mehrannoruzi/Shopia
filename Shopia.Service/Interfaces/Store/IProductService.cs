@@ -8,8 +8,8 @@ namespace Shopia.Service
     public interface IProductService
     {
         Task<IResponse<PagingListDetails<ProductDTO>>> Get(ProductFilterDTO filter);
-
-        Task<IResponse<ProductDTO>> FindAsync(int id);
+        Task<IResponse<Product>> FindAsync(int id);
+        Task<IResponse<ProductDTO>> FindAsDtoAsync(int id);
 
         Task<(bool Changed, IEnumerable<OrderItemDTO> Items)> CheckChanges(IEnumerable<OrderItemDTO> items);
 

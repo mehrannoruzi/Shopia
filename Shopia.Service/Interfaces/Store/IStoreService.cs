@@ -13,5 +13,7 @@ namespace Shopia.Service
         Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default);
         Task<IResponse<Domain.Store>> SignUp(StoreSignUpModel model, CrawledPageDto crawl);
         IEnumerable<Domain.Store> GetAll(Guid userId);
+
+        IDictionary<object, object> Search(string searchParameter, Guid? userId, int take = 10);
     }
 }

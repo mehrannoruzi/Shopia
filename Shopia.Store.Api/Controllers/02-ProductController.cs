@@ -17,6 +17,6 @@ namespace Shopia.Store.Api.Controllers
         public async Task<IActionResult> Get(ProductFilterDTO filter)=> Json(await _productService.Get(filter));
 
         [HttpGet]
-        public async Task<IActionResult> GetSingle(int id) => Json(await _productService.FindAsync(id));
+        public async Task<IActionResult> GetSingle(int id) => Json(await _productService.FindAsDtoAsync(id));
     }
 }

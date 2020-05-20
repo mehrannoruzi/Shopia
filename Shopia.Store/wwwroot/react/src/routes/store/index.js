@@ -18,10 +18,10 @@ class Store extends Component {
     }
 
     componentDidMount() {
-        console.log('store page');
+        localStorage.setItem('storeId', this.props.match.params.id);
         this.props.hideInitError();
     }
-    
+
     render() {
         const { params } = this.props.match;
         return (

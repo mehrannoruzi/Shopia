@@ -1,23 +1,22 @@
 ﻿using Elk.AspNetCore;
-using Elk.Core;
-using System.Linq;
-using Shopia.Domain;
-using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
-using Shopia.Dashboard.Resources;
+using Shopia.Service;
+using System;
 
 namespace Shopia.Dashboard.Controllers
 {
     public class StoreController : Controller
     {
-
-        public StoreController(IConfiguration configuration)
+        readonly IStoreService _storeSrv;
+        public StoreController(IStoreService storeSrv)
         {
+            _storeSrv = storeSrv;
         }
 
+        [HttpGet, AllowAnonymous]
+        public virtual JsonResult Search(string q, Guid? userId)
+        => Json(_storeSrv.Search(q, userId).ToSelectListItems());
 
 
     }

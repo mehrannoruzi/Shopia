@@ -180,6 +180,9 @@
   <data name="DeliverTrackingId" xml:space="preserve">
     <value>کد پیگیری تحویل</value>
   </data>
+  <data name="DeliveryDetail" xml:space="preserve">
+    <value>جزییات تحویل</value>
+  </data>
   <data name="DeliveryProvider" xml:space="preserve">
     <value>شرکت پخش</value>
   </data>
@@ -353,6 +356,9 @@
   </data>
   <data name="Path" xml:space="preserve">
     <value>مسیر</value>
+  </data>
+  <data name="PayAtDestination" xml:space="preserve">
+    <value>پرداخت در محل</value>
   </data>
   <data name="PaymentGateway" xml:space="preserve">
     <value>درگاه پرداخت</value>

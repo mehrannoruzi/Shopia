@@ -52,7 +52,6 @@ namespace Shopia.Service
                 }
 
             }
-
             return new Response<PagingListDetails<ProductDTO>>
             {
                 Result = products,
@@ -60,7 +59,7 @@ namespace Shopia.Service
             };
         }
 
-        public async Task<IResponse<ProductDTO>> FindAsync(int id)
+        public async Task<IResponse<ProductDTO>> FindAsDtoAsync(int id)
         {
             var product = await _productRepo.FirstOrDefaultAsync(conditions: x => x.ProductId == id && x.IsActive,
                 new List<Expression<Func<Product, object>>> { x => x.ProductAssets });
@@ -83,6 +82,19 @@ namespace Shopia.Service
                     Description = product.Description,
                     Slides = product.ProductAssets?.Select(x => x.FileUrl).ToList()
                 }
+            };
+
+        }
+
+        public async Task<IResponse<Product>> FindAsync(int id)
+        {
+            var product = await _productRepo.FirstOrDefaultAsync(conditions: x => x.ProductId == id,
+                new List<Expression<Func<Product, object>>> { x => x.ProductAssets, x => x.Store });
+            if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
+            return new Response<Product>
+            {
+                IsSuccessful = true,
+                Result = product
             };
 
         }
@@ -139,15 +151,18 @@ namespace Shopia.Service
 
         public async Task<IResponse<Product>> UpdateAsync(Product model)
         {
-            var findedRole = await _productRepo.FindAsync(model.ProductId);
-            if (findedRole == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
+            var product = await _productRepo.FindAsync(model.ProductId);
+            if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
 
-            findedRole.Name = model.Name;
-            findedRole.Price = model.Price;
-            findedRole.DiscountPercent = model.DiscountPercent;
-
+            product.StoreId = model.StoreId;
+            product.Name = model.Name;
+            product.Price = model.Price;
+            product.DiscountPercent = model.DiscountPercent;
+            product.IsActive = model.IsActive;
+            product.Description = model.Description;
+            product.ProductCategoryId = model.ProductCategoryId;
             var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<Product> { Result = findedRole, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            return new Response<Product> { Result = product, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
         }
 
         public async Task<IResponse<bool>> DeleteAsync(int id)
@@ -164,7 +179,7 @@ namespace Shopia.Service
 
         public PagingListDetails<Product> Get(ProductSearchFilter filter)
         {
-            Expression<Func<Product, bool>> conditions = x => true;
+            Expression<Func<Product, bool>> conditions = x => x.Store.UserId == filter.UserId;
             if (filter != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.Name))
@@ -183,6 +198,7 @@ namespace Shopia.Service
                 Name = x.Description.Length > 35 ? x.Description.Substring(0, 34) : x.Description,
                 Description = x.Description,
                 Price = x.Price,
+                IsActive =true,
                 ProductAssets = x.Assets?.Select(a => new ProductAsset
                 {
                     FileType = a.Type,

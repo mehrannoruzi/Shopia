@@ -75,6 +75,7 @@ namespace Shopia.DependencyResolver
             services.AddScoped<IStoreService, StoreService>();
             //services.AddScoped<IProductRepo, ProductRepo>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductCategoryService, ProductCategoryService>();
             //services.AddScoped<IDiscountRepo, DiscountRepo>();
             #endregion
             #region Dapper Sp

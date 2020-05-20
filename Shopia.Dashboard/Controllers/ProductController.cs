@@ -40,7 +40,7 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet]
         public virtual async Task<JsonResult> Update(int id)
         {
-            var findProduct = await _productSrv.FindAsync(id);
+            var findProduct = await _productSrv.FindAsDtoAsync(id);
             if (!findProduct.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Product) });
             return Json(new Modal
             {

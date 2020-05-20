@@ -5,6 +5,7 @@ using Shopia.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Shopia.Store.Api.Resources;
+using System.Net.Http;
 
 namespace Shopia.Store.Api.Controllers
 {
@@ -29,8 +30,11 @@ namespace Shopia.Store.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetDeliveryCost(LocationDTO location)
+        public IActionResult GetDeliveryCost(int storeId, LocationDTO location)
         {
+
+            using var deliveryPriceHttp = new HttpClient();
+
             return Json(new
             {
                 IsSuccessful = true,

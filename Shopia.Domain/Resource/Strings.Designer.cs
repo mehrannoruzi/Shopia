@@ -250,6 +250,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to جزییات تحویل.
+        /// </summary>
+        public static string DeliveryDetail {
+            get {
+                return ResourceManager.GetString("DeliveryDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شرکت پخش.
         /// </summary>
         public static string DeliveryProvider {
@@ -768,6 +777,15 @@ namespace Shopia.Domain.Resource {
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پرداخت در محل.
+        /// </summary>
+        public static string PayAtDestination {
+            get {
+                return ResourceManager.GetString("PayAtDestination", resourceCulture);
             }
         }
         

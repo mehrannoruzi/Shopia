@@ -102,6 +102,15 @@ namespace Shopia.Domain
         [StringLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string UserComment { get; set; }
 
+        [Column(TypeName = "varchar(500)")]
+        [Display(Name = nameof(Strings.DeliveryDetail), ResourceType = typeof(Strings))]
+        [MaxLength(500, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(500, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string DeliveryDetailJson { get; set; }
+
+        [NotMapped]
+        public DeliveryDetail Delivery => DeliveryDetailJson.DeSerializeJson<DeliveryDetail>();
+
 
         public List<OrderDetail> OrderDetails { get; set; }
     }
