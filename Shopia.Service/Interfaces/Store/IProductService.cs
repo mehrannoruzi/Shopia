@@ -22,5 +22,7 @@ namespace Shopia.Service
         Task<IResponse<bool>> DeleteAsync(int id);
 
         PagingListDetails<Product> Get(ProductSearchFilter filter);
+
+        Task<IResponse<int>> AddRangeAsync(ProductAddModel model);
     }
 }

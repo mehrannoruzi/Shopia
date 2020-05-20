@@ -17,7 +17,7 @@ $(document).ready(function () {
                     $('#modal').modal('show');
                 }
                 else showAlert(rep.Message);
-                
+
             })
             .fail(function () {
                 $btn.text(btnText);
@@ -31,20 +31,27 @@ $(document).ready(function () {
         if (!$frm.valid()) return;
         let btnText = $btn.text();
         $btn.html($circularLoader);
-        console.log(JSON.stringify(customSerialize($frm)));
-        //postObjectList()
-        $.post($frm.attr('action'), customSerialize($frm))
-            .done(function (rep) {
+        let model = customSerialize($frm);
+        $.ajax({
+            type: "POST",
+            url: $frm.attr('action'),
+            contentType: 'application/json;charset=utf-8',
+            headers: {
+                "X-CSRF-TOKEN": $('input[name="__RequestVerificationToken"]').val()
+            },
+            data: JSON.stringify(model),
+            success: function (rep) {
                 $btn.html(btnText);
                 if (rep.IsSuccessful)
                     window.location.href = rep.Result;
                 else {
                     showAlert(rep.Message);
                 }
-            })
-            .fail(function (e) {
+            },
+            error: function (e) {
                 $btn.html(btnText);
-            });
+            }
+        });
     });
 });
 

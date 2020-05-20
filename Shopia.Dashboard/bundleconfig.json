@@ -44,6 +44,7 @@
     "outputFileName": "wwwroot/Scripts/App/public.js",
     "inputFiles": [
       "wwwroot/Scripts/App/public-layout.js",
+      "wwwroot/Scripts/App/plugins.js",
       "wwwroot/Scripts/App/common.js"
     ]
   },

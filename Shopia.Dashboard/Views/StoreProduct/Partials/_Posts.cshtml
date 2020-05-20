@@ -1,24 +1,41 @@
-﻿@model IEnumerable<Post>
+﻿@model IEnumerable<PostModel>
 @{
     Layout = null;
 }
 
-
-@if (Model != null)
-{
-    foreach (var item in Model)
+<div class="row">
+    @if (Model != null)
     {
-
-    }
-}
-
-@*<div class="row btn-group">
-        <div class="col-12">
-            <button type="button" class="btn btn-info m-t btn-action search">
-                <span class="text">@Strings.Search</span>
-                <div class="icon">
-                    <i class="zmdi zmdi-search-for"></i>
+        foreach (var item in Model)
+        {
+            @if (item.HasImage)
+            {
+                <div class="col-12 col-sm-4 post">
+                    <figure class="">
+                        <div class="check">
+                            <i class="chk zmdi zmdi-check-circle"></i>
+                        </div>
+                        <img src="@item.ImageUrl" alt="img" />
+                        <figcaption>
+                            <input data-id="@item.UniqueId" class="form-control p-h-r ltr-elm input-price" type="text" placeholder="قیمت" value="" />
+                        </figcaption>
+                    </figure>
                 </div>
-            </button>
-        </div>
-    </div>*@
+            }
+
+        }
+    }
+
+</div>
+
+
+<div class="row btn-group">
+    <div class="col-12 text-center">
+        <custom-button icon="zmdi zmdi-chevron-left" class="btn btn-info" text="بعدی"></custom-button>
+        <button type="button" class="btn btn-primary" id="btn-submit" data-url="@Url.Action("AddRange","StoreProduct")">
+            @Strings.Submit
+        </button>
+        <custom-button icon="zmdi zmdi-chevron-right" class="btn btn-info ltr" text="قبلی"></custom-button>
+
+    </div>
+</div>

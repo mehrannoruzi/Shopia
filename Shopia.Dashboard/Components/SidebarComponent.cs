@@ -3,7 +3,7 @@ using Shopia.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Shopia.Dashboard.Components
+namespace Shopia.Dashboard
 {
     public class Sidebar : ViewComponent
     {

@@ -18,7 +18,6 @@ namespace Shopia.Dashboard.Controllers
         readonly IStoreService _storeSrv;
         readonly IConfiguration _configuration;
         readonly IUserService _userSrv;
-        private readonly IHttpContextAccessor _httpAccessor;
         public StorePublicController(IConfiguration configuration, IStoreService storeSrv, IHttpContextAccessor httpAccessor, IUserService userSrv) : base(httpAccessor)
         {
             _configuration = configuration;
@@ -54,8 +53,8 @@ namespace Shopia.Dashboard.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Submit(StoreSignUpModel model)
+        [HttpPost,ValidateAntiForgeryToken]
+        public async Task<IActionResult> Submit([FromBody]StoreSignUpModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
             using var pageInfoHttp = new HttpClient();

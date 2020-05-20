@@ -45,6 +45,10 @@ namespace Shopia.Dashboard
             services.AddTransient(_configuration);
             services.AddScoped(_configuration);
             services.AddSingleton(_configuration);
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN"; //may be any other valid header name
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +95,7 @@ namespace Shopia.Dashboard
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Public}/{action=SignUp}");
+                    pattern: "{controller=StorePublic}/{action=SignUp}");
             });
         }
     }

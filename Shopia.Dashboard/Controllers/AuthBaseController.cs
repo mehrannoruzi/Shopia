@@ -23,7 +23,7 @@ namespace Shopia.Dashboard.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.MobileNumber.ToString()),
                 new Claim(ClaimTypes.MobilePhone, user.MobileNumber.ToString()),
                 new Claim("Fullname", user.FullName)
             };

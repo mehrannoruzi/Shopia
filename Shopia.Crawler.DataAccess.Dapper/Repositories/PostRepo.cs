@@ -83,7 +83,7 @@ namespace Shopia.Crawler.DataAccess.Dapper
         {
             try
             {
-                var query = "SELECT		po.[PostId],[ViewCount],[LikeCount],[CommentCount],[IsAlbum],[CreateDateMi],po.[UniqueId]," +
+                var query = "SELECT		po.[PostId],[ViewCount],[LikeCount],[CommentCount],[IsAlbum],[CreateDateMi],po.[UniqueId],po.[Description]," +
                             "PostAssets =	(SELECT	[Type],[Dimension],[UniqueId],[FileUrl],[ThumbnailUrl]" +
                             "				FROM	[Instagram].[PostAsset]" +
                             "				WHERE	PostId = po.PostId" +

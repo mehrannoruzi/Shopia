@@ -1,4 +1,4 @@
-﻿@model StoreSignUpModel
+﻿@model PagingListDetails<Product>
 @{
     ViewBag.Title = "مدیریت محصولات";
     Layout = Url.Content("~/Views/Shared/_Layout.cshtml");
@@ -8,21 +8,33 @@
 }
 
 <div class="product-manage-page">
-    <div class="ibox collapsed">
+    <div class="stores m-b">
+        <label>نام فروشگاه</label>
+        <select class="form-control" id="select-store">
+            @foreach (var store in (List<Store>)ViewBag.Stores)
+            {
+                <option value="@store.StoreId" data-un="@store.Username">@store.FullName</option>
+            }
+        </select>
+    </div>
+    <div class="ibox">
         <div class="ibox-title">
-            <h5>قیمت گذاری محصولات</h5>
+            <h5>بارگذاری محصولات</h5>
             <div class="ibox-tools">
                 <a class="collapse-link">
                     <i class="zmdi zmdi-chevron-down"></i>
                 </a>
             </div>
         </div>
-        <div class="ibox-content text-center">
-            <custom-button id="btn-get-posts" class="btn btn-info" icon="zmdi zmdi-download" text="دریافت پست ها"></custom-button>
+        <div class="ibox-content text-center" id="posts-wrapper">
+            <custom-button data-url="@Url.Action("Post","StoreProduct")" id="btn-get-posts" class="btn btn-info" icon="zmdi zmdi-download" text="دریافت محصولات"></custom-button>
         </div>
     </div>
 
 </div>
+
+<partial name="./Partials/_Filters" model="@new ProductSearchFilter()" />
+<partial name="./Partials/_List" model="@Model" />
 
 @section scripts{
     <script src="@Url.Content("~/Scripts/App/02-Store/Product/manage.js")"></script>

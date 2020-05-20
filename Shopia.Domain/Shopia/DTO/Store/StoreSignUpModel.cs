@@ -26,6 +26,6 @@ namespace Shopia.Domain
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage), AllowEmptyStrings = false)]
         public string MobileNumber { get; set; }
 
-        public int StoreRoleId { get; set; }
+        public int? StoreRoleId { get; set; }
     }
 }

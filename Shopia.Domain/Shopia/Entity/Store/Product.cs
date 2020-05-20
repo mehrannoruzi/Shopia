@@ -24,8 +24,8 @@ namespace Shopia.Domain
         [ForeignKey(nameof(ProductCategoryId))]
         [Display(Name = nameof(Strings.ProductCategory), ResourceType = typeof(Strings))]
         public ProductCategory ProductCategory { get; set; }
+
         [Display(Name = nameof(Strings.ProductCategory), ResourceType = typeof(Strings))]
-        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public int? ProductCategoryId { get; set; }
 
         [Display(Name = nameof(Strings.Price), ResourceType = typeof(Strings))]

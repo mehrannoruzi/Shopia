@@ -205,7 +205,16 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to تمام حقوق مادی و معنوی این اثر متعلق به  &lt;a href=&quot;https://www.kingofday.ir/&quot;&gt;Kingofday.ir&lt;/a&gt; می باشد.
+        ///   Looks up a localized string similar to تماس با ما.
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تمام حقوق مادی و معنوی این اثر محفوظ می باشد.
         /// </summary>
         public static string CopyRights {
             get {
@@ -588,6 +597,15 @@ namespace Shopia.Dashboard.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لطفا حداقل یک مورد را قیمت گذاری نمایید.
+        /// </summary>
+        public static string PleasePriceAtleastOne {
+            get {
+                return ResourceManager.GetString("PleasePriceAtleastOne", resourceCulture);
             }
         }
         

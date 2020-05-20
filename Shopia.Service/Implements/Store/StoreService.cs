@@ -74,9 +74,11 @@ namespace Shopia.Service
                 User = user ?? new User
                 {
                     FullName = model.FullName,
+                    IsActive = true,
                     MobileNumber = mobileNumber,
                     Password = HashGenerator.Hash(mobileNumber.ToString()),
-                    IsRecoveredPassword = true,
+                    NewPassword = HashGenerator.Hash(mobileNumber.ToString()),
+                    MustChangePassword = false,
                     UserStatus = UserStatus.AddStore
                 }
             };
@@ -92,7 +94,7 @@ namespace Shopia.Service
                 await _userInRoleRepo.AddAsync(new UserInRole
                 {
                     UserId = store.UserId,
-                    RoleId = model.StoreRoleId
+                    RoleId = model.StoreRoleId??0
                 });
                 var saveUserInRole = await _authUow.ElkSaveChangesAsync();
                 if (!saveUserInRole.IsSuccessful) tb.Rollback();

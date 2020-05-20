@@ -5,8 +5,9 @@ using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
-using System.Collections.Generic;
 using Shopia.Service.Resource;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Shopia.Service
 {
@@ -170,9 +171,36 @@ namespace Shopia.Service
                     conditions = conditions.And(x => x.Name.Contains(filter.Name));
             }
 
-            return _productRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.ProductId));
+            return _productRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.ProductId), new List<Expression<Func<Product, object>>> { x => x.Store });
         }
 
-
+        public async Task<IResponse<int>> AddRangeAsync(ProductAddModel model)
+        {
+            var products = model.Posts.Select(x => new Product
+            {
+                ProductCategoryId = null,
+                StoreId = model.StoreId,
+                Name = x.Description.Length > 35 ? x.Description.Substring(0, 34) : x.Description,
+                Description = x.Description,
+                Price = x.Price,
+                ProductAssets = x.Assets?.Select(a => new ProductAsset
+                {
+                    FileType = a.Type,
+                    Extention = ".png",
+                    Name = "post-image",
+                    UniqueId = a.UniqueId,
+                    FileUrl = a.FileUrl,
+                    ThumbnailUrl = a.ThumbnailUrl
+                }).ToList()
+            }).ToList();
+            await _productRepo.AddRangeAsync(products);
+            var save = await _appUow.ElkSaveChangesAsync();
+            return new Response<int>
+            {
+                IsSuccessful = save.IsSuccessful,
+                Result = save.Result,
+                Message = save.Message
+            };
+        }
     }
 }

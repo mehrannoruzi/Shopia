@@ -165,8 +165,11 @@
   <data name="Close" xml:space="preserve">
     <value>بستن</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>تماس با ما</value>
+  </data>
   <data name="CopyRights" xml:space="preserve">
-    <value>تمام حقوق مادی و معنوی این اثر متعلق به  &lt;a href="https://www.kingofday.ir/"&gt;Kingofday.ir&lt;/a&gt; می باشد</value>
+    <value>تمام حقوق مادی و معنوی این اثر محفوظ می باشد</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
     <value>ایجاد حساب</value>
@@ -293,6 +296,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>گذرواژه</value>
+  </data>
+  <data name="PleasePriceAtleastOne" xml:space="preserve">
+    <value>لطفا حداقل یک مورد را قیمت گذاری نمایید</value>
   </data>
   <data name="PrevPage" xml:space="preserve">
     <value>صفحه قبلی</value>
