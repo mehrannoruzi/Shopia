@@ -16,6 +16,7 @@ namespace Shopia.DataAccess.Ef
         {
             builder.Entity<User>().HasIndex(x => x.MobileNumber).HasName("IX_MobileNumber").IsUnique();
             builder.Entity<Tag>().HasIndex(x => x.Title).HasName("IX_Title").IsUnique();
+            builder.Entity<TempOrderDetail>().HasIndex(x => x.BasketId).HasName("IX_BasketId");
 
             builder.OverrideDeleteBehavior();
             builder.RegisterAllEntities<IEntity>(typeof(User).Assembly);
