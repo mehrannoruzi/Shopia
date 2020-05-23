@@ -25,7 +25,7 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.User), ResourceType = typeof(Strings))]
         public User User { get; set; }
         [Display(Name = nameof(Strings.User), ResourceType = typeof(Strings))]
-        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        //[Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public Guid UserId { get; set; }
 
         [ForeignKey(nameof(FromAddressId))]
@@ -39,7 +39,7 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.CustomerAddress), ResourceType = typeof(Strings))]
         public Address ToAddress { get; set; }
         [Display(Name = nameof(Strings.CustomerAddress), ResourceType = typeof(Strings))]
-        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        //[Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public int ToAddressId { get; set; }
 
         [Display(Name = nameof(Strings.DeliveryProvider), ResourceType = typeof(Strings))]
@@ -85,12 +85,6 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.ModifyDate), ResourceType = typeof(Strings))]
         [MaxLength(10, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string ModifyDateSh { get; set; }
-
-        [Column(TypeName = "varchar(32)")]
-        [Display(Name = nameof(Strings.DeliverTrackingId), ResourceType = typeof(Strings))]
-        [MaxLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [StringLength(32, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string DeliverTrackingId { get; set; }
 
         [Display(Name = nameof(Strings.OrderComment), ResourceType = typeof(Strings))]
         [MaxLength(150, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]

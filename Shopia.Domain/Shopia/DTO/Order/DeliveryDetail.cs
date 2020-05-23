@@ -1,9 +1,6 @@
 ﻿using Shopia.Domain.Resource;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Shopia.Domain
 {
@@ -13,7 +10,7 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.Identifier), ResourceType = typeof(Strings))]
         [MaxLength(20, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         [StringLength(20, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string Id { get; set; }
+        public string DeliveryId { get; set; }
 
         [Column("varchar(50)")]
         [Display(Name = nameof(Strings.Token), ResourceType = typeof(Strings))]
