@@ -13,31 +13,31 @@ namespace Shopia.Service
         readonly IGenericRepo<Order> _orderRepo;
         readonly IProductService _productSrv;
         readonly IGatewayFactory _gatewayFactory;
-        readonly IGenericRepo<Product> _productRepo;
-        readonly IGenericRepo<Address> _addressRepo;
-        public OrderService(AppUnitOfWork appUOW, IGenericRepo<Order> orderRepo, IGenericRepo<Product> productRepo, IGatewayFactory gatewayFactory, IProductService productSrv, IGenericRepo<Address> addressRepo)
+        readonly IDeliveryService _deliverySrv;
+        public OrderService(AppUnitOfWork appUOW, IGatewayFactory gatewayFactory, IProductService productSrv, IDeliveryService deliverySrv)
         {
             _appUow = appUOW;
-            _orderRepo = orderRepo;
-            _productRepo = productRepo;
+            _orderRepo = appUOW.OrderRepo;
             _productSrv = productSrv;
             _gatewayFactory = gatewayFactory;
-            _addressRepo = addressRepo;
+            _deliverySrv = deliverySrv;
         }
 
         public async Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model)
         {
             var chkResult = await _productSrv.CheckChanges(model.Items);
             var productId = chkResult.Items.Where(x => x.Count != 0).First().Id;
-            var store = await _productRepo.FirstOrDefaultAsync(x => new { x.StoreId, x.Store.AddressId }, x => x.ProductId == productId);
+            var store = await _appUow.ProductRepo.FirstOrDefaultAsync(x => new { x.StoreId, x.Store.AddressId }, x => x.ProductId == productId);
             if (store == null) return new Response<(Order, bool)> { Message = ServiceMessage.RecordNotExist };
-            //TODO:Calculate Order Delivery Cost
-
+            var address = await _appUow.AddressRepo.FindAsync(store.AddressId);
+            if (address == null) await _appUow.AddressRepo.FindAsync(store.AddressId);
+            var getDeliveryCost = await _deliverySrv.GetDeliveryCost(model.DeliveryId, store.StoreId, new LocationDTO { Lat = model.Address.Lat, Lng = model.Address.Lng });
+            if (!getDeliveryCost.IsSuccessful) return new Response<(Order, bool)> { Message = getDeliveryCost.Message };
             var orderDetails = chkResult.Items.Where(x => x.Count != 0).Select(i => new OrderDetail
             {
                 ProductId = i.Id,
                 Count = i.Count,
-                DiscountPrice = i.Count * (i.Price - i.RealPrice),
+                DiscountPrice = i.DiscountPrice,
                 Price = i.Price,
                 TotalPrice = i.RealPrice * i.Count,
                 DiscountPercent = i.Discount
@@ -45,12 +45,13 @@ namespace Shopia.Service
             var order = new Order
             {
                 StoreId = store.StoreId,
-                TotalPrice = orderDetails.Sum(x => x.TotalPrice),
+                TotalPrice = orderDetails.Sum(x => x.Price * x.Count),
+                TotalPriceAfterDiscount = orderDetails.Sum(x => x.TotalPrice) + getDeliveryCost.Result,
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
                 OrderStatus = OrderStatus.InProcessing,
                 DeliveryProviderId = model.DeliveryId,
-                UserComment = model.Description,
+                OrderComment = model.Description,
                 ToAddressId = model.Address.Id ?? 0,
                 ToAddress = model.Address.Id == null ? new Address
                 {

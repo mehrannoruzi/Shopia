@@ -14,25 +14,20 @@ namespace Shopia.Service
     {
         readonly AppUnitOfWork _appUow;
         readonly AuthUnitOfWork _authUow;
-        readonly IGenericRepo<Domain.Store> _storeRepo;
-        readonly IGenericRepo<User> _userRepo;
-        readonly IGenericRepo<Address> _addressRepo;
-        readonly IGenericRepo<UserInRole> _userInRoleRepo;
-        public StoreService(AppUnitOfWork appUOW, AuthUnitOfWork authUow, IGenericRepo<Domain.Store> storeRepo, IGenericRepo<User> userRepo, IGenericRepo<Address> addressRepo, IGenericRepo<UserInRole> userInRoleRepo)
+        readonly IGenericRepo<Store> _storeRepo;
+
+        public StoreService(AppUnitOfWork appUOW, AuthUnitOfWork authUow)
         {
             _appUow = appUOW;
             _authUow = authUow;
-            _storeRepo = storeRepo;
-            _userRepo = userRepo;
-            _addressRepo = addressRepo;
-            _userInRoleRepo = userInRoleRepo;
+            _storeRepo = appUOW.StoreRepo;
         }
 
         public async Task<IResponse<LocationDTO>> GetLocationAsync(int id)
         {
-            var addressId = await _storeRepo.FirstOrDefaultAsync(selector: x => x.AddressId, conditions: x => x.StoreId == id && x.IsActive, includeProperties: null);
+            var addressId = await _storeRepo.FirstOrDefaultAsync(x => x.AddressId, x => x.StoreId == id && x.IsActive, includeProperties: null);//await _storeRepo.FirstOrDefaultAsync(x => x.AddressId, x => x.StoreId == id && x.IsActive, includeProperties: null);
             if (addressId == null) return new Response<LocationDTO> { Message = ServiceMessage.RecordNotExist };
-            var address = await _addressRepo.FindAsync(addressId);
+            var address = await _appUow.AddressRepo.FindAsync(addressId);
             if (address == null) return new Response<LocationDTO> { Message = ServiceMessage.RecordNotExist };
             return new Response<LocationDTO>
             {
@@ -46,22 +41,31 @@ namespace Shopia.Service
         }
         public async Task<IResponse<StoreDTO>> FindAsDtoAsync(int id)
         {
-            var store = await _storeRepo.FindAsync(id);
-            if (store == null) return new Response<StoreDTO>
+            try
             {
-                IsSuccessful = false,
-                Message = ServiceMessage.RecordNotExist
-            };
-
-            return new Response<StoreDTO>
-            {
-                IsSuccessful = true,
-                Result = new StoreDTO
+                var store = await _storeRepo.FindAsync(id);
+                if (store == null) return new Response<StoreDTO>
                 {
-                    Name = store.FullName,
-                    LogoUrl = store.ProfilePictureUrl
-                }
-            };
+                    IsSuccessful = false,
+                    Message = ServiceMessage.RecordNotExist
+                };
+
+                return new Response<StoreDTO>
+                {
+                    IsSuccessful = true,
+                    Result = new StoreDTO
+                    {
+                        Name = store.FullName,
+                        LogoUrl = store.ProfilePictureUrl
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+
+                return new Response<StoreDTO> { };
+            }
+
         }
 
         public async Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default)
@@ -75,7 +79,7 @@ namespace Shopia.Service
         {
             using var tb = _appUow.Database.BeginTransaction();
             var mobileNumber = long.Parse(model.MobileNumber);
-            var user = await _userRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, null);
+            var user = await _appUow.UserRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, null);
             var store = await _storeRepo.FirstOrDefaultAsync(conditions: x => x.Username == model.Username, null);
             if (store != null) return new Response<Domain.Store> { Message = ServiceMessage.DuplicateRecord };
             store = new Domain.Store
@@ -109,7 +113,7 @@ namespace Shopia.Service
             }
             if (user == null)
             {
-                await _userInRoleRepo.AddAsync(new UserInRole
+                await _authUow.UserInRoleRepo.AddAsync(new UserInRole
                 {
                     UserId = store.UserId,
                     RoleId = model.StoreRoleId ?? 0

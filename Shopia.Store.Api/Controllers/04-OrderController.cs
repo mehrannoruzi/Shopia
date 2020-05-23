@@ -14,15 +14,17 @@ namespace Shopia.Store.Api.Controllers
     {
         readonly IUserService _userService;
         readonly IOrderService _orderService;
+        readonly IDeliveryService _deliveryService;
         readonly IPaymentService _paymentService;
         readonly IGatewayFactory _gatewayFectory;
         readonly IConfiguration _configuration;
-        public OrderController(IUserService userService, IOrderService orderService, IPaymentService paymentService, IGatewayFactory gatewayFactory, IConfiguration configuration)
+        public OrderController(IUserService userService, IOrderService orderService, IDeliveryService deliveryService, IPaymentService paymentService, IGatewayFactory gatewayFactory, IConfiguration configuration)
         {
             _userService = userService;
             _orderService = orderService;
             _paymentService = paymentService;
             _gatewayFectory = gatewayFactory;
+            _deliveryService = deliveryService;
             _configuration = configuration;
         }
 

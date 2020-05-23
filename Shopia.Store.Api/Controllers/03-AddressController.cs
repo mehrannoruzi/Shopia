@@ -38,6 +38,6 @@ namespace Shopia.Store.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetDeliveryCost(int storeId, LocationDTO location)
-            => Json(await _deliverySrv.GetDeliveryTypes(storeId, location));
+                => Json(await _deliverySrv.GetDeliveryTypes(storeId, location));
     }
 }

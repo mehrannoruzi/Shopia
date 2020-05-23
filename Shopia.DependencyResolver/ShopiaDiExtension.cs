@@ -32,7 +32,7 @@ namespace Shopia.DependencyResolver
             services.AddScoped<AppUnitOfWork, AppUnitOfWork>();
 
             services.AddScoped(typeof(IGenericRepo<>), typeof(AppGenericRepo<>));
-            services.AddScoped(typeof(IGenericRepo<>), typeof(AuthGenericRepo<>));
+            //services.AddScoped(typeof(IGenericRepo<>), typeof(AuthGenericRepo<>));
 
             #region Auth
 
@@ -60,7 +60,6 @@ namespace Shopia.DependencyResolver
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IAddressService, AddressService>();
-
             services.AddScoped<IGatewayFactory, GatewayFactory>();
             services.AddScoped<IGatewayService, HillaPayService>(); 
             #endregion
