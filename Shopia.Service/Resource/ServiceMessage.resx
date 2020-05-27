@@ -132,6 +132,9 @@
   <data name="DuplicateRecord" xml:space="preserve">
     <value>رکورد مورد نظر هم اکنون وجود دارد</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطایی رخ داده است، دوباره تلاش نمایید</value>
+  </data>
   <data name="InvalidDeliveryType" xml:space="preserve">
     <value>روش ارسال معتبر نمی باشد</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="RecoverPassword" xml:space="preserve">
     <value>بازیابی رمز عبور</value>
+  </data>
+  <data name="SaveFileFailed" xml:space="preserve">
+    <value>ذخیره فایل با مشکل مواجه شد</value>
   </data>
   <data name="UserInfoMissing" xml:space="preserve">
     <value>اطلاعات کاربری شما ثبت نشده است، لطفا فرایند خرید را دوباره طی نمایید</value>

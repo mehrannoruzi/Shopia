@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shopia.Dashboard.Resources;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DomainString = Shopia.Domain.Resource.Strings;
 
@@ -40,6 +40,7 @@ namespace Shopia.Dashboard.Controllers
                 Text = x.Name
             }).ToList();
         }
+
         public IActionResult Manage([FromServices]IStoreService storeSerive, ProductSearchFilter filter)
         {
             var userId = User.GetUserId();
@@ -76,11 +77,34 @@ namespace Shopia.Dashboard.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddRange(int storeId, IList<PostModel> posts)
-            => Json(await _productSerive.AddRangeAsync(new ProductAddModel
+            => Json(await _productSerive.AddRangeAsync(new ProductAddRangeModel
             {
                 Posts = posts,
                 StoreId = storeId
             }));
+
+        [HttpGet]
+        public virtual async Task<JsonResult> Add()
+        {
+            ViewBag.Categories = GetCategories();
+            return Json(new Modal
+            {
+                IsSuccessful = true,
+                Title = $"{Strings.Add} {DomainString.Product}",
+                Body = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Entity", new Product()),
+                AutoSubmit = false
+            });
+        }
+
+        [HttpPost]
+        public virtual async Task<JsonResult> Add([FromServices]IWebHostEnvironment env, ProductAddModel model)
+        {
+            if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.Root = env.WebRootPath;
+            var add = await _productSerive.AddAsync(model);
+            return Json(new { add.IsSuccessful, add.Message, add.Result });
+        }
 
         [HttpGet]
         public virtual async Task<JsonResult> Update(int id)
@@ -98,10 +122,19 @@ namespace Shopia.Dashboard.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<JsonResult> Update(Product model)
+        public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {
             if (!ModelState.IsValid) return Json(new { IsSuccessful = false, Message = ModelState.GetModelError() });
-            return Json(await _productSerive.UpdateAsync(model));
+            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.Root = env.WebRootPath;
+            var update = await _productSerive.UpdateAsync(model);
+            return Json(new { update.IsSuccessful, update.Message });
         }
+
+        [HttpPost]
+        public virtual async Task<JsonResult> Delete([FromServices]IWebHostEnvironment env, int id) => Json(await _productSerive.DeleteAsync(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
+
+        [HttpPost]
+        public virtual async Task<JsonResult> DeleteAsset([FromServices]IProductAssetService productAssetSerive, int assetId) => Json(await productAssetSerive.DeleteAsync(assetId));
     }
 }

@@ -443,6 +443,8 @@ $(document).ready(function () {
     $(document).on('keypress', '.filters input[type="text"]', function (e) {
         if (e.keyCode === 13) $(this).closest('form').find('button.search').trigger('click');
     });
+
+
 });
 
 //--- loading function
@@ -613,7 +615,8 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
 var customSerialize = function ($wrapper, checkNumbers) {
     let model = {};
     $wrapper.find('input:not([type="checkbox"]):not([type="radio"]),select,textarea').each(function () {
-        if (checkNumbers && !isNaN($(this).val()))
+        let v = $(this).val();
+        if (checkNumbers && !isNaN(v) && v !== '')
             model[$(this).attr('name')] = parseInt($(this).val());
         else
             model[$(this).attr('name')] = $(this).val();

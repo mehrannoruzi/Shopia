@@ -1,25 +1,71 @@
-@model Product
+﻿@model Product
 @{
     Layout = null;
+    var assets = Model.ProductAssets?.OrderByDescending(x => x.UniqueId);
 }
+<form asp-controller="StoreProduct" asp-action="@(Model.ProductId==0?"Add":"Update")">
     @Html.HiddenFor(x => x.ProductId)
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <custom-input-for for="Name" />
+    <div class="row m-b">
+        <div class="col-12 col-sm-4">
+            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image1","تصویر یک",assets.FirstOrDefault())' />
+        </div>
+        <div class="col-12 col-sm-3">
+            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image2","تصویر دو",null)' />
+
+        </div>
+        <div class="col-12 col-sm-3">
+            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image3","تصویر سه",assets.Skip(2).FirstOrDefault())' />
+        </div>
     </div>
-    <div class="col-12 col-sm-6">
-        <custom-input-for for="Price" class="form-control ltr-elm"/>
+    <div class="row">
+        @Html.HiddenFor(x => x.ProductId)
+        <div class="col-12 col-sm-6">
+            <custom-select-for for="StoreId"
+                               select-data-url='@Url.Action("Search", "Store",new {})'
+                               class="form-control select2 w-100 with-ajax"
+                               items="new List<SelectListItem> {
+                                              new SelectListItem {
+                                                      Selected = true,
+                                                      Value = Model.StoreId.ToString(),
+                                                      Text = Model.Store.FullName
+                                                }
+                                              }" />
+        </div>
+        <div class="col-12 col-sm-6">
+            <custom-select-for for="ProductCategoryId"
+                               class="form-control"
+                               items="(List<SelectListItem>)ViewBag.Categories" />
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <custom-input-for for="DiscountPercent" class="form-control ltr-elm" />
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <custom-input-for for="Name" />
+        </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            <custom-input-for for="Price" class="form-control ltr-elm" />
+        </div>
+        <div class="col-12 col-sm-4">
+            <custom-input-for for="DiscountPercent" class="form-control ltr-elm" />
+        </div>
+        <div class="col-12 col-sm-4">
+            <custom-checkbox-for for="IsActive" wrapper-class="chb-group" />
+        </div>
+
     </div>
-</div>
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <custom-checkbox-for wrapper-class="chb-group" for="IsActive" />
+    <div class="row">
+        <div class="col-12">
+            <custom-textarea-for for="Description"></custom-textarea-for>
+        </div>
     </div>
-</div>
+
+    <div class="custom-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">@Strings.Close</button>
+        <custom-button text="@Strings.Submit" icon="zmdi zmdi-floppy" class="btn-primary btn-submit-product float-left"></custom-button>
+    </div>
+</form>
+
+<script>
+    assets = [];
+</script>

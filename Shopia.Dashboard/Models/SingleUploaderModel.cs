@@ -1,38 +1,25 @@
-﻿using Microsoft.Extensions.Configuration;
-using Shopia.Domain;
-using System;
+﻿using Shopia.Domain;
 
 namespace Shopia.Dashboard
 {
-    //public class SingleUploaderModel
-    //{
-    //    public SingleUploaderModel(IConfiguration configure, AttachedFile attch)
-    //    {
-    //        if (attch != null)
-    //        {
-    //            AttachedFileId = attch.AttachedFileId;
-    //            FileId = attch.FileId;
-    //            AttachFileType = attch.Type;
-    //            Url = $"{configure["CustomSettings:FileManager:Url"]}/File/DownloadFile?fileId={attch.FileId}&fileType={attch.FileType}";
-    //        }
-    //    }
-
-    //    public bool HasAttch => !string.IsNullOrWhiteSpace(Url);
-
-    //    public string AttchName { get; set; }
-
-    //    public string UploaderName { get; set; }
-
-    //    public int AttachedFileId { get; set; }
-
-    //    public Guid FileId { get; set; }
-
-    //    public string Url { get; set; }
-
-    //    public string FileName { get; set; }
-
-    //    public AttachFileType AttachFileType { get; set; }
-
-    //    public string Accept { get; set; } = "image/*";
-    //}
+    public class SingleUploaderModel
+    {
+        public SingleUploaderModel(string id ,string name, ProductAsset productAsset)
+        {
+            Id = id;
+            Name = name;
+            if (productAsset != null)
+            {
+                HaveAsset = true;
+                AssetId = productAsset.ProductAssetId;
+                Url = productAsset.FileUrl;
+            }
+        }
+        public string Id { get; set; }
+        public int AssetId { get; set; } = 0;
+        public string Name { get; set; }
+        public bool HaveAsset { get; set; } = false;
+        public string Url { get; set; }
+        public string Accept { get; set; } = "image/*";
+    }
 }

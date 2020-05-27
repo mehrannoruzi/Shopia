@@ -132,6 +132,9 @@
   <data name="AddedRolesToThisAction" xml:space="preserve">
     <value>نقش های افزوده  شده به این اکشن</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
   <data name="Answer" xml:space="preserve">
     <value>پاسخ</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="LenghIsNotInRange" xml:space="preserve">
     <value>تعداد کاراکترها میبایست بین {0} و {1} باشد</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>مکان</value>
   </data>
   <data name="MainImage" xml:space="preserve">
     <value>تصویر اصلی</value>

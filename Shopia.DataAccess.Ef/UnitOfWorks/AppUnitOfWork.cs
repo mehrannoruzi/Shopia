@@ -42,6 +42,7 @@ namespace Shopia.DataAccess.Ef
         #region Store
         public IGenericRepo<Store> StoreRepo => _serviceProvider.GetService<IGenericRepo<Store>>();
         public IGenericRepo<Product> ProductRepo => _serviceProvider.GetService<IGenericRepo<Product>>();
+        public IGenericRepo<ProductAsset> ProductAssetRepo => _serviceProvider.GetService<IGenericRepo<ProductAsset>>();
         public IGenericRepo<Discount> DiscountRepo => _serviceProvider.GetService<IGenericRepo<Discount>>();
         #endregion
 

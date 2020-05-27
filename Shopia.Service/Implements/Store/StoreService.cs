@@ -7,6 +7,9 @@ using Shopia.Service.Resource;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Shopia.Service
 {
@@ -67,6 +70,36 @@ namespace Shopia.Service
             }
 
         }
+        public async Task<IResponse<Store>> FindAsync(int id)
+        {
+            var store = await _storeRepo.FindAsync(id);
+            if (store == null) return new Response<Store> { Message = ServiceMessage.RecordNotExist };
+
+            return new Response<Store> { Result = store, IsSuccessful = true };
+        }
+        public PagingListDetails<Store> Get(StoreSearchFilter filter)
+        {
+            Expression<Func<Store, bool>> conditions = x => true;
+            if (filter != null)
+            {
+                if (!string.IsNullOrWhiteSpace(filter.Name))
+                    conditions = x => x.FullName.Contains(filter.Name);
+            }
+
+            return _storeRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.StoreId));
+        }
+
+        public async Task<IResponse<bool>> DeleteAsync(int id)
+        {
+            _storeRepo.Delete(new Store { StoreId = id });
+            var saveResult = await _authUow.ElkSaveChangesAsync();
+            return new Response<bool>
+            {
+                Message = saveResult.Message,
+                Result = saveResult.IsSuccessful,
+                IsSuccessful = saveResult.IsSuccessful,
+            };
+        }
 
         public async Task<bool> SuccessCrawlAsync(string UniqueId, CancellationToken token = default)
         {
@@ -82,6 +115,7 @@ namespace Shopia.Service
             var user = await _appUow.UserRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, null);
             var store = await _storeRepo.FirstOrDefaultAsync(conditions: x => x.Username == model.Username, null);
             if (store != null) return new Response<Domain.Store> { Message = ServiceMessage.DuplicateRecord };
+            var cdt = DateTime.Now;
             store = new Domain.Store
             {
                 Username = model.Username,
@@ -98,6 +132,9 @@ namespace Shopia.Service
                     FullName = model.FullName,
                     IsActive = true,
                     MobileNumber = mobileNumber,
+                    LastLoginDateMi = cdt,
+                    LastLoginDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date),
+                    InsertDateMi = cdt,
                     Password = HashGenerator.Hash(mobileNumber.ToString()),
                     NewPassword = HashGenerator.Hash(mobileNumber.ToString()),
                     MustChangePassword = false,
@@ -141,10 +178,81 @@ namespace Shopia.Service
         => _storeRepo.Get(x => x.UserId == userId, o => o.OrderByDescending(x => x.StoreId), null);
 
         public IDictionary<object, object> Search(string searchParameter, Guid? userId, int take = 10)
-            => _storeRepo.Get(conditions: x => x.FullName.Contains(searchParameter) && userId == null ? true : x.UserId == userId)
-            .OrderByDescending(x => x.StoreId)
-            .Take(take)
+            => _storeRepo.Get(conditions: x => x.FullName.Contains(searchParameter) && userId == null ? true : x.UserId == userId,
+                new PagingParameter
+                {
+                    PageNumber = 1,
+                    PageSize = 6
+                },
+                o => o.OrderByDescending(x => x.StoreId))
+            .Items
             .ToDictionary(k => (object)k.StoreId, v => (object)v.FullName);
 
+        public async Task<IResponse<Store>> UpdateAsync(StoreUpdateModel model)
+        {
+            var store = await _appUow.StoreRepo.FindAsync(model.StoreId);
+            if (store == null) return new Response<Store> { Message = ServiceMessage.RecordNotExist };
+            if (store.AddressId != null)
+            {
+                var addr = await _appUow.AddressRepo.FindAsync(store.AddressId);
+                if (addr == null)
+                {
+                    await _appUow.AddressRepo.AddAsync(new Address
+                    {
+                        UserId = store.UserId,
+                        Latitude = model.Latitude ?? 0,
+                        Longitude = model.Longitude ?? 0,
+                        AddressDetails = model.AddressDetails
+                    });
+                    var addAddress = await _appUow.ElkSaveChangesAsync();
+                    if (addAddress.IsSuccessful) store.AddressId = addr.AddressId;
+                    else return new Response<Store> { Message = addAddress.Message };
+                }
+                else
+                {
+                    addr.Latitude = model.Latitude ?? 0;
+                    addr.Longitude = model.Longitude ?? 0;
+                    addr.AddressDetails = model.AddressDetails;
+                    _appUow.AddressRepo.Update(addr);
+                }
+            }
+            store.FullName = model.FullName;
+            store.Username = model.Username;
+            if (model.Logo != null)
+            {
+                var dir = $"/Files/{model.StoreId}";
+                if (!FileOperation.CreateDirectory(model.Root + dir))
+                    return new Response<Store> { Message = ServiceMessage.SaveFileFailed };
+                var relativePath = $"{dir}/logo_{Guid.NewGuid().ToString().Replace("-", "_")}{Path.GetExtension(model.Logo.FileName)}";
+                using (var stream = File.Create($"{model.Root}{relativePath.Replace("/", "\\")}"))
+                    await model.Logo.CopyToAsync(stream);
+                store.ProfilePictureUrl = $"{model.BaseDomain}{relativePath}";
+            }
+            _storeRepo.Update(store);
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<Store> { Result = store, IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
+        }
+
+        public async Task<IResponse<bool>> DeleteFile(string baseDomain, string root, int id)
+        {
+            var store = await _appUow.StoreRepo.FindAsync(id);
+            if (store == null) return new Response<bool> { Message = ServiceMessage.RecordNotExist };
+            var url = store.ProfilePictureUrl;
+            store.ProfilePictureUrl = null;
+            _storeRepo.Update(store);
+            var update = await _appUow.ElkSaveChangesAsync();
+            if (!update.IsSuccessful) return new Response<bool> { Message = update.Message };
+            try
+            {
+                if (url.StartsWith(baseDomain))
+                    System.IO.File.Delete(root + url.Replace(baseDomain, ""));
+                return new Response<bool> { IsSuccessful = true };
+            }
+            catch (Exception e)
+            {
+                FileLoger.Error(e);
+                return new Response<bool> { Message = ServiceMessage.Error };
+            }
+        }
     }
 }

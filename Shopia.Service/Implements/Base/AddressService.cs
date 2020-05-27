@@ -3,6 +3,8 @@ using Elk.Core;
 using System.Linq;
 using Shopia.Domain;
 using Shopia.DataAccess.Ef;
+using System.Threading.Tasks;
+using Shopia.Service.Resource;
 
 namespace Shopia.Service
 {
@@ -38,6 +40,13 @@ namespace Shopia.Service
                 Result = addresses,
                 IsSuccessful = true
             };
+        }
+
+        public async Task<IResponse<Address>> FindAsync(int id)
+        {
+            var addr = await _addressRepo.FindAsync(id);
+            if (addr == null) return new Response<Address> { Message = ServiceMessage.RecordNotExist };
+            else return new Response<Address> { IsSuccessful = true, Result = addr };
         }
     }
 }

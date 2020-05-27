@@ -8,16 +8,20 @@ using Microsoft.AspNetCore.Mvc;
 using Shopia.Dashboard.Resources;
 using DomainString = Shopia.Domain.Resource.Strings;
 using Elk.Http;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Dashboard.Controllers
 {
     public class ProductController : Controller
     {
         private readonly IProductService _productSrv;
+        readonly IConfiguration _configuration;
 
-        public ProductController(IProductService productSrv)
+        public ProductController(IProductService productSrv, IConfiguration configuration)
         {
             _productSrv = productSrv;
+            _configuration = configuration;
         }
 
 
@@ -31,9 +35,11 @@ namespace Shopia.Dashboard.Controllers
             });
 
         [HttpPost]
-        public virtual async Task<JsonResult> Add(Product model)
+        public virtual async Task<JsonResult> Add([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.Root = env.WebRootPath;
             return Json(await _productSrv.AddAsync(model));
         }
 
@@ -53,14 +59,16 @@ namespace Shopia.Dashboard.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<JsonResult> Update(Product model)
+        public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.Root = env.WebRootPath;
             return Json(await _productSrv.UpdateAsync(model));
         }
 
         [HttpPost]
-        public virtual async Task<JsonResult> Delete(int id) => Json(await _productSrv.DeleteAsync(id));
+        public virtual async Task<JsonResult> Delete([FromServices]IWebHostEnvironment env, int id) => Json(await _productSrv.DeleteAsync(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
 
 
         [HttpGet]

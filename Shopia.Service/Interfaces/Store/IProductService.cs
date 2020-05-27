@@ -1,4 +1,5 @@
 ﻿using Elk.Core;
+using Microsoft.AspNetCore.Http;
 using Shopia.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,16 +14,16 @@ namespace Shopia.Service
 
         Task<(bool Changed, IEnumerable<OrderItemDTO> Items)> CheckChanges(IEnumerable<OrderItemDTO> items);
 
-        Task<IResponse<Product>> AddAsync(Product model);
+        Task<IResponse<Product>> AddAsync(ProductAddModel model);
 
         Task<IResponse<Product>> FindWithAssetsAsync(int id);
 
-        Task<IResponse<Product>> UpdateAsync(Product model);
+        Task<IResponse<Product>> UpdateAsync(ProductAddModel model);
 
-        Task<IResponse<bool>> DeleteAsync(int id);
+        Task<IResponse<bool>> DeleteAsync(string baseDomain, string root, int id);
 
         PagingListDetails<Product> Get(ProductSearchFilter filter);
 
-        Task<IResponse<int>> AddRangeAsync(ProductAddModel model);
+        Task<IResponse<int>> AddRangeAsync(ProductAddRangeModel model);
     }
 }

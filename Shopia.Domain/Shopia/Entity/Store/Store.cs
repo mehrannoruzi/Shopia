@@ -110,7 +110,8 @@ namespace Shopia.Domain
         [MaxLength(1000, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string ProfilePictureUrl { get; set; }
 
-
+        [NotMapped]
+        public Address Address { get; set; }
         public List<Product> Products { get; set; }
     }
 }

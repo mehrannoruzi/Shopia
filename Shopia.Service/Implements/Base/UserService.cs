@@ -20,7 +20,7 @@ namespace Shopia.Service
         private readonly IEmailService _emailService;
         private readonly IMemoryCacheProvider _cache;
         private readonly DashboardMenuSp _dashboardMenuSp;
-
+        readonly IUserRepo _userRepo;
         public UserService(AppUnitOfWork uow, IMemoryCacheProvider cache,
             IEmailService emailService, DashboardMenuSp dashboardMenuSp)
         {
@@ -28,6 +28,7 @@ namespace Shopia.Service
             _cache = cache;
             _emailService = emailService;
             _dashboardMenuSp = dashboardMenuSp;
+            _userRepo = uow.UserRepo;
         }
 
 
@@ -37,7 +38,7 @@ namespace Shopia.Service
         {
             model.UserId = Guid.NewGuid();
             model.Password = HashGenerator.Hash(model.Password);
-            await _appUow.UserRepo.AddAsync(model);
+            await _userRepo.AddAsync(model);
 
             var saveResult = await _appUow.ElkSaveChangesAsync();
             return new Response<User> { Result = model, IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
@@ -45,19 +46,23 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> UpdateProfile(User model)
         {
-            var findedUser = await _appUow.UserRepo.FindAsync(model.UserId);
-            if (findedUser == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
-
-            findedUser.Password = HashGenerator.Hash(model.Password);
-            findedUser.FullName = model.FullName;
-
+            var user = await _userRepo.FindAsync(model.UserId);
+            if (user == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
+            if (await _userRepo.AnyAsync(x => x.MobileNumber == model.MobileNumber && x.UserId != model.UserId))
+                return new Response<User> { Message = ServiceMessage.DuplicateRecord };
+            user.Password = HashGenerator.Hash(model.Password);
+            user.FullName = model.FullName;
+            user.Email = model.Email;
+            if (!string.IsNullOrWhiteSpace(user.NewPassword)) user.Password = HashGenerator.Hash(model.NewPassword);
+            user.NewPassword = null;
+            _userRepo.Update(user);
             var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<User> { Result = findedUser, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            return new Response<User> { Result = user, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
         }
 
         public async Task<IResponse<User>> UpdateAsync(User model)
         {
-            var findedUser = await _appUow.UserRepo.FindAsync(model.UserId);
+            var findedUser = await _userRepo.FindAsync(model.UserId);
             if (findedUser == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
             if (model.MustChangePassword)
@@ -72,7 +77,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<bool>> DeleteAsync(Guid userId)
         {
-            _appUow.UserRepo.Delete(new User { UserId = userId });
+            _userRepo.Delete(new User { UserId = userId });
             var saveResult = await _appUow.ElkSaveChangesAsync();
             return new Response<bool>
             {
@@ -84,7 +89,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> FindAsync(Guid userId)
         {
-            var findedUser = await _appUow.UserRepo.FindAsync(userId);
+            var findedUser = await _userRepo.FindAsync(userId);
             if (findedUser == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
             return new Response<User> { Result = findedUser, IsSuccessful = true };
@@ -102,7 +107,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> FindByMobileNumber(long mobileNumber)
         {
-            var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FindByMobileNumber(mobileNumber);
             return new Response<User>
             {
                 IsSuccessful = user != null,
@@ -113,7 +118,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> Authenticate(long mobileNumber, string password)
         {
-            var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FindByMobileNumber(mobileNumber);
             if (user == null) return new Response<User> { Message = ServiceMessage.InvalidUsernameOrPassword };
 
             if (!user.IsActive) return new Response<User> { Message = ServiceMessage.AccountIsBlocked };
@@ -131,7 +136,7 @@ namespace Shopia.Service
             //}
             user.LastLoginDateMi = DateTime.Now;
             user.LastLoginDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
-
+            _userRepo.Update(user);
             var saveResult = await _appUow.ElkSaveChangesAsync();
             return new Response<User> { IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message, Result = user };
         }
@@ -246,13 +251,13 @@ namespace Shopia.Service
                     conditions = x => x.MobileNumber.ToString().Contains(filter.MobileNumberF);
             }
 
-            var items = _appUow.UserRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.InsertDateMi));
+            var items = _userRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.InsertDateMi));
             return items;
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _appUow.UserRepo.Get(conditions: x => x.FullName.Contains(searchParameter))
-                .Union(_appUow.UserRepo.Get(conditions: x => x.Email.Contains(searchParameter)))
+            => _userRepo.Get(conditions: x => x.FullName.Contains(searchParameter))
+                .Union(_userRepo.Get(conditions: x => x.Email.Contains(searchParameter)))
                 .Select(x => new
                 {
                     x.UserId,
@@ -265,13 +270,13 @@ namespace Shopia.Service
 
         public async Task<IResponse<string>> RecoverPassword(long mobileNumber, string from, EmailMessage model)
         {
-            var user = await _appUow.UserRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FindByMobileNumber(mobileNumber);
             if (user == null) return new Response<string> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
             user.MustChangePassword = true;
             var newPassword = Randomizer.GetUniqueKey(6);
             user.Password = HashGenerator.Hash(newPassword);
-            _appUow.UserRepo.Update(user);
+            _userRepo.Update(user);
             var saveResult = await _appUow.ElkSaveChangesAsync();
             if (!saveResult.IsSuccessful) return new Response<string> { IsSuccessful = false, Message = saveResult.Message };
 

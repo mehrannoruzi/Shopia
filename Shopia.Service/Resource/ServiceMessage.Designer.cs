@@ -106,6 +106,15 @@ namespace Shopia.Service.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطایی رخ داده است، دوباره تلاش نمایید.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to روش ارسال معتبر نمی باشد.
         /// </summary>
         public static string InvalidDeliveryType {
@@ -156,6 +165,15 @@ namespace Shopia.Service.Resource {
         public static string RecoverPassword {
             get {
                 return ResourceManager.GetString("RecoverPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ذخیره فایل با مشکل مواجه شد.
+        /// </summary>
+        public static string SaveFileFailed {
+            get {
+                return ResourceManager.GetString("SaveFileFailed", resourceCulture);
             }
         }
         

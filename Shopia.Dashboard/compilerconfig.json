@@ -14,5 +14,13 @@
   {
     "outputFile": "wwwroot/Styles/App/02-Store/Public/sign-up.css",
     "inputFile": "wwwroot/Styles/App/02-Store/Public/sign-up.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/App/common.css",
+    "inputFile": "wwwroot/Styles/App/common.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/App/fa.css",
+    "inputFile": "wwwroot/Styles/App/fa.scss"
   }
 ]

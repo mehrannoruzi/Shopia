@@ -106,6 +106,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آدرس.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پاسخ.
         /// </summary>
         public static string Answer {
@@ -462,6 +471,15 @@ namespace Shopia.Dashboard.Resources {
         public static string LenghIsNotInRange {
             get {
                 return ResourceManager.GetString("LenghIsNotInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مکان.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         

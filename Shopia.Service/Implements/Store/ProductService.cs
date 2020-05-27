@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Shopia.Service.Resource;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Shopia.Service
 {
     public class ProductService : IProductService
     {
         readonly AppUnitOfWork _appUow;
+        readonly IProductAssetService _productAssetService;
         readonly IGenericRepo<Product> _productRepo;
         readonly IGenericRepo<Discount> _discountRepo;
-        public ProductService(AppUnitOfWork appUOW, IGenericRepo<Product> productRepo, IGenericRepo<Discount> discountRepo)
+        public ProductService(AppUnitOfWork appUOW, IGenericRepo<Product> productRepo, IGenericRepo<Discount> discountRepo, IProductAssetService productAssetService)
         {
             _appUow = appUOW;
             _productRepo = productRepo;
             _discountRepo = discountRepo;
+            _productAssetService = productAssetService;
         }
 
         public async Task<IResponse<PagingListDetails<ProductDTO>>> Get(ProductFilterDTO filter)
@@ -36,7 +37,7 @@ namespace Shopia.Service
                 ImageUrl = p.ProductAssets == null ? null : p.ProductAssets[0].ThumbnailUrl,
                 Description = p.Description
             },
-            conditions: x => x.StoreId == filter.StoreId,
+            conditions: x => x.StoreId == filter.StoreId && !x.IsDeleted,
             pagingParameter: filter,
             orderBy: o => o.OrderByDescending(x => x.ProductId),
             new List<Expression<Func<Product, object>>> { x => x.ProductAssets });
@@ -133,12 +134,24 @@ namespace Shopia.Service
             return (changed, items);
         }
 
-        public async Task<IResponse<Product>> AddAsync(Product model)
+        public async Task<IResponse<Product>> AddAsync(ProductAddModel model)
         {
-            await _productRepo.AddAsync(model);
-
-            var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<Product> { Result = model, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            var getAssets = await _productAssetService.SaveRange(model);
+            if (!getAssets.IsSuccessful) return new Response<Product> { Message = getAssets.Message };
+            var product = new Product().CopyFrom(model);
+            product.ProductAssets = getAssets.Result;
+            await _productRepo.AddAsync(product);
+            if (model.Files != null && model.Files.Count != 0)
+            {
+                var add = await _appUow.ElkSaveChangesAsync();
+                if (!add.IsSuccessful) _productAssetService.DeleteRange(getAssets.Result);
+                return new Response<Product> { Result = product, IsSuccessful = add.IsSuccessful, Message = add.Message };
+            }
+            else
+            {
+                var add = await _appUow.ElkSaveChangesAsync();
+                return new Response<Product> { Result = product, IsSuccessful = add.IsSuccessful, Message = add.Message };
+            }
         }
 
         public async Task<IResponse<Product>> FindWithAssetsAsync(int id)
@@ -149,7 +162,7 @@ namespace Shopia.Service
             return new Response<Product> { Result = product, IsSuccessful = true };
         }
 
-        public async Task<IResponse<Product>> UpdateAsync(Product model)
+        public async Task<IResponse<Product>> UpdateAsync(ProductAddModel model)//string root, Product model, IList<IFormFile> files)
         {
             var product = await _productRepo.FindAsync(model.ProductId);
             if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
@@ -161,25 +174,42 @@ namespace Shopia.Service
             product.IsActive = model.IsActive;
             product.Description = model.Description;
             product.ProductCategoryId = model.ProductCategoryId;
-            var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<Product> { Result = product, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            _productRepo.Update(product);
+            if (model.Files != null && model.Files.Count != 0)
+            {
+                var getAssets = await _productAssetService.SaveRange(model);
+                if (!getAssets.IsSuccessful) return new Response<Product> { Message = getAssets.Message };
+                foreach (var asset in getAssets.Result) asset.ProductId = model.ProductId;
+                await _appUow.ProductAssetRepo.AddRangeAsync(getAssets.Result);
+                var update = await _appUow.ElkSaveChangesAsync();
+                if (!update.IsSuccessful) _productAssetService.DeleteRange(getAssets.Result);
+                return new Response<Product> { Result = product, IsSuccessful = update.IsSuccessful, Message = update.Message };
+            }
+            else
+            {
+                var update = await _appUow.ElkSaveChangesAsync();
+                return new Response<Product> { Result = product, IsSuccessful = update.IsSuccessful, Message = update.Message };
+            }
         }
 
-        public async Task<IResponse<bool>> DeleteAsync(int id)
+        public async Task<IResponse<bool>> DeleteAsync(string baseDomain, string root, int id)
         {
-            _productRepo.Delete(new Product { ProductId = id });
-            var saveResult = await _appUow.ElkSaveChangesAsync();
+            var product = await _productRepo.FindAsync(id);
+            var urls = _appUow.ProductAssetRepo.Get(x => new { x.FileUrl, x.CdnFileUrl }, x => x.ProductId == id, o => o.OrderBy(x => x.ProductId)).Select(x => (x.FileUrl, x.CdnFileUrl));
+            _productRepo.Delete(product);
+            var delete = await _appUow.ElkSaveChangesAsync();
+            if (delete.IsSuccessful) _productAssetService.DeleteFiles(baseDomain, urls);
             return new Response<bool>
             {
-                Message = saveResult.Message,
-                Result = saveResult.IsSuccessful,
-                IsSuccessful = saveResult.IsSuccessful,
+                Message = delete.Message,
+                Result = delete.IsSuccessful,
+                IsSuccessful = delete.IsSuccessful,
             };
         }
 
         public PagingListDetails<Product> Get(ProductSearchFilter filter)
         {
-            Expression<Func<Product, bool>> conditions = x => x.Store.UserId == filter.UserId;
+            Expression<Func<Product, bool>> conditions = x => x.Store.UserId == filter.UserId && !x.IsDeleted;
             if (filter != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.Name))
@@ -189,7 +219,7 @@ namespace Shopia.Service
             return _productRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.ProductId), new List<Expression<Func<Product, object>>> { x => x.Store });
         }
 
-        public async Task<IResponse<int>> AddRangeAsync(ProductAddModel model)
+        public async Task<IResponse<int>> AddRangeAsync(ProductAddRangeModel model)
         {
             var products = model.Posts.Select(x => new Product
             {
@@ -198,7 +228,7 @@ namespace Shopia.Service
                 Name = x.Description.Length > 35 ? x.Description.Substring(0, 34) : x.Description,
                 Description = x.Description,
                 Price = x.Price,
-                IsActive =true,
+                IsActive = true,
                 ProductAssets = x.Assets?.Select(a => new ProductAsset
                 {
                     FileType = a.Type,
@@ -207,7 +237,7 @@ namespace Shopia.Service
                     UniqueId = a.UniqueId,
                     FileUrl = a.FileUrl,
                     ThumbnailUrl = a.ThumbnailUrl
-                }).ToList()
+                }).OrderByDescending(x => x.UniqueId).Take(3).ToList()
             }).ToList();
             await _productRepo.AddRangeAsync(products);
             var save = await _appUow.ElkSaveChangesAsync();
