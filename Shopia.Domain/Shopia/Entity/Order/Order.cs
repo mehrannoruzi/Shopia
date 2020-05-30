@@ -105,7 +105,11 @@ namespace Shopia.Domain
         [NotMapped]
         public DeliveryDetail Delivery => DeliveryDetailJson.DeSerializeJson<DeliveryDetail>();
 
-
+        [Display(Name = nameof(Strings.OrderDetails), ResourceType = typeof(Strings))]
         public List<OrderDetail> OrderDetails { get; set; }
+        public List<Payment> Payments { get; set; }
+
+        [NotMapped]
+        public UserComment UserCommentInfo => UserComment?.DeSerializeJson<UserComment>();
     }
 }

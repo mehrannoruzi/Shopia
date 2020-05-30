@@ -22,5 +22,9 @@
   {
     "outputFile": "wwwroot/Styles/App/fa.css",
     "inputFile": "wwwroot/Styles/App/fa.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/App/01-Admin/Product/manage.css",
+    "inputFile": "wwwroot/Styles/App/01-Admin/Product/manage.scss"
   }
 ]

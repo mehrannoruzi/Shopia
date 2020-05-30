@@ -1,24 +1,33 @@
 ﻿/// <reference path="../../../Libs/jquery-3.1.1.min.js" />
-var logo = {};
-var coords = [];
-var map = {};
-var marker = {};
+var postsPageNumber = 1;
+var posts = [];
+var selectedPosts = [];
+var assets = [];
 $(document).ready(function () {
-    //====================================================================== logo
+
+    //====================================================================== Assets
     //======================================================================
     $('#modal').on('click', '.btn-remove', function (e) {
         e.stopPropagation();
         let $btn = $(this);
         let $box = $btn.closest('.single-uploader');
 
-        if ($('#StoreId').val() !== '0') {
+        let removeUrl = $btn.data('url');
+        console.log(removeUrl);
+        function removeAsset(id) {
+            let idx = assets.findIndex(function (x) {
+                return x.id === id;
+            });
+            assets.splice(idx, 1);
+        }
+        if (removeUrl) {
             ajaxBtn.inProgress($btn);
-            $.post($btn.data('url'))
+            $.post(removeUrl)
                 .done(function (data) {
                     console.log(data);
                     ajaxBtn.normal();
                     if (data.IsSuccessful) {
-                        logo = {};
+                        removeAsset($box.data('id'));
                         $box.removeClass('uploaded');
                     }
                     else showNotif(notifyType.danger, data.Message);
@@ -29,7 +38,7 @@ $(document).ready(function () {
         }
         else {
             $box.removeClass('uploaded');
-            logo = {};
+            removeAsset($box.data('id'));
         }
     });
     $('#modal').on('click', '.single-uploader > .uploader', function (e) {
@@ -51,24 +60,25 @@ $(document).ready(function () {
 
             $box.addClass('uploaded').find('img').attr('src', url);
             $i.val('');
-            logo = file;
+            assets.push({ id: $box.data('id'), file: file });
         };
         reader.readAsDataURL(file);
     });
     //====================================================================== Submit
     //======================================================================
 
-    $(document).on('click', '.btn-submit-store', function (e) {
+    $(document).on('click', '.btn-submit-product', function (e) {
         e.stopPropagation();
         let $btn = $(this);
         let $frm = $btn.closest('form');
-        if (!$frm.valid()) return;
         let frmData = new FormData();
         let model = customSerialize($('#frm-product'));
         for (var k in model) {
             frmData.append(k, model[k]);
         }
-        frmData.append('Logo', logo);
+        for (var i = 0; i < assets.length; i++)  frmData.append('Files', assets[i].file);
+        console.log(frmData);
+        console.log(assets);
         ajaxBtn.inProgress($btn);
         $.ajax({
             type: 'POST',
@@ -89,7 +99,25 @@ $(document).ready(function () {
 
             }
         });
+
     });
 });
-
+function getPosts($btn) {
+    ajaxBtn.inProgress($btn);
+    console.log($btn.data('url'));
+    $.get($btn.data('url'), { username: $('#select-store option:selected').data('un'), pageNumber: postsPageNumber })
+        .done(function (rep) {
+            ajaxBtn.normal();
+            if (rep.IsSuccessful) {
+                posts = rep.Result.Posts;
+                $('#posts-wrapper').html(rep.Result.Partial);
+            }
+            else {
+                showNotif(notifyType.danger, rep.Message);
+            }
+        })
+        .fail(function (e) {
+            ajaxBtn.normal();
+        });
+}
 

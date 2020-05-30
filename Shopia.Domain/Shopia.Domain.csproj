@@ -39,7 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Shopia.Crawler\" />
-    <Folder Include="Shopia\DTO\NewFolder\" />
+    <Folder Include="Shopia\Repositories\Order\" />
     <Folder Include="Shopia\Repositories\Payment\" />
   </ItemGroup>
 

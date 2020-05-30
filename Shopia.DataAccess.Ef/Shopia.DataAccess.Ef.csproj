@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Shopia.Domain\Shopia.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Order\" />
+  </ItemGroup>
+
 </Project>

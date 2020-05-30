@@ -115,6 +115,15 @@ namespace Shopia.Service.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطا هنگام دریافت پست ها، لطفا دوباره تلاش نمایید.
+        /// </summary>
+        public static string GetPostsFailed {
+            get {
+                return ResourceManager.GetString("GetPostsFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to روش ارسال معتبر نمی باشد.
         /// </summary>
         public static string InvalidDeliveryType {
@@ -147,6 +156,15 @@ namespace Shopia.Service.Resource {
         public static string MemberIsBlocked {
             get {
                 return ResourceManager.GetString("MemberIsBlocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عملیات مورد نظر مجاز نمی باشد.
+        /// </summary>
+        public static string NotAllowedOperation {
+            get {
+                return ResourceManager.GetString("NotAllowedOperation", resourceCulture);
             }
         }
         

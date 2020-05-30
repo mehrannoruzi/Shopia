@@ -1,16 +1,19 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Shopia.Domain
 {
     public enum OrderStatus : int
     {
+        [Description("ناموفق")]
         Failed = -1,
-        
-        WaitForCrm = 1,
-        WaitForPayment = 2,
-        InProcessing = 3,
-        WaitForDelivery = 4,
-        
-        Successed = 10,
+        [Description("در انتظار پرداخت")]
+        WaitForPayment = 3,
+        [Description("در حال پردازش")]
+        InProcessing = 9,
+        [Description("در انتظار تحویل")]
+        WaitForDelivery = 12,
+        [Description("موفق")]
+        Successed = 15,
     }
 }

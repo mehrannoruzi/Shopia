@@ -25,5 +25,6 @@ namespace Shopia.Service
         PagingListDetails<Product> Get(ProductSearchFilter filter);
 
         Task<IResponse<int>> AddRangeAsync(ProductAddRangeModel model);
+        Task<IResponse<List<Post>>> GetPosts(string username, int pageNumber);
     }
 }

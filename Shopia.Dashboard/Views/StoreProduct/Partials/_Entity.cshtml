@@ -22,7 +22,7 @@
         @Html.HiddenFor(x => x.ProductId)
         <div class="col-12 col-sm-6">
             <custom-select-for for="StoreId"
-                               select-data-url='@Url.Action("Search", "Store",new {userId = User.GetUserId() })'
+                               select-data-url='@Url.Action("Search", "StoreStore",new {userId = User.GetUserId() })'
                                class="form-control select2 w-100 with-ajax"
                                items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem> {
                                               new SelectListItem {

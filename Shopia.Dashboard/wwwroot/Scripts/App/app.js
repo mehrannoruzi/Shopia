@@ -81,7 +81,7 @@ var showModal = function ({ $elm, beforeFunc, afterFunc, errorFunc }) {
 
             $.validator.unobtrusive.parse($modal);
             $modal.modal('show');
-
+            //fireGlobalPlugins();
 
             if (typeof afterFunc === 'function') afterFunc();
         })
@@ -507,10 +507,14 @@ function WinMove() {
 }
 
 
+var notifyType = {
+    success: "success",
+    danger: "danger",
+    info: "info",
+    warning: "warning"
+};
 
 var fireGlobalPlugins = function () {
-    //fireDropzone();
-
     $('.footable').footable({
         pageSize: 200,
         "breakpoints": {
@@ -793,15 +797,13 @@ var fireDropzone = function () {
     });
 };
 ///<reference path="../Libs/jquery-3.1.1.min.js" />
+//================================================== Map
+//==================================================
+var mapToken = 'pk.eyJ1Ijoia2luZ29mZGF5IiwiYSI6ImNrYWNweWQxaTFpbXcydnF3bDJiZ3QyODcifQ.RRNM5g4uAbca39ZWwp6p2A';
+//================================================== Loader
+//==================================================
 var $threeDotLoader = '<span class="three-dot-loader"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
 var $circularLoader = '<div class="spinner"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg></div>';
-var notifyType = {
-    success: "success",
-    danger: "danger",
-    info: "info",
-    warning: "warning"
-};
-
 
 $(document).ready(function () {
 

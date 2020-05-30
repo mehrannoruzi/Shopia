@@ -15,8 +15,7 @@ namespace Shopia.Dashboard.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public virtual JsonResult Search(string q, Guid? userId)
-        => Json(_storeSrv.Search(q, userId).ToSelectListItems());
+        public virtual JsonResult Search(string q) => Json(_storeSrv.Search(q, null).ToSelectListItems());
 
 
     }

@@ -1,7 +1,11 @@
-﻿
-var fireGlobalPlugins = function () {
-    //fireDropzone();
+﻿var notifyType = {
+    success: "success",
+    danger: "danger",
+    info: "info",
+    warning: "warning"
+};
 
+var fireGlobalPlugins = function () {
     $('.footable').footable({
         pageSize: 200,
         "breakpoints": {

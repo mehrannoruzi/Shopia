@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using Shopia.Service.Resource;
 using System.Collections.Generic;
+using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace Shopia.Service
 {
@@ -14,14 +16,20 @@ namespace Shopia.Service
     {
         readonly AppUnitOfWork _appUow;
         readonly IProductAssetService _productAssetService;
+        readonly IConfiguration _configuration;
         readonly IGenericRepo<Product> _productRepo;
         readonly IGenericRepo<Discount> _discountRepo;
-        public ProductService(AppUnitOfWork appUOW, IGenericRepo<Product> productRepo, IGenericRepo<Discount> discountRepo, IProductAssetService productAssetService)
+        public ProductService(AppUnitOfWork appUOW,
+            IGenericRepo<Product> productRepo,
+            IGenericRepo<Discount> discountRepo,
+            IProductAssetService productAssetService,
+            IConfiguration configuration)
         {
             _appUow = appUOW;
             _productRepo = productRepo;
             _discountRepo = discountRepo;
             _productAssetService = productAssetService;
+            _configuration = configuration;
         }
 
         public async Task<IResponse<PagingListDetails<ProductDTO>>> Get(ProductFilterDTO filter)
@@ -136,19 +144,20 @@ namespace Shopia.Service
 
         public async Task<IResponse<Product>> AddAsync(ProductAddModel model)
         {
-            var getAssets = await _productAssetService.SaveRange(model);
-            if (!getAssets.IsSuccessful) return new Response<Product> { Message = getAssets.Message };
             var product = new Product().CopyFrom(model);
-            product.ProductAssets = getAssets.Result;
-            await _productRepo.AddAsync(product);
             if (model.Files != null && model.Files.Count != 0)
             {
+                var getAssets = await _productAssetService.SaveRange(model);
+                if (!getAssets.IsSuccessful) return new Response<Product> { Message = getAssets.Message };
+                product.ProductAssets = getAssets.Result;
+                await _productRepo.AddAsync(product);
                 var add = await _appUow.ElkSaveChangesAsync();
                 if (!add.IsSuccessful) _productAssetService.DeleteRange(getAssets.Result);
                 return new Response<Product> { Result = product, IsSuccessful = add.IsSuccessful, Message = add.Message };
             }
             else
             {
+                await _productRepo.AddAsync(product);
                 var add = await _appUow.ElkSaveChangesAsync();
                 return new Response<Product> { Result = product, IsSuccessful = add.IsSuccessful, Message = add.Message };
             }
@@ -209,9 +218,13 @@ namespace Shopia.Service
 
         public PagingListDetails<Product> Get(ProductSearchFilter filter)
         {
-            Expression<Func<Product, bool>> conditions = x => x.Store.UserId == filter.UserId && !x.IsDeleted;
+            Expression<Func<Product, bool>> conditions = x => !x.IsDeleted;
             if (filter != null)
             {
+                if (filter.UserId != null)
+                    conditions = conditions.And(x => x.Store.UserId == filter.UserId);
+                if (filter.StoreId != null)
+                    conditions = conditions.And(x => x.StoreId == filter.StoreId);
                 if (!string.IsNullOrWhiteSpace(filter.Name))
                     conditions = conditions.And(x => x.Name.Contains(filter.Name));
             }
@@ -247,6 +260,26 @@ namespace Shopia.Service
                 Result = save.Result,
                 Message = save.Message
             };
+        }
+
+        public async Task<IResponse<List<Post>>> GetPosts(string username, int pageNumber)
+        {
+            try
+            {
+                using var getPostsHttp = new HttpClient();
+                var apiCall = await getPostsHttp.GetAsync($"{_configuration["CustomSettings:Crawler:GetPosts"]}?pageSize=6&username={username}&pageNumber={pageNumber}");
+                if (!apiCall.IsSuccessStatusCode) return new Response<List<Post>> { Message = ServiceMessage.Error };
+                var getPosts = (await apiCall.Content.ReadAsStringAsync()).DeSerializeJson<Response<List<Post>>>();
+                if (!getPosts.IsSuccessful) return new Response<List<Post>> { Message = getPosts.Message };
+                return new Response<List<Post>> { IsSuccessful = true, Result = getPosts.Result };
+            }
+            catch(Exception e)
+            {
+                FileLoger.Error(e);
+                return new Response<List<Post>> { Message = ServiceMessage.GetPostsFailed };
+
+            }
+
         }
     }
 }

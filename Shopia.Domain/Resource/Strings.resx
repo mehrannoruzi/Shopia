@@ -231,6 +231,9 @@
   <data name="FolowingCount" xml:space="preserve">
     <value>تعداد دنبال شونده</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>از تاریخ</value>
+  </data>
   <data name="FullName" xml:space="preserve">
     <value>نام و نام خانوادگی</value>
   </data>
@@ -338,6 +341,9 @@
   </data>
   <data name="OrderComment" xml:space="preserve">
     <value>توضیحات سفارش</value>
+  </data>
+  <data name="OrderDetails" xml:space="preserve">
+    <value>اقلام سفارش</value>
   </data>
   <data name="OrderPriority" xml:space="preserve">
     <value>اولویت</value>
@@ -461,6 +467,9 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>عنوان</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>تا تاریخ</value>
   </data>
   <data name="Token" xml:space="preserve">
     <value>توکن دسترسی</value>

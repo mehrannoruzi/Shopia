@@ -1,4 +1,5 @@
-﻿using Elk.Http;
+﻿using Elk.Core;
+using Elk.Http;
 using Shopia.Domain;
 using Shopia.Service;
 using Elk.AspNetCore;
@@ -8,7 +9,6 @@ using Shopia.Dashboard.Resources;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using DomainString = Shopia.Domain.Resource.Strings;
-using Elk.Core;
 
 namespace Shopia.Dashboard.Controllers
 {
@@ -69,5 +69,9 @@ namespace Shopia.Dashboard.Controllers
 
         [HttpPost]
         public virtual async Task<IActionResult> DeleteLogo([FromServices]IWebHostEnvironment env, int id) => Json(await _storeSrv.DeleteFile(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
+
+        [HttpGet, AuthEqualTo("StoreStore", "Update")]
+        public virtual JsonResult Search(string q)
+            => Json(_storeSrv.Search(q, User.GetUserId()).ToSelectListItems());
     }
 }

@@ -1,9 +1,9 @@
 ﻿@model Product
 @{
     Layout = null;
-    var assets = Model.ProductAssets?.OrderByDescending(x => x.UniqueId);
+    var assets = (Model.ProductAssets ?? new List<ProductAsset>()).OrderBy(x => x.ProductAssetId).ToList();
 }
-<form asp-controller="StoreProduct" asp-action="@(Model.ProductId==0?"Add":"Update")">
+<form asp-controller="Product" asp-action="@(Model.ProductId==0?"Add":"Update")" id="frm-product">
     @Html.HiddenFor(x => x.ProductId)
     <div class="row m-b">
         <div class="col-12 col-sm-4">
@@ -21,9 +21,9 @@
         @Html.HiddenFor(x => x.ProductId)
         <div class="col-12 col-sm-6">
             <custom-select-for for="StoreId"
-                               select-data-url='@Url.Action("Search", "Store",new {})'
+                               select-data-url='@Url.Action("Search", "Store",new {userId = User.GetUserId() })'
                                class="form-control select2 w-100 with-ajax"
-                               items="new List<SelectListItem> {
+                               items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem> {
                                               new SelectListItem {
                                                       Selected = true,
                                                       Value = Model.StoreId.ToString(),

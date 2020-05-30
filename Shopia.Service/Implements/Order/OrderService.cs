@@ -4,6 +4,8 @@ using Shopia.Domain;
 using Shopia.DataAccess.Ef;
 using System.Threading.Tasks;
 using Shopia.Service.Resource;
+using System.Linq.Expressions;
+using System;
 
 namespace Shopia.Service
 {
@@ -37,9 +39,9 @@ namespace Shopia.Service
             {
                 ProductId = i.Id,
                 Count = i.Count,
-                DiscountPrice = i.DiscountPrice,
                 Price = i.Price,
                 TotalPrice = i.RealPrice * i.Count,
+                DiscountPrice = i.DiscountPrice,
                 DiscountPercent = i.Discount
             }).ToList();
             var order = new Order
@@ -49,9 +51,10 @@ namespace Shopia.Service
                 TotalPriceAfterDiscount = orderDetails.Sum(x => x.TotalPrice) + getDeliveryCost.Result,
                 UserId = model.UserToken,
                 DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
-                OrderStatus = OrderStatus.InProcessing,
+                OrderStatus = OrderStatus.WaitForPayment,
                 DeliveryProviderId = model.DeliveryId,
                 OrderComment = model.Description,
+                UserComment = new UserComment { Reciever = model.Reciever, RecieverMobileNumber = model.RecieverMobileNumber }.SerializeToJson(),
                 ToAddressId = model.Address.Id ?? 0,
                 ToAddress = model.Address.Id == null ? new Address
                 {
@@ -90,7 +93,7 @@ namespace Shopia.Service
             if (!verify.IsSuccessful) return new Response<string> { IsSuccessful = false, Result = payment.TransactionId };
             var order = await _orderRepo.FindAsync(payment.OrderId);
             if (order == null) return new Response<string> { Message = ServiceMessage.RecordNotExist };
-            order.OrderStatus = OrderStatus.WaitForDelivery;
+            order.OrderStatus = OrderStatus.InProcessing;
             payment.PaymentStatus = PaymentStatus.Success;
             var update = await _appUow.ElkSaveChangesAsync();
 
@@ -101,6 +104,95 @@ namespace Shopia.Service
                 Message = update.Message
 
             };
+        }
+
+        public async Task<IResponse<Order>> AddAsync(Order model)
+        {
+            await _orderRepo.AddAsync(model);
+
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<Order> { Result = model, IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
+        }
+
+        public async Task<IResponse<Order>> UpdateAsync(Order model)
+        {
+            var findedOrder = await _orderRepo.FindAsync(model.OrderId);
+            if (findedOrder == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            //TODO:Set Update Fileds
+            var saveResult = _appUow.ElkSaveChangesAsync();
+            return new Response<Order> { Result = findedOrder, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+        }
+
+        public async Task<bool> CheckOwner(Guid userId, int orderId) => await _orderRepo.AnyAsync(x => x.OrderId == orderId && x.Store.UserId == userId);
+
+        public async Task<IResponse<Order>> UpdateStatusAsync(int id, OrderStatus status)
+        {
+            var order = await _orderRepo.FindAsync(id);
+            if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            if (order.OrderStatus == OrderStatus.Successed || (order.OrderStatus == OrderStatus.WaitForPayment && order.OrderStatus != status))
+                return new Response<Order> { Message = ServiceMessage.NotAllowedOperation };
+            var saveResult = _appUow.ElkSaveChangesAsync();
+            return new Response<Order> { Result = order, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+
+        }
+
+        public async Task<IResponse<bool>> DeleteAsync(int OrderId)
+        {
+            _appUow.OrderRepo.Delete(new Order { OrderId = OrderId });
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<bool>
+            {
+                Message = saveResult.Message,
+                Result = saveResult.IsSuccessful,
+                IsSuccessful = saveResult.IsSuccessful,
+            };
+        }
+
+        public async Task<IResponse<Order>> FindAsync(int OrderId)
+        {
+            var order = await _appUow.OrderRepo.FirstOrDefaultAsync(x => x.OrderId == OrderId, new System.Collections.Generic.List<Expression<Func<Order, object>>>
+            {
+                x=>x.Store,
+                x=>x.User,
+                x=>x.ToAddress,
+            });
+            if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            order.OrderDetails = _appUow.OrderDetailRepo.Get(x => x.OrderId == OrderId, o => o.OrderByDescending(x => x.OrderDetailId), new System.Collections.Generic.List<Expression<Func<OrderDetail, object>>>
+            {
+                x=>x.Product
+            });
+            return new Response<Order> { Result = order, IsSuccessful = true };
+        }
+
+        public PagingListDetails<Order> Get(OrderSearchFilter filter)
+        {
+            Expression<Func<Order, bool>> conditions = x => true;
+            if (filter != null)
+            {
+                if (filter.UserId != null) conditions = x => x.UserId == filter.UserId;
+                if (filter.StoreId != null) conditions = x => x.StoreId == filter.StoreId;
+                if (!string.IsNullOrWhiteSpace(filter.FromDateSh))
+                {
+                    var dt = PersianDateTime.Parse(filter.FromDateSh).ToDateTime();
+                    conditions = x => x.InsertDateMi >= dt;
+                }
+                if (!string.IsNullOrWhiteSpace(filter.ToDateSh))
+                {
+                    var dt = PersianDateTime.Parse(filter.ToDateSh).ToDateTime();
+                    conditions = x => x.InsertDateMi <= dt;
+                }
+                if (!string.IsNullOrWhiteSpace(filter.TransactionId))
+                    conditions = x => x.Payments.Any(p => p.TransactionId == filter.TransactionId);
+                if (filter.OrderStatus != null)
+                    conditions = x => x.OrderStatus == filter.OrderStatus;
+            }
+
+            return _orderRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.OrderId), new System.Collections.Generic.List<Expression<Func<Order, object>>>
+            {
+                x=>x.Store,
+                x=>x.ToAddress,
+                x=>x.User
+            });
         }
     }
 }

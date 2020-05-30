@@ -1,38 +1,58 @@
 ﻿using System;
 using Elk.Core;
+using Elk.Http;
 using Shopia.Domain;
 using Shopia.Service;
 using Elk.AspNetCore;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shopia.Dashboard.Resources;
-using DomainString = Shopia.Domain.Resource.Strings;
-using Elk.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using DomainString = Shopia.Domain.Resource.Strings;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shopia.Dashboard.Controllers
 {
+    //[AuthorizationFilter]
     public class ProductController : Controller
     {
         private readonly IProductService _productSrv;
-        readonly IConfiguration _configuration;
-
-        public ProductController(IProductService productSrv, IConfiguration configuration)
+        private readonly IConfiguration _configuration;
+        private readonly IProductCategoryService _productCategorySrv;
+        public ProductController(IProductService productSrv, IConfiguration configuration, IProductCategoryService productCategorySrv)
         {
             _productSrv = productSrv;
             _configuration = configuration;
+            _productCategorySrv = productCategorySrv;
         }
 
+        [NonAction]
+        private List<SelectListItem> GetCategories()
+        {
+            var categories = _productCategorySrv.Get(new ProductCategorySearchFilter());
+            if (categories.Items == null) return new List<SelectListItem>();
+            return categories.Items.Select(x => new SelectListItem
+            {
+                Value = x.ProductCategoryId.ToString(),
+                Text = x.Name
+            }).ToList();
+        }
 
         [HttpGet]
         public virtual JsonResult Add()
-            => Json(new Modal
+        {
+            ViewBag.Categories = GetCategories();
+
+            return Json(new Modal
             {
                 Title = $"{Strings.Add} {DomainString.Product}",
                 Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", new Product()),
-                AutoSubmitUrl = Url.Action("Add", "Product")
+                AutoSubmit = false
             });
+        }
 
         [HttpPost]
         public virtual async Task<JsonResult> Add([FromServices]IWebHostEnvironment env, ProductAddModel model)
@@ -46,18 +66,17 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet]
         public virtual async Task<JsonResult> Update(int id)
         {
-            var findProduct = await _productSrv.FindAsDtoAsync(id);
-            if (!findProduct.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Product) });
+            var findRep = await _productSrv.FindAsync(id);
+            if (!findRep.IsSuccessful) return Json(new { IsSuccessful = false, Message = Strings.NotFound });
+            ViewBag.Categories = GetCategories();
             return Json(new Modal
             {
                 Title = $"{Strings.Update} {DomainString.Product}",
                 AutoSubmitBtnText = Strings.Edit,
-                Body = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Entity", findProduct.Result),
-                AutoSubmitUrl = Url.Action("Update", "Product"),
-                ResetForm = false
+                Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", findRep.Result),
+                AutoSubmit = false
             });
         }
-
         [HttpPost]
         public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {

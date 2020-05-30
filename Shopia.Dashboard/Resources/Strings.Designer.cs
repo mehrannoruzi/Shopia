@@ -601,6 +601,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سفارش.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to صفحات.
         /// </summary>
         public static string Pages {

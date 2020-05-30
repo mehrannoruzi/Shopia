@@ -81,7 +81,7 @@ var showModal = function ({ $elm, beforeFunc, afterFunc, errorFunc }) {
 
             $.validator.unobtrusive.parse($modal);
             $modal.modal('show');
-
+            //fireGlobalPlugins();
 
             if (typeof afterFunc === 'function') afterFunc();
         })

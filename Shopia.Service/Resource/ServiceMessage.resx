@@ -135,6 +135,9 @@
   <data name="Error" xml:space="preserve">
     <value>خطایی رخ داده است، دوباره تلاش نمایید</value>
   </data>
+  <data name="GetPostsFailed" xml:space="preserve">
+    <value>خطا هنگام دریافت پست ها، لطفا دوباره تلاش نمایید</value>
+  </data>
   <data name="InvalidDeliveryType" xml:space="preserve">
     <value>روش ارسال معتبر نمی باشد</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="MemberIsBlocked" xml:space="preserve">
     <value>اکانت کاربر قفل شده است</value>
+  </data>
+  <data name="NotAllowedOperation" xml:space="preserve">
+    <value>عملیات مورد نظر مجاز نمی باشد</value>
   </data>
   <data name="RecordNotExist" xml:space="preserve">
     <value>آیتم مورد نظر یافت نشد</value>

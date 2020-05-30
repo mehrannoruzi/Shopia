@@ -297,6 +297,9 @@
   <data name="NotFoundPageMessage" xml:space="preserve">
     <value>صفحه مورد نظر یافت نشد!</value>
   </data>
+  <data name="Order" xml:space="preserve">
+    <value>سفارش</value>
+  </data>
   <data name="Pages" xml:space="preserve">
     <value>صفحات</value>
   </data>

@@ -1,0 +1,22 @@
+@model PagingListDetails<Order>
+@{
+    ViewBag.Title = $"{Strings.Management} {DomainStrings.Order}";
+    Layout = "_LayoutManage";
+}
+@*@section styles{
+    <link href="@Url.Content("~/Styles/App/Order/manage.css")" rel="stylesheet" />
+}*@
+
+@section filter{
+    <partial name="Partials/_Filters" model="new OrderSearchFilter()" />
+}
+<partial name="Partials/_List" model="@Model" />
+@section scripts{
+    @*<script src="@Url.Content("~/Scripts/App/Order/manage.js")"></script>*@
+<script>
+    var Coords_from = [];
+    var map_from = {};
+    var Coords_to = [];
+    var map_to = {};
+</script>
+}

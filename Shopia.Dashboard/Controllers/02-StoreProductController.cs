@@ -53,11 +53,8 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet]
         public async Task<IActionResult> Post(string username, int pageNumber)
         {
-            using var getPostsHttp = new HttpClient();
-            var apiCall = await getPostsHttp.GetAsync($"{_configuration["CustomSettings:Crawler:GetPosts"]}?pageSize=6&username={username}&pageNumber={pageNumber}");
-            if (!apiCall.IsSuccessStatusCode) return Json(new { IsSuccessful = false, Message = Strings.Error });
-            var getPosts = (await apiCall.Content.ReadAsStringAsync()).DeSerializeJson<Response<List<Post>>>();
-            if (!getPosts.IsSuccessful) return Json(new { IsSuccessful = false, getPosts.Message });
+            var getPosts = await _productSerive.GetPosts(username, pageNumber);
+            if (!getPosts.IsSuccessful) return Json(getPosts);
             var model = getPosts.Result.Select(x => new PostModel
             {
                 Description = x.Description,
