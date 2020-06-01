@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../Libs/jquery-3.1.1.min.js" />
 $(document).ready(function () {
-
     $(document).on('click', '.btn-sign-in', function () {
         let $btn = $(this);
         submitAjaxForm(

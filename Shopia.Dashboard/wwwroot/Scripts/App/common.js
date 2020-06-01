@@ -7,6 +7,8 @@ var mapToken = 'pk.eyJ1Ijoia2luZ29mZGF5IiwiYSI6ImNrYWNweWQxaTFpbXcydnF3bDJiZ3QyO
 var $threeDotLoader = '<span class="three-dot-loader"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
 var $circularLoader = '<div class="spinner"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg></div>';
 
+function commaThousondSeperator(str) { return str.replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
 $(document).ready(function () {
 
     var setActiveMenu = function () {
@@ -202,7 +204,6 @@ var submitAjaxForm = function ($btn, successFunc, errorFunc, useToastr) {
     if (!$frm.valid()) return;
     ajaxBtn.inProgress($btn);
     let model = customSerialize($frm, true);
-    console.log(model);
     $.post($frm.attr('action'), model)
         .done(function (rep) {
             if (rep.IsSuccessful) {

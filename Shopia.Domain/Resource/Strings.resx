@@ -138,6 +138,9 @@
   <data name="BankName" xml:space="preserve">
     <value>نام بانک</value>
   </data>
+  <data name="Basket" xml:space="preserve">
+    <value>سبد خرید</value>
+  </data>
   <data name="BasketId" xml:space="preserve">
     <value>کد سبد خرید</value>
   </data>

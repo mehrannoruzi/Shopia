@@ -41,9 +41,10 @@ var fireGlobalPlugins = function () {
         if (!$(this).data('select2-fired')) {
             let $elm = $(this).prop({ 'autocomnplete': 'off', 'autocorrect': 'off' });
             let minimumInputLength = typeof $elm.data('min-length') !== 'undefined' ? $elm.data('min-length') : 2;
-            let nullable = $(this).find('option[value=""]').length > 0;
+            let $opt = $(this).find('option[value=""]');
+            let nullable = $opt.length > 0;
             $elm.data('select2-fired', true).select2({
-                placeholder: strings.pleaseSelect,
+                placeholder: nullable ? $opt.text() : strings.pleaseSelect,
                 searchInputPlaceholder: strings.searchHere,
                 allowClear: nullable,
                 language: {
@@ -73,6 +74,7 @@ var fireGlobalPlugins = function () {
         }
 
     });
+
 
     //place holder for select2 input plugin
     //$(document).on("select2:open", function (event) {

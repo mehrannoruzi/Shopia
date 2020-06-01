@@ -131,8 +131,10 @@ namespace Shopia.Service
             if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
             if (order.OrderStatus == OrderStatus.Successed || (order.OrderStatus == OrderStatus.WaitForPayment && order.OrderStatus != status))
                 return new Response<Order> { Message = ServiceMessage.NotAllowedOperation };
-            var saveResult = _appUow.ElkSaveChangesAsync();
-            return new Response<Order> { Result = order, IsSuccessful = saveResult.Result.IsSuccessful, Message = saveResult.Result.Message };
+            order.OrderStatus = status;
+            _orderRepo.Update(order);
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<Order> { IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
 
         }
 

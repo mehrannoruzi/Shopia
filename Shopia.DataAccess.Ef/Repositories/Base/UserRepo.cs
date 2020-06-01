@@ -13,7 +13,5 @@ namespace Shopia.DataAccess.Ef
         {
             _appContext = appContext;
         }
-
-        public async Task<User> FindByMobileNumber(long mobileNumber) => await FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber);//_appContext.Set<User>().FirstOrDefaultAsync(x => x.MobileNumber == mobileNumber);
     }
 }

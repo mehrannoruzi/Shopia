@@ -273,7 +273,7 @@ namespace Shopia.Service
                 if (!getPosts.IsSuccessful) return new Response<List<Post>> { Message = getPosts.Message };
                 return new Response<List<Post>> { IsSuccessful = true, Result = getPosts.Result };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 FileLoger.Error(e);
                 return new Response<List<Post>> { Message = ServiceMessage.GetPostsFailed };
@@ -281,5 +281,20 @@ namespace Shopia.Service
             }
 
         }
+
+        public IList<ProductSearchResult> Search(string searchParameter, Guid? userId, int take = 10)
+                => _productRepo.Get(x => new ProductSearchResult
+                    {
+                        Id = x.ProductId,
+                        Name = x.Name,
+                        Price = x.Price  - (int)(x.Price * x.DiscountPercent/100),
+                    },
+                    conditions: x => x.Name.Contains(searchParameter) && (userId == null ? true : x.Store.UserId == userId),
+                    new PagingParameter
+                    {
+                        PageNumber = 1,
+                        PageSize = 6
+                    },
+                    o => o.OrderByDescending(x => x.StoreId)).Items;
     }
 }

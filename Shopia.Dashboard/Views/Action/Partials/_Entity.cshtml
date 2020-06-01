@@ -5,10 +5,23 @@
 <form asp-controller="Action" asp-action="@(Model.ActionId==0?"Add":"Update")">
     <div class="row">
         @Html.HiddenFor(x => x.ActionId)
-        <div class="col-12 col-sm-6">
-            <custom-select-for for="ParentId" optional-label="@Strings.SelectPlease" class="form-control select2 w-100" items="(List<SelectListItem>)ViewBag.Actions" />
+        <div class="col-12">
+            <custom-select-for for="ParentId" 
+                               optional-label="@Strings.SelectPlease" 
+                               class="form-control select2 w-100 with-ajax"
+                               select-data-url="@Url.Action("Search")"
+                               items="Model.Parent==null?new List<SelectListItem>():new List<SelectListItem>
+                                {
+                                    new SelectListItem{ 
+                                        Text= Model.Parent.Name,
+                                        Value = Model.ParentId.ToString(),
+                                        Selected = true
+                                    }
+                                }" />
         </div>
-        <div class="col-12 col-sm-6">
+    </div>
+    <div class="row">
+        <div class="col-12">
             <custom-input-for for="Name" />
         </div>
     </div>

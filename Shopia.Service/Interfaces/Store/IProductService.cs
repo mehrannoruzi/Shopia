@@ -1,8 +1,8 @@
-﻿using Elk.Core;
-using Microsoft.AspNetCore.Http;
+﻿using System;
+using Elk.Core;
 using Shopia.Domain;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Shopia.Service
 {
@@ -26,5 +26,6 @@ namespace Shopia.Service
 
         Task<IResponse<int>> AddRangeAsync(ProductAddRangeModel model);
         Task<IResponse<List<Post>>> GetPosts(string username, int pageNumber);
+        IList<ProductSearchResult> Search(string searchParameter, Guid? userId, int take = 10);
     }
 }

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Shopia.Dashboard.Controllers
 {
-    // [AuthorizationFilter]
+    [AuthorizationFilter]
     public partial class StoreOrderController : Controller
     {
         private readonly IOrderService _OrderSrv;
@@ -32,27 +32,11 @@ namespace Shopia.Dashboard.Controllers
             Value = x.StoreId.ToString()
         }).ToList();
 
-        //[HttpGet]
-        //public virtual JsonResult Add()
-        //    => Json(new Modal
-        //    {
-        //        Title = $"{Strings.Add} {DomainString.Order}",
-        //        Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", new Order()),
-        //        AutoSubmitUrl = Url.Action("Add", "Order")
-        //    });
-
-        //[HttpPost]
-        //public virtual async Task<JsonResult> Add(Order model)
-        //{
-        //    if (!ModelState.IsValid) return Json(new { IsSuccessful = false, Message = ModelState.GetModelError() });
-        //    return Json(await _OrderSrv.AddAsync(model));
-        //}
-
         [HttpGet]
         public virtual async Task<JsonResult> Update(int id)
         {
             var chk = await _OrderSrv.CheckOwner(User.GetUserId(), id);
-            if (!chk) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound });
+            if (!chk) return Json(new Modal { IsSuccessful = false, Message = Strings.RecordNotFound });
             var findRep = await _OrderSrv.FindAsync(id);
             if (!findRep.IsSuccessful) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Order) });
             return Json(new Modal
@@ -60,7 +44,7 @@ namespace Shopia.Dashboard.Controllers
                 Title = $"{Strings.Update} {DomainString.Order}",
                 AutoSubmitBtnText = Strings.Edit,
                 Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", findRep.Result),
-                AutoSubmitUrl = Url.Action("Update", "Order"),
+                AutoSubmitUrl = Url.Action("Update", "StoreOrder"),
                 ResetForm = false
             });
         }
@@ -70,7 +54,6 @@ namespace Shopia.Dashboard.Controllers
         {
             var chk = await _OrderSrv.CheckOwner(User.GetUserId(), model.OrderId);
             if (!chk) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound });
-            if (!ModelState.IsValid) return Json(new { IsSuccessful = false, Message = ModelState.GetModelError() });
             return Json(await _OrderSrv.UpdateStatusAsync(model.OrderId, model.OrderStatus));
         }
 
@@ -97,6 +80,7 @@ namespace Shopia.Dashboard.Controllers
         {
             ViewBag.WithoutAddButton = true;
             ViewBag.Stores = GetStores();
+            filter.UserId = User.GetUserId();
             if (!Request.IsAjaxRequest()) return View(_OrderSrv.Get(filter));
             else return PartialView("Partials/_List", _OrderSrv.Get(filter));
         }

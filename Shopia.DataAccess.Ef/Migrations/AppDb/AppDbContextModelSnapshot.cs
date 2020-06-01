@@ -856,7 +856,6 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
                         .HasColumnType("bit");
 
                     b.Property<string>("NewPassword")
-                        .IsRequired()
                         .HasColumnType("varchar(50)")
                         .HasMaxLength(50);
 
@@ -1004,15 +1003,15 @@ namespace Shopia.DataAccess.Ef.Migrations.AppDb
             modelBuilder.Entity("Shopia.Domain.Payment", b =>
                 {
                     b.HasOne("Shopia.Domain.Order", "Order")
-                        .WithMany()
+                        .WithMany("Payments")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Shopia.Domain.PaymentGateway", "PaymentGateway")
                         .WithMany("Payments")
                         .HasForeignKey("PaymentGatewayId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

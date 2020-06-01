@@ -171,8 +171,14 @@
   <data name="ContactUs" xml:space="preserve">
     <value>تماس با ما</value>
   </data>
+  <data name="CopyAddress" xml:space="preserve">
+    <value>کپی آدرس</value>
+  </data>
   <data name="CopyRights" xml:space="preserve">
     <value>تمام حقوق مادی و معنوی این اثر محفوظ می باشد</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>تعداد</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
     <value>ایجاد حساب</value>
@@ -200,6 +206,9 @@
   </data>
   <data name="ErrorPageMessage" xml:space="preserve">
     <value>در پردازش درخواست خطا رخ داده است</value>
+  </data>
+  <data name="FactorGenerator" xml:space="preserve">
+    <value>فاکتور ساز</value>
   </data>
   <data name="FileFormatNotSupported" xml:space="preserve">
     <value>فرمت فایل پشتیبانی نمی شود</value>
@@ -288,6 +297,9 @@
   <data name="MobileNumber" xml:space="preserve">
     <value>شماره موبایل</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>خیر</value>
   </data>
@@ -312,6 +324,12 @@
   <data name="PrevPage" xml:space="preserve">
     <value>صفحه قبلی</value>
   </data>
+  <data name="Price" xml:space="preserve">
+    <value>قیمت</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>کالا</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>پروفایل</value>
   </data>
@@ -319,7 +337,7 @@
     <value>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
-    <value>{0} مورد نظر وجود ندارد</value>
+    <value>آیتم مورد نظر پیدا نشد</value>
   </data>
   <data name="Recover" xml:space="preserve">
     <value>بازیابی</value>
@@ -379,10 +397,13 @@
     <value>عملیات با موفقیت انجام شد</value>
   </data>
   <data name="ThereIsNoRecord" xml:space="preserve">
-    <value>هیچ {0}ی پبدا نشد</value>
+    <value>هیچ موردی یافت نشد</value>
   </data>
   <data name="ThereIsNoViewForUser" xml:space="preserve">
     <value>شما به هیچ صفحه ای دسترسی ندارید</value>
+  </data>
+  <data name="TotalPrice" xml:space="preserve">
+    <value>قیمت نهایی</value>
   </data>
   <data name="UnAuthorizedPageMessage" xml:space="preserve">
     <value>امکان دسترسی به بخش مورد نظر وجود ندارد</value>

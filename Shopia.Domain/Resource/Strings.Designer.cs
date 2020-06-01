@@ -124,6 +124,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to سبد خرید.
+        /// </summary>
+        public static string Basket {
+            get {
+                return ResourceManager.GetString("Basket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کد سبد خرید.
         /// </summary>
         public static string BasketId {

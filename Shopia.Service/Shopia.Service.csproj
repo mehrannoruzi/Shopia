@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Shopia.DataAccess.Dapper\Shopia.DataAccess.Dapper.csproj" />
     <ProjectReference Include="..\Shopia.DataAccess.Ef\Shopia.DataAccess.Ef.csproj" />
+    <ProjectReference Include="..\Shopia.InfraStructure\Shopia.InfraStructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,15 +16,9 @@ $(document).ready(function () {
         let $elm = $(this);
         showModal({
             $elm: $elm,
-            beforeFunc: function () {
-                ajaxActionLink.inProgress($elm);
-            },
-            afterFunc: function () {
-                ajaxActionLink.normal();
-            },
-            errorFunc: function () {
-                ajaxActionLink.normal();
-            }
+            beforeFunc: function () {ajaxActionLink.inProgress($elm);},
+            afterFunc: function () {ajaxActionLink.normal();},
+            errorFunc: function () {ajaxActionLink.normal();}
         });
     });
 
@@ -90,7 +84,6 @@ var ajaxActionLink = new (function () {
     var ins = function () { };
     var $elm = null, elmHtml = null;
     ins.prototype.inProgress = function ($a) {
-        console.log('here');
         $elm = $a.closest('.dropdown').find('[data-toggle="dropdown"]');
         elmHtml = $elm.html();
         $elm.html($circularLoader);

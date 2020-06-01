@@ -60,7 +60,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<Action>> FindAsync(int actionId)
         {
-            var findedAction = await _authUow.ActionRepo.FindAsync(actionId);
+            var findedAction = await _authUow.ActionRepo.FirstOrDefaultAsync(x => x.ActionId == actionId, new List<Expression<Func<Domain.Action, object>>> { i => i.Parent });
             if (findedAction == null) return new Response<Action> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.Action) };
             return new Response<Action> { Result = findedAction, IsSuccessful = true };
         }
@@ -83,15 +83,16 @@ namespace Shopia.Service
                     conditions = x => x.ControllerName.Contains(filter.ControllerNameF.ToLower());
             }
 
-            return _authUow.ActionRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.ActionId));
+            return _authUow.ActionRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.ActionId), new List<Expression<Func<Domain.Action, object>>> {
+                i=>i.Parent
+            });
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _authUow.ActionRepo.Get(conditions: x => x.Name.Contains(searchParameter))
-            .Union(_authUow.ActionRepo.Get(conditions: x => x.ControllerName.Contains(searchParameter) || x.ActionName.Contains(searchParameter)))
-            .OrderByDescending(x => x.Name)
+            => _authUow.ActionRepo.Get(conditions: x => x.Name.Contains(searchParameter) || x.ControllerName.Contains(searchParameter) || x.ActionName.Contains(searchParameter), o => o.OrderByDescending(x => x.ActionId))
+            //.OrderByDescending(x => x.Name)
             .Take(take)
-            .ToDictionary(k => (object)k.ActionId, v => (object)$"{v.Name}(/{v.ControllerName}/{v.ActionName})");
+            .ToDictionary(k => (object)k.ActionId, v => (object)$"{v.Name}({(string.IsNullOrWhiteSpace(v.ControllerName) ? "" : v.ControllerName + "/" + v.ActionName)})");
     }
 }
 

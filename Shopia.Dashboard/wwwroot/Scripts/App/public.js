@@ -41,9 +41,10 @@ var fireGlobalPlugins = function () {
         if (!$(this).data('select2-fired')) {
             let $elm = $(this).prop({ 'autocomnplete': 'off', 'autocorrect': 'off' });
             let minimumInputLength = typeof $elm.data('min-length') !== 'undefined' ? $elm.data('min-length') : 2;
-            let nullable = $(this).find('option[value=""]').length > 0;
+            let $opt = $(this).find('option[value=""]');
+            let nullable = $opt.length > 0;
             $elm.data('select2-fired', true).select2({
-                placeholder: strings.pleaseSelect,
+                placeholder: nullable ? $opt.text() : strings.pleaseSelect,
                 searchInputPlaceholder: strings.searchHere,
                 allowClear: nullable,
                 language: {
@@ -73,6 +74,7 @@ var fireGlobalPlugins = function () {
         }
 
     });
+
 
     //place holder for select2 input plugin
     //$(document).on("select2:open", function (event) {
@@ -296,6 +298,8 @@ var mapToken = 'pk.eyJ1Ijoia2luZ29mZGF5IiwiYSI6ImNrYWNweWQxaTFpbXcydnF3bDJiZ3QyO
 var $threeDotLoader = '<span class="three-dot-loader"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>';
 var $circularLoader = '<div class="spinner"><svg viewBox="25 25 50 50"><circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle></svg></div>';
 
+function commaThousondSeperator(str) { return str.replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
 $(document).ready(function () {
 
     var setActiveMenu = function () {
@@ -491,7 +495,6 @@ var submitAjaxForm = function ($btn, successFunc, errorFunc, useToastr) {
     if (!$frm.valid()) return;
     ajaxBtn.inProgress($btn);
     let model = customSerialize($frm, true);
-    console.log(model);
     $.post($frm.attr('action'), model)
         .done(function (rep) {
             if (rep.IsSuccessful) {

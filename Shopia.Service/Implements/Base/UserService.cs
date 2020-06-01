@@ -11,6 +11,7 @@ using Shopia.Service.Resource;
 using Shopia.DataAccess.Dapper;
 using System.Collections.Generic;
 using DomainStrings = Shopia.Domain.Resource.Strings;
+using Shopia.InfraStructure;
 
 namespace Shopia.Service
 {
@@ -50,7 +51,8 @@ namespace Shopia.Service
             if (user == null) return new Response<User> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
             if (await _userRepo.AnyAsync(x => x.MobileNumber == model.MobileNumber && x.UserId != model.UserId))
                 return new Response<User> { Message = ServiceMessage.DuplicateRecord };
-            user.Password = HashGenerator.Hash(model.Password);
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
+                user.Password = HashGenerator.Hash(model.NewPassword);
             user.FullName = model.FullName;
             user.Email = model.Email;
             if (!string.IsNullOrWhiteSpace(user.NewPassword)) user.Password = HashGenerator.Hash(model.NewPassword);
@@ -78,6 +80,9 @@ namespace Shopia.Service
         public async Task<IResponse<bool>> DeleteAsync(Guid userId)
         {
             _userRepo.Delete(new User { UserId = userId });
+            var stores = _appUow.StoreRepo.Get(conditions: x => x.UserId == userId, orderBy: null);
+            if (stores != null)
+                foreach (var store in stores) _appUow.StoreRepo.Delete(store);
             var saveResult = await _appUow.ElkSaveChangesAsync();
             return new Response<bool>
             {
@@ -107,7 +112,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> FindByMobileNumber(long mobileNumber)
         {
-            var user = await _userRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, includeProperties: null);
             return new Response<User>
             {
                 IsSuccessful = user != null,
@@ -118,7 +123,7 @@ namespace Shopia.Service
 
         public async Task<IResponse<User>> Authenticate(long mobileNumber, string password)
         {
-            var user = await _userRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, includeProperties: null);
             if (user == null) return new Response<User> { Message = ServiceMessage.InvalidUsernameOrPassword };
 
             if (!user.IsActive) return new Response<User> { Message = ServiceMessage.AccountIsBlocked };
@@ -176,7 +181,7 @@ namespace Shopia.Service
 
         public MenuModel GetAvailableActions(Guid userId, List<MenuSPModel> spResult = null, string urlPrefix = "")
         {
-            var userMenu = (MenuModel)_cache.Get(MenuModelCacheKey(userId));
+            var userMenu = (MenuModel)_cache.Get(GlobalVariables.CacheSettings.MenuModelCacheKey(userId));
             if (userMenu != null) return userMenu;
 
             userMenu = new MenuModel();
@@ -207,29 +212,32 @@ namespace Shopia.Service
             }
             if (userMenu.DefaultUserAction == null || userMenu.DefaultUserAction.Controller == null) return null;
             #endregion
-
-            var userActions =
-                spResult.Where(x => x.IsAction)
-                .Select(rvm => new UserAction
-                {
-                    Controller = rvm.ControllerName.ToLower(),
-                    Action = rvm.ActionName.ToLower(),
-                    RoleId = rvm.RoleId,
-                    RoleNameFa = rvm.RoleNameFa
-                })
-             .Union(
-                 spResult.Where(x => !x.IsAction)
-                 .SelectMany(x => x.ActionsList.Select(rvm => new UserAction
-                 {
-                     Controller = rvm.ControllerName.ToLower(),
-                     Action = rvm.ActionName.ToLower(),
-                     RoleId = rvm.RoleId,
-                     RoleNameFa = rvm.RoleNameFa
-                 }))).ToList();
+            var userActions = new List<UserAction>();
+            foreach (var item in spResult)
+            {
+                if (item.IsAction)
+                    userActions.Add(new UserAction
+                    {
+                        Controller = item.ControllerName.ToLower(),
+                        Action = item.ActionName.ToLower(),
+                        RoleId = item.RoleId,
+                        RoleNameFa = item.RoleNameFa
+                    });
+                if (item.ActionsList != null)
+                    foreach (var child in item.ActionsList)
+                        userActions.Add(new UserAction
+                        {
+                            Controller = child.ControllerName.ToLower(),
+                            Action = child.ActionName.ToLower(),
+                            RoleId = child.RoleId,
+                            RoleNameFa = child.RoleNameFa
+                        });
+            }
+            userActions = userActions.Distinct().ToList();
             userMenu.Menu = GetAvailableMenu(spResult, urlPrefix);
             userMenu.ActionList = userActions;
 
-            _cache.Add(MenuModelCacheKey(userId), userMenu, DateTime.Now.AddMinutes(30));
+            _cache.Add(GlobalVariables.CacheSettings.MenuModelCacheKey(userId), userMenu, DateTime.Now.AddMinutes(30));
             return userMenu;
         }
 
@@ -256,21 +264,19 @@ namespace Shopia.Service
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _userRepo.Get(conditions: x => x.FullName.Contains(searchParameter))
-                .Union(_userRepo.Get(conditions: x => x.Email.Contains(searchParameter)))
+            => _userRepo.Get(conditions: x => x.FullName.Contains(searchParameter) || x.Email.Contains(searchParameter), o => o.OrderByDescending(x => x.InsertDateMi))
                 .Select(x => new
                 {
                     x.UserId,
                     x.Email,
                     x.FullName
                 })
-                .OrderBy(x => x.FullName)
                 .Take(take)
                 .ToDictionary(k => (object)k.UserId, v => (object)$"{v.FullName}({v.Email})");
 
         public async Task<IResponse<string>> RecoverPassword(long mobileNumber, string from, EmailMessage model)
         {
-            var user = await _userRepo.FindByMobileNumber(mobileNumber);
+            var user = await _userRepo.FirstOrDefaultAsync(conditions: x => x.MobileNumber == mobileNumber, includeProperties: null);
             if (user == null) return new Response<string> { Message = ServiceMessage.RecordNotExist.Fill(DomainStrings.User) };
 
             user.MustChangePassword = true;

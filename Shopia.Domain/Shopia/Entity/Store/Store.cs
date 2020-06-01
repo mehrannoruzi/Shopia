@@ -101,7 +101,7 @@ namespace Shopia.Domain
         public string Username { get; set; }
 
         [Column(TypeName = "varchar(40)")]
-        [Display(Name = nameof(Strings.FullName), ResourceType = typeof(Strings))]
+        [Display(Name = nameof(Strings.Name), ResourceType = typeof(Strings))]
         [MaxLength(40, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string FullName { get; set; }
 

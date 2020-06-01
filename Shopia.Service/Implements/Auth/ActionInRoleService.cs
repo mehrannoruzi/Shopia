@@ -54,12 +54,12 @@ namespace Shopia.Service
             };
         }
 
-        public IEnumerable<ActionInRole> GetViaAction(int actionId) =>
+        public IEnumerable<ActionInRole> GetRoles(int actionId) =>
                 _authUow.ActionInRoleRepo.Get(x => x.ActionId == actionId,
                 x => x.OrderByDescending(air => air.ActionId),
                 new List<Expression<Func<ActionInRole, object>>> { x => x.Role }).ToList();
 
-        public IEnumerable<ActionInRole> GetViaRole(int roleId) =>
+        public IEnumerable<ActionInRole> GetActions(int roleId) =>
                     _authUow.ActionInRoleRepo.Get(x => x.RoleId == roleId,
                     x => x.OrderByDescending(air => air.ActionId),
                     new List<Expression<Func<ActionInRole, object>>> { x => x.Action }).ToList();

@@ -27,7 +27,6 @@ $(document).ready(function () {
 
     //modal close event
     $("#modal").on("hidden.bs.modal", function () {
-        console.log($(this).data('refresh-list'));
         if ($(this).data('refresh-list')) refreshList();
     });
 });
@@ -57,6 +56,7 @@ var showModal = function ({ $elm, beforeFunc, afterFunc, errorFunc }) {
     $.get($elm.data('url'))
         .done(function (rep) {
             if (elmIsActionBtn) ajaxBtn.normal();
+            else if (typeof afterFunc === 'function') afterFunc();
             if (!rep.IsSuccessful) {
                 showNotif(notifyType.danger, rep.Message);
                 return;
@@ -82,8 +82,7 @@ var showModal = function ({ $elm, beforeFunc, afterFunc, errorFunc }) {
             $.validator.unobtrusive.parse($modal);
             $modal.modal('show');
             //fireGlobalPlugins();
-
-            if (typeof afterFunc === 'function') afterFunc();
+            
         })
         .fail(function (e) {
             if (elmIsActionBtn) ajaxBtn.normal();

@@ -17,6 +17,7 @@ using DomainString = Shopia.Domain.Resource.Strings;
 
 namespace Shopia.Dashboard.Controllers
 {
+    [AuthorizationFilter]
     public class StoreProductController : Controller
     {
         readonly IProductService _productSerive;
@@ -50,7 +51,7 @@ namespace Shopia.Dashboard.Controllers
             else return PartialView("Partials/_List", _productSerive.Get(filter));
         }
 
-        [HttpGet]
+        [HttpGet, AuthEqualTo("StoreProduct", "Add")]
         public async Task<IActionResult> Post(string username, int pageNumber)
         {
             var getPosts = await _productSerive.GetPosts(username, pageNumber);
@@ -72,7 +73,7 @@ namespace Shopia.Dashboard.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost, AuthEqualTo("StoreProduct", "Add")]
         public async Task<IActionResult> AddRange(int storeId, IList<PostModel> posts)
             => Json(await _productSerive.AddRangeAsync(new ProductAddRangeModel
             {
@@ -131,7 +132,10 @@ namespace Shopia.Dashboard.Controllers
         [HttpPost]
         public virtual async Task<JsonResult> Delete([FromServices]IWebHostEnvironment env, int id) => Json(await _productSerive.DeleteAsync(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
 
-        [HttpPost]
+        [HttpPost,AuthEqualTo("StoreProduct", "Delete")]
         public virtual async Task<JsonResult> DeleteAsset([FromServices]IProductAssetService productAssetSerive, int assetId) => Json(await productAssetSerive.DeleteAsync(assetId));
+
+        [HttpGet, AuthEqualTo("StoreProduct", "Manage")]
+        public virtual JsonResult Search(string q) => Json(_productSerive.Search(q, User.GetUserId()));
     }
 }

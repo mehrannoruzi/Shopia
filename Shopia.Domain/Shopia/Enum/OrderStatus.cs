@@ -9,7 +9,7 @@ namespace Shopia.Domain
         Failed = -1,
         [Description("در انتظار پرداخت")]
         WaitForPayment = 3,
-        [Description("در حال پردازش")]
+        [Description("در حال بررسی")]
         InProcessing = 9,
         [Description("در انتظار تحویل")]
         WaitForDelivery = 12,

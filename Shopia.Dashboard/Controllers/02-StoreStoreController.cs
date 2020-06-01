@@ -12,6 +12,7 @@ using DomainString = Shopia.Domain.Resource.Strings;
 
 namespace Shopia.Dashboard.Controllers
 {
+    [AuthorizationFilter]
     public class StoreStoreController : Controller
     {
         private readonly IStoreService _storeSrv;
@@ -67,7 +68,7 @@ namespace Shopia.Dashboard.Controllers
             else return PartialView("Partials/_List", _storeSrv.Get(filter));
         }
 
-        [HttpPost]
+        [HttpPost, AuthEqualTo("StoreStore", "Update")]
         public virtual async Task<IActionResult> DeleteLogo([FromServices]IWebHostEnvironment env, int id) => Json(await _storeSrv.DeleteFile(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
 
         [HttpGet, AuthEqualTo("StoreStore", "Update")]

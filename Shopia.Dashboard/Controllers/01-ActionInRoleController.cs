@@ -40,7 +40,7 @@ namespace Shopia.Dashboard.Controllers
             var addRep = await _actionInRoleSrv.AddAsync(model);
 
             if (!addRep.IsSuccessful) return Json(addRep);
-            var getRep = _actionInRoleSrv.GetViaAction(model.ActionId).ToList();
+            var getRep = _actionInRoleSrv.GetRoles(model.ActionId).ToList();
             getRep.ForEach((x) =>
             {
                 x.Role.ActionInRoles = null;
@@ -57,15 +57,15 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> Delete(int id) => Json(await _actionInRoleSrv.DeleteAsync(id));
 
         [HttpGet, AuthEqualTo("ActionInRole", "Add")]
-        public virtual PartialViewResult GetViaAction(int actionId) => PartialView("Partials/_ListViaAction", _actionInRoleSrv.GetViaAction(actionId));
+        public virtual PartialViewResult GetByAction(int actionId) => PartialView("Partials/_ListViaAction", _actionInRoleSrv.GetRoles(actionId));
 
         [HttpGet, AuthEqualTo("ActionInRole", "Add")]
-        public virtual async Task<JsonResult> GetViaRole(int roleId)
+        public virtual async Task<JsonResult> GetByRole(int roleId)
             => Json(new Modal
             {
                 IsSuccessful = true,
                 Title = $"{DomainString.Action}",
-                Body = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_ListViaRole", _actionInRoleSrv.GetViaRole(roleId)),
+                Body = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_ListViaRole", _actionInRoleSrv.GetActions(roleId)),
                 AutoSubmitUrl = Url.Action("Add", "Action"),
                 AutoSubmit = false
             });

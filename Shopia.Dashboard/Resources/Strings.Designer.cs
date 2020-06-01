@@ -223,11 +223,29 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کپی آدرس.
+        /// </summary>
+        public static string CopyAddress {
+            get {
+                return ResourceManager.GetString("CopyAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تمام حقوق مادی و معنوی این اثر محفوظ می باشد.
         /// </summary>
         public static string CopyRights {
             get {
                 return ResourceManager.GetString("CopyRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تعداد.
+        /// </summary>
+        public static string Count {
+            get {
+                return ResourceManager.GetString("Count", resourceCulture);
             }
         }
         
@@ -309,6 +327,15 @@ namespace Shopia.Dashboard.Resources {
         public static string ErrorPageMessage {
             get {
                 return ResourceManager.GetString("ErrorPageMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فاکتور ساز.
+        /// </summary>
+        public static string FactorGenerator {
+            get {
+                return ResourceManager.GetString("FactorGenerator", resourceCulture);
             }
         }
         
@@ -574,6 +601,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خیر.
         /// </summary>
         public static string No {
@@ -646,6 +682,24 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to قیمت.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کالا.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to پروفایل.
         /// </summary>
         public static string Profile {
@@ -664,7 +718,7 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} مورد نظر وجود ندارد.
+        ///   Looks up a localized string similar to آیتم مورد نظر پیدا نشد.
         /// </summary>
         public static string RecordNotFound {
             get {
@@ -844,7 +898,7 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to هیچ {0}ی پبدا نشد.
+        ///   Looks up a localized string similar to هیچ موردی یافت نشد.
         /// </summary>
         public static string ThereIsNoRecord {
             get {
@@ -858,6 +912,15 @@ namespace Shopia.Dashboard.Resources {
         public static string ThereIsNoViewForUser {
             get {
                 return ResourceManager.GetString("ThereIsNoViewForUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to قیمت نهایی.
+        /// </summary>
+        public static string TotalPrice {
+            get {
+                return ResourceManager.GetString("TotalPrice", resourceCulture);
             }
         }
         

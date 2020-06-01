@@ -9,7 +9,7 @@ namespace Shopia.Service
     {
         Task<IResponse<ActionInRole>> AddAsync(ActionInRole model);
         Task<IResponse<bool>> DeleteAsync(int id);
-        IEnumerable<ActionInRole> GetViaAction(int actionId);
-        IEnumerable<ActionInRole> GetViaRole(int roleId);
+        IEnumerable<ActionInRole> GetRoles(int actionId);
+        IEnumerable<ActionInRole> GetActions(int roleId);
     }
 }

@@ -11,7 +11,7 @@ $(document).ready(function () {
         let $btn = $(this);
         let $box = $btn.closest('.single-uploader');
 
-        if ($('#StoreId').val() !== '0') {
+        if ($btn.data('remove-from-server')) {
             ajaxBtn.inProgress($btn);
             $.post($btn.data('url'))
                 .done(function (data) {
@@ -19,6 +19,7 @@ $(document).ready(function () {
                     ajaxBtn.normal();
                     if (data.IsSuccessful) {
                         logo = {};
+                        $btn.data('remove-from-server', false);
                         $box.removeClass('uploaded');
                     }
                     else showNotif(notifyType.danger, data.Message);
