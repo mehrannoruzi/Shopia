@@ -5,6 +5,7 @@ import Info from './comps/info';
 import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
 import strings from './../../shared/constant';
 import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
+import { SetBasketRouteAction } from './../../redux/actions/basketAction';
 
 class Store extends Component {
 
@@ -47,9 +48,7 @@ class Store extends Component {
                                 </Col>
                             </Row>
                         </Container>
-
                     </Nav>
-
                     <Container>
                         <Row>
                             <Col>
@@ -84,7 +83,8 @@ class Store extends Component {
 // }
 
 const mapDispatchToProps = dispatch => ({
-    hideInitError: () => dispatch(HideInitErrorAction())
+    hideInitError: () => dispatch(HideInitErrorAction()),
+    setBasketRoute: () => dispatch(SetBasketRouteAction())
 });
 
 export default connect(null, mapDispatchToProps)(Store);

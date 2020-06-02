@@ -3,6 +3,39 @@ import strings from './../shared/constant';
 
 export default class orderApi {
 
+    static async getBasketItems(id) {
+        try {
+            const response = await fetch(`${addr.getFixedBasket}?basketId=${id}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8;'
+                }
+            });
+            const rep = await response.json();
+            console.log(rep);
+            if (rep.IsSuccessful)
+                return {
+                    success: true,
+                    result: rep.Result.map(p => ({
+                        id: p.Id,
+                        name: p.Name,
+                        price: p.Price,
+                        count: p.Count,
+                        disount: p.Discount,
+                        realPrice: p.RealPrice,
+                        currency: p.Currency,
+                        imgUrl: p.ImageUrl
+                    }))
+                };
+            else return { success: false, message: rep.Message };
+        }
+        catch (error) {
+            console.log(error);
+            return { success: false, message: strings.connecttionFailed };
+        }
+    }
+
     static async postCompleteInfo(info) {
         try {
             const response = await fetch(addr.postCompleteInfo, {
@@ -14,7 +47,7 @@ export default class orderApi {
                 body: JSON.stringify(info)
             });
             const rep = await response.json();
-            
+
             if (!rep.IsSuccessful) return ({ success: false, message: rep.Message });
             else return ({ success: true, result: rep.Result });
         } catch (error) {
@@ -39,12 +72,12 @@ export default class orderApi {
                     result: {
                         id: rep.Result.OrderId,
                         basketChanged: rep.Result.BasketChanged,
-                        url:rep.Result.Url,
+                        url: rep.Result.Url,
                         changedProducts: rep.Result.BasketChanged ? rep.Result.ChangedProducts.map((p) => ({
                             id: p.Id,
                             price: p.Price,
                             discount: p.Discount,
-                            count:p.Count
+                            count: p.Count
                         })) : []
                     }
                 };

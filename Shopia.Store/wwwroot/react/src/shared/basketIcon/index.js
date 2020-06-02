@@ -20,7 +20,7 @@ class BasketIcon extends React.Component {
     render() {
         return (
             <div className='basket-icon-comp'>
-                <Link to='/basket'>
+                <Link to={this.props.route}>
                     <i className='icon zmdi zmdi-shopping-basket'></i>
                     <span> {strings.basket}</span>
                     <span className={'count' + (this.state.animate ? ' ripple-loader' : '')}> ({this.props.items.length})</span>

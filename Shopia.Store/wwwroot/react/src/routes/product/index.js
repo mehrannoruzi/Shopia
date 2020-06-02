@@ -9,7 +9,6 @@ import Slider from './comps/slider';
 import Header from './../../shared/header';
 import DiscountBadg from './../../shared/discountBadg';
 import { AddToBasketAction } from './../../redux/actions/basketAction';
-import basketSrv from './../../service/basketSrv';
 import { commaThousondSeperator, checkLocalStorage } from './../../shared/utils';
 import Counter from './../../shared/counter';
 import addToBasketImage from './../../assets/images/add-to-basket.svg';
@@ -62,7 +61,6 @@ class Product extends React.Component {
     }
 
     _addToBasket() {
-        basketSrv.add(this.state.product, this.state.count);
         this.props.addToBasket(this.state.product, this.state.count);
     }
 

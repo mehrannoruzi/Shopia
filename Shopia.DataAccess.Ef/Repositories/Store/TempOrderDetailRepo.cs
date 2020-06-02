@@ -3,6 +3,8 @@ using Elk.Core;
 using System.Linq;
 using Shopia.Domain;
 using Elk.EntityFrameworkCore;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shopia.DataAccess.Ef
 {
@@ -14,7 +16,7 @@ namespace Shopia.DataAccess.Ef
             _appContext = appContext;
         }
 
-        public PagingListDetails<TempOrderDetailDTO> GetBaskets(TempOrderDetailSearchFilter filter)
+        public PagingListDetails<TempOrderDetailModel> GetBaskets(TempOrderDetailSearchFilter filter)
         {
             var q = _appContext.Set<TempOrderDetail>().AsQueryable();
             if (filter != null)
@@ -40,7 +42,7 @@ namespace Shopia.DataAccess.Ef
                 x.BasketId,
                 x.InsertDateSh
             })
-            .Select(x => new TempOrderDetailDTO
+            .Select(x => new TempOrderDetailModel
             {
                 BasketId = x.Key.BasketId,
                 InsertDateSh = x.Key.InsertDateSh,
@@ -51,14 +53,32 @@ namespace Shopia.DataAccess.Ef
             .Take(filter.PageSize)
             .ToList();
             var count = q.Count();
-            return new PagingListDetails<TempOrderDetailDTO>
+            return new PagingListDetails<TempOrderDetailModel>
             {
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize,
-                Items = new PagingList<TempOrderDetailDTO>(items, count, filter),
+                Items = new PagingList<TempOrderDetailModel>(items, count, filter),
                 TotalCount = count
             };
 
+        }
+
+        public IResponse<IList<ProductDTO>> GetItems(Guid basketId)
+        {
+            var items = _appContext.Set<TempOrderDetail>().Include(x => x.Product).Where(x => x.BasketId == basketId)
+                .AsNoTracking().Select(x => new ProductDTO
+                {
+                    Id = x.ProductId,
+                    Count = x.Count,
+                    Price = x.Price,
+                    Discount = 0,
+                    Name = x.Product.Name,
+                    ImageUrl = x.Product.ProductAssets.Any() ? x.Product.ProductAssets[0].FileUrl :null
+                }).ToList();
+            return new Response<IList<ProductDTO>>{
+                IsSuccessful = true,
+                Result = items
+            };
         }
     }
 }

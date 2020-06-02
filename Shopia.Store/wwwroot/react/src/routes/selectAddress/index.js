@@ -10,7 +10,6 @@ import Steps from './../../shared/steps';
 import strings, { validationStrings } from './../../shared/constant';
 import AddressListModal from './comps/addressListModal';
 import { Radio, FormControlLabel, RadioGroup } from '@material-ui/core';
-import basketSrv from './../../service/basketSrv';
 import orderSrv from './../../service/orderSrv';
 import { Redirect, Link } from 'react-router-dom';
 import { SetAddrssAction } from './../../redux/actions/addressAction';
@@ -51,6 +50,8 @@ class SelectAddress extends React.Component {
             deliveryTypes: [],
             prevAddress: null
         };
+        console.log('ctor');
+        console.log(this.state.location);
     }
 
     _inputChanged(e) {
@@ -80,7 +81,7 @@ class SelectAddress extends React.Component {
         if (addressInfo) this.setState(p => ({ ...p, reciever: { ...p.reciever, value: addressInfo.reciever }, recieverMobileNumber: { ...p.recieverMobileNumber, value: addressInfo.recieverMobileNumber } }));
         if (this.props.lat) await this._getDeliveryCost();
 
-        if (basketSrv.get().length === 0)
+        if (this.props.items.length === 0)
             toast(strings.doPurchaseProcessAgain, {
                 type: toast.TYPE.INFO,
                 onClose: function () {
@@ -192,7 +193,7 @@ class SelectAddress extends React.Component {
                     ) :
                         (<Row>
                             <Col xs={12} className='m-b'>
-                                <Link className={'location-selector ' + (this.state.location.message ? 'error' : '')} to={`/selectLocation/${this.state.location.lng}/${this.state.location.lat}`}>
+                                <Link className={'location-selector ' + (this.state.location.message ? 'error' : '')} to={`/selectLocation?lng=${this.props.lng}&lat=${this.props.lat}`}>
                                     <CustomMap height='50px' lng={this.props.lng} lat={this.props.lat} hideMarker={true} />
                                     <label>
                                         <span>{this.state.placeName ? this.state.placeName : strings.selectLocation}</span>
@@ -272,7 +273,7 @@ class SelectAddress extends React.Component {
 
 }
 const mapStateToProps = state => {
-    return { ...state.mapReducer };
+    return { ...state.mapReducer,...state.basketReducer };
 }
 
 const mapDispatchToProps = dispatch => ({

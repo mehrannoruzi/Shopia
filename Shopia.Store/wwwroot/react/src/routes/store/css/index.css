@@ -123,7 +123,7 @@
 .store-page .products-list .arraned-row .product {
   margin-right: 3px;
   position: relative;
-  max-width: 50%;
+  width: 50%;
 }
 
 .store-page .products-list .arraned-row .product .discount-badg {

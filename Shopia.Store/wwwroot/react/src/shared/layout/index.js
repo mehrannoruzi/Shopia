@@ -5,6 +5,7 @@ import Store from '../../routes/store';
 import ContactUs from '../../routes/contactUs';
 import Product from '../../routes/product';
 import Basket from './../../routes/basket';
+import TempBasket from './../../routes/tempBasket';
 import AfterGateway from '../../routes/afterGateway';
 import NotFound from '../../routes/notFound';
 import InitError from '../../shared/initError';
@@ -25,9 +26,10 @@ class Layout extends React.Component {
                     <Route exact path="/product/:id" component={Product} />
                     <Route exact path="/contactus" component={ContactUs} />
                     <Route exact path="/basket" component={Basket} />
+                    <Route exact path="/tempbasket/:basketId?" component={TempBasket} />
                     <Route path="/completeInformation" component={CompleteInfo} />
                     <Route path="/selectAddress" component={SelectAddress} />
-                    <Route path="/selectLocation/:lng/:lat" component={SelectLocation} />
+                    <Route path="/selectLocation" component={SelectLocation} />
                     <Route path="/review" component={Review} />
                     <Route path="/afterGateway/:status/:transId" component={AfterGateway} />
                     <Route path="/:msg?" component={NotFound} />

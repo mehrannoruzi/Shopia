@@ -36,8 +36,6 @@ export default class addressApi {
     static async getDeliveryCost(address) {
         try {
             let storeId = localStorage.getItem('storeId');
-            console.log(storeId);
-
             const response = await fetch(`${addr.getDeliveryCost}?storeId=${storeId}&lng=${address.lng}&lat=${address.lat}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -46,7 +44,6 @@ export default class addressApi {
                 }
             });
             const rep = await response.json();
-            console.log(rep);
             if (!rep.IsSuccessful)
                 return {
                     success: false,

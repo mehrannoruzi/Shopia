@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import strings from '../../shared/constant';
 import orderSrv from './../../service/orderSrv';
-import basketSrv from './../../service/basketSrv';
 import greenBasketImage from './../../assets/images/green-basket.svg';
 import redBasketImage from './../../assets/images/red-basket.svg';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { ShowInitErrorAction, HideInitErrorAction } from "../../redux/actions/InitErrorAction";
+import { ClearBasketAction } from "../../redux/actions/basketAction";
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
 
@@ -24,8 +24,8 @@ class AfterGateway extends React.Component {
     componentDidMount(){
         if(this.state.success)
         {
+            this.props.clearBasket();
             orderSrv.clearOrderId();
-            basketSrv.clear();
         }
     }
 
@@ -69,6 +69,7 @@ class AfterGateway extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
     showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
-    hideInitError: () => dispatch(HideInitErrorAction())
+    hideInitError: () => dispatch(HideInitErrorAction()),
+    clearBasket:()=>dispatch(ClearBasketAction())
 });
 export default connect(null, mapDispatchToProps)(AfterGateway);

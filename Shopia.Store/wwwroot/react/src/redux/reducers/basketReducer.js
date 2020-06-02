@@ -1,8 +1,11 @@
 ﻿import actionTypes from '../actions/actionTypes';
-import basketSrv from './../../service/basketSrv';
+
 
 const initState = {
-    items: basketSrv.get()
+    items: [],
+    totalPrice: 0,
+    totalDiscount: 0,
+    route: '/basket'
 };
 const caculate = (items) => {
     let totalPrice = items.reduce(function (total, x) {
@@ -32,6 +35,12 @@ export default function basketReducer(state = initState, action) {
         case actionTypes.REMOVE_FROM_BASKET:
             state.items.splice(state.items.findIndex(x => x.id == action.payload.id), 1);
             return { ...state, items: [...state.items], ...caculate(state.items) };
+        case actionTypes.CLEAR_BASKET:
+            return { ...state, items: [], totalPrice: 0, totalDiscount: 0 };
+        case actionTypes.SET_WHOLE:
+            return { ...state, items: action.payload.items, ...caculate(action.payload.items) };
+        case actionTypes.SET_BASKET_ROUTE:
+            return { ...state, route: action.payload.route };
         case actionTypes.CHANGED_BASKET_ITEMS:
             action.payload.products.forEach(p => {
                 let idx = state.items.findIndex(x => x.id === p.id);
@@ -43,10 +52,10 @@ export default function basketReducer(state = initState, action) {
                         state.items[idx].realPrice = p.realPrice;
                     }
                 }
-    
+
             });
             return { ...state, items: [...state.items], ...caculate(state.items) };
         default:
-            return { ...state, ...caculate(state.items) };
+            return state;
     }
 };

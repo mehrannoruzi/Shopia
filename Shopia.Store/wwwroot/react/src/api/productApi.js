@@ -12,7 +12,6 @@ export default class productApi {
                 }
             });
             const rep = await response.json();
-            console.log(rep);
             if (!rep.IsSuccessful)
                 return {
                     success: false,

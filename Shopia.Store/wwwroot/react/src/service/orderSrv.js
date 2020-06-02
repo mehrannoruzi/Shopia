@@ -1,7 +1,6 @@
 import CryptoJS from 'crypto-js';
 import orderApi from './../api/orderApi';
 import strings from './../shared/constant';
-import basketSrv from './basketSrv';
 
 export default class orderSrv {
 
@@ -44,7 +43,7 @@ export default class orderSrv {
         return null;
     }
 
-    static async submit(address, reciever, recieverMobileNumber, deliveryId) {
+    static async submit(items, address, reciever, recieverMobileNumber, deliveryId) {
         let info = this.getInfo();
         if (!info)
             return { success: false, message: strings.doPurchaseProcessAgain };
@@ -53,17 +52,11 @@ export default class orderSrv {
         order.description = info.description;
         order.orderId = this.getOrderId();
         order.deliveryId = parseInt(deliveryId);
-        order.items = basketSrv.get().map((x) => ({ id: x.id, price: x.price, discount: x.discount, count: x.count }));
+        order.items = items.map((x) => ({ id: x.id, price: x.price, discount: x.discount, count: x.count }));
         order.address = address;
         order.reciever = reciever;
         order.recieverMobileNumber = recieverMobileNumber;
-        let apiRep = await orderApi.submit(order);
-        if (apiRep.success) {
-            //this.setOrderId(apiRep.result.id);
-            if (apiRep.result.basketChanged)
-                basketSrv.update(apiRep.result.changedProducts);
-        }
-        return { ...apiRep };
+        return await orderApi.submit(order);
     }
     static getOrderId() {
         let id = localStorage.getItem(this.orderIdKey);

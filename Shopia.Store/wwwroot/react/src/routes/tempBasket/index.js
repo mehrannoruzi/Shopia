@@ -1,31 +1,48 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string'
+
 import strings from './../../shared/constant';
 import DiscountBadg from './../../shared/discountBadg';
-import Counter from './../../shared/counter';
 import Header from './../../shared/header';
 import { commaThousondSeperator } from './../../shared/utils';
-import { UpdateBasketAction, RemoveFromBasketAction } from './../../redux/actions/basketAction';
+import { UpdateBasketAction, SetBasketRouteAction, SetWholeBasketAction } from './../../redux/actions/basketAction';
 import ConfirmModal from './../../shared/confirm';
-import { HideInitErrorAction } from "../../redux/actions/InitErrorAction";
+import { HideInitErrorAction, ShowInitErrorAction } from "../../redux/actions/InitErrorAction";
 import emptyBasketImage from './../../assets/images/empty-basket.png';
+import orderApi from './../../api/orderApi';
 
-class Basket extends React.Component {
+class TempBasket extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+            items: []
+        };
+        this._isMounted = true;
+    }
+
+    async _fetchData() {
+        const { params } = this.props.match;
+        let getItems = await orderApi.getBasketItems(params.basketId);
+        console.log(getItems.result);
+        if (!this._isMounted) return;
+        if (getItems.success) this.setState(p => ({ ...p, items: getItems.result, loading: false }));
+        else this.props.showInitError(this._fetchData.bind(this));
+    }
 
     async componentDidMount() {
         this.props.hideInitError();
+        await this._fetchData();
     }
 
     _changeCount(id, count) {
         this.props.updateBasket(id, count);
     }
 
-    _delete(id, name) {
-        this.modal._toggle(id, strings.areYouSureForDeleteingProduct.replace('##name##', name));
-
-    }
     _confirmDelete(id) {
         this.props.removeFromBasket(id);
     }
@@ -45,31 +62,30 @@ class Basket extends React.Component {
                 <div className='basket-page with-header'>
                     <Header goBack={this.props.history.goBack} />
                     <Container className='basket-wrapper'>
-                        {this.props.items.map((x) => (
-                            <Row key={x.id}>
-                                <Col>
-                                    <div className='item'>
-                                        {x.imgUrl ?
-                                            (<div className='img-wrapper'>
-                                                <Link to={`product/${x.id}`}><img src={x.imgUrl} alt='img item' /></Link>
-                                            </div>) : null}
+                        {this.state.loading ? [0, 1, 2].map(i => (<Skeleton key={i} style={{ marginTop: 15 }} variant='rect' height={80} />)) :
+                            this.state.items.map((x) => (
+                                <Row key={x.id}>
+                                    <Col>
+                                        <div className='item'>
+                                            {x.imgUrl ?
+                                                (<div className='img-wrapper'>
+                                                    <Link to={`product/${x.id}`}><img src={x.imgUrl} alt='img item' /></Link>
+                                                </div>) : null}
 
-                                        <div className='info'>
-                                            <div className='name m-b'>
-                                                <h2 className='hx'>{x.name}</h2>
-                                                <DiscountBadg discount={x.discount} />
-                                            </div>
-                                            <Counter id={x.id} className='m-b' count={x.count} onChange={this._changeCount.bind(this)} />
-                                            <div className='price-wrapper'>
-                                                <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}<small className='currency'> {strings.currency}</small></span>
-                                                <button onClick={this._delete.bind(this, x.id, x.name)} className='btn-delete'><i className='zmdi zmdi-delete'></i></button>
+                                            <div className='info'>
+                                                <div className='name m-b'>
+                                                    <h2 className='hx'>{x.name}</h2>
+                                                    <DiscountBadg discount={x.discount} />
+                                                </div>
+                                                <div className='price-wrapper'>
+                                                    <span className='price'>{commaThousondSeperator((x.price * x.count).toString())}<small className='currency'> {strings.currency}</small></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </Col>
-                            </Row>
-                        ))}
+                                    </Col>
+                                </Row>
+                            ))}
                     </Container>
                     <div className='footer-row'>
                         <Container className='total-price-wrapper'>
@@ -84,7 +100,7 @@ class Basket extends React.Component {
                                 </Col>
                             </Row>
                         </Container>
-                        <Link className='btn-next d-block' to='/completeInformation'>
+                        <Link className='btn-next d-block' to='../completeInformation'>
                             <span>{strings.continuePurchase}</span>
                         </Link>
                     </div>
@@ -99,8 +115,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
+    showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData)),
     updateBasket: (id, count) => dispatch(UpdateBasketAction(id, count)),
-    removeFromBasket: (id) => dispatch(RemoveFromBasketAction(id))
+    setBasketRoute: () => dispatch(SetBasketRouteAction()),
+    setWholeBasket: () => dispatch(SetWholeBasketAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Basket);
+export default connect(mapStateToProps, mapDispatchToProps)(TempBasket);

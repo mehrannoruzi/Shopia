@@ -35,3 +35,25 @@ export function RemoveFromBasketAction(id) {
         payload: { id }
     };
 };
+
+
+export function ClearBasketAction() {
+    return {
+        type: actionTypes.CLEAR_BASKET,
+        payload: {}
+    };
+};
+
+export function SetBasketRouteAction(route) {
+    return {
+        type: actionTypes.SET_BASKET_ROUTE,
+        payload: { route }
+    };
+};
+
+export function SetWholeBasketAction(items) {
+    return {
+        type: actionTypes.SET_WHOLE,
+        payload: { items }
+    };
+};

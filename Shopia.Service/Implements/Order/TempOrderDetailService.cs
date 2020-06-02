@@ -43,11 +43,13 @@ namespace Shopia.Service
             };
         }
 
-        public PagingListDetails<TempOrderDetailDTO> Get(TempOrderDetailSearchFilter filter) => _tempOrderDetailRepo.GetBaskets(filter);
+        public PagingListDetails<TempOrderDetailModel> Get(TempOrderDetailSearchFilter filter) => _tempOrderDetailRepo.GetBaskets(filter);
 
-        public List<TempOrderDetail> Get(Guid basketId)
-                        => _tempOrderDetailRepo.Get(x => x.BasketId == basketId, o => o.OrderBy(x => x.TempOrderDetailId),new List<Expression<Func<TempOrderDetail, object>>> { 
+        public List<TempOrderDetail> GetDetails(Guid basketId)
+                        => _tempOrderDetailRepo.Get(x => x.BasketId == basketId, o => o.OrderBy(x => x.TempOrderDetailId), new List<Expression<Func<TempOrderDetail, object>>> {
                             i=>i.Product
                         });
+
+        public IResponse<IList<ProductDTO>> Get(Guid basketId) => _tempOrderDetailRepo.GetItems(basketId);
     }
 }

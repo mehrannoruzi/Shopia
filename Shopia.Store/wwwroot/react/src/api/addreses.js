@@ -8,6 +8,7 @@ const addr = {
     getAddresses:`${baseUrl}Address/Get`,
     getDeliveryCost:`${baseUrl}Address/GetDeliveryCost`,
     postOrder:`${baseUrl}Order/Add`,
-    getContactUs:`${baseUrl}Home/ContactUs`
+    getContactUs:`${baseUrl}Home/ContactUs`,
+    getFixedBasket:`${baseUrl}TempOrderDetail/Get`
 } 
 export default addr;

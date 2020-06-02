@@ -58,7 +58,7 @@ namespace Shopia.Dashboard.Controllers
             {
                 Title = $"{Strings.Details} {DomainString.Basket}",
                 AutoSubmitBtnText = Strings.Edit,
-                Body = ControllerExtension.RenderViewToString(this, "Partials/_Details", _TempOrderDetailSrv.Get(id)),
+                Body = ControllerExtension.RenderViewToString(this, "Partials/_Details", _TempOrderDetailSrv.GetDetails(id)),
                 AutoSubmit = false
             });
         }

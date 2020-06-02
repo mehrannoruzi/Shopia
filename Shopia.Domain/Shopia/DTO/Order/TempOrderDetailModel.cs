@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shopia.Domain
 {
-    public class TempOrderDetailDTO
+    public class TempOrderDetailModel
     {
         [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
         public string InsertDateSh { get; set; }

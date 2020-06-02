@@ -1,20 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css';
 import './assets/css/material-design-iconic-font.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Layout from './shared/layout';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './redux/reducers';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { MuiThemeProvider, createMuiTheme, StylesProvider, jssPreset } from '@material-ui/core/styles';
-
-const store = createStore(reducers);
+import { PersistGate } from 'redux-persist/integration/react'
+import persistStore from './redux/persistStore'
+const { store, persistor } = persistStore();
 const theme = createMuiTheme({
     direction: 'rtl',
 });
@@ -29,12 +28,13 @@ function RTL(props) {
         </StylesProvider>
     );
 }
-
 ReactDOM.render(
     <Provider store={store}>
         <RTL>
             <MuiThemeProvider theme={theme}>
-                <Layout />
+                <PersistGate loading={null} persistor={persistor}>
+                    <Layout />
+                </PersistGate>
             </MuiThemeProvider>
 
         </RTL>

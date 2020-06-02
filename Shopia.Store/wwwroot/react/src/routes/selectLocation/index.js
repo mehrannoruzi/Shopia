@@ -5,13 +5,17 @@ import CustomMap from '../../shared/map';
 import { SetLocationAction } from './../../redux/actions/mapAction';
 import strings from './../../shared/constant';
 import Header from './../../shared/header';
+import queryString from 'query-string'
 
 class SelectLocation extends React.Component {
     constructor(props) {
         super(props);
-        const { params } = this.props.match;
-        this.lng = params.lng === 'null' ? null : parseInt(params.lng);
-        this.lat = params.lat === 'null' ? null : parseInt(params.lat);
+        const values = queryString.parse(this.props.location.search)
+
+        if (values['lng']) this.lng = parseFloat(values['lng'])
+        else this.lng = null;
+        if (values['lat']) this.lat = parseFloat(values['lat'])
+        else this.lat = null;
     }
 
     _mapChanged(lng, lat) {
@@ -20,7 +24,6 @@ class SelectLocation extends React.Component {
     }
 
     _setLocation() {
-        console.log(this.lng + '-' + this.lat);
         this.props.setLocation(this.lng, this.lat);
         this.props.history.goBack();
     }

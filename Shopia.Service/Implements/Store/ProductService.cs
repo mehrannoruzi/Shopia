@@ -42,7 +42,7 @@ namespace Shopia.Service
                 Price = p.Price,
                 Discount = p.DiscountPercent,
                 Name = p.Name,
-                ImageUrl = p.ProductAssets == null ? null : p.ProductAssets[0].ThumbnailUrl,
+                ImageUrl = p.ProductAssets.Any() ? p.ProductAssets[0].ThumbnailUrl : null,
                 Description = p.Description
             },
             conditions: x => x.StoreId == filter.StoreId && !x.IsDeleted,
@@ -284,11 +284,11 @@ namespace Shopia.Service
 
         public IList<ProductSearchResult> Search(string searchParameter, Guid? userId, int take = 10)
                 => _productRepo.Get(x => new ProductSearchResult
-                    {
-                        Id = x.ProductId,
-                        Name = x.Name,
-                        Price = x.Price  - (int)(x.Price * x.DiscountPercent/100),
-                    },
+                {
+                    Id = x.ProductId,
+                    Name = x.Name,
+                    Price = x.Price - (int)(x.Price * x.DiscountPercent / 100),
+                },
                     conditions: x => x.Name.Contains(searchParameter) && (userId == null ? true : x.Store.UserId == userId),
                     new PagingParameter
                     {

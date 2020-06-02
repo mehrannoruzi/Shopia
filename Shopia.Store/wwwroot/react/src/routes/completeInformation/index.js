@@ -9,7 +9,6 @@ import strings, { validationStrings } from '../../shared/constant';
 import Header from './../../shared/header';
 import Steps from './../../shared/steps';
 import orderSrv from './../../service/orderSrv';
-import basketSrv from './../../service/basketSrv';
 
 class Completeinformation extends React.Component {
     constructor(props) {
@@ -44,7 +43,7 @@ class Completeinformation extends React.Component {
     }
 
     componentDidMount() {
-        if (basketSrv.get().length === 0)
+        if (this.props.items.length === 0)
             toast(strings.doPurchaseProcessAgain, {
                 type: toast.TYPE.INFO,
                 onClose: function () {
@@ -159,13 +158,13 @@ class Completeinformation extends React.Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return { ...state.headerReducer, ...state.authenticationReducer };
-// }
+const mapStateToProps = state => {
+    return { ...state.basketReducer };
+}
 
 // const mapDispatchToProps = dispatch => ({
 //     logIn: (token, userId, username) => { dispatch(LogInAction(token, userId, username)); },
 //     showToast: (title, body) => dispatch(ShowToastAction(title, body))
 // });
 
-export default connect(null, null)(Completeinformation);
+export default connect(mapStateToProps, null)(Completeinformation);
