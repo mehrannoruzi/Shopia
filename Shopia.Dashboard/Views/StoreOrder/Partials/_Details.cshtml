@@ -7,6 +7,7 @@
         <a class="nav-item nav-link active" id="nav-order-tab" data-toggle="tab" href="#nav-order" role="tab" aria-controls="nav-order" aria-selected="true">@Strings.Order</a>
         <a class="nav-item nav-link" id="nav-items-tab" data-toggle="tab" href="#nav-items" role="tab" aria-controls="nav-items" aria-selected="false">@Html.DisplayNameFor(x => x.OrderDetails)</a>
         <a class="nav-item nav-link" id="nav-address-tab" data-toggle="tab" href="#nav-address" role="tab" aria-controls="nav-address" aria-selected="false" onclick="setTimeout(function () { map_to.invalidateSize() }, 800);">@Html.DisplayNameFor(x => x.ToAddress)</a>
+        <a class="nav-item nav-link" id="nav-payment-tab" data-toggle="tab" href="#nav-payment" role="tab" aria-controls="nav-payment" aria-selected="false">@Html.DisplayNameFor(x => x.Payments)</a>
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
@@ -118,6 +119,45 @@
             </div>
         </div>
     </div>
+    <div class="tab-pane fade m-t" id="nav-payment" role="tabpanel" aria-labelledby="nav-payment-tab">
+        @if (Model.Payments != null)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <table class="footable table table-hover toggle-arrow-tiny">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>@Html.DisplayNameFor(x => x.Payments[0].PaymentStatus)</td>
+                                <td data-hide="phone">@Html.DisplayNameFor(x => x.Payments[0].Price)</td>
+                                <td data-hide="phone">@Html.DisplayNameFor(x => x.Payments[0].InsertDateSh)</td>
+                                <td data-hide="all">@Html.DisplayNameFor(x => x.Payments[0].PaymentGateway)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var payment in Model.Payments)
+                            {
+                                <tr>
+                                    <td>@(Model.Payments.IndexOf(payment) + 1)</td>
+                                    <td>@payment.PaymentStatus.GetDescription()</td>
+                                    <td>@payment.Price.ToString("N0")</td>
+                                    <td dir="ltr">@payment.InsertDateSh @payment.InsertDateMi.ToString("HH:mm")</td>
+                                    <td>@payment.PaymentGateway.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot class="d-none">
+                            <tr>
+                                <td colspan="5">
+                                    <ul class="pagination float-right"></ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 
@@ -135,5 +175,5 @@
     }).addTo(map_to);
 
     marker_to = L.marker(coords_to).addTo(map_to).openPopup();
-   
+
 </script>

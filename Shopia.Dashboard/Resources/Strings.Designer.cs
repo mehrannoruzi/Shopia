@@ -826,6 +826,24 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ارسال.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ارسال از طریق پیامک.
+        /// </summary>
+        public static string SendViaSms {
+            get {
+                return ResourceManager.GetString("SendViaSms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نمایش پاسخ ها.
         /// </summary>
         public static string ShowAnswers {

@@ -95,6 +95,8 @@ namespace Shopia.Service
             if (order == null) return new Response<string> { Message = ServiceMessage.RecordNotExist };
             order.OrderStatus = OrderStatus.InProcessing;
             payment.PaymentStatus = PaymentStatus.Success;
+            _appUow.OrderRepo.Update(order);
+            _appUow.PaymentRepo.Update(payment);
             var update = await _appUow.ElkSaveChangesAsync();
 
             return new Response<string>
@@ -155,13 +157,32 @@ namespace Shopia.Service
             var order = await _appUow.OrderRepo.FirstOrDefaultAsync(x => x.OrderId == OrderId, new System.Collections.Generic.List<Expression<Func<Order, object>>>
             {
                 x=>x.Store,
+                x=>x.User
+            });
+            if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            //order.OrderDetails = _appUow.OrderDetailRepo.Get(x => x.OrderId == OrderId, o => o.OrderByDescending(x => x.OrderDetailId), new System.Collections.Generic.List<Expression<Func<OrderDetail, object>>>
+            //{
+            //    x=>x.Product
+            //});
+            return new Response<Order> { Result = order, IsSuccessful = true };
+        }
+
+        public async Task<IResponse<Order>> GetDetails(int OrderId)
+        {
+            var order = await _appUow.OrderRepo.FirstOrDefaultAsync(x => x.OrderId == OrderId, new System.Collections.Generic.List<Expression<Func<Order, object>>>
+            {
+                x=>x.Store,
                 x=>x.User,
-                x=>x.ToAddress,
+                x=>x.ToAddress
             });
             if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
             order.OrderDetails = _appUow.OrderDetailRepo.Get(x => x.OrderId == OrderId, o => o.OrderByDescending(x => x.OrderDetailId), new System.Collections.Generic.List<Expression<Func<OrderDetail, object>>>
             {
                 x=>x.Product
+            });
+            order.Payments = _appUow.PaymentRepo.Get(x => x.OrderId == OrderId, o => o.OrderByDescending(x => x.PaymentId), new System.Collections.Generic.List<Expression<Func<Payment, object>>>
+            {
+                x=>x.PaymentGateway
             });
             return new Response<Order> { Result = order, IsSuccessful = true };
         }

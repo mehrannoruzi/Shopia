@@ -43,7 +43,11 @@ namespace Shopia.Dashboard.Controllers
             var add = await _TempOrderDetailSrv.AddRangeAsync(items);
             if (!add.IsSuccessful) return Json(add);
             var url = $"{_configuration["CustomSettings:ReactTempBasketUrl"]}/{add.Result}";
-            return Json(new Response<string> { IsSuccessful = true, Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Result", (object)url) });
+            return Json(new Response<string>
+            {
+                IsSuccessful = true,
+                Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Result", new TempOrderDetailResultModel { Url = url })
+            });
         }
 
         [HttpGet, AuthEqualTo("StoreTempOrderDetail", "Add")]
@@ -76,5 +80,7 @@ namespace Shopia.Dashboard.Controllers
             else return PartialView("Partials/_List", _TempOrderDetailSrv.Get(filter));
         }
 
+        [HttpPost, AuthEqualTo("StoreTempOrderDetail", "Add")]
+        public virtual async Task<JsonResult> Notify([FromBody]TempOrderDetailResultModel model) => Json(new { IsSuccessful = true });
     }
 }

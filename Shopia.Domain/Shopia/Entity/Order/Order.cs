@@ -107,6 +107,8 @@ namespace Shopia.Domain
 
         [Display(Name = nameof(Strings.OrderDetails), ResourceType = typeof(Strings))]
         public List<OrderDetail> OrderDetails { get; set; }
+
+        [Display(Name = nameof(Strings.Payments), ResourceType = typeof(Strings))]
         public List<Payment> Payments { get; set; }
 
         [NotMapped]

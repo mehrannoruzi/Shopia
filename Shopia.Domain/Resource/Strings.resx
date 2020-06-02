@@ -375,6 +375,9 @@
   <data name="PaymentGateway" xml:space="preserve">
     <value>درگاه پرداخت</value>
   </data>
+  <data name="Payments" xml:space="preserve">
+    <value>پرداختی ها</value>
+  </data>
   <data name="PaymentStatus" xml:space="preserve">
     <value>وضعیت پرداخت</value>
   </data>

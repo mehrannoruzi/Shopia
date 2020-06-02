@@ -60,7 +60,7 @@ namespace Shopia.Dashboard.Controllers
         [HttpGet, AuthEqualTo("StoreOrder", "Update")]
         public virtual async Task<JsonResult> Details(int id)
         {
-            var findRep = await _OrderSrv.FindAsync(id);
+            var findRep = await _OrderSrv.GetDetails(id);
             if (!findRep.IsSuccessful) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Order) });
 
             return Json(new Modal

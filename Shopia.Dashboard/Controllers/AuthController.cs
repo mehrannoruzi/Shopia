@@ -55,7 +55,7 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> SignIn(SignInModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
-            if (!long.TryParse(model.Mobilenumber, out long mobNum)) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            if (!long.TryParse(model.MobileNumber, out long mobNum)) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
 
             var chkRep = await _userSrv.Authenticate(mobNum, model.Password);
             if (!chkRep.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = chkRep.Message });

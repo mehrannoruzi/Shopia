@@ -32,6 +32,7 @@ namespace Shopia.DataAccess.Ef
         #region Order
         public IGenericRepo<Order> OrderRepo => _serviceProvider.GetService<IGenericRepo<Order>>();
         public IGenericRepo<OrderDetail> OrderDetailRepo => _serviceProvider.GetService<IGenericRepo<OrderDetail>>();
+        public IGenericRepo<Payment> PaymentRepo => _serviceProvider.GetService<IGenericRepo<Payment>>();
         public ITempOrderDetailRepo TempOrderDetailRepo => _serviceProvider.GetService<ITempOrderDetailRepo>();
         #endregion
 

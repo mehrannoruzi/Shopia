@@ -372,6 +372,12 @@
   <data name="SelectPlease" xml:space="preserve">
     <value>لطفا انتخاب نمایید</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="SendViaSms" xml:space="preserve">
+    <value>ارسال از طریق پیامک</value>
+  </data>
   <data name="ShowAnswers" xml:space="preserve">
     <value>نمایش پاسخ ها</value>
   </data>

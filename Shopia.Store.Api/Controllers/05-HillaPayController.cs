@@ -34,7 +34,7 @@ namespace Shopia.Store.Api.Controllers
                 var findPayment = await _paymentSrv.FindAsync(model.result_transaction_callback.transaction_id);
                 if (!findPayment.IsSuccessful) return RedirectToAction(action, controller, new Response<string> { IsSuccessful = false, Result = model.result_transaction_callback.transaction_id });
                 var verify = await _orderSrv.Verify(findPayment.Result, new object[1] { model.result_transaction_callback.rrn });
-                if(verify.IsSuccessful)  await _deliverySrv.Add(findPayment.Result.OrderId);
+                if (verify.IsSuccessful) await _deliverySrv.Add(findPayment.Result.OrderId);
                 return RedirectToAction(action, controller, new Response<string> { IsSuccessful = verify.IsSuccessful, Result = model.result_transaction_callback.transaction_id });
             }
 
