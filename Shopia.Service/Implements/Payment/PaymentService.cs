@@ -9,11 +9,11 @@ namespace Shopia.Service
     public class PaymentService : IPaymentService
     {
         readonly AppUnitOfWork _appUow;
-        readonly IGenericRepo<Payment> _paymentRepo;
-        public PaymentService(AppUnitOfWork appUOW, IGenericRepo<Payment> paymentRepo)
+        readonly IPaymentRepo _paymentRepo;
+        public PaymentService(AppUnitOfWork appUOW)
         {
             _appUow = appUOW;
-            _paymentRepo = paymentRepo;
+            _paymentRepo = appUOW.PaymentRepo;
         }
 
         public async Task<IResponse<Payment>> Add(CreateTransactionRequest model, string transId, int gatewayId)
@@ -54,6 +54,21 @@ namespace Shopia.Service
             };
         }
 
+        public async Task<IResponse<Payment>> GetDetails(int paymentId)
+        {
+            var payment = await _paymentRepo.FirstOrDefaultAsync(conditions: x => x.PaymentId == paymentId, new System.Collections.Generic.List<System.Linq.Expressions.Expression<System.Func<Payment, object>>> {
+                x=>x.Order,
+                x=>x.Order.User,
+                x=>x.PaymentGateway
+            });
+            return new Response<Payment>
+            {
+                IsSuccessful = payment != null,
+                Message = payment == null ? ServiceMessage.RecordNotExist : string.Empty,
+                Result = payment
+            };
+        }
+
         public async Task<IResponse<Payment>> Update(string transactionId, PaymentStatus status)
         {
             var payment = await _paymentRepo.FirstOrDefaultAsync(conditions: x => x.TransactionId == transactionId);
@@ -67,5 +82,7 @@ namespace Shopia.Service
                 Result = payment
             };
         }
+
+        public PaymentModel Get(PaymentSearchFilter filter) => _paymentRepo.GetItemsAndCount(filter);
     }
 }

@@ -11,8 +11,8 @@
                 <th>@Html.DisplayNameFor(x => x.Items[0].Store)</th>
                 <th data-hide="phone">@Html.DisplayNameFor(x => x.Items[0].User)</th>
                 <th data-hide="phone">@Html.DisplayNameFor(x => x.Items[0].TotalPriceAfterDiscount)</th>
+                <th data-hide="phone">@Html.DisplayNameFor(x => x.Items[0].OrderStatus)</th>
                 <th data-hide="phone">@Html.DisplayNameFor(x => x.Items[0].InsertDateSh)</th>
-                <th data-hide="all">@Html.DisplayNameFor(x => x.Items[0].OrderStatus)</th>
                 <th data-hide="all">@Html.DisplayNameFor(x => x.Items[0].ToAddress)</th>
                 <th class="text-center"> <i class="zmdi zmdi-wrench rotate-90"></i></th>
             </tr>
@@ -25,8 +25,8 @@
                     <td>@item.Store.FullName</td>
                     <td>@item.User.FullName (@item.User.MobileNumber)</td>
                     <td>@item.TotalPriceAfterDiscount.ToString("N0")</td>
-                    <td>@item.InsertDateSh</td>
                     <td>@item.OrderStatus.GetDescription()</td>
+                    <td>@item.InsertDateSh</td>
                     <td>@item.ToAddress.AddressDetails</td>
                     <td class="actions">
                         <div class="dropdown b-a-c">

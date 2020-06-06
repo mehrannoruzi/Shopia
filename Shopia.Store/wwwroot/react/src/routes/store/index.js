@@ -6,6 +6,7 @@ import { Nav, Tab, Container, Row, Col } from 'react-bootstrap';
 import strings from './../../shared/constant';
 import { HideInitErrorAction } from './../../redux/actions/InitErrorAction';
 import { SetBasketRouteAction } from './../../redux/actions/basketAction';
+import { SetTempBasketIdAction, ClearTempBasketAction } from './../../redux/actions/tempBasketAction';
 
 class Store extends Component {
 
@@ -21,6 +22,9 @@ class Store extends Component {
     componentDidMount() {
         localStorage.setItem('storeId', this.props.match.params.id);
         this.props.hideInitError();
+        this.props.setBasketId(null);
+        this.props.setBasketRoute('/basket');
+        this.props.clearTempBasket()
     }
 
     render() {
@@ -84,7 +88,9 @@ class Store extends Component {
 
 const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
-    setBasketRoute: () => dispatch(SetBasketRouteAction())
+    setBasketRoute: (route) => dispatch(SetBasketRouteAction(route)),
+    setBasketId: (id) => dispatch(SetTempBasketIdAction(id)),
+    clearTempBasket: () => dispatch(ClearTempBasketAction())
 });
 
 export default connect(null, mapDispatchToProps)(Store);

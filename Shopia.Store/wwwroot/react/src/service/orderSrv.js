@@ -58,6 +58,23 @@ export default class orderSrv {
         order.recieverMobileNumber = recieverMobileNumber;
         return await orderApi.submit(order);
     }
+
+    static async submitTempBasket(basketId, address, reciever, recieverMobileNumber, deliveryId) {
+        let info = this.getInfo();
+        if (!info)
+            return { success: false, message: strings.doPurchaseProcessAgain };
+        let order = {};
+        order.basketId=basketId;
+        order.UserToken = info.token;
+        order.description = info.description;
+        order.orderId = this.getOrderId();
+        order.deliveryId = parseInt(deliveryId);
+        order.address = address;
+        order.reciever = reciever;
+        order.recieverMobileNumber = recieverMobileNumber;
+        return await orderApi.submitTempBasket(order);
+    }
+
     static getOrderId() {
         let id = localStorage.getItem(this.orderIdKey);
         if (id) return parseInt(id);

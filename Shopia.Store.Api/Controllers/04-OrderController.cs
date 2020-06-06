@@ -73,7 +73,7 @@ namespace Shopia.Store.Api.Controllers
             var transModel = new CreateTransactionRequest
             {
                 OrderId = addOrder.Result.Order.OrderId,
-                Amount = addOrder.Result.Order.TotalPrice,
+                Amount = addOrder.Result.Order.TotalPriceAfterDiscount,
                 MobileNumber = findUser.Result.MobileNumber.ToString(),
                 ApiKey = fatcory.Result.Gateway.MerchantId,
                 CallbackUrl = fatcory.Result.Gateway.PostBackUrl,
@@ -98,6 +98,38 @@ namespace Shopia.Store.Api.Controllers
                         Price = x.Price,
                         Count = x.Count
                     })
+                }
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddTempBasket([FromBody]TempOrderDTO model)
+        {
+            var findUser = await _userService.FindAsync(model.UserToken);
+            if (!findUser.IsSuccessful) return Json(new Response<string> { Message = Strings.InvalidToken });
+            var addOrder = await _orderService.AddTempBasket(model);
+            if (!addOrder.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = addOrder.Message });
+            var fatcory = await _gatewayFectory.GetInsance(int.Parse(_configuration["DefaultGatewayId"]));
+            var transModel = new CreateTransactionRequest
+            {
+                OrderId = addOrder.Result.OrderId,
+                Amount = addOrder.Result.TotalPriceAfterDiscount,
+                MobileNumber = findUser.Result.MobileNumber.ToString(),
+                ApiKey = fatcory.Result.Gateway.MerchantId,
+                CallbackUrl = fatcory.Result.Gateway.PostBackUrl,
+                Url = fatcory.Result.Gateway.Url
+            };
+            var createTrans = await fatcory.Result.Service.CreateTrasaction(transModel, null);
+            if (!createTrans.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = createTrans.Message, Result = new AddOrderReponse { OrderId = addOrder.Result.OrderId } });
+            var addPayment = await _paymentService.Add(transModel, createTrans.Result.TransactionId, fatcory.Result.Gateway.PaymentGatewayId);
+            if (!addPayment.IsSuccessful) return Json(new Response<AddOrderReponse> { Message = addPayment.Message, Result = new AddOrderReponse { OrderId = addOrder.Result.OrderId } });
+            return Json(new Response<AddOrderReponse>
+            {
+                IsSuccessful = true,
+                Result = new AddOrderReponse
+                {
+                    OrderId = addOrder.Result.OrderId,
+                    Url = createTrans.Result.GatewayUrl
                 }
             });
         }

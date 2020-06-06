@@ -50,6 +50,6 @@ namespace Shopia.Service
                             i=>i.Product
                         });
 
-        public IResponse<IList<ProductDTO>> Get(Guid basketId) => _tempOrderDetailRepo.GetItems(basketId);
+        public IResponse<IList<TempOrderDetailDTO>> Get(Guid basketId) => _tempOrderDetailRepo.GetItems(basketId);
     }
 }

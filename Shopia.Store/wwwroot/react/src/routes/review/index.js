@@ -13,6 +13,7 @@ import deliveryCostImage from './../../assets/images/delivery-cost.svg';
 import discountImage from './../../assets/images/discount.svg';
 import { toast } from 'react-toastify';
 import ProductsChangedModal from './comps/ProductsChangedModal';
+import { SetTempBasketIdAction } from './../../redux/actions/tempBasketAction';
 
 class Review extends React.Component {
     constructor(props) {
@@ -32,23 +33,35 @@ class Review extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.items);
         this.props.hideInitError();
     }
 
     async _pay() {
         this.setState(p => ({ ...p, btnInProgresss: true }));
-        let rep = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber, this.props.deliveryId);
-        this.setState(p => ({ ...p, btnInProgresss: false }));
-        if (rep.success) {
-            orderSrv.setOrderId(rep.result.id);
-            if (rep.result.basketChanged) {
-                this.setState(p => ({ ...p, gatewayUrl: rep.result.url }));
-                this.changedProductModal._toggle();
-                this.props.changeBasket(rep.result.changedProducts);
+        if (this.props.basketId) {
+            let submit = await orderSrv.submitTempBasket(this.props.basketId, this.props.address, this.props.reciever, this.props.recieverMobileNumber, this.props.deliveryId);
+            if (submit.success) {
+                this.props.setBasketId(null);
+                window.open(submit.result.url, '_self');
             }
-            else window.open(rep.result.url, '_self');
+            else toast(submit.message, { type: toast.TYPE.ERROR });
         }
-        else toast(rep.message, { type: toast.TYPE.ERROR })
+        else {
+            let submit = await orderSrv.submit(this.props.address, this.props.reciever, this.props.recieverMobileNumber, this.props.deliveryId);
+            this.setState(p => ({ ...p, btnInProgresss: false }));
+            if (submit.success) {
+                orderSrv.setOrderId(submit.result.id);
+                if (submit.result.basketChanged) {
+                    this.setState(p => ({ ...p, gatewayUrl: submit.result.url }));
+                    this.changedProductModal._toggle();
+                    this.props.changeBasket(submit.result.changedProducts);
+                }
+                else window.open(submit.result.url, '_self');
+            }
+            else toast(submit.message, { type: toast.TYPE.ERROR });
+        }
+
     }
 
     _goToBasket() {
@@ -123,7 +136,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     showInitError: (fetchData, message) => dispatch(ShowInitErrorAction(fetchData, message)),
     hideInitError: () => dispatch(HideInitErrorAction()),
-    changeBasket: (products) => dispatch(ChangedBasketItemsAction(products))
+    changeBasket: (products) => dispatch(ChangedBasketItemsAction(products)),
+    setBasketId: (id) => dispatch(SetTempBasketIdAction(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Review);

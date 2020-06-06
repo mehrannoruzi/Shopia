@@ -16,13 +16,19 @@ namespace Shopia.Service
         readonly IProductService _productSrv;
         readonly IGatewayFactory _gatewayFactory;
         readonly IDeliveryService _deliverySrv;
-        public OrderService(AppUnitOfWork appUOW, IGatewayFactory gatewayFactory, IProductService productSrv, IDeliveryService deliverySrv)
+        readonly ITempOrderDetailService _tempOrderDetailSrv;
+        public OrderService(AppUnitOfWork appUOW,
+            IGatewayFactory gatewayFactory,
+            IProductService productSrv,
+            IDeliveryService deliverySrv,
+            ITempOrderDetailService tempOrderDetailSrv)
         {
             _appUow = appUOW;
             _orderRepo = appUOW.OrderRepo;
             _productSrv = productSrv;
             _gatewayFactory = gatewayFactory;
             _deliverySrv = deliverySrv;
+            _tempOrderDetailSrv = tempOrderDetailSrv;
         }
 
         public async Task<IResponse<(Order Order, bool IsChanged)>> Add(OrderDTO model)
@@ -75,6 +81,60 @@ namespace Shopia.Service
             {
                 IsSuccessful = true,
                 Result = (order, chkResult.Changed)
+            };
+        }
+
+        public async Task<IResponse<Order>> AddTempBasket(TempOrderDTO model)
+        {
+            var getItems = _tempOrderDetailSrv.Get(model.BasketId);
+            if(!getItems.IsSuccessful) return new Response<Order> { Message = getItems.Message };
+            var productId = getItems.Result.Where(x => x.Count != 0).First().Id;
+            var store = await _appUow.ProductRepo.FirstOrDefaultAsync(x => new { x.StoreId, x.Store.AddressId }, x => x.ProductId == productId);
+            if (store == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
+            var address = await _appUow.AddressRepo.FindAsync(store.AddressId);
+            if (address == null) await _appUow.AddressRepo.FindAsync(store.AddressId);
+            var getDeliveryCost = await _deliverySrv.GetDeliveryCost(model.DeliveryId, store.StoreId, new LocationDTO { Lat = model.Address.Lat, Lng = model.Address.Lng });
+            if (!getDeliveryCost.IsSuccessful) return new Response<Order> { Message = getDeliveryCost.Message };
+            var orderDetails = getItems.Result.Where(x => x.Count != 0).Select(i => new OrderDetail
+            {
+                ProductId = i.Id,
+                Count = i.Count,
+                Price = i.Price,
+                TotalPrice = i.RealPrice * i.Count,
+                DiscountPrice = i.DiscountPrice,
+                DiscountPercent = i.Discount
+            }).ToList();
+            var order = new Order
+            {
+                StoreId = store.StoreId,
+                TotalPrice = orderDetails.Sum(x => x.Price * x.Count),
+                TotalPriceAfterDiscount = orderDetails.Sum(x => x.TotalPrice) + getDeliveryCost.Result,
+                UserId = model.UserToken,
+                DiscountPrice = orderDetails.Sum(x => x.DiscountPrice),
+                OrderStatus = OrderStatus.WaitForPayment,
+                DeliveryProviderId = model.DeliveryId,
+                OrderComment = model.Description,
+                UserComment = new UserComment { Reciever = model.Reciever, RecieverMobileNumber = model.RecieverMobileNumber }.SerializeToJson(),
+                ToAddressId = model.Address.Id ?? 0,
+                ToAddress = model.Address.Id == null ? new Address
+                {
+                    UserId = model.UserToken,
+                    AddressType = AddressType.Home,
+                    Latitude = model.Address.Lat,
+                    Longitude = model.Address.Lng,
+                    AddressDetails = model.Address.Address
+                } : null,
+                FromAddressId = store.AddressId ?? 0,
+                OrderDetails = orderDetails
+            };
+            await _orderRepo.AddAsync(order);
+            var addOrder = await _appUow.ElkSaveChangesAsync();
+            if (!addOrder.IsSuccessful)
+                return new Response<Order> { Message = addOrder.Message };
+            return new Response<Order>
+            {
+                IsSuccessful = true,
+                Result = order
             };
         }
 
@@ -192,22 +252,22 @@ namespace Shopia.Service
             Expression<Func<Order, bool>> conditions = x => true;
             if (filter != null)
             {
-                if (filter.UserId != null) conditions = x => x.UserId == filter.UserId;
-                if (filter.StoreId != null) conditions = x => x.StoreId == filter.StoreId;
+                if (filter.UserId != null) conditions = conditions.And(x => x.UserId == filter.UserId);
+                if (filter.StoreId != null) conditions = conditions.And(x => x.StoreId == filter.StoreId);
                 if (!string.IsNullOrWhiteSpace(filter.FromDateSh))
                 {
                     var dt = PersianDateTime.Parse(filter.FromDateSh).ToDateTime();
-                    conditions = x => x.InsertDateMi >= dt;
+                    conditions = conditions.And(x => x.InsertDateMi >= dt);
                 }
                 if (!string.IsNullOrWhiteSpace(filter.ToDateSh))
                 {
                     var dt = PersianDateTime.Parse(filter.ToDateSh).ToDateTime();
-                    conditions = x => x.InsertDateMi <= dt;
+                    conditions = conditions.And(x => x.InsertDateMi <= dt);
                 }
                 if (!string.IsNullOrWhiteSpace(filter.TransactionId))
-                    conditions = x => x.Payments.Any(p => p.TransactionId == filter.TransactionId);
+                    conditions = conditions.And(x => x.Payments.Any(p => p.TransactionId == filter.TransactionId));
                 if (filter.OrderStatus != null)
-                    conditions = x => x.OrderStatus == filter.OrderStatus;
+                    conditions = conditions.And(x => x.OrderStatus == filter.OrderStatus);
             }
 
             return _orderRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.OrderId), new System.Collections.Generic.List<Expression<Func<Order, object>>>

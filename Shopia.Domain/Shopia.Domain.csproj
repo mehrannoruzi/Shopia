@@ -39,7 +39,6 @@
 
   <ItemGroup>
     <Folder Include="Shopia.Crawler\" />
-    <Folder Include="Shopia\Repositories\Payment\" />
   </ItemGroup>
 
 </Project>

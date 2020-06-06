@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Shopia.DataAccess.Ef;
 using Elk.AspNetCore;
+using Elk.Cache;
+using Shopia.InfraStructure;
 
 namespace Shopia.Dashboard.Controllers
 {
@@ -67,10 +69,11 @@ namespace Shopia.Dashboard.Controllers
             return Json(new Response<string> { IsSuccessful = true, Result = Url.Action(menuRep.DefaultUserAction.Action, menuRep.DefaultUserAction.Controller, new { }), });
         }
 
-        public virtual async Task<ActionResult> SignOut()
+        public virtual async Task<ActionResult> SignOut([FromServices]IMemoryCacheProvider cache)
         {
             if (User.Identity.IsAuthenticated)
             {
+                cache.Remove(GlobalVariables.CacheSettings.MenuModelCacheKey(User.GetUserId()));
                 await _httpAccessor.HttpContext.SignOutAsync();
             }
 

@@ -67,9 +67,9 @@ namespace Shopia.Service
             if (filter != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.RoleNameFaF))
-                    conditions = x => x.RoleNameFa.Contains(filter.RoleNameFaF);
+                    conditions = conditions.And(x => x.RoleNameFa.Contains(filter.RoleNameFaF));
                 if (!string.IsNullOrWhiteSpace(filter.RoleNameEnF))
-                    conditions = x => x.RoleNameEn.Contains(filter.RoleNameEnF);
+                    conditions = conditions.And(x => x.RoleNameEn.Contains(filter.RoleNameEnF));
             }
 
             return _authUow.RoleRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.RoleId));

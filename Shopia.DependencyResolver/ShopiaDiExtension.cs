@@ -3,7 +3,6 @@ using Elk.Cache;
 using Shopia.Domain;
 using Shopia.Service;
 using Shopia.DataAccess.Ef;
-using Elk.EntityFrameworkCore;
 using Shopia.DataAccess.Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -70,6 +69,7 @@ namespace Shopia.DependencyResolver
             services.AddScoped<ITempOrderDetailRepo, TempOrderDetailRepo>();
             #endregion
             #region Payment
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<IPaymentService, PaymentService>();
             #endregion
             #region Store

@@ -19,6 +19,7 @@ const caculate = (items) => {
 export default function basketReducer(state = initState, action) {
     switch (action.type) {
         case actionTypes.ADD_TO_BASKET:
+            state.items = state.items.filter(x => !x.itemId);
             let idx = state.items.findIndex(x => x.id == action.payload.id);
             let items = [];
             if (idx === -1)
@@ -41,6 +42,9 @@ export default function basketReducer(state = initState, action) {
             return { ...state, items: action.payload.items, ...caculate(action.payload.items) };
         case actionTypes.SET_BASKET_ROUTE:
             return { ...state, route: action.payload.route };
+        case actionTypes.CLEAR_TEMP_BASKET:
+            state.items = state.items.filter(x => !x.itemId);
+            return { ...state, items: [...state.items], ...caculate(state.items) };
         case actionTypes.CHANGED_BASKET_ITEMS:
             action.payload.products.forEach(p => {
                 let idx = state.items.findIndex(x => x.id === p.id);

@@ -202,7 +202,7 @@ class SelectAddress extends React.Component {
                                 </Link>
                                 <p className='Mui-error'>{this.state.location.message}</p>
                             </Col>
-                            <Col xs={12} sm={6}>
+                            <Col xs={12}>
                                 <div className="form-group">
                                     <TextField
                                         id="address"

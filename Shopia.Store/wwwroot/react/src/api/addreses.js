@@ -8,6 +8,7 @@ const addr = {
     getAddresses:`${baseUrl}Address/Get`,
     getDeliveryCost:`${baseUrl}Address/GetDeliveryCost`,
     postOrder:`${baseUrl}Order/Add`,
+    postTempBasket:`${baseUrl}Order/AddTempBasket`,
     getContactUs:`${baseUrl}Home/ContactUs`,
     getFixedBasket:`${baseUrl}TempOrderDetail/Get`
 } 

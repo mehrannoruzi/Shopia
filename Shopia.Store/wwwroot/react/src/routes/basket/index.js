@@ -16,6 +16,7 @@ class Basket extends React.Component {
 
     async componentDidMount() {
         this.props.hideInitError();
+        console.log(this.props.items);
     }
 
     _changeCount(id, count) {

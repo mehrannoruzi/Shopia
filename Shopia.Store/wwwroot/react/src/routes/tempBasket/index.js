@@ -8,10 +8,11 @@ import queryString from 'query-string'
 import strings from './../../shared/constant';
 import DiscountBadg from './../../shared/discountBadg';
 import Header from './../../shared/header';
+import ConfirmModal from './../../shared/confirm';
 import { commaThousondSeperator } from './../../shared/utils';
 import { UpdateBasketAction, SetBasketRouteAction, SetWholeBasketAction } from './../../redux/actions/basketAction';
-import ConfirmModal from './../../shared/confirm';
 import { HideInitErrorAction, ShowInitErrorAction } from "../../redux/actions/InitErrorAction";
+import { SetTempBasketIdAction } from "../../redux/actions/tempBasketAction";
 import emptyBasketImage from './../../assets/images/empty-basket.png';
 import orderApi from './../../api/orderApi';
 
@@ -23,22 +24,28 @@ class TempBasket extends React.Component {
             items: []
         };
         this._isMounted = true;
+        this.basketId = this.props.match.params.basketId;
     }
 
     async _fetchData() {
-        const { params } = this.props.match;
-        let getItems = await orderApi.getBasketItems(params.basketId);
-        console.log(getItems.result);
+        let getItems = await orderApi.getBasketItems(this.basketId);
         if (!this._isMounted) return;
-        if (getItems.success) this.setState(p => ({ ...p, items: getItems.result, loading: false }));
+        if (getItems.success) {
+            this.props.setWholeBasket(getItems.result);
+            this.setState(p => ({ ...p, items: getItems.result, loading: false }));
+        }
         else this.props.showInitError(this._fetchData.bind(this));
     }
 
     async componentDidMount() {
         this.props.hideInitError();
+        this.props.setBasketRoute(`/tempBasket/${this.basketId}`)
+        this.props.setBasketId(this.basketId);
         await this._fetchData();
     }
-
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
     _changeCount(id, count) {
         this.props.updateBasket(id, count);
     }
@@ -117,8 +124,9 @@ const mapDispatchToProps = dispatch => ({
     hideInitError: () => dispatch(HideInitErrorAction()),
     showInitError: (fetchData) => dispatch(ShowInitErrorAction(fetchData)),
     updateBasket: (id, count) => dispatch(UpdateBasketAction(id, count)),
-    setBasketRoute: () => dispatch(SetBasketRouteAction()),
-    setWholeBasket: () => dispatch(SetWholeBasketAction()),
+    setBasketRoute: (route) => dispatch(SetBasketRouteAction(route)),
+    setWholeBasket: (items) => dispatch(SetWholeBasketAction(items)),
+    setBasketId: (id) => dispatch(SetTempBasketIdAction(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TempBasket);

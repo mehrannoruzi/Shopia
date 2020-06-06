@@ -12,6 +12,6 @@ namespace Shopia.Service
         Task<IResponse<bool>> DeleteAsync(Guid basketId);
         PagingListDetails<TempOrderDetailModel> Get(TempOrderDetailSearchFilter filter);
         List<TempOrderDetail> GetDetails(Guid basketId);
-        IResponse<IList<ProductDTO>> Get(Guid basketId);
+        IResponse<IList<TempOrderDetailDTO>> Get(Guid basketId);
     }
 }

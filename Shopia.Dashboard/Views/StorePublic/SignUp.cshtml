@@ -13,7 +13,7 @@
     <div class="form-wrapper">
         <div class="container">
             <div class="row" dir="ltr">
-                <div class="col-12 col-sm-8 offset-sm-2">
+                <div class="col-12 col-sm-10 offset-sm-1 col-xl-8 offset-xl-2">
                     <div class="white-box">
                         <h4 class="title text-center">@Strings.StoreSignUp</h4>
                         <form class="m-t m-t" action="@Url.Action("Submit","StorePublic")" dir="rtl">
@@ -40,9 +40,19 @@
                                     <custom-input-for for="MobileNumber" class="form-control ltr-elm"></custom-input-for>
                                 </div>
                             </div>
-                            <button class="btn-submit btn-1" type="button">
-                                @Strings.Submit
-                            </button>
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-start align-items-center">
+                                    <a href="@Url.Action("SignIn","Auth")" class="link-to-sign">
+                                        @Strings.SignInToAccount
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn-submit btn-1" type="button">
+                                        @Strings.Submit
+                                    </button>
+                                </div>
+                            </div>
+
 
                         </form>
                     </div>

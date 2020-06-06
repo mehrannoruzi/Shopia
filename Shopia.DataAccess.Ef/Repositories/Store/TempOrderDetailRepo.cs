@@ -63,11 +63,12 @@ namespace Shopia.DataAccess.Ef
 
         }
 
-        public IResponse<IList<ProductDTO>> GetItems(Guid basketId)
+        public IResponse<IList<TempOrderDetailDTO>> GetItems(Guid basketId)
         {
             var items = _appContext.Set<TempOrderDetail>().Include(x => x.Product).Where(x => x.BasketId == basketId)
-                .AsNoTracking().Select(x => new ProductDTO
+                .AsNoTracking().Select(x => new TempOrderDetailDTO
                 {
+                    ItemId = x.TempOrderDetailId,
                     Id = x.ProductId,
                     Count = x.Count,
                     Price = x.Price,
@@ -75,7 +76,7 @@ namespace Shopia.DataAccess.Ef
                     Name = x.Product.Name,
                     ImageUrl = x.Product.ProductAssets.Any() ? x.Product.ProductAssets[0].FileUrl :null
                 }).ToList();
-            return new Response<IList<ProductDTO>>{
+            return new Response<IList<TempOrderDetailDTO>>{
                 IsSuccessful = true,
                 Result = items
             };

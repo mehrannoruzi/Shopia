@@ -18,13 +18,13 @@ export default class orderApi {
                 return {
                     success: true,
                     result: rep.Result.map(p => ({
+                        itemId: p.ItemId,
                         id: p.Id,
                         name: p.Name,
                         price: p.Price,
                         count: p.Count,
                         disount: p.Discount,
                         realPrice: p.RealPrice,
-                        currency: p.Currency,
                         imgUrl: p.ImageUrl
                     }))
                 };
@@ -88,7 +88,33 @@ export default class orderApi {
             return { success: false, message: strings.connecttionFailed };
         }
     }
-
+    static async submitTempBasket(order) {
+        try {
+            const response = await fetch(addr.postTempBasket, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8;'
+                },
+                body: JSON.stringify(order) // body data type must match "Content-Type" header
+            });
+            const rep = await response.json();
+            if (rep.IsSuccessful)
+                return {
+                    success: true,
+                    result: {
+                        id: rep.Result.OrderId,
+                        basketChanged: rep.Result.BasketChanged,
+                        url: rep.Result.Url
+                    }
+                };
+            else return { success: false, message: rep.Message };
+        }
+        catch (error) {
+            console.log(error);
+            return { success: false, message: strings.connecttionFailed };
+        }
+    }
     static verify = (orderId) => new Promise((resolve) => {
 
         setTimeout(function () {

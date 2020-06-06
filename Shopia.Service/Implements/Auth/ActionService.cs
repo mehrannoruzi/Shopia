@@ -76,11 +76,11 @@ namespace Shopia.Service
             if (filter != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.NameF))
-                    conditions = x => x.Name.Contains(filter.NameF);
+                    conditions = conditions.And(x => x.Name.Contains(filter.NameF));
                 if (!string.IsNullOrWhiteSpace(filter.ActionNameF))
-                    conditions = x => x.ActionName.Contains(filter.ActionNameF.ToLower());
+                    conditions = conditions.And(x => x.ActionName.Contains(filter.ActionNameF.ToLower()));
                 if (!string.IsNullOrWhiteSpace(filter.ControllerNameF))
-                    conditions = x => x.ControllerName.Contains(filter.ControllerNameF.ToLower());
+                    conditions = conditions.And(x => x.ControllerName.Contains(filter.ControllerNameF.ToLower()));
             }
 
             return _authUow.ActionRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.ActionId), new List<Expression<Func<Domain.Action, object>>> {
