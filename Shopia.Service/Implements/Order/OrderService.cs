@@ -187,11 +187,11 @@ namespace Shopia.Service
 
         public async Task<bool> CheckOwner(Guid userId, int orderId) => await _orderRepo.AnyAsync(x => x.OrderId == orderId && x.Store.UserId == userId);
 
-        public async Task<IResponse<Order>> UpdateStatusAsync(int id, OrderStatus status)
+        public async Task<IResponse<Order>> UpdateStatusAsync(int id, OrderStatus status, bool check = true)
         {
             var order = await _orderRepo.FindAsync(id);
             if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
-            if (order.OrderStatus == OrderStatus.Successed || (order.OrderStatus == OrderStatus.WaitForPayment && order.OrderStatus != status))
+            if (check && (order.OrderStatus == OrderStatus.Successed || (order.OrderStatus == OrderStatus.WaitForPayment && order.OrderStatus != status)))
                 return new Response<Order> { Message = ServiceMessage.NotAllowedOperation };
             order.OrderStatus = status;
             _orderRepo.Update(order);
@@ -217,13 +217,10 @@ namespace Shopia.Service
             var order = await _appUow.OrderRepo.FirstOrDefaultAsync(x => x.OrderId == OrderId, new System.Collections.Generic.List<Expression<Func<Order, object>>>
             {
                 x=>x.Store,
-                x=>x.User
+                x=>x.User,
+                x=>x.FromAddress
             });
             if (order == null) return new Response<Order> { Message = ServiceMessage.RecordNotExist };
-            //order.OrderDetails = _appUow.OrderDetailRepo.Get(x => x.OrderId == OrderId, o => o.OrderByDescending(x => x.OrderDetailId), new System.Collections.Generic.List<Expression<Func<OrderDetail, object>>>
-            //{
-            //    x=>x.Product
-            //});
             return new Response<Order> { Result = order, IsSuccessful = true };
         }
 

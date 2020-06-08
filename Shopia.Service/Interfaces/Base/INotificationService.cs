@@ -1,10 +1,11 @@
-﻿using Shopia.Domain;
+﻿using Elk.Core;
+using Shopia.Domain;
 using System.Threading.Tasks;
 
 namespace Shopia.Service
 {
     public interface INotificationService
     {
-        Task<bool> NotifyAsync(NotificationDto notifyDto);
+        Task<IResponse<bool>> NotifyAsync(NotificationDto notifyDto);
     }
 }

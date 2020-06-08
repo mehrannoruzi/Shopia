@@ -77,7 +77,8 @@
     review: 'بازبینی',
     continue: 'ادامه',
     selectLocation: 'انتخاب مکان',
-    map: 'نقشه'
+    map: 'نقشه',
+    mostVisited:'پر بازدیدترین ها'
 };
 export default strings;
 export const validationStrings = {

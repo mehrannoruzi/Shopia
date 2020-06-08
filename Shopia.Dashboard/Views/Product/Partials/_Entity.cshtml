@@ -9,11 +9,11 @@
         <div class="col-12 col-sm-4">
             <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image1","تصویر یک",assets.FirstOrDefault())' />
         </div>
-        <div class="col-12 col-sm-3">
-            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image2","تصویر دو",null)' />
+        <div class="col-12 col-sm-4">
+            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image2","تصویر دو",assets.Skip(1).FirstOrDefault())' />
 
         </div>
-        <div class="col-12 col-sm-3">
+        <div class="col-12 col-sm-4">
             <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image3","تصویر سه",assets.Skip(2).FirstOrDefault())' />
         </div>
     </div>
@@ -21,7 +21,7 @@
         @Html.HiddenFor(x => x.ProductId)
         <div class="col-12 col-sm-6">
             <custom-select-for for="StoreId"
-                               select-data-url='@Url.Action("Search", "Store",new {userId = User.GetUserId() })'
+                               select-data-url='@Url.Action("Search", "Store")'
                                class="form-control select2 w-100 with-ajax"
                                items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem> {
                                               new SelectListItem {

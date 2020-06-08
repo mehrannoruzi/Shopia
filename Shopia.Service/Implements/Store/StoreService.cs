@@ -82,17 +82,23 @@ namespace Shopia.Service
             Expression<Func<Store, bool>> conditions = x => !x.IsDeleted;
             if (filter != null)
             {
+                if (filter.UserId != null)
+                    conditions = conditions.And(x => x.UserId == filter.UserId);
                 if (!string.IsNullOrWhiteSpace(filter.Name))
-                    conditions = x => x.FullName.Contains(filter.Name);
+                    conditions = conditions.And(x => x.FullName.Contains(filter.Name));
             }
 
-            return _storeRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.StoreId));
+            return _storeRepo.Get(conditions, filter, x => x.OrderByDescending(i => i.StoreId), new List<Expression<Func<Store, object>>> {
+                x=>x.User
+            });
         }
 
         public async Task<IResponse<bool>> DeleteAsync(int id)
         {
-            _storeRepo.Delete(new Store { StoreId = id });
-            var saveResult = await _authUow.ElkSaveChangesAsync();
+            var store = await _storeRepo.FindAsync(id);
+            if (store == null) return new Response<bool> { Message = ServiceMessage.RecordNotExist };
+            _storeRepo.Delete(store);
+            var saveResult = await _appUow.ElkSaveChangesAsync();
             return new Response<bool>
             {
                 Message = saveResult.Message,
@@ -178,7 +184,7 @@ namespace Shopia.Service
         => _storeRepo.Get(x => !x.IsDeleted && x.UserId == userId, o => o.OrderByDescending(x => x.StoreId), null);
 
         public IDictionary<object, object> Search(string searchParameter, Guid? userId, int take = 10)
-            => _storeRepo.Get(conditions: x => x.FullName.Contains(searchParameter) && userId == null ? true : x.UserId == userId,
+            => _storeRepo.Get(conditions: x => !x.IsDeleted && x.FullName.Contains(searchParameter) && userId == null ? true : x.UserId == userId,
                 new PagingParameter
                 {
                     PageNumber = 1,
@@ -244,8 +250,8 @@ namespace Shopia.Service
             if (!update.IsSuccessful) return new Response<bool> { Message = update.Message };
             try
             {
-                if (url.StartsWith(baseDomain))
-                    System.IO.File.Delete(root + url.Replace(baseDomain, ""));
+                if (url.StartsWith(baseDomain) && File.Exists(root + url.Replace(baseDomain, "")))
+                    File.Delete(root + url.Replace(baseDomain, ""));
                 return new Response<bool> { IsSuccessful = true };
             }
             catch (Exception e)
@@ -254,5 +260,7 @@ namespace Shopia.Service
                 return new Response<bool> { Message = ServiceMessage.Error };
             }
         }
+
+        public async Task<bool> CheckOwner(int storeId, Guid userId) => await _storeRepo.AnyAsync(x => x.StoreId == storeId && x.UserId == userId);
     }
 }

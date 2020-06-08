@@ -3,7 +3,7 @@ import Strings from './../../shared/constant';
 
 class NotFound extends Component {
     componentDidMount(){
-        window.location.href = "https://about.shopia.me/contact/";
+       // window.location.href = "https://about.shopia.me/contact/";
     }
     render() {
         console.log('not found');

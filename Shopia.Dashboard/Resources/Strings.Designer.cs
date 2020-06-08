@@ -70,6 +70,15 @@ namespace Shopia.Dashboard.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شما اجازه انجام این کار را ندارید.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عملیات.
         /// </summary>
         public static string Actions {
@@ -912,6 +921,17 @@ namespace Shopia.Dashboard.Resources {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to سبد خرید شما به آدرس زیر ایجاد گردید
+        ///{0}
+        ///با تشکر، شاپیا.
+        /// </summary>
+        public static string TempBasketText {
+            get {
+                return ResourceManager.GetString("TempBasketText", resourceCulture);
             }
         }
         

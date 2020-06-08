@@ -17,60 +17,24 @@ namespace Shopia.Service
         readonly AppUnitOfWork _appUow;
         readonly IProductAssetService _productAssetService;
         readonly IConfiguration _configuration;
-        readonly IGenericRepo<Product> _productRepo;
+        readonly IProductRepo _productRepo;
         readonly IGenericRepo<Discount> _discountRepo;
         public ProductService(AppUnitOfWork appUOW,
-            IGenericRepo<Product> productRepo,
-            IGenericRepo<Discount> discountRepo,
             IProductAssetService productAssetService,
             IConfiguration configuration)
         {
             _appUow = appUOW;
-            _productRepo = productRepo;
-            _discountRepo = discountRepo;
+            _productRepo = appUOW.ProductRepo;
+            _discountRepo = appUOW.DiscountRepo;
             _productAssetService = productAssetService;
             _configuration = configuration;
         }
 
-        public async Task<IResponse<PagingListDetails<ProductDTO>>> Get(ProductFilterDTO filter)
-        {
-            var currentDT = DateTime.Now;
-            var discount = await _discountRepo.FirstOrDefaultAsync(conditions: x => x.StoreId == filter.StoreId && x.ValidFromDateMi <= currentDT && x.ValidToDateMi >= currentDT);
-            var products = _productRepo.Get(selector: p => new ProductDTO
-            {
-                Id = p.ProductId,
-                Price = p.Price,
-                Discount = p.DiscountPercent,
-                Name = p.Name,
-                ImageUrl = p.ProductAssets.Any() ? p.ProductAssets[0].ThumbnailUrl : null,
-                Description = p.Description
-            },
-            conditions: x => x.StoreId == filter.StoreId && !x.IsDeleted,
-            pagingParameter: filter,
-            orderBy: o => o.OrderByDescending(x => x.ProductId),
-            new List<Expression<Func<Product, object>>> { x => x.ProductAssets });
-            if (discount != null)
-            {
-                foreach (var p in products.Items)
-                {
-                    if (p.Discount != null) continue;
-                    p.Discount = discount.Percent;
-                    var discountAmount = p.Price * p.Discount / 100;
-                    if (discountAmount > discount.MaxPrice)
-                        p.Discount = (float)Math.Floor((float)(100 * discount.MaxPrice / p.Price));
-                }
-
-            }
-            return new Response<PagingListDetails<ProductDTO>>
-            {
-                Result = products,
-                IsSuccessful = true
-            };
-        }
+        public async Task<IResponse<PagingListDetails<ProductDTO>>> GetAndCalcPriceAsync(ProductSearchFilter filter) => await _productRepo.GetAndCalcDiscountAsync(filter);
 
         public async Task<IResponse<ProductDTO>> FindAsDtoAsync(int id)
         {
-            var product = await _productRepo.FirstOrDefaultAsync(conditions: x => x.ProductId == id && x.IsActive,
+            var product = await _productRepo.FirstOrDefaultAsync(conditions: x => !x.IsDeleted && x.ProductId == id && x.IsActive,
                 new List<Expression<Func<Product, object>>> { x => x.ProductAssets });
             if (product == null) return new Response<ProductDTO>
             {
@@ -171,7 +135,7 @@ namespace Shopia.Service
             return new Response<Product> { Result = product, IsSuccessful = true };
         }
 
-        public async Task<IResponse<Product>> UpdateAsync(ProductAddModel model)//string root, Product model, IList<IFormFile> files)
+        public async Task<IResponse<Product>> UpdateAsync(ProductAddModel model)
         {
             var product = await _productRepo.FindAsync(model.ProductId);
             if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
@@ -284,12 +248,12 @@ namespace Shopia.Service
 
         public IList<ProductSearchResult> Search(string searchParameter, Guid? userId, int take = 10)
                 => _productRepo.Get(x => new ProductSearchResult
-                {
-                    Id = x.ProductId,
-                    Name = x.Name,
-                    Price = x.Price - (int)(x.Price * x.DiscountPercent / 100),
-                },
-                    conditions: x => x.Name.Contains(searchParameter) && (userId == null ? true : x.Store.UserId == userId),
+                    {
+                        Id = x.ProductId,
+                        Name = x.Name,
+                        Price = x.Price - (int)(x.Price * x.DiscountPercent / 100),
+                    },
+                    conditions: x => !x.IsDeleted && x.Name.Contains(searchParameter) && (userId == null ? true : x.Store.UserId == userId),
                     new PagingParameter
                     {
                         PageNumber = 1,

@@ -10,6 +10,7 @@ using Shopia.Dashboard.Resources;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using DomainString = Shopia.Domain.Resource.Strings;
+using System.Net.Http;
 
 namespace Shopia.Dashboard.Controllers
 {
@@ -81,6 +82,15 @@ namespace Shopia.Dashboard.Controllers
         }
 
         [HttpPost, AuthEqualTo("StoreTempOrderDetail", "Add")]
-        public virtual async Task<JsonResult> Notify([FromBody]TempOrderDetailResultModel model) => Json(new { IsSuccessful = true });
+        public virtual async Task<JsonResult> Notify([FromServices]INotificationService notifSrv, [FromBody]TempOrderDetailResultModel model)
+        {
+            var notify = await notifSrv.NotifyAsync(new NotificationDto
+            {
+                Content = Strings.TempBasketText.Fill(model.Url),
+                MobileNumber = long.Parse(model.MobileNumber),
+                Type = EventType.Subscription
+            });
+            return Json(new { IsSuccessful = notify, Message = notify ? string.Empty : Strings.Error });
+        }
     }
 }

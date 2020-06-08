@@ -8,7 +8,7 @@ namespace Shopia.Service
 {
     public interface IProductService
     {
-        Task<IResponse<PagingListDetails<ProductDTO>>> Get(ProductFilterDTO filter);
+        Task<IResponse<PagingListDetails<ProductDTO>>> GetAndCalcPriceAsync(ProductSearchFilter filter);
         Task<IResponse<Product>> FindAsync(int id);
         Task<IResponse<ProductDTO>> FindAsDtoAsync(int id);
 

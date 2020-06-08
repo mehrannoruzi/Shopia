@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 @{
     var withotAddBotton = ViewBag.WithoutAddButton ?? false;
+    var filterBoxIsOpen = ViewBag.FilterBoxIsOpen ?? false;
 }
 <html lang="fa" dir="rtl">
 <head>
@@ -22,7 +23,7 @@
                     <div class="row">
                         <div class="col-12 col-sm-12">
                             <div class="filters">
-                                <div class="ibox collapsed @(withotAddBotton?"fixed-ibox":"")">
+                                <div class="ibox @(filterBoxIsOpen?"":"collapsed") @(withotAddBotton?"fixed-ibox":"")">
                                     <div class="ibox-title">
                                         <h5>@Strings.Filters</h5>
                                         <div class="ibox-tools">
@@ -103,7 +104,7 @@
 
             </div>
             <div class="footer">
-                <div>@Html.Raw(Strings.CopyRights)</div>
+                <div class="text-center">@Html.Raw(Strings.CopyRights)</div>
             </div>
 
         </div>

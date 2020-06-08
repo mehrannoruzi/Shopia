@@ -21,6 +21,8 @@ namespace Shopia.DataAccess.Ef
                 .Include(x=>x.PaymentGateway)
                 .Include(x=>x.Order)
                 .Include(x=>x.Order.User)
+                .Include(x=>x.Order.Store)
+                .Include(x=>x.Order.Store.User)
                 .AsQueryable();
             if (filter != null)
             {

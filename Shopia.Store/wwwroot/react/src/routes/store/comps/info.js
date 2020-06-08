@@ -44,7 +44,7 @@ class Info extends React.Component {
                                 {!this.state.loading ? <h2 className='name m-b'>{this.state.name}</h2> : <Skeleton className='m-b' variant='text' width={100} height={30} />}
                                 <div className='basket-wrapper'>
                                     <BasketIcon />
-                                    <Link className='contactus' to='contactus'>{strings.contactus}</Link>
+                                    <Link className='contactus' to='/contactus'>{strings.contactus}</Link>
                                 </div>
                             </div>
                         </Col>

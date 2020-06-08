@@ -268,11 +268,11 @@ namespace Shopia.Service
                 .Select(x => new
                 {
                     x.UserId,
-                    x.Email,
+                    x.MobileNumber,
                     x.FullName
                 })
                 .Take(take)
-                .ToDictionary(k => (object)k.UserId, v => (object)$"{v.FullName}({v.Email})");
+                .ToDictionary(k => (object)k.UserId, v => (object)$"{v.FullName}({v.MobileNumber})");
 
         public async Task<IResponse<string>> RecoverPassword(long mobileNumber, string from, EmailMessage model)
         {

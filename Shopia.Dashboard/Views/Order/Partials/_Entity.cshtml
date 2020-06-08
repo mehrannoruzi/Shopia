@@ -11,15 +11,16 @@
         <custom-input-for for="User.MobileNumber" readonly="true" class="form-control ltr-elm" />
     </div>
 </div>
-<div class="col-12 col-sm-6">
-    <custom-select-for for="OrderStatus" items="EnumExtension.GetEnumElements<OrderStatus>().Select(x=>new SelectListItem {
+<div class="row">
+    <div class="col-12 col-sm-6">
+        <custom-select-for for="OrderStatus" items="EnumExtension.GetEnumElements<OrderStatus>().Select(x=>new SelectListItem {
             Value = x.Name,
             Text = x.Description
         }).ToList()" />
-</div>
-<div class="col-12 col-sm-6">
-    <custom-select-for for="StoreId" class="form-control with-ajax select2"
-                       items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem>
+    </div>
+    <div class="col-12 col-sm-6">
+        <custom-select-for for="StoreId" class="form-control"
+                           items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem>
                         {
                             new SelectListItem
                             {
@@ -27,45 +28,28 @@
                                 Text = Model.Store.FullName
                             }
                         }"
-                       select-data-url="@Url.Action("Search","StoreStore")"
-                       select-readonly="readonly" />
+                           select-data-url="@Url.Action("Search","StoreStore")"
+                           select-disabled="disabled" />
+    </div>
 </div>
+
 <div class="row">
     <div class="col-12 col-sm-4">
-        <custom-input-for for="InsertDateSh" readonly="true" />
+        <custom-input-for for="InsertDateSh" readonly="true" class="form-control ltr-elm" />
     </div>
     <div class="col-12 col-sm-4">
-        <custom-input-for for="TotalPrice" readonly="true" />
+        <custom-input-for for="TotalPrice" class="form-control ltr-elm" readonly="true" />
     </div>
     <div class="col-12 col-sm-4">
-        <custom-input-for for="TotalPriceAfterDiscount" readonly="true" />
+        <custom-input-for for="TotalPriceAfterDiscount" class="form-control ltr-elm" readonly="true" />
     </div>
 </div>
 <div class="row">
     <div class="col-12">
         <custom-textarea-for for="OrderComment" readonly="true" />
     </div>
-    <div class="col-12">
-        <custom-textarea-for for="UserComment" readonly="true" />
-    </div>
 </div>
-<div class="col-12">
-    <div class="col-12">
-        <custom-input-for for="FromAddress.AddressDetails" readonly="true" />
-    </div>
-    <div class="col-12">
-        <div id="from_map"></div>
-    </div>
-</div>
-<div class="col-12">
-    <div class="col-12">
-        <custom-input-for for="ToAddress.AddressDetails" readonly="true" />
-    </div>
-    <div class="col-12">
-        <div id="to_map"></div>
-    </div>
-</div>
-<div class="row">
+@*<div class="row">
     @if (Model.OrderDetails != null)
     {
         int idx = 1;
@@ -106,33 +90,4 @@
         </table>
 
     }
-</div>
-<script>
-    coords_from = [@(Model.FromAddress.Latitude),@(Model.FromAddress.Longitude)];
-    map_from = L.map('from_map').setView(coords_from, 13);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken, {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: mapToken
-    }).addTo(map);
-
-    L.marker(coords_from).addTo(map_from).openPopup();
-    setTimeout(function () { map_from.invalidateSize() }, 800);
-
-    coords_to = [@(Model.ToAddress.Latitude),@(Model.ToAddress.Longitude)];
-    map_to = L.map('from_map').setView(coords_to, 13);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken, {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: mapToken
-    }).addTo(map);
-
-    marker_to = L.marker(coords_to).addTo(map_to).openPopup();
-    setTimeout(function () { map_to.invalidateSize() }, 800);
-</script>
+</div>*@

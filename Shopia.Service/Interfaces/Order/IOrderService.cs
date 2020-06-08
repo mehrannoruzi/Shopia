@@ -17,6 +17,6 @@ namespace Shopia.Service
         Task<IResponse<Order>> FindAsync(int OrderId);
         Task<IResponse<Order>> GetDetails(int OrderId);
         PagingListDetails<Order> Get(OrderSearchFilter filter);
-        Task<IResponse<Order>> UpdateStatusAsync(int id, OrderStatus status);
+        Task<IResponse<Order>> UpdateStatusAsync(int id, OrderStatus status, bool check = true);
     }
 }

@@ -82,5 +82,6 @@ namespace Shopia.Domain
 
 
         public IList<ProductAsset> ProductAssets { get; set; }
+        public IList<OrderDetail> OrderDetails { get; set; }
     }
 }

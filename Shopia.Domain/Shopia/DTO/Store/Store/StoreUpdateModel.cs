@@ -7,6 +7,7 @@ namespace Shopia.Domain
     public class StoreUpdateModel : LocationDTO
     {
         public int StoreId { get; set; }
+        [Display(Name = nameof(Strings.IsActive), ResourceType = typeof(Strings))]
         public bool IsActive { get; set; }
         public string ProfilePictureUrl { get; set; }
         [Display(Name = nameof(Strings.ShopiaUrl), ResourceType = typeof(Strings))]

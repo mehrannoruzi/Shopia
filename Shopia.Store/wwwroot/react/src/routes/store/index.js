@@ -40,9 +40,9 @@ class Store extends Component {
                                     <Nav.Item>
                                         <Nav.Link eventKey="all">{strings.all}</Nav.Link>
                                     </Nav.Item>
-                                    <Nav.Item>
-                                        <Nav.Link eventKey="newests"><i className="icon newests-icon zmdi zmdi-flash"></i> {strings.newests}</Nav.Link>
-                                    </Nav.Item>
+                                    {/* <Nav.Item>
+                                        <Nav.Link eventKey="mostVisited"><i className="icon most-visited-icon zmdi zmdi-flash"></i> {strings.mostVisited}</Nav.Link>
+                                    </Nav.Item> */}
                                     <Nav.Item>
                                         <Nav.Link eventKey="favorites"><i className="icon favorites-icon zmdi zmdi-favorite"></i> {strings.favorites}</Nav.Link>
                                     </Nav.Item>
@@ -60,9 +60,9 @@ class Store extends Component {
                                     <Tab.Pane eventKey="all" className="all">
                                         <ProductsList storeId={params.id} category='all' />
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="newests">
-                                        <ProductsList storeId={params.id} category='newests' />
-                                    </Tab.Pane>
+                                    {/* <Tab.Pane eventKey="mostVisited">
+                                        <ProductsList storeId={params.id} category='mostVisited' />
+                                    </Tab.Pane> */}
                                     <Tab.Pane eventKey="favorites">
                                         <ProductsList storeId={params.id} category='favorites' />
                                     </Tab.Pane>

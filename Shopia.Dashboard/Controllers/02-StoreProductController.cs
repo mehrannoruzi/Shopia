@@ -98,7 +98,7 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> Add([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {
             if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
-            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.BaseDomain = _configuration["CustomSettings:BaseUrl"];
             model.Root = env.WebRootPath;
             var add = await _productSerive.AddAsync(model);
             return Json(new { add.IsSuccessful, add.Message, add.Result });
@@ -123,14 +123,14 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, ProductAddModel model)
         {
             if (!ModelState.IsValid) return Json(new { IsSuccessful = false, Message = ModelState.GetModelError() });
-            model.BaseDomain = _configuration["CustomSettings:BaseDomain"];
+            model.BaseDomain = _configuration["CustomSettings:BaseUrl"];
             model.Root = env.WebRootPath;
             var update = await _productSerive.UpdateAsync(model);
             return Json(new { update.IsSuccessful, update.Message });
         }
 
         [HttpPost]
-        public virtual async Task<JsonResult> Delete([FromServices]IWebHostEnvironment env, int id) => Json(await _productSerive.DeleteAsync(_configuration["CustomSettings:BaseDomain"], env.WebRootPath, id));
+        public virtual async Task<JsonResult> Delete([FromServices]IWebHostEnvironment env, int id) => Json(await _productSerive.DeleteAsync(_configuration["CustomSettings:BaseUrl"], env.WebRootPath, id));
 
         [HttpPost,AuthEqualTo("StoreProduct", "Delete")]
         public virtual async Task<JsonResult> DeleteAsset([FromServices]IProductAssetService productAssetSerive, int assetId) => Json(await productAssetSerive.DeleteAsync(assetId));

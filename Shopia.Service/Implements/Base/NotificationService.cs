@@ -3,6 +3,11 @@ using Elk.Http;
 using Shopia.Domain;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System;
+using Shopia.Service.Resource;
 
 namespace Shopia.Service
 {
@@ -16,10 +21,22 @@ namespace Shopia.Service
         }
 
 
-        public async Task<bool> NotifyAsync(NotificationDto notifyDto)
+        public async Task<IResponse<bool>> NotifyAsync(NotificationDto notifyDto)
         {
-            var requestResult = await HttpRequestTools.PostJsonAsync<IResponse<bool>>(_configuration.GetSection("CustomSettings:NotifierUrl").Value, notifyDto);
-            return requestResult.IsSuccessful;
+            try
+            {
+                using var http = new HttpClient();
+                http.DefaultRequestHeaders.Add("Token", _configuration["CustomSettings:NotifierToken"]);
+                var notify = await http.PostAsync(_configuration["CustomSettings:NotifierUrl"], new StringContent(notifyDto.SerializeToJson(), Encoding.UTF8, "application/json"));
+                if (!notify.IsSuccessStatusCode) return new Response<bool> {Message = ServiceMessage.Error };
+                return (await notify.Content.ReadAsStringAsync()).DeSerializeJson<Response<bool>>();
+            }
+            catch(Exception e)
+            {
+                FileLoger.Error(e);
+                return new Response<bool> { Message = ServiceMessage.Error };
+            }
+
         }
     }
 }

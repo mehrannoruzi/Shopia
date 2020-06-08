@@ -120,6 +120,9 @@
   <data name="AboutUs" xml:space="preserve">
     <value>درباره ما</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>شما اجازه انجام این کار را ندارید</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>عملیات</value>
   </data>
@@ -401,6 +404,11 @@
   </data>
   <data name="Success" xml:space="preserve">
     <value>عملیات با موفقیت انجام شد</value>
+  </data>
+  <data name="TempBasketText" xml:space="preserve">
+    <value>سبد خرید شما به آدرس زیر ایجاد گردید
+{0}
+با تشکر، شاپیا</value>
   </data>
   <data name="ThereIsNoRecord" xml:space="preserve">
     <value>هیچ موردی یافت نشد</value>

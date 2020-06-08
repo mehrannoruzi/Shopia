@@ -13,7 +13,7 @@ using DomainString = Shopia.Domain.Resource.Strings;
 
 namespace Shopia.Dashboard.Controllers
 {
-    //[AuthorizationFilter]
+    [AuthorizationFilter]
     public partial class StorePaymentController : Controller
     {
         private readonly IPaymentService _paymentSrv;
