@@ -90,7 +90,7 @@ namespace Shopia.Dashboard.Controllers
                 MobileNumber = long.Parse(model.MobileNumber),
                 Type = EventType.Subscription
             });
-            return Json(new { IsSuccessful = notify, Message = notify ? string.Empty : Strings.Error });
+            return Json(new { IsSuccessful = notify.IsSuccessful, Message = notify.IsSuccessful ? string.Empty : Strings.Error });
         }
     }
 }
