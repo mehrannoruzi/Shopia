@@ -1,12 +1,12 @@
-﻿@model StoreUpdateModel
+﻿@model Store
 @{
     Layout = null;
     var haveLogo = !string.IsNullOrWhiteSpace(Model.ProfilePictureUrl);
 }
     <form asp-action="@(Model.StoreId==0?"Add":"Update")" asp-controller="Store" id="frm-product">
         @Html.HiddenFor(x => x.StoreId)
-        @Html.HiddenFor(x => x.Longitude)
-        @Html.HiddenFor(x => x.Latitude)
+        @Html.HiddenFor(x => x.Address.Longitude)
+        @Html.HiddenFor(x => x.Address.Latitude)
         <div class="row m-b">
             <div class="col-12 d-flex justify-content-center align-items-center">
                 <div class="single-uploader @(haveLogo?"uploaded":"")">
@@ -37,6 +37,17 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-12 col-sm-4">
+                <custom-input-for for="FolowerCount" class="form-control ltr-elm" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <custom-input-for for="FolowingCount" class="form-control ltr-elm" />
+            </div>
+            <div class="col-12 col-sm-4">
+                <custom-input-for for="FolowingCount" class="form-control ltr-elm" />
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <custom-input-for for="ShopiaUrl" class="form-control ltr-elm" />
             </div>
@@ -49,7 +60,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <custom-textarea-for for="AddressDetails" />
+                <custom-textarea-for for="Address.AddressDetails" />
             </div>
         </div>
         <div class="custom-modal-footer">
@@ -58,7 +69,7 @@
         </div>
     </form>
 <script>
-    coords = [@(Model.Latitude),@(Model.Longitude)];
+    coords = [@(Model.Address.Latitude),@(Model.Address.Longitude)];
     logo = {};
     map = L.map('map').setView(coords, 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken, {
@@ -73,9 +84,8 @@
     marker = L.marker(coords).addTo(map).openPopup();
     setTimeout(function () { map.invalidateSize() }, 800);
     map.on('click',function (p) {
-        console.log(p);
-        $('#Latitude').val(p.latlng.lat);
-        $('#Longitude').val(p.latlng.lng);
+        $('#Address.Latitude').val(p.latlng.lat);
+        $('#Address.Longitude').val(p.latlng.lng);
         let newCoords = [p.latlng.lat, p.latlng.lng];
         map.setView(newCoords, 13);
         map.removeLayer(marker);

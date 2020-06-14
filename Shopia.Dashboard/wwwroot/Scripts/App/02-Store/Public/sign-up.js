@@ -1,28 +1,21 @@
 ﻿/// <reference path="../../../Libs/jquery-3.1.1.min.js" />
 $(document).ready(function () {
+    console.log('its ok');
     $('.btn-check').click(function () {
-        if ($('#Username').val()) return;
-        console.log('fired');
+        if (!$('#Username').val()) return;
         let $btn = $(this);
         let $frm = $btn.closest('form');
         let btnText = $btn.text();
-        $btn.html($threeDotLoader);
-        $.get($btn.data('url'), $frm.serialize())
-            .done(function (rep) {
-                console.log(rep);
-                $btn.text(btnText);
-                if (rep.IsSuccessful) {
-                    $('#modal  .modal-title').text(strings.checkResult);
-                    $('#modal  .modal-body-content').html(rep.Result);
-                    $('#modal').modal('show');
-                }
-                else showAlert(rep.Message);
-
-            })
-            .fail(function () {
-                $btn.text(btnText);
-                $('#modal').modal('hide');
-            });
+        let $a = $('<a>check</a>').attr({
+            id:'a_chk',
+            href: 'https://www.instagram.com/' + $('#Username').val(),
+            target: '_blank',
+            class:'d-none'
+        });
+        $a.appendTo('body');
+        $('#a_chk')[0].click();
+        $a.remove();
+        console.log('clieced');
     });
 
     $('.btn-submit').click(function () {
@@ -50,9 +43,11 @@ $(document).ready(function () {
             },
             error: function (e) {
                 $btn.html(btnText);
+                showAlert(strings.error);
             }
         });
     });
+
 });
 
 var showAlert = function (msg) {
@@ -61,5 +56,5 @@ var showAlert = function (msg) {
     $alert.slideDown();
     setTimeout(function () {
         $alert.slideUp();
-    }, 2000);
+    }, 4000);
 };

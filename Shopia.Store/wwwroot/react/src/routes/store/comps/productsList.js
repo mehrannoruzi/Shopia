@@ -5,6 +5,8 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { arrangeInRows } from './../../../shared/utils';
 import { ShowInitErrorAction } from '../../../redux/actions/InitErrorAction';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import strings from './../../../shared/constant';
 
 class ProductsList extends React.Component {
     constructor(props) {
@@ -33,8 +35,11 @@ class ProductsList extends React.Component {
                 this.pageNumber--;
             this.setState(p => ({ ...p, products: [...(p.products ? p.products : []), ...productsRep.result] }))
         }
-        else this.props.showInitError(this._fetchData.bind(this));
+        else {
+            if (this.pageNumber === 1) this.props.showInitError(this._fetchData.bind(this));
+            else toast(strings.connecttionFailed, { type: toast.TYPE.INFO });
 
+        }
 
     }
 

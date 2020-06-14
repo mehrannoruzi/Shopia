@@ -67,7 +67,7 @@ namespace Shopia.Dashboard.Controllers
             var addPosts = (await callAddPosts.Content.ReadAsStringAsync()).DeSerializeJson<Response<bool>>();
             if (!addPosts.IsSuccessful) return Json(new Response<string> { Message = addPosts.Message });
             model.StoreRoleId = int.Parse(_configuration["CustomSettings:StoreRoleId"]);
-            var signup = await _storeSrv.SignUp(model, crawl.Result);
+            var signup = await _storeSrv.SignUp(model);
             if (!signup.IsSuccessful) return Json(new Response<string> { IsSuccessful = signup.IsSuccessful, Message = signup.Message });
             var menuRep = _userSrv.GetAvailableActions(signup.Result.UserId, null, _configuration["CustomSettings:UrlPrefix"]);
             if (menuRep == null) return Json(new Response<string> { IsSuccessful = false, Message = Strings.ThereIsNoViewForUser });

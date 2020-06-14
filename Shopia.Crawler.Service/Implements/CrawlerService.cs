@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Shopia.Crawler.Service.Resource;
 using Shopia.Crawler.DataAccess.Dapper;
+using System.Net;
+using HtmlAgilityPack;
+using System.Text.RegularExpressions;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Shopia.Crawler.Service
 {
@@ -22,7 +27,6 @@ namespace Shopia.Crawler.Service
             _instagramSetting = instagramSetting;
             _crawlerUnitOfWork = crawlerUnitOfWork;
         }
-
 
         private async Task<CrawledPageDto> CrawlPageFromInstagramAsync(string username)
         {
@@ -185,13 +189,17 @@ namespace Shopia.Crawler.Service
 
         public async Task<IResponse<CrawledPageDto>> CrawlPageAsync(string username)
         {
+            //MyCrawler(username);
             try
             {
                 if (string.IsNullOrWhiteSpace(username)) return new Response<CrawledPageDto> { IsSuccessful = false, Message = ServiceMessage.InvalidPageId };
 
-                var page = await CrawlPageFromInstagramAsync(username);
-                if (page.IsNull()) return new Response<CrawledPageDto> { IsSuccessful = false, Message = ServiceMessage.InvalidPageId };
-
+                //var page = await CrawlPageFromInstagramAsync(username);
+                //if (page.IsNull()) return new Response<CrawledPageDto> { IsSuccessful = false, Message = ServiceMessage.InvalidPageId };
+                var page = new CrawledPageDto
+                {
+                    Username = username
+                };
                 var saveResult = await _crawlerUnitOfWork.PageRepo.AddAsync(page);
                 return new Response<CrawledPageDto>
                 {

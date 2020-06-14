@@ -3,8 +3,9 @@ import strings from './../shared/constant';
 
 export default class productApi {
     static async getProducts(storeId, category, pageNumber) {
+        let url = `${addr.getProducts}?storeId=${storeId}&category=${category}&pageNumber=${pageNumber}&pageSize=8`;
         try {
-            const response = await fetch(`${addr.getProducts}?storeId=${storeId}&category=${category}&pageNumber=${pageNumber}&pageSize=8`, {
+            const response = await fetch(url, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -31,13 +32,33 @@ export default class productApi {
                     }))
                 }
         } catch (error) {
-            return ({ success: false, message: strings.connecttionFailed });
+            if ('caches' in window) {
+                let data = await caches.match(url);
+                if (data) {
+                    const rep = await data.json();
+                    return {
+                        success: true,
+                        result: rep.Result.Items.map((p) => ({
+                            id: p.Id,
+                            name: p.Name,
+                            price: p.Price,
+                            disount: p.Discount,
+                            realPrice: p.RealPrice,
+                            currency: p.Currency,
+                            imgUrl: p.ImageUrl,
+                        }))
+                    };
+                }
+                else return ({ success: false, message: strings.connecttionFailed });
+            }
+            else return ({ success: false, message: strings.connecttionFailed });
         }
     }
 
     static async getSingleProduct(id) {
+        let url = `${addr.getSingleProduct}?id=${id}`;
         try {
-            const response = await fetch(`${addr.getSingleProduct}?id=${id}`, {
+            const response = await fetch(url, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -66,7 +87,26 @@ export default class productApi {
                     }
                 }
         } catch (error) {
-            return ({ success: false, message: strings.connecttionFailed });
+            if ('caches' in window) {
+                let data = await caches.match(url);
+                if (data) {
+                    const rep = await data.json();
+                    return {
+                        success: true,
+                        result: rep.Result.Items.map((p) => ({
+                            id: p.Id,
+                            name: p.Name,
+                            price: p.Price,
+                            disount: p.Discount,
+                            realPrice: p.RealPrice,
+                            currency: p.Currency,
+                            imgUrl: p.ImageUrl,
+                        }))
+                    };
+                }
+                else return ({ success: false, message: strings.connecttionFailed });
+            }
+            else return ({ success: false, message: strings.connecttionFailed });
         }
 
     }

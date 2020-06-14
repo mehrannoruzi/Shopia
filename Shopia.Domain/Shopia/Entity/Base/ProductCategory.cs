@@ -40,5 +40,12 @@ namespace Shopia.Domain
         [MaxLength(30, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         [StringLength(30, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         public string Name { get; set; }
+
+        [Display(Name = nameof(Strings.OrderPriority), ResourceType = typeof(Strings))]
+        public int OrderPriority { get; set; }
+
+        [Column(TypeName = "varchar(20)")]
+        [Display(Name = nameof(Strings.Icon), ResourceType = typeof(Strings))]
+        public int Icon { get; set; }
     }
 }

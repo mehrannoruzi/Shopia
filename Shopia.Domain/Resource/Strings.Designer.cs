@@ -1060,6 +1060,15 @@ namespace Shopia.Domain.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to نام فروشگاه.
+        /// </summary>
+        public static string StoreName {
+            get {
+                return ResourceManager.GetString("StoreName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to وضعیت فروشگاه.
         /// </summary>
         public static string StoreStatus {

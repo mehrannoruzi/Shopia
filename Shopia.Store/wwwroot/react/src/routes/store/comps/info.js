@@ -20,6 +20,8 @@ class Info extends React.Component {
     }
     async _fetchData() {
         let storeRep = await storeApi.getSingleStore(this.props.id);
+        console.log('after call');
+        console.log(storeRep);
         if(!this._isMounted) return;
         if (storeRep.success) this.setState(p => ({ ...p, ...storeRep.result, loading: false }));
         else this.props.showInitError(this._fetchData.bind(this));

@@ -21,6 +21,12 @@ namespace Shopia.Dashboard.Controllers
             _productSrv = productCategorySrv;
         }
 
+        [HttpGet]
+        public virtual ActionResult Manage(ProductCategorySearchFilter filter)
+        {
+            return View(_productSrv.GetAll(filter));
+        }
+
 
         //[HttpGet]
         //public virtual JsonResult Add()

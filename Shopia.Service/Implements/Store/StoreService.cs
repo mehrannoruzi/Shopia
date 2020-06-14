@@ -114,7 +114,7 @@ namespace Shopia.Service
             return saveResult.IsSuccessful;
         }
 
-        public async Task<IResponse<Domain.Store>> SignUp(StoreSignUpModel model, CrawledPageDto crawl)
+        public async Task<IResponse<Domain.Store>> SignUp(StoreSignUpModel model)
         {
             using var tb = _appUow.Database.BeginTransaction();
             var mobileNumber = long.Parse(model.MobileNumber);
@@ -125,13 +125,13 @@ namespace Shopia.Service
             store = new Domain.Store
             {
                 Username = model.Username,
-                FolowerCount = crawl.FolowerCount,
-                FolowingCount = crawl.FolowingCount,
+                //FolowerCount = crawl.FolowerCount,
+                //FolowingCount = crawl.FolowingCount,
                 StoreType = StoreType.Instagram,
                 StoreStatus = StoreStatus.Register,
-                ProfilePictureUrl = crawl.ProfilePictureUrl,
-                LastCrawlTime = crawl.LastCrawlDate,
-                FullName = crawl.FullName,
+                ProfilePictureUrl = null,//crawl.ProfilePictureUrl,
+                LastCrawlTime = null,//crawl.LastCrawlDate,
+                FullName = model.StoreName,//crawl.FullName,
                 IsActive = true,
                 User = user ?? new User
                 {

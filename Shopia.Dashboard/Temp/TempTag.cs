@@ -1,55 +1,55 @@
-﻿using Elk.AspNetCore;
-using Microsoft.AspNetCore.Html;
+﻿using System.Linq;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System.Linq;
+using Shopia.Domain;
 
-namespace Shopia.Dashboard.Temp
+namespace Shopia.Dashboard
 {
-    public class BaseTagHelperModel2 : FormGroupModel
+    [HtmlTargetElement("nested-view")]
+    public class NestedView : TagHelper
     {
-        public string Label { get; set; }
-        public string Name { get; set; }
-        public string Id { get; set; }
-        public string Value { get; set; }
-    }
-    [HtmlTargetElement("custom-input2")]
-    public class CustomInput2 : BaseTagHelperModel2
-    {
-        public InputType Type { set; get; } = InputType.text;
-
-        public string PlaceHolder { get; set; } = "";
+        public string TagId { get; set; }
+        public string AddText { get; set; }
+        public string EditText { get; set; }
+        public string DeleteText { get; set; }
+        public List<NestedItem> Items { get; set; }
+        public string AddFormHtml { get; set; }
+        public string GetItemsUrl { get; set; }
+        public string GetEditFormUrl { get; set; }
+        public string SubmitEditFormUrl { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = null;
-            output.PreContent.SetHtmlContent($"<div class='form-group group-{Name.ToLower()} {WrapperClass}'>");
-            if (LabelVisibility)
+            var wrapper = new TagBuilder("div");
+            wrapper.AddCssClass("nested-view");
+            wrapper.Attributes.Add("id", TagId);
+            //var filterRow = new TagBuilder("div");
+            //filterRow.AddCssClass("nested-items-filter");
+            //var input = new TagBuilder("input");
+            //input.AddCssClass("input-search");
+            var mainUl = new TagBuilder("ul");
+            mainUl.AddCssClass("main-nested-ul");
+            TagBuilder Appender(NestedItem currentItem)
             {
-                var lbl = new TagBuilder("label");
-                lbl.Attributes.Add("for", Name);
-                lbl.Attributes.Add("class", LabelClass);
-                lbl.InnerHtml.Append(Label);
-                output.Content.AppendHtml(lbl);
+                var li = new TagBuilder("li");
+                li.Attributes.Add("data-id", currentItem.Id.ToString());
+                li.InnerHtml.AppendHtml($"<span>{currentItem.Name}</span>");
+                var childs = Items.Where(x => x.ParentId == currentItem.Id).OrderByDescending(x => x.OrderPrority).ToList();
+                if (childs.Any())
+                {
+                    li.InnerHtml.AppendHtml($"<ul class='submenu'>");
+                    foreach (var child in childs)
+                        li.InnerHtml.AppendHtml(Appender(child));
+                    li.InnerHtml.AppendHtml($"</ul>");
+                }
+                return li;
             }
-
-            var input = new TagBuilder("input");
-            input.Attributes.Add("type", Type.ToString());
-            input.Attributes.Add("name", Name);
-            input.Attributes.Add("id", Id);
-            if (Value != null)
-            {
-                input.Attributes.Add("value", Value);
-            }
-            input.Attributes.Add("placeholder", PlaceHolder);
-            if (Readonly) input.Attributes.Add("readonly", "readonly");
-            if (string.IsNullOrWhiteSpace(Class)) input.Attributes.Add("class", "form-control");
-            else input.Attributes.Add("class", Class);
-            foreach (var attr in context.AllAttributes.Where(x => x.Name.StartsWith("input-")))
-                input.Attributes.Add(attr.Name.Replace("input-", ""), attr.Value.ToString());
-
-            output.Content.AppendHtml(input);
-            output.PostContent.SetHtmlContent($"</div>");
+            foreach (var item in Items.Where(x => x.ParentId == null).OrderByDescending(x => x.OrderPrority).ToList())
+                mainUl.InnerHtml.AppendHtml(Appender(item));
+            wrapper.InnerHtml.AppendHtml(mainUl);
+            output.Content.AppendHtml(wrapper);
         }
     }
 }

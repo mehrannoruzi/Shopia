@@ -34,5 +34,9 @@
   {
     "outputFile": "wwwroot/Styles/App/template.css",
     "inputFile": "wwwroot/Styles/App/template.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/Libs/jquery.treeview.css",
+    "inputFile": "wwwroot/Styles/Libs/jquery.treeview.scss"
   }
 ]

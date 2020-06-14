@@ -30,6 +30,23 @@ namespace Shopia.Service
             return _productCategoryRepo.Get(conditions, filter, x => x.OrderByDescending(u => u.ProductCategoryId));
         }
 
+        public IList<NestedItem> GetAll(ProductCategorySearchFilter filter)
+        {
+            Expression<Func<ProductCategory, bool>> conditions = x => true;
+            if (filter != null)
+            {
+                if (!string.IsNullOrWhiteSpace(filter.Name))
+                    conditions = x => x.Name.Contains(filter.Name);
+            }
+            return _productCategoryRepo.Get(selector: x => new NestedItem
+            {
+                Id = x.ProductCategoryId,
+                Name = x.Name,
+                ParentId = x.ParentId,
+                OrderPrority = x.OrderPriority
+            }, conditions: conditions, orderBy: x => x.OrderByDescending(u => u.ProductCategoryId));
+        }
+
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
                 => _productCategoryRepo.Get(conditions: x => x.Name.Contains(searchParameter))
                 .OrderByDescending(x => x.Name)

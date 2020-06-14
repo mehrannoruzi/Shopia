@@ -9,7 +9,8 @@
 @section breadcrumb{
     <partial name="./Partials/_BreadCrumb" model='new BreadCrumb { Icon="zmdi zmdi-sign-in", Path = Strings.SignUp}' />
 }
-<div class=" store-sign-up-page">
+<div id="instagram-feed-demo" class="instagram_feed"></div>
+<div class="store-sign-up-page">
     <div class="form-wrapper">
         <div class="container">
             <div class="row" dir="ltr">
@@ -27,7 +28,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 position-relative">
                                     <custom-input-for for="Username" class="form-control ltr-elm"></custom-input-for>
-                                    <button class="btn-check" type="button" data-url="@Url.Action("ShowPage","Store")">
+                                    <button class="btn-check" type="button" data-url="@Url.Action("ShowPage","StorePublic")">
                                         @Strings.Check
                                     </button>
                                 </div>
@@ -38,6 +39,11 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <custom-input-for for="MobileNumber" class="form-control ltr-elm"></custom-input-for>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <custom-input-for for="StoreName"></custom-input-for>
                                 </div>
                             </div>
                             <div class="row">
@@ -52,8 +58,6 @@
                                     </button>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
 

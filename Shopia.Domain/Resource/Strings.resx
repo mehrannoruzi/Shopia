@@ -450,6 +450,9 @@
   <data name="StoreAddress" xml:space="preserve">
     <value>آدرس فروشگاه</value>
   </data>
+  <data name="StoreName" xml:space="preserve">
+    <value>نام فروشگاه</value>
+  </data>
   <data name="StoreStatus" xml:space="preserve">
     <value>وضعیت فروشگاه</value>
   </data>
