@@ -1,16 +1,19 @@
 ﻿/// <reference path="../../../Libs/jquery-3.1.1.min.js" />
 $(document).ready(function () {
-    console.log('its ok');
+    var model = { a: 'aa' };
+
+
+    console.log(model);
     $('.btn-check').click(function () {
         if (!$('#Username').val()) return;
         let $btn = $(this);
         let $frm = $btn.closest('form');
         let btnText = $btn.text();
         let $a = $('<a>check</a>').attr({
-            id:'a_chk',
+            id: 'a_chk',
             href: 'https://www.instagram.com/' + $('#Username').val(),
             target: '_blank',
-            class:'d-none'
+            class: 'd-none'
         });
         $a.appendTo('body');
         $('#a_chk')[0].click();

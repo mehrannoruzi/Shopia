@@ -14,60 +14,79 @@ namespace Shopia.Dashboard.Controllers
 {
     public class ProductCategoryController : Controller
     {
-        private readonly IProductCategoryService _productSrv;
+        private readonly IProductCategoryService _productCatSrv;
 
         public ProductCategoryController(IProductCategoryService productCategorySrv)
         {
-            _productSrv = productCategorySrv;
+            _productCatSrv = productCategorySrv;
         }
+
+        [NonAction]
+        private void GetAddPartial() => ViewBag.EntityPartial = ControllerExtension.RenderViewToString(this, "Partials/_Entity", new ProductCategory());
 
         [HttpGet]
         public virtual ActionResult Manage(ProductCategorySearchFilter filter)
         {
-            return View(_productSrv.GetAll(filter));
+            GetAddPartial();
+            ViewBag.EntityPartial = ControllerExtension.RenderViewToString(this, "Partials/_Entity", new ProductCategory());
+            return View(_productCatSrv.GetAll(filter));
         }
 
 
-        //[HttpGet]
-        //public virtual JsonResult Add()
-        //    => Json(new Modal
-        //    {
-        //        Title = $"{Strings.Add} {DomainString.Product}",
-        //        Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", new Product()),
-        //        AutoSubmitUrl = Url.Action("Add", "Product")
-        //    });
 
-        //[HttpPost]
-        //public virtual async Task<JsonResult> Add(Product model)
-        //{
-        //    if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
-        //    return Json(await _productSrv.AddAsync(model));
-        //}
+        [HttpPost]
+        public virtual async Task<JsonResult> Add(ProductCategory model)
+        {
+            GetAddPartial();
+            if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            var add = await _productCatSrv.AddAsync(model);
+            if (!add.IsSuccessful) return Json(add);
+            return Json(new Response<string>
+            {
+                IsSuccessful = true,
+                Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_List", _productCatSrv.GetAll(new ProductCategorySearchFilter()))
+            });
+        }
 
-        //[HttpGet]
-        //public virtual async Task<JsonResult> Update(int id)
-        //{
-        //    var findProduct = await _productSrv.FindAsync(id);
-        //    if (!findProduct.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Product) });
-        //    return Json(new Modal
-        //    {
-        //        Title = $"{Strings.Update} {DomainString.Product}",
-        //        AutoSubmitBtnText = Strings.Edit,
-        //        Body = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Entity", findProduct.Result),
-        //        AutoSubmitUrl = Url.Action("Update", "Product"),
-        //        ResetForm = false
-        //    });
-        //}
+        [HttpGet]
+        public virtual async Task<JsonResult> Update(int id)
+        {
+            var findProduct = await _productCatSrv.FindAsync(id);
+            if (!findProduct.IsSuccessful) return Json(new Response<string> { IsSuccessful = false, Message = Strings.RecordNotFound.Fill(DomainString.Product) });
+            return Json(new Response<string>
+            {
+                IsSuccessful = true,
+                Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_Entity", findProduct.Result)
+            });
+        }
 
-        //[HttpPost]
-        //public virtual async Task<JsonResult> Update(Product model)
-        //{
-        //    if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
-        //    return Json(await _productSrv.UpdateAsync(model));
-        //}
+        [HttpPost]
+        public virtual async Task<JsonResult> Update(ProductCategory model)
+        {
+            GetAddPartial();
+            if (!ModelState.IsValid) return Json(new Response<string> { IsSuccessful = false, Message = ModelState.GetModelError() });
+            var update = await _productCatSrv.UpdateAsync(model);
+            if (!update.IsSuccessful)
+                return Json(update);
+            return Json(new
+            {
+                IsSuccessful = true,
+                Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_List", _productCatSrv.GetAll(new ProductCategorySearchFilter()))
+            });
+        }
 
-        //[HttpPost]
-        //public virtual async Task<JsonResult> Delete(int id) => Json(await _productSrv.DeleteAsync(id));
+        [HttpPost]
+        public virtual async Task<JsonResult> Delete(int id)
+        {
+            var delete = await _productCatSrv.DeleteAsync(id);
+            if (!delete.IsSuccessful)
+                return Json(delete);
+            return Json(new
+            {
+                IsSuccessful = true,
+                Result = await ControllerExtension.RenderViewToStringAsync(this, "Partials/_List", _productCatSrv.GetAll(new ProductCategorySearchFilter()))
+            });
+        }
 
 
         //[HttpGet]
@@ -79,6 +98,6 @@ namespace Shopia.Dashboard.Controllers
 
         [HttpGet, AllowAnonymous]
         public virtual JsonResult Search(string q)
-            => Json(_productSrv.Search(q).ToSelectListItems());
+            => Json(_productCatSrv.Search(q).ToSelectListItems());
     }
 }

@@ -38,5 +38,13 @@
   {
     "outputFile": "wwwroot/Styles/Libs/jquery.treeview.css",
     "inputFile": "wwwroot/Styles/Libs/jquery.treeview.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/Libs/jquery.nested-view.css",
+    "inputFile": "wwwroot/Styles/Libs/jquery.nested-view.scss"
+  },
+  {
+    "outputFile": "wwwroot/Styles/App/01-Admin/ProductCategory/manage.css",
+    "inputFile": "wwwroot/Styles/App/01-Admin/ProductCategory/manage.scss"
   }
 ]

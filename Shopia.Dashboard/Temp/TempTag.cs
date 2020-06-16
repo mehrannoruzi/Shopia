@@ -13,18 +13,29 @@ namespace Shopia.Dashboard
         public string AddText { get; set; }
         public string EditText { get; set; }
         public string DeleteText { get; set; }
+        public string ShowAllText { get; set; }
         public List<NestedItem> Items { get; set; }
-        public string AddFormHtml { get; set; }
         public string GetItemsUrl { get; set; }
-        public string GetEditFormUrl { get; set; }
-        public string SubmitEditFormUrl { get; set; }
+        public string EditUrl { get; set; }
+        public string DeleteUrl { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = null;
             var wrapper = new TagBuilder("div");
             wrapper.AddCssClass("nested-view");
+            var rootActions = new TagBuilder("div");
+            rootActions.AddCssClass("root-actions");
+            if (!string.IsNullOrWhiteSpace(AddText))
+                rootActions.InnerHtml.AppendHtml($"<button class='btn btn-primary' id='btn-add-root'>{AddText}</button>");
+            rootActions.InnerHtml.AppendHtml($"<button class='btn btn-info' id='btn-show-all'>{ShowAllText}</button>");
+            wrapper.InnerHtml.AppendHtml(rootActions);
             wrapper.Attributes.Add("id", TagId);
+            wrapper.Attributes.Add("data-add-text", AddText);
+            wrapper.Attributes.Add("data-edit-text", EditText);
+            wrapper.Attributes.Add("data-edit-url", EditUrl);
+            wrapper.Attributes.Add("data-delete-text", DeleteText);
+            wrapper.Attributes.Add("data-delete-url", DeleteUrl);
             //var filterRow = new TagBuilder("div");
             //filterRow.AddCssClass("nested-items-filter");
             //var input = new TagBuilder("input");
@@ -34,10 +45,10 @@ namespace Shopia.Dashboard
             TagBuilder Appender(NestedItem currentItem)
             {
                 var li = new TagBuilder("li");
-                li.Attributes.Add("data-id", currentItem.Id.ToString());
-                li.InnerHtml.AppendHtml($"<span>{currentItem.Name}</span>");
                 var childs = Items.Where(x => x.ParentId == currentItem.Id).OrderByDescending(x => x.OrderPrority).ToList();
-                if (childs.Any())
+                var hasChild = childs.Any();
+                li.InnerHtml.AppendHtml($"<div class='item' data-id='{currentItem.Id}'>{(hasChild ? "<span class='sign'></span>" : string.Empty)}<span class='name'>{currentItem.Name}</span></div>");
+                if (hasChild)
                 {
                     li.InnerHtml.AppendHtml($"<ul class='submenu'>");
                     foreach (var child in childs)

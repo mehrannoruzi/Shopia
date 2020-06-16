@@ -30,29 +30,25 @@ namespace Shopia.Dashboard.Controllers
         {
             var store = await _storeSrv.FindAsync(id);
             if (!store.IsSuccessful) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound });
-            var model = new StoreUpdateModel().CopyFrom(store.Result);
+            //var model = new StoreUpdateModel().CopyFrom(store.Result);
             if (store.Result.AddressId != null)
             {
                 var addr = await addrSrv.FindAsync(store.Result.AddressId ?? 0);
-                if (addr.IsSuccessful)
-                {
-                    model.Latitude = addr.Result.Latitude;
-                    model.Longitude = addr.Result.Longitude;
-                    model.AddressDetails = addr.Result.AddressDetails;
-                }
+                store.Result.Address = addr.IsSuccessful ? addr.Result : new Address();
             }
-            model.ShopiaUrl = $"{_configuration["CustomSettings:ReactBaseUrl"]}/store/{id}";
+            else store.Result.Address = new Address();
+            store.Result.ShopiaUrl = $"{_configuration["CustomSettings:ReactBaseUrl"]}/store/{id}";
             return Json(new Modal
             {
                 Title = $"{Strings.Update} {DomainString.Store}",
                 AutoSubmitBtnText = Strings.Edit,
-                Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", model),
+                Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", store.Result),
                 AutoSubmit = false
             });
         }
 
         [HttpPost]
-        public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, StoreUpdateModel model)
+        public virtual async Task<JsonResult> Update([FromServices]IWebHostEnvironment env, StoreAdminUpdateModel model)
         {
             if (!ModelState.IsValid) return Json(new { IsSuccessful = false, Message = ModelState.GetModelError() });
             model.Root = env.WebRootPath;

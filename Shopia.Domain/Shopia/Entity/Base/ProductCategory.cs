@@ -44,8 +44,10 @@ namespace Shopia.Domain
         [Display(Name = nameof(Strings.OrderPriority), ResourceType = typeof(Strings))]
         public int OrderPriority { get; set; }
 
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "nvarchar(20)")]
+        [MaxLength(20, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(20, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
         [Display(Name = nameof(Strings.Icon), ResourceType = typeof(Strings))]
-        public int Icon { get; set; }
+        public string Icon { get; set; }
     }
 }

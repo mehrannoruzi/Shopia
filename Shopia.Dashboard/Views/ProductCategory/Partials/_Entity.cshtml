@@ -1,93 +1,33 @@
-@model Order
+@model ProductCategory
 @{
     Layout = null;
 }
-<div class="row">
-    @Html.HiddenFor(x => x.OrderId)
-    <div class="col-12 col-sm-6">
-        <custom-input-for for="User.Email" readonly="true" />
-    </div>
-    <div class="col-12 col-sm-6">
-        <custom-input-for for="User.MobileNumber" readonly="true" class="form-control ltr-elm" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-12 col-sm-6">
-        <custom-select-for for="OrderStatus" items="EnumExtension.GetEnumElements<OrderStatus>().Select(x=>new SelectListItem {
-            Value = x.Name,
-            Text = x.Description
-        }).ToList()" />
-    </div>
-    <div class="col-12 col-sm-6">
-        <custom-select-for for="StoreId" class="form-control"
-                           items="Model.Store==null?new List<SelectListItem>():new List<SelectListItem>
-                        {
-                            new SelectListItem
-                            {
-                                Value = Model.StoreId.ToString(),
-                                Text = Model.Store.FullName
-                            }
-                        }"
-                           select-data-url="@Url.Action("Search","StoreStore")"
-                           select-disabled="disabled" />
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12 col-sm-4">
-        <custom-input-for for="InsertDateSh" readonly="true" class="form-control ltr-elm" />
-    </div>
-    <div class="col-12 col-sm-4">
-        <custom-input-for for="TotalPrice" class="form-control ltr-elm" readonly="true" />
-    </div>
-    <div class="col-12 col-sm-4">
-        <custom-input-for for="TotalPriceAfterDiscount" class="form-control ltr-elm" readonly="true" />
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <custom-textarea-for for="OrderComment" readonly="true" />
-    </div>
-</div>
-@*<div class="row">
-    @if (Model.OrderDetails != null)
+<form class="frm-category" asp-action='@(Model.ProductCategoryId==0?"Add":"Update")' asp-controller="ProductCategory">
+    @Html.HiddenFor(x => x.ProductCategoryId)
+    @if (Model.ProductCategoryId == 0)
     {
-        int idx = 1;
-        <table class="footable table table-stripped toggle-arrow-tiny">
-            <thead>
-                <tr>
-                    <td>#</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].Product.Name)</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].Product.UniqueId)</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].Count)</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].DiscountPrice)</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].Price)</td>
-                    <td>@Html.DisplayNameFor(x => x.OrderDetails[0].TotalPrice)</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.OrderDetails)
-                {
-                    <tr>
-                        <td>@idx</td>
-                        <td>@item.Product.Name</td>
-                        <td>@item.Product.UniqueId</td>
-                        <td>@item.Count</td>
-                        <td>@item.DiscountPrice</td>
-                        <td>@item.Price</td>
-                        <td>@item.TotalPrice</td>
-                    </tr>
-                    idx++;
-                }
-            </tbody>
-            <tfoot class="d-none">
-                <tr>
-                    <td colspan="5">
-                        <ul class="pagination float-right"></ul>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-
+        <input type="hidden" id="@nameof(Model.ParentId)" name="@nameof(Model.ParentId)" value="##ParentId##" />
     }
-</div>*@
+    else
+    {
+        @Html.HiddenFor(x => x.ParentId)
+    }
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Name) })
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="col-12 col-sm-3">
+            @Html.TextBoxFor(x => x.Icon, new { @class = "form-control ltr-elm p-h-r", placeholder = Html.DisplayNameFor(x => x.Icon) })
+            @Html.ValidationMessageFor(x => x.Icon)
+        </div>
+        <div class="col-12 col-sm-2">
+            @Html.TextBoxFor(x => x.Icon, new { @class = "form-control ltr-elm p-h-r", placeholder = Html.DisplayNameFor(x => x.OrderPriority) })
+            @Html.ValidationMessageFor(x => x.OrderPriority)
+        </div>
+        <div class="col-12 col-sm-12 col-md-3">
+            <button type="button" class="btn btn-primary btn-submit">@Strings.Submit</button>
+            <button type="button" class="btn btn-secondary" onclick="$(this).closest('form').remove()">@Strings.Close</button>
+        </div>
+    </div>
+</form>

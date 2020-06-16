@@ -28,7 +28,7 @@ namespace Shopia.Dashboard.Controllers
         public virtual async Task<JsonResult> Update([FromServices]IAddressService addrSrv, int id)
         {
             var chk = await _storeSrv.CheckOwner(id, User.GetUserId());
-            if(!chk) return Json(new { IsSuccessful = false, Message = Strings.AccessDenied });
+            if (!chk) return Json(new { IsSuccessful = false, Message = Strings.AccessDenied });
             var store = await _storeSrv.FindAsync(id);
             if (!store.IsSuccessful) return Json(new { IsSuccessful = false, Message = Strings.RecordNotFound });
             var model = new StoreUpdateModel().CopyFrom(store.Result);
@@ -37,16 +37,18 @@ namespace Shopia.Dashboard.Controllers
                 var addr = await addrSrv.FindAsync(store.Result.AddressId ?? 0);
                 if (addr.IsSuccessful)
                 {
-                    model.Latitude = addr.Result.Latitude;
-                    model.Longitude = addr.Result.Longitude;
-                    model.AddressDetails = addr.Result.AddressDetails;
+                    model.Address.Latitude = addr.Result.Latitude;
+                    model.Address.Longitude = addr.Result.Longitude;
+                    model.Address.AddressDetails = addr.Result.AddressDetails;
                 }
             }
+
+            model.ShopiaUrl = $"{_configuration["CustomSettings:ReactBaseUrl"]}/store/{id}";
             return Json(new Modal
             {
                 Title = $"{Strings.Update} {DomainString.Store}",
                 AutoSubmitBtnText = Strings.Edit,
-                Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", model),
+                Body = ControllerExtension.RenderViewToString(this, "Partials/_Entity", store.Result),
                 AutoSubmit = false
             });
         }

@@ -1,21 +1,29 @@
-@model List<NestedItem>
+﻿@model List<ProductCategory>
 @{
 	ViewBag.Title = $"{Strings.Management} {DomainStrings.Order}";
 	Layout = "_Layout";
 }
 @section styles{
-	<link href="~/Styles/Libs/jquery.nestedView.min.css" rel="stylesheet" />
+	<link href="~/Styles/App/01-Admin/ProductCategory/manage.min.css" rel="stylesheet" />
+	<link href="~/Styles/Libs/jquery.nested-view.min.css" rel="stylesheet" />
 }
 
-<div class="container">
+<div class="container" id="product-category-page">
 	<div class="row">
 		<div class="col-12">
-			<div class="ibox ">
+			<div class="ibox">
+				<div class="ibox-title">
+					<h5>@Strings.Items</h5>
+					<div class="ibox-tools">
+						<a class="collapse-icon">
+							<i class="zmdi zmdi-chevron-down"></i>
+						</a>
+					</div>
+				</div>
 				<div class="ibox-content">
 					<div class="row">
 						<div class="col-12 col-sm-12">
-							<nested-view tag-id="nested-view" 
-										 items="Model"></nested-view>
+							<partial name="Partials/_List" model="Model" />
 						</div>
 					</div>
 				</div>
@@ -26,10 +34,16 @@
 
 @section scripts{
 	<script src="~/Scripts/Libs/jquery.nested-view.js"></script>
+	<script src="~/Scripts/App/01-Admin/ProductCategory/manage.js"></script>
 	<script type="text/javascript">
 
 			$(document).ready(function () {
-
+                $('#nested-view').nestedView({
+                    addTex: 'افزودن',
+					addFormHtml:`@Html.Raw(ViewBag.EntityPartial)`,
+                    editText: 'ویرایش',
+					deleteText:'حذف'
+                });
 			});
 
 	</script>

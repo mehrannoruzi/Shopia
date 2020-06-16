@@ -206,9 +206,9 @@ namespace Shopia.Service
                     await _appUow.AddressRepo.AddAsync(new Address
                     {
                         UserId = store.UserId,
-                        Latitude = model.Latitude ?? 0,
-                        Longitude = model.Longitude ?? 0,
-                        AddressDetails = model.AddressDetails
+                        Latitude = model.Address.Latitude,
+                        Longitude = model.Address.Longitude,
+                        AddressDetails = model.Address.AddressDetails
                     });
                     var addAddress = await _appUow.ElkSaveChangesAsync();
                     if (addAddress.IsSuccessful) store.AddressId = addr.AddressId;
@@ -216,14 +216,63 @@ namespace Shopia.Service
                 }
                 else
                 {
-                    addr.Latitude = model.Latitude ?? 0;
-                    addr.Longitude = model.Longitude ?? 0;
-                    addr.AddressDetails = model.AddressDetails;
+                    addr.Latitude = model.Address.Latitude;
+                    addr.Longitude = model.Address.Longitude;
+                    addr.AddressDetails = model.Address.AddressDetails;
                     _appUow.AddressRepo.Update(addr);
                 }
             }
             store.FullName = model.FullName;
             store.Username = model.Username;
+            if (model.Logo != null)
+            {
+                var dir = $"/Files/{model.StoreId}";
+                if (!FileOperation.CreateDirectory(model.Root + dir))
+                    return new Response<Store> { Message = ServiceMessage.SaveFileFailed };
+                var relativePath = $"{dir}/logo_{Guid.NewGuid().ToString().Replace("-", "_")}{Path.GetExtension(model.Logo.FileName)}";
+                using (var stream = File.Create($"{model.Root}{relativePath.Replace("/", "\\")}"))
+                    await model.Logo.CopyToAsync(stream);
+                store.ProfilePictureUrl = $"{model.BaseDomain}{relativePath}";
+            }
+            _storeRepo.Update(store);
+            var saveResult = await _appUow.ElkSaveChangesAsync();
+            return new Response<Store> { Result = store, IsSuccessful = saveResult.IsSuccessful, Message = saveResult.Message };
+        }
+
+        public async Task<IResponse<Store>> UpdateAsync(StoreAdminUpdateModel model)
+        {
+            var store = await _appUow.StoreRepo.FindAsync(model.StoreId);
+            if (store == null) return new Response<Store> { Message = ServiceMessage.RecordNotExist };
+            if (store.AddressId != null)
+            {
+                var addr = await _appUow.AddressRepo.FindAsync(store.AddressId);
+                if (addr == null)
+                {
+                    await _appUow.AddressRepo.AddAsync(new Address
+                    {
+                        UserId = store.UserId,
+                        Latitude = model.Address.Latitude,
+                        Longitude = model.Address.Longitude,
+                        AddressDetails = model.Address.AddressDetails
+                    });
+                    var addAddress = await _appUow.ElkSaveChangesAsync();
+                    if (addAddress.IsSuccessful) store.AddressId = addr.AddressId;
+                    else return new Response<Store> { Message = addAddress.Message };
+                }
+                else
+                {
+                    addr.Latitude = model.Address.Latitude;
+                    addr.Longitude = model.Address.Longitude;
+                    addr.AddressDetails = model.Address.AddressDetails;
+                    _appUow.AddressRepo.Update(addr);
+                }
+            }
+            store.FullName = model.FullName;
+            store.Username = model.Username;
+            store.IsActive = model.IsActive;
+            store.ShopiaUrl = model.ShopiaUrl;
+            store.FolowerCount = model.FolowerCount;
+            store.FolowingCount = model.FolowingCount;
             if (model.Logo != null)
             {
                 var dir = $"/Files/{model.StoreId}";

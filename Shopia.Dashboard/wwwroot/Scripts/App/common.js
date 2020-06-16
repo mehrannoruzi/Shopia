@@ -204,6 +204,7 @@ var submitAjaxForm = function ($btn, successFunc, errorFunc, useToastr) {
     if (!$frm.valid()) return;
     ajaxBtn.inProgress($btn);
     let model = customSerialize($frm, true);
+    console.log(model);
     $.post($frm.attr('action'), model)
         .done(function (rep) {
             if (rep.IsSuccessful) {
@@ -328,24 +329,41 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
 
 var customSerialize = function ($wrapper, checkNumbers) {
     let model = {};
+    let checkNumberValue = function (v) {
+        if (checkNumbers && !isNaN(v) && v !== '') return parseInt(v);
+        else return v;
+    };
+    let valueSetter = function (name, v) {
+        let arr = name.split('.');
+        for (let idx = 0; idx < arr.length - 1; idx++) {
+            let leftAssign = 'model.' + arr.slice(0, idx + 1).join('.');
+            if (idx === arr.length) {
+                eval(leftAssign + '=' + v);
+                break;
+            }
+            eval(leftAssign + '=' + leftAssign + '?' + leftAssign + ':{}');
+        }
+        let fullLeftAssign = 'model.' + arr.join('.');
+        if (typeof eval(fullLeftAssign) === 'undefined') eval(fullLeftAssign + ' = v');
+        else if (Array.isArray(eval(fullLeftAssign))) eval(fullLeftAssign + '.push(v)');
+        else eval(fullLeftAssign + ' = [' + fullLeftAssign + ', v]');
+    };
     $wrapper.find('input:not([type="checkbox"]):not([type="radio"]),select,textarea').each(function () {
-        let v = $(this).val();
-        if (checkNumbers && !isNaN(v) && v !== '')
-            model[$(this).attr('name')] = parseInt($(this).val());
-        else
-            model[$(this).attr('name')] = $(this).val();
+        let name = $(this).attr('name');
+        if (typeof name !== 'undefined') {
+            let v = checkNumberValue($(this).val());
+            console.log(v);
+            valueSetter(name, v);
+        }
+
     });
 
     $wrapper.find('input[type="checkbox"],input[type="radio"]').each(function () {
         let name = $(this).attr('name');
-        let val = $(this).attr('value').toLowerCase();
-        if (!val || val === 'true' || val === 'false') val = $(this).prop('checked');
-        if (!model[name]) {
-            model[name] = val;
-        }
-        else {
-            if (Array.isArray(model[name])) model[name].push(val);
-            else model[name] = [model[name], val];
+        if (typeof name !== 'undefined') {
+            let val = $(this).attr('value').toLowerCase();
+            if (!val || val === 'true' || val === 'false') val = $(this).prop('checked');
+            valueSetter(name, val);
         }
     });
     return model;
@@ -444,4 +462,34 @@ var convertToOptionTags = function (items, isNullable) {
         return total + ('<option value="' + x.Value + '">' + x.Text + '</option>');
     }, $optTags);
     return $optTags;
+};
+
+var objectToFormData = function (obj, form, namespace) {
+
+    var fd = form || new FormData();
+    var formKey;
+
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+
+            if (namespace) {
+                formKey = namespace + '[' + property + ']';
+            } else {
+                formKey = property;
+            }
+            if (typeof obj[property] === 'object' && !(obj[property] instanceof File)) {
+
+                objectToFormData(obj[property], fd, property);
+
+            } else {
+
+                // if it's a string or a File object
+                fd.append(formKey, obj[property]);
+            }
+
+        }
+    }
+
+    return fd;
+
 };

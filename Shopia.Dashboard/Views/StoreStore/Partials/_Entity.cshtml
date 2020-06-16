@@ -5,8 +5,8 @@
 }
 <form asp-action="@(Model.StoreId==0?"Add":"Update")" asp-controller="StoreStore" id="frm-product">
     @Html.HiddenFor(x => x.StoreId)
-    @Html.HiddenFor(x => x.Longitude)
-    @Html.HiddenFor(x => x.Latitude)
+    @Html.HiddenFor(x => x.Address.Longitude)
+    @Html.HiddenFor(x => x.Address.Latitude)
     @if (Model.IsActive && !string.IsNullOrEmpty(Model.ShopiaUrl))
     {
         <div class="row">
@@ -49,7 +49,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <custom-textarea-for for="AddressDetails" />
+            <custom-textarea-for for="Address.AddressDetails" />
         </div>
     </div>
     <div class="custom-modal-footer">
@@ -58,7 +58,7 @@
     </div>
 </form>
 <script>
-    coords = [@(Model.Latitude),@(Model.Longitude)];
+    coords = [@(Model.Address.Latitude),@(Model.Address.Longitude)];
     logo = {};
     map = L.map('map').setView(coords, 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=' + mapToken, {

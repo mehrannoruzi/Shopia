@@ -381,6 +381,9 @@
   <data name="SendViaSms" xml:space="preserve">
     <value>ارسال از طریق پیامک</value>
   </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>نمایش همه</value>
+  </data>
   <data name="ShowAnswers" xml:space="preserve">
     <value>نمایش پاسخ ها</value>
   </data>
