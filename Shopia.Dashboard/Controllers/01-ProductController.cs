@@ -99,6 +99,8 @@ namespace Shopia.Dashboard.Controllers
             else return PartialView("Partials/_List", _productSrv.Get(filter));
         }
 
+        [HttpPost, AuthEqualTo("Product", "Delete")]
+        public virtual async Task<JsonResult> DeleteAsset([FromServices]IProductAssetService productAssetSerive, int assetId) => Json(await productAssetSerive.DeleteAsync(assetId));
         //[HttpGet, AuthEqualTo("ProductInRole", "Add")]
         //public virtual JsonResult Search(string q)
         //    => Json(_productSrv.Search(q).ToSelectListItems());

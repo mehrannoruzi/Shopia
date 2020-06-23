@@ -1,6 +1,7 @@
 ﻿(function ($) {
 
 	$.fn.nestedView = function (options) {
+
 		let $elm = $(this);
 		let fired = $elm.data('fired');
 		if (fired === 'true') return;
@@ -8,7 +9,6 @@
 		options = typeof options !== 'undefined' ? options : {};
 		let $btns = '<div class="box">';
 		let addable = typeof options.addFormHtml !== 'undefined' ? true : false;
-		$btns += '<input class="form-control" id="input-search" type="text"/>';
 		if (addable)
 			$btns += '<button type="button" class="btn btn-add btn-primary">' + $elm.data('add-text') + '</button>';
 		let editable = typeof $elm.data('edit-url') !== 'undefined' ? true : false;
@@ -21,15 +21,19 @@
 		//===================================================================
 		//-- Commands
 		//===================================================================
-		let openItem = function ($item) {
+		let openItem = function ($item, ignoreOtthers) {
+
 			let $li = $item.parent();
 			if ($li.hasClass('open')) return;
 			let $subMenu = $item.next();
 			let $wrapperLi = $li.parent().closest('li');
-			$elm.find('li').not($wrapperLi).removeClass('open');
+			if (!ignoreOtthers) {
+				$elm.find('li').not($wrapperLi).removeClass('open');
+				$elm.find('.box').remove();
+			}
 			$li.addClass('open');
-			$subMenu.slideDown(500);
-			$elm.find('.box').remove();
+			if ($subMenu.length > 0)
+				$subMenu.slideDown(500);
 			if ($item.find('.box').length === 0)
 				$item.append($btns);
 		};
@@ -43,26 +47,42 @@
 			$li.find('form').remove();
 		};
 		let openAll = function () {
-			$elm.find('.item').each(function () { openItem($(this)); });
+			console.log($elm.find('.item').length);
+			$elm.find('.item').each(function () { openItem($(this), true); });
 		};
 		let closeAll = function () {
 			$elm.find('.item').each(function () { closeItem($(this)); });
+		};
+		let bubbleOpen = function ($item) {
+			openItem($item);
+			console.log($item.find('span.name').text());
+			let $parentItem = $item.closest('ul').prev('.item');
+			if ($parentItem.length > 0)
+				bubbleOpen($parentItem);
 		};
 		//===================================================================
 		//-- events
 		//===================================================================
 		//
-		$(document).on('input', '.nested-view #input-search', function (e) {
+		$(document).off('click', '.nested-view #btn-search').on('click', '.nested-view #btn-search', function (e) {
+			console.log('plugin fired');
 			closeAll();
-			let txt = $(this).val();
+			let txt = $('#input-search').val();
+			if (!txt || txt.length === 0) return;
 			let $items = [];
 			$elm.find('.item').each(function () {
 				if ($(this).find('span.name').text().indexOf(txt) > -1) $items.push($(this));
 			});
 
+
+			$items.forEach(function ($item) {
+				$item.addClass('found');
+				setTimeout(function () { $item.removeClass('found'); }, 2000);
+				bubbleOpen($item);
+			});
 		});
 		//add to root
-		$(document).on('click', '.nested-view #btn-add-root', function (e) {
+		$(document).off('click', '.nested-view #btn-add-root').on('click', '.nested-view #btn-add-root', function (e) {
 			e.stopPropagation();
 			let $btn = $(this);
 			let $root = $btn.parent();
@@ -71,36 +91,46 @@
 			$.validator.unobtrusive.parse($root);
 		});
 		//show all
-		$(document).on('click', '.nested-view #btn-show-all', function (e) {
+		$(document).off('click', '.nested-view #btn-show-all').on('click', '.nested-view #btn-show-all', function (e) {
 			e.stopPropagation();
+			console.log($elm.length);
 			let $btn = $(this);
 			let openMode = $btn.data('open');
-			if (openMode === 'true') closeAll();
-			else openAll();
+			console.log(openMode);
+			if (openMode === 'true') {
+
+				$btn.data('open', 'false');
+				closeAll();
+			}
+			else {
+				console.log('close');
+				$btn.data('open', 'true');
+				openAll();
+			}
 			//$(this).closest('.nested-view').find('.item').each(function () {
 			//	let $item = $(this);
-				//let $li = $item.parent();
-				//let $menu = $item.next();
-				//if (openMode === 'true') {
-				//	closeItem($item);
-					//$btn.data('open', 'false');
-					//$li.removeClass('open');
-					//$menu.slideUp(500);
-					//$item.find('.box').remove();
-					//$li.find('form').remove();
-				//}
-				//else {
-				//	openItem($item);
-					//$btn.data('open', 'true');
-					//$li.addClass('open');
-					//$menu.slideDown(500);
-					//if ($item.find('.box').length === 0)
-					//	$item.append($btns);
-				//}
+			//let $li = $item.parent();
+			//let $menu = $item.next();
+			//if (openMode === 'true') {
+			//	closeItem($item);
+			//$btn.data('open', 'false');
+			//$li.removeClass('open');
+			//$menu.slideUp(500);
+			//$item.find('.box').remove();
+			//$li.find('form').remove();
+			//}
+			//else {
+			//	openItem($item);
+			//$btn.data('open', 'true');
+			//$li.addClass('open');
+			//$menu.slideDown(500);
+			//if ($item.find('.box').length === 0)
+			//	$item.append($btns);
+			//}
 			//});
 		});
 		//show item
-		$(document).on('click', '.nested-view .item', function (e) {
+		$(document).off('click', '.nested-view .item').on('click', '.nested-view .item', function (e) {
 			e.stopPropagation();
 			let $item = $(this);
 			let $li = $item.parent();
@@ -125,7 +155,7 @@
 			}
 		});
 		//show add item form
-		$(document).on('click', '.nested-view .btn-add', function (e) {
+		$(document).off('click', '.nested-view .btn-add').on('click', '.nested-view .btn-add', function (e) {
 			e.stopPropagation();
 			console.log('add');
 			let $btn = $(this);
@@ -136,7 +166,7 @@
 			$.validator.unobtrusive.parse($li);
 		});
 		//show edit form
-		$(document).on('click', '.nested-view .btn-edit', function (e) {
+		$(document).off('click', '.nested-view .btn-edit').on('click', '.nested-view .btn-edit', function (e) {
 			e.stopPropagation();
 			let $btn = $(this);
 			let id = $btn.closest('.item').data('id');
@@ -160,7 +190,7 @@
 
 		});
 		//show edit form
-		$(document).on('click', '.nested-view .btn-delete', function (e) {
+		$(document).off('click', '.nested-view .btn-delete').on('click', '.nested-view .btn-delete', function (e) {
 			e.stopPropagation();
 			let $btn = $(this);
 			let id = $btn.closest('.item').data('id');

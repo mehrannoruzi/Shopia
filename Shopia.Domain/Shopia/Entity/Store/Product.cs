@@ -83,5 +83,7 @@ namespace Shopia.Domain
 
         public IList<ProductAsset> ProductAssets { get; set; }
         public IList<OrderDetail> OrderDetails { get; set; }
+        [Display(Name = nameof(Strings.Tag), ResourceType = typeof(Strings))]
+        public IList<ProductTag> ProductTags { get; set; }
     }
 }

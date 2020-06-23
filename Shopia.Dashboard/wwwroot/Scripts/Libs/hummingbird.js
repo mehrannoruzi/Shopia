@@ -40,7 +40,7 @@
         var opt = '<div class="hummingbird-opt"><a href="#">{0}</a></div>';
         //
         var setRemoveEvent = function (item) {
-            $wrapper.find('.remove').on('click', function () {
+            $wrapper.find('.remove').off('click').on('click', function () {
                 items.splice(items.findIndex(x => x.Value === item.Value), 1);
                 $targetInput.val(JSON.stringify(items));
                 $(this).closest('.hummingbird-tag').remove();
@@ -99,8 +99,8 @@
                                 if (e.keyCode === 13) {//enter
                                     e.preventDefault();
                                     if (idx > -1)
-                                        select($opts.eq(idx), function () {
-                                            $opt.parent().empty().hide();
+                                        select($opts.eq(idx).data('item'), function () {
+                                            $opts.eq(idx).parent().empty().hide();
                                         });
                                 }
                                 else if (e.keyCode === 38) {//up

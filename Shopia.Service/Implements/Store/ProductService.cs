@@ -64,6 +64,11 @@ namespace Shopia.Service
             var product = await _productRepo.FirstOrDefaultAsync(conditions: x => x.ProductId == id,
                 new List<Expression<Func<Product, object>>> { x => x.ProductAssets, x => x.Store });
             if (product == null) return new Response<Product> { Message = ServiceMessage.RecordNotExist };
+            product.ProductTags = _appUow.ProductTagRepo.Get(conditions: x => x.ProductId == id,
+                o => o.OrderByDescending(x => x.ProductTagId)
+            , includeProperties: new List<Expression<Func<ProductTag, object>>> {
+                x=>x.Tag
+            });
             return new Response<Product>
             {
                 IsSuccessful = true,
@@ -109,6 +114,8 @@ namespace Shopia.Service
         public async Task<IResponse<Product>> AddAsync(ProductAddModel model)
         {
             var product = new Product().CopyFrom(model);
+            if (model.TagIds != null && model.TagIds.Any())
+                product.ProductTags = new List<ProductTag>(model.TagIds.Select(x => new ProductTag { TagId = x }));
             if (model.Files != null && model.Files.Count != 0)
             {
                 var getAssets = await _productAssetService.SaveRange(model);
@@ -147,6 +154,15 @@ namespace Shopia.Service
             product.IsActive = model.IsActive;
             product.Description = model.Description;
             product.ProductCategoryId = model.ProductCategoryId;
+            #region Tags
+            if (model.TagIds == null) model.TagIds = new List<int>();
+            var tags = _appUow.ProductTagRepo.Get(conditions: x => x.ProductId == model.ProductId,orderBy:o=>o.OrderByDescending(x=>x.ProductTagId));
+            _appUow.ProductTagRepo.DeleteRange(tags.Where(x => !model.TagIds.Contains(x.TagId)).ToList());
+            var ttt = model.TagIds.Where(x => !tags.Select(t => t.TagId).Contains(x)).ToList();
+            if (model.TagIds != null && model.TagIds.Any())
+                product.ProductTags = new List<ProductTag>(model.TagIds.Where(x => !tags.Select(t => t.TagId).Contains(x)).Select(x => new ProductTag { TagId = x })); 
+            #endregion
+
             _productRepo.Update(product);
             if (model.Files != null && model.Files.Count != 0)
             {
@@ -248,11 +264,11 @@ namespace Shopia.Service
 
         public IList<ProductSearchResult> Search(string searchParameter, Guid? userId, int take = 10)
                 => _productRepo.Get(x => new ProductSearchResult
-                    {
-                        Id = x.ProductId,
-                        Name = x.Name,
-                        Price = x.Price - (int)(x.Price * x.DiscountPercent / 100),
-                    },
+                {
+                    Id = x.ProductId,
+                    Name = x.Name,
+                    Price = x.Price - (int)(x.Price * x.DiscountPercent / 100),
+                },
                     conditions: x => !x.IsDeleted && x.Name.Contains(searchParameter) && (userId == null ? true : x.Store.UserId == userId),
                     new PagingParameter
                     {

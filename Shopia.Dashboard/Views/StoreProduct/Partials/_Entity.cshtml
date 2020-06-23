@@ -4,22 +4,20 @@
     var assets = (Model.ProductAssets ?? new List<ProductAsset>()).OrderBy(x => x.ProductAssetId).ToList();
 }
 <form asp-controller="StoreProduct" asp-action="@(Model.ProductId==0?"Add":"Update")" id="frm-product">
-    @Html.HiddenFor(x => x.StoreId)
     @Html.HiddenFor(x => x.ProductId)
     <div class="row m-b">
         <div class="col-12 col-sm-4">
-            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image1","تصویر یک",assets.FirstOrDefault())' />
+            <partial name="~/Views/Shared/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image1","تصویر یک",assets.FirstOrDefault())' />
         </div>
         <div class="col-12 col-sm-4">
-            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image2","تصویر دو",assets.Skip(1).FirstOrDefault())' />
+            <partial name="~/Views/Shared/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image2","تصویر دو",assets.Skip(1).FirstOrDefault())' />
 
         </div>
         <div class="col-12 col-sm-4">
-            <partial name="~/Views/StorePublic/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image3","تصویر سه",assets.Skip(2).FirstOrDefault())' />
+            <partial name="~/Views/Shared/Partials/_SingleUploader.cshtml" model='new SingleUploaderModel("image3","تصویر سه",assets.Skip(2).FirstOrDefault())' />
         </div>
     </div>
     <div class="row">
-        @Html.HiddenFor(x => x.ProductId)
         <div class="col-12 col-sm-6">
             <custom-select-for for="StoreId"
                                select-data-url='@Url.Action("Search", "StoreStore",new {userId = User.GetUserId() })'
@@ -55,6 +53,25 @@
         </div>
 
 
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                @Html.LabelFor(x => x.ProductTags)
+                @{
+                    var tags = "[]";
+                    if (Model.ProductTags != null)
+                    {
+                        tags = (Model.ProductTags.Select(x => new SelectListItem
+                        {
+                            Text = x.Tag.Title,
+                            Value = x.TagId.ToString()
+                        }).ToList()).SerializeToJson();
+                    }
+                    <input type="hidden" value='@tags' id="tags_wrapper" placeholder="@Strings.SearchHere" />
+                }
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

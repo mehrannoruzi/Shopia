@@ -7,6 +7,7 @@
              show-all-text="@Strings.ShowAll"
              add-text="@Strings.Add"
              edit-text="@Strings.Edit"
+             search-text="@Strings.Search"
              edit-url="@Url.Action("Update","ProductCategory")"
              delete-text="@Strings.Delete"
              delete-url="@Url.Action("delete","ProductCategory")"
@@ -19,14 +20,14 @@
 
 @if (_httpContextAccessor.HttpContext.Request.IsAjaxRequest())
 {
-    @*<script type="text/javascript">
+    <script type="text/javascript">
 
-                $('#nested-view').nestedView({
+                $('#nested-view').off('nestedView').nestedView({
                     addTex: 'افزودن',
 					addFormHtml:`@Html.Raw(ViewBag.EntityPartial)`,
                     editText: 'ویرایش',
 					deleteText:'حذف'
                 });
 
-    </script>*@
+    </script>
 }

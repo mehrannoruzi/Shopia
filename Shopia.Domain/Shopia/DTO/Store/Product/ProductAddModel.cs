@@ -51,5 +51,7 @@ namespace Shopia.Domain
 
         [NotMapped]
         public string BaseDomain { get; set; }
+
+        public List<int> TagIds { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace Shopia.Service
             findedAction.Icon = model.Icon;
             findedAction.ParentId = model.ParentId;
             findedAction.ShowInMenu = model.ShowInMenu;
+            findedAction.ControllerName = model.ControllerName;
             findedAction.ActionName = model.ActionName;
             findedAction.OrderPriority = model.OrderPriority;
 

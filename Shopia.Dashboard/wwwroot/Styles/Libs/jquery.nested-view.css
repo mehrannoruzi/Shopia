@@ -1,8 +1,25 @@
-﻿.nested-view .root-actions button {
-  margin-bottom: 10px; }
-  .nested-view .root-actions button#btn-show-all {
-    margin-right: 10px;
-    margin-left: 10px; }
+﻿.nested-view .root-actions {
+  display: flex;
+  flex-direction: row; }
+  .nested-view .root-actions .root-btns {
+    margin: 0 10px; }
+  .nested-view .root-actions input {
+    width: 150px; }
+  .nested-view .root-actions button {
+    margin-bottom: 10px; }
+    .nested-view .root-actions button#btn-add-root {
+      margin-right: 10px;
+      margin-left: 10px; }
+
+@media (max-width: 576px) {
+  .nested-view .root-actions {
+    flex-direction: column; }
+    .nested-view .root-actions input {
+      width: 100%;
+      margin-bottom: 10px; }
+    .nested-view .root-actions .root-btns {
+      width: 100%;
+      text-align: center; } }
 
 .nested-view ul {
   list-style: none;
@@ -27,6 +44,8 @@
         font-size: 0.75rem;
         border-radius: 12px;
         margin: 0 2.5px; }
+      .nested-view ul li .item.found {
+        background-color: #d8d8d8; }
     .nested-view ul li.open > .item {
       color: #3d9a87; }
       .nested-view ul li.open > .item > .sign:after {

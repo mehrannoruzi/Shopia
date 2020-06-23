@@ -71,14 +71,19 @@ $(document).ready(function () {
         e.stopPropagation();
         let $btn = $(this);
         let $frm = $btn.closest('form');
-        let frmData = new FormData();
         let model = customSerialize($('#frm-product'));
-        for (var k in model) {
-            frmData.append(k, model[k]);
-        }
+        let tags = JSON.parse($('#tags_wrapper').val());
+        model.TagIds = [];
+        for (let i = 0; i < tags.length; i++)
+            model.TagIds.push(tags[i].Value);
+        let frmData = objectToFormData(model);
+        console.log('fired');
+        //return;
+        //for (var k in model) {
+        //    frmData.append(k, model[k]);
+        //}
         for (var i = 0; i < assets.length; i++)  frmData.append('Files', assets[i].file);
-        console.log(frmData);
-        console.log(assets);
+
         ajaxBtn.inProgress($btn);
         $.ajax({
             type: 'POST',

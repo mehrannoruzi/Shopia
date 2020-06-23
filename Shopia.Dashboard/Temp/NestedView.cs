@@ -13,6 +13,7 @@ namespace Shopia.Dashboard
         public string AddText { get; set; }
         public string EditText { get; set; }
         public string DeleteText { get; set; }
+        public string SearchText { get; set; }
         public string ShowAllText { get; set; }
         public List<NestedItem> Items { get; set; }
         public string GetItemsUrl { get; set; }
@@ -26,9 +27,11 @@ namespace Shopia.Dashboard
             wrapper.AddCssClass("nested-view");
             var rootActions = new TagBuilder("div");
             rootActions.AddCssClass("root-actions");
+            rootActions.InnerHtml.AppendHtml($"<input id='input-search' type='text' class='form-control' placeholder='{SearchText}' /><div class='root-btns'>");
+            rootActions.InnerHtml.AppendHtml($"<button class='btn btn-info' id='btn-search'>{SearchText}</button>");
             if (!string.IsNullOrWhiteSpace(AddText))
                 rootActions.InnerHtml.AppendHtml($"<button class='btn btn-primary' id='btn-add-root'>{AddText}</button>");
-            rootActions.InnerHtml.AppendHtml($"<button class='btn btn-info' id='btn-show-all'>{ShowAllText}</button>");
+            rootActions.InnerHtml.AppendHtml($"<button class='btn btn-warning' id='btn-show-all' data-open='false'>{ShowAllText}</button></div>");
             wrapper.InnerHtml.AppendHtml(rootActions);
             wrapper.Attributes.Add("id", TagId);
             wrapper.Attributes.Add("data-add-text", AddText);
