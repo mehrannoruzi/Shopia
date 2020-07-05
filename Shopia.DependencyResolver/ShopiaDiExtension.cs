@@ -24,8 +24,8 @@ namespace Shopia.DependencyResolver
             services.AddContext<AppDbContext>(_configuration.GetConnectionString("AppDbContext"));
             services.AddContext<AuthDbContext>(_configuration.GetConnectionString("AuthDbContext"));
 
-            services.AddScoped<AppDbContext>();
-            services.AddScoped<AuthDbContext>();
+            //services.AddScoped<AppDbContext>();
+            //services.AddScoped<AuthDbContext>();
 
             services.AddScoped<AuthUnitOfWork, AuthUnitOfWork>();
             services.AddScoped<AppUnitOfWork, AppUnitOfWork>();

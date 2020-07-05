@@ -21,7 +21,7 @@ namespace Shopia.DataAccess.Ef
             _serviceProvider = serviceProvider;
         }
 
-
+        public IUserRepo UserRepo => _serviceProvider.GetService<UserRepo>();
         public IGenericRepo<Role> RoleRepo => _serviceProvider.GetService<IGenericRepo<Role>>();
         public IGenericRepo<Domain.Action> ActionRepo => _serviceProvider.GetService<IGenericRepo<Domain.Action>>();
         public IGenericRepo<ActionInRole> ActionInRoleRepo => _serviceProvider.GetService<IGenericRepo<ActionInRole>>();

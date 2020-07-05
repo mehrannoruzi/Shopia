@@ -66,8 +66,9 @@ class ProductsList extends React.Component {
         }
     };
     render() {
-        if (this.state.products) return (arrangeInRows(2, this.state.products.map((p, idx) => (<Product key={idx} product={p} />)), 'products-list'));
-        else return (arrangeInRows(2, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
+        let cols = window.innerWidth > 576 ? 3 : 2;
+        if (this.state.products) return (arrangeInRows(cols, this.state.products.map((p, idx) => (<Product key={idx} product={p} />)), 'products-list'));
+        else return (arrangeInRows(cols, [1, 2, 3, 4, 5, 6].map(x => (<div key={x} className='skeleton-product'><Skeleton variant="rect" /></div>)), 'products-list'));
     }
 }
 

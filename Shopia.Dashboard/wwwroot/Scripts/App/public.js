@@ -617,7 +617,9 @@ $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
     }
     catch (e) { console.log(e); }
 });
-
+/*--------------------------------------
+           custom serialize
+---------------------------------------*/
 var customSerialize = function ($wrapper, checkNumbers) {
     let model = {};
     let checkNumberValue = function (v) {

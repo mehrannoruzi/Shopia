@@ -105,13 +105,18 @@ class Product extends React.Component {
                                 </div>)}
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            <Button disabled={this.state.loading} className={"btn-purchase btn-next " + (window.innerWidth > 576 ? "fab" : "")} onClick={this._addToBasket.bind(this)}>
+                                {`${strings.add} ${strings.to} ${strings.basket}`}
+                                &nbsp;
+                                <img src={addToBasketImage} alt='add to basket' />
+                            </Button>
+                        </Col>
+                    </Row>
                 </Container>
 
-                <Button disabled={this.state.loading} className="btn-purchase btn-next" onClick={this._addToBasket.bind(this)}>
-                    {`${strings.add} ${strings.to} ${strings.basket}`}
-                    &nbsp;
-                    <img src={addToBasketImage} alt='add to basket'/>
-                </Button>
+
             </div>
         );
     }

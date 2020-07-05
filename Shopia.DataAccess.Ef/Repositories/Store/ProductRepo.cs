@@ -45,7 +45,7 @@ namespace Shopia.DataAccess.Ef
                 Price = p.Price,
                 Discount = p.DiscountPercent,
                 Name = p.Name,
-                ImageUrl = p.ProductAssets.Any() ? p.ProductAssets[0].ThumbnailUrl : null,
+                ImageUrl = p.ProductAssets.Any() ? p.ProductAssets[0].FileUrl : null,
                 Description = p.Description
             }).ToPagingListDetails(filter);
             if (discount != null)

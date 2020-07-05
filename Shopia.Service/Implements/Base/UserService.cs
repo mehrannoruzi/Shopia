@@ -187,52 +187,70 @@ namespace Shopia.Service
             userMenu = new MenuModel();
             if (spResult == null) spResult = _dashboardMenuSp.GetUserMenu(userId).ToList();
 
-            #region Find Default View
-            foreach (var menuItem in spResult)
-            {
-                if (menuItem.IsAction && menuItem.IsDefault)
-                {
-                    userMenu.DefaultUserAction = new UserAction
-                    {
-                        Action = menuItem.ActionName,
-                        Controller = menuItem.ControllerName
-                    };
-                    break;
-                }
-                var actions = menuItem.ActionsList;
-                if (actions.Any(x => x.IsDefault))
-                {
-                    userMenu.DefaultUserAction = new UserAction
-                    {
-                        Action = actions.FirstOrDefault(x => x.IsDefault).ActionName,
-                        Controller = actions.FirstOrDefault(x => x.IsDefault).ControllerName
-                    };
-                    break;
-                }
-            }
-            if (userMenu.DefaultUserAction == null || userMenu.DefaultUserAction.Controller == null) return null;
-            #endregion
+            //#region Find Default View
+            //foreach (var menuItem in spResult)
+            //{
+            //    if (menuItem.IsAction && menuItem.IsDefault)
+            //    {
+            //        userMenu.DefaultUserAction = new UserAction
+            //        {
+            //            Action = menuItem.ActionName,
+            //            Controller = menuItem.ControllerName
+            //        };
+            //        break;
+            //    }
+            //    var actions = menuItem.ActionsList;
+            //    if (actions.Any(x => x.IsDefault))
+            //    {
+            //        userMenu.DefaultUserAction = new UserAction
+            //        {
+            //            Action = actions.FirstOrDefault(x => x.IsDefault).ActionName,
+            //            Controller = actions.FirstOrDefault(x => x.IsDefault).ControllerName
+            //        };
+            //        break;
+            //    }
+            //}
+            //if (userMenu.DefaultUserAction == null || userMenu.DefaultUserAction.Controller == null) return null;
+            //#endregion
             var userActions = new List<UserAction>();
-            foreach (var item in spResult)
+            void AddAction(MenuSPModel item)
             {
-                if (item.IsAction)
-                    userActions.Add(new UserAction
-                    {
-                        Controller = item.ControllerName.ToLower(),
-                        Action = item.ActionName.ToLower(),
-                        RoleId = item.RoleId,
-                        RoleNameFa = item.RoleNameFa
-                    });
+                if (item.IsDefault) userMenu.DefaultUserAction = new UserAction
+                {
+                    Action = item.ActionName,
+                    Controller = item.ControllerName
+                };
+                if (item.IsAction) userActions.Add(new UserAction
+                {
+                    Controller = item.ControllerName.ToLower(),
+                    Action = item.ActionName.ToLower(),
+                    RoleId = item.RoleId,
+                    RoleNameFa = item.RoleNameFa
+                });
                 if (item.ActionsList != null)
-                    foreach (var child in item.ActionsList)
-                        userActions.Add(new UserAction
-                        {
-                            Controller = child.ControllerName.ToLower(),
-                            Action = child.ActionName.ToLower(),
-                            RoleId = child.RoleId,
-                            RoleNameFa = child.RoleNameFa
-                        });
+                    foreach (var child in item.ActionsList) AddAction(child);
             }
+            foreach (var item in spResult) AddAction(item);
+            //foreach (var item in spResult)
+            //{
+            //    if (item.IsAction)
+            //        userActions.Add(new UserAction
+            //        {
+            //            Controller = item.ControllerName.ToLower(),
+            //            Action = item.ActionName.ToLower(),
+            //            RoleId = item.RoleId,
+            //            RoleNameFa = item.RoleNameFa
+            //        });
+            //    if (item.ActionsList != null)
+            //        foreach (var child in item.ActionsList)
+            //            userActions.Add(new UserAction
+            //            {
+            //                Controller = child.ControllerName.ToLower(),
+            //                Action = child.ActionName.ToLower(),
+            //                RoleId = child.RoleId,
+            //                RoleNameFa = child.RoleNameFa
+            //            });
+            //}
             userActions = userActions.Distinct().ToList();
             userMenu.Menu = GetAvailableMenu(spResult, urlPrefix);
             userMenu.ActionList = userActions;
@@ -264,15 +282,19 @@ namespace Shopia.Service
         }
 
         public IDictionary<object, object> Search(string searchParameter, int take = 10)
-            => _userRepo.Get(conditions: x => x.FullName.Contains(searchParameter) || x.Email.Contains(searchParameter), o => o.OrderByDescending(x => x.InsertDateMi))
-                .Select(x => new
-                {
-                    x.UserId,
-                    x.MobileNumber,
-                    x.FullName
-                })
-                .Take(take)
-                .ToDictionary(k => (object)k.UserId, v => (object)$"{v.FullName}({v.MobileNumber})");
+           => _userRepo.Get(conditions: x => x.FullName.Contains(searchParameter) || x.Email.Contains(searchParameter), pagingParameter: new PagingParameter
+           {
+               PageNumber = 1,
+               PageSize = 10
+           },
+               selector: x => new
+               {
+                   x.UserId,
+                   x.MobileNumber,
+                   x.FullName
+               },
+               orderBy: o => o.OrderByDescending(x => x.InsertDateMi))
+               .Items.ToDictionary(k => (object)k.UserId, v => (object)$"{v.FullName}({v.MobileNumber})");
 
         public async Task<IResponse<string>> RecoverPassword(long mobileNumber, string from, EmailMessage model)
         {

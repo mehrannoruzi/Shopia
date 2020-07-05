@@ -67,7 +67,7 @@ namespace Shopia.Dashboard
                 {
                     OnPrepareResponse = ctx => { ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}"); }
                 });
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/Details");
                 //app.UseHsts();
             }
             //app.UseHttpsRedirection();
